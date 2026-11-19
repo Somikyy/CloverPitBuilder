@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "source": "https://cloverpit.wiki.gg (Symbols Board, Patterns Board, Slot Machine, ATM, Traits pages)",
+    "license": "CC BY-SA 4.0",
+    "notes": "Symbol chance weights are inferred from the wiki's base probabilities (19.4/14.9/11.9/7.5%), which match weights 1.3/1.0/0.8/0.5 exactly. A '+1 manifest more often' effect is modelled as +1 weight."
+  },
+  "grid": { "rows": 3, "cols": 5 },
+  "symbols": [
+    { "id": "lemon",    "name": "Lemon",    "baseValue": 2, "baseWeight": 1.3, "yellow": true,  "fruit": true,  "affinity": ["token", "repetition"], "icon": "assets/icons/game/SymbolLemon.webp" },
+    { "id": "cherry",   "name": "Cherry",   "baseValue": 2, "baseWeight": 1.3, "yellow": false, "fruit": true,  "affinity": ["token", "repetition"], "icon": "assets/icons/game/SymbolCherry.webp" },
+    { "id": "clover",   "name": "Clover",   "baseValue": 3, "baseWeight": 1.0, "yellow": false, "fruit": false, "affinity": ["ticket", "battery"],   "icon": "assets/icons/game/SymbolClover.webp" },
+    { "id": "bell",     "name": "Bell",     "baseValue": 3, "baseWeight": 1.0, "yellow": true,  "fruit": false, "affinity": ["ticket", "battery"],   "icon": "assets/icons/game/SymbolBell.webp" },
+    { "id": "diamond",  "name": "Diamond",  "baseValue": 5, "baseWeight": 0.8, "yellow": false, "fruit": false, "affinity": ["golden", "chain"],    "icon": "assets/icons/game/SymbolDiamond.webp" },
+    { "id": "treasure", "name": "Treasure", "baseValue": 5, "baseWeight": 0.8, "yellow": true,  "fruit": false, "affinity": ["golden", "chain"],    "icon": "assets/icons/game/SymbolTreasure.webp" },
+    { "id": "seven",    "name": "Seven",    "baseValue": 7, "baseWeight": 0.5, "yellow": true,  "fruit": false, "affinity": ["golden", "chain"],    "icon": "assets/icons/game/SymbolSeven.webp" }
+  ],
+  "patterns": [
+    { "id": "HOR",     "name": "HOR",     "baseValue": 1,   "size": 3,  "group": "small", "default": true,  "icon": "assets/icons/game/PatternHor.webp" },
+    { "id": "VER",     "name": "VER",     "baseValue": 1,   "size": 3,  "group": "small", "default": true,  "icon": "assets/icons/game/PatternVer.webp" },
+    { "id": "DIAG",    "name": "DIAG",    "baseValue": 1,   "size": 3,  "group": "small", "default": true,  "icon": "assets/icons/game/PatternDiag.webp" },
+    { "id": "HOR_L",   "name": "HOR-L",   "baseValue": 2,   "size": 4,  "group": "large", "default": true,  "icon": "assets/icons/game/PatternHorL.webp" },
+    { "id": "HOR_XL",  "name": "HOR-XL",  "baseValue": 3,   "size": 5,  "group": "large", "default": true,  "icon": "assets/icons/game/PatternHorXL.webp" },
+    { "id": "ZIG",     "name": "ZIG",     "baseValue": 4,   "size": 5,  "group": "large", "default": true,  "icon": "assets/icons/game/PatternZig.webp" },
+    { "id": "ZAG",     "name": "ZAG",     "baseValue": 4,   "size": 5,  "group": "large", "default": true,  "icon": "assets/icons/game/PatternZag.webp" },
+    { "id": "ABOVE",   "name": "ABOVE",   "baseValue": 7,   "size": 8,  "group": "large", "default": true,  "icon": "assets/icons/game/PatternAbove.webp" },
+    { "id": "BELOW",   "name": "BELOW",   "baseValue": 7,   "size": 8,  "group": "large", "default": true,  "icon": "assets/icons/game/PatternBelow.webp" },
+    { "id": "EYE",     "name": "EYE",     "baseValue": 8,   "size": 10, "group": "large", "default": true,  "icon": "assets/icons/game/PatternEye.webp" },
+    { "id": "JACKPOT", "name": "JACKPOT", "baseValue": 10,  "size": 15, "group": "large", "default": true,  "icon": "assets/icons/game/PatternJackpot.webp" },
+    { "id": "HOR_S",   "name": "HOR-S",   "baseValue": 0.5, "size": 2,  "group": "small", "default": false, "icon": "assets/icons/game/PatternHorS.webp" },
+    { "id": "VER_S",   "name": "VER-S",   "baseValue": 0.5, "size": 2,  "group": "small", "default": false, "icon": "assets/icons/game/PatternVerS.webp" },
+    { "id": "DIAG_S",  "name": "DIAG-S",  "baseValue": 0.5, "size": 2,  "group": "small", "default": false, "icon": "assets/icons/game/PatternDiagS.webp" }
+  ],
+  "patternShapes": {
+    "comment": "Cells are [row, col]; rows 0-2 top to bottom, cols 0-4 left to right. Shapes read from the wiki's pattern icons.",
+    "ZIG":   [[2,0],[1,1],[0,2],[1,3],[2,4]],
+    "ZAG":   [[0,0],[1,1],[2,2],[1,3],[0,4]],
+    "ABOVE": [[0,2],[1,1],[1,3],[2,0],[2,1],[2,2],[2,3],[2,4]],
+    "BELOW": [[0,0],[0,1],[0,2],[0,3],[0,4],[1,1],[1,3],[2,2]],
+    "EYE":   [[0,1],[0,2],[0,3],[1,0],[1,1],[1,3],[1,4],[2,1],[2,2],[2,3]]
+  },
+  "modifiers": [
+    { "id": "golden",     "name": "Golden",     "dlc": false, "icon": "assets/icons/game/ModifierGolden.webp",     "effect": "Scoring a Symbol with this Modifier increases the Symbol by its base value, permanently." },
+    { "id": "token",      "name": "Token",      "dlc": false, "icon": "assets/icons/game/ModifierToken.webp",      "effect": "Scoring a Symbol with this Modifier earns you half of your current Interest." },
+    { "id": "ticket",     "name": "Ticket",     "dlc": false, "icon": "assets/icons/game/ModifierTicket.webp",     "effect": "Scoring a Symbol with this Modifier earns you 1 Clover Ticket." },
+    { "id": "repetition", "name": "Repetition", "dlc": false, "icon": "assets/icons/game/ModifierRepetition.webp", "effect": "Scoring a Symbol with this Modifier retriggers Patterns containing this Symbol." },
+    { "id": "battery",    "name": "Battery",    "dlc": false, "icon": "assets/icons/game/ModifierBattery.webp",    "effect": "Scoring a Symbol with this Modifier restores 1 Charge to a random Red Button Charm." },
+    { "id": "chain",      "name": "Chain",      "dlc": false, "icon": "assets/icons/game/ModifierChain.webp",      "effect": "Scoring a Symbol with this Modifier increases the value of its Pattern by the Pattern's base value, permanently." },
+    { "id": "investor",   "name": "Investor",   "dlc": true,  "icon": "assets/icons/game/ModifierInvestor.webp",   "effect": "Scoring a Symbol with this Modifier raises your Interest by 1% until the end of the Round (max 100%)." },
+    { "id": "rising",     "name": "Rising",     "dlc": true,  "icon": "assets/icons/game/ModifierRising.webp",     "effect": "Scoring a Symbol with this Modifier gives Symbols Multiplier +1 until the end of the Deadline." },
+    { "id": "copy",       "name": "Copy",       "dlc": true,  "icon": "assets/icons/game/ModifierCopy.webp",       "effect": "Transforms into the closest Symbol Modifier available on the Slot Machine." },
+    { "id": "revenge",    "name": "Revenge",    "dlc": true,  "icon": "assets/icons/game/ModifierRevenge.webp",    "effect": "Scoring a Symbol with this Modifier awards 5% of the coins lost to 666 during this run." }
+  ],
+  "traits": [
+    { "id": "ambitious",   "name": "Ambitious",   "color": "#ff8c00", "effect": "Patterns Multiplier +1",                    "storeChance": 1.0, "costDelta": 3 },
+    { "id": "avid",        "name": "Avid",        "color": "#ffd500", "effect": "Symbols Multiplier +2",                     "storeChance": 1.5, "costDelta": 2 },
+    { "id": "devious",     "name": "Devious",     "color": "#ff2a2a", "effect": "+0.6% chance of seeing a 666",              "storeChance": 1.5, "costDelta": -1 },
+    { "id": "florid",      "name": "Florid",      "color": "#9acd32", "effect": "+3 Clover Tickets when a Deadline ends",    "storeChance": 2.0, "costDelta": 1 },
+    { "id": "gambler",     "name": "Gambler",     "color": "#2fbf4a", "effect": "Gain 1 free Restock every Deadline",        "storeChance": 2.0, "costDelta": 1 },
+    { "id": "obsessive",   "name": "Obsessive",   "color": "#00e5ff", "effect": "Every last Pattern triggers one more time", "storeChance": 1.0, "costDelta": 3 },
+    { "id": "speculative", "name": "Speculative", "color": "#ffb6c1", "effect": "+3% to your Interest",                      "storeChance": 1.5, "costDelta": 2 }
+  ],
+  "rules": {
+    "scoring": "Coins per Pattern = Symbol Value x Symbols Multiplier x Pattern Value x Patterns Multiplier",
+    "containment": "A Pattern only scores if no larger formed Pattern (except Jackpot) contains all of its cells.",
+    "luck": "Luck N guarantees N copies of one Symbol (chosen by the Symbols' chances). 15+ Luck guarantees a Jackpot unless 6s appear.",
+    "charmSpace": 7,
+    "roundsPerDeadline": 3,
+    "spinsMost": 7,
+    "spinsFew": 3,
+    "ticketsMost": 1,
+    "ticketsFew": 2,
+    "ticketsPerSkippedRound": 4,
+    "baseInterest": 7,
+    "chance666": 1.5,
+    "chance666Cap": 30,
+    "chance66": 6.0,
+    "chance6": 7.5,
+    "first666Deadline": 3,
+    "loseAllCoinsFromDeadline": 7
+  },
+  "deadlines": [
+    { "n": 1,  "debt": 75,            "lever": 7,    "restock": 3 },
+    { "n": 2,  "debt": 200,           "lever": 14,   "restock": 6 },
+    { "n": 3,  "debt": 666,           "lever": 28,   "restock": 20 },
+    { "n": 4,  "debt": 2222,          "lever": 42,   "restock": 69 },
+    { "n": 5,  "debt": 12500,         "lever": 56,   "restock": 300 },
+    { "n": 6,  "debt": 33333,         "lever": 140,  "restock": 1000 },
+    { "n": 7,  "debt": 66666,         "lever": 168,  "restock": 2000 },
+    { "n": 8,  "debt": 200000,        "lever": 196,  "restock": 7000 },
+    { "n": 9,  "debt": 1000000,       "lever": 224,  "restock": 43000 },
+    { "n": 10, "debt": 6000000,       "lever": 756,  "restock": 375000 },
+    { "n": 11, "debt": 144000000,     "lever": 1260, "restock": 9000000 },
+    { "n": 12, "debt": 13800000000,   "lever": 1386, "restock": 864000000 },
+    { "n": 13, "debt": 2e13,          "lever": 1500, "restock": 1.3e12 },
+    { "n": 14, "debt": 2e17,          "lever": 546,  "restock": 1.27e16 },
+    { "n": 15, "debt": 2e22,          "lever": 588,  "restock": 5.41e20 },
+    { "n": 16, "debt": 2.96e27,       "lever": 840,  "restock": null }
+  ]
+}
