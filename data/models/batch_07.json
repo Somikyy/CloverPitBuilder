@@ -718,7 +718,7 @@
  {
   "id": "exotic_matter",
   "kind": "charm",
-  "summary": "Surgery (all four battery charms): Red Button charms refill completely before every spin, but every Red Button press doubles your Debt for good.",
+  "summary": "Surgery (Electricity Meter, Potato Battery, Super Capacitor, Dynamo): button charms refill before each spin, but each press doubles your Debt for good.",
   "tip": "A trap for most builds: each press doubles the debt for the rest of the run. Only worth a few early presses of permanent-growth charms like Midas Touch; Nuclear Button gets more out of each press.",
   "tier": "D",
   "ratings": {
@@ -1049,7 +1049,7 @@
    },
    {
     "id": "desperate_search",
-    "why": "Every Deadline starts with 2 free restocks to double."
+    "why": "You start each Deadline with 2 free restocks, so there is always a pile to double."
    },
    {
     "id": "cloverbell",
@@ -1224,7 +1224,7 @@
   "id": "sacrifice",
   "kind": "charm",
   "summary": "Surgery (Corpse Left Arm + Cross), Red Button: ends the Round at once; Patterns Multiplier +1 for good per spin given up, -1 per spin already played.",
-  "tip": "Press it before your first spin: a full Round becomes +7 Patterns Multiplier (+9 with Cat Food) for the rest of the run. Sacrifice the Rounds you can spare while still paying the debt.",
+  "tip": "Press it before your first spin: +7 Patterns Multiplier for good (+9 with Cat Food). Sacrifice Rounds you can spare; other charged button charms fire on the same press, so park them first.",
   "tier": "S",
   "ratings": {
    "power": 2,
@@ -1303,7 +1303,7 @@
    },
    {
     "id": "midas_touch",
-    "why": "A Red Button press also fires a charged Midas Touch, wasting it on a Round with no spins; park it in a drawer first."
+    "why": "One button fires both: pressing for Midas Touch also ends the Round, and a sacrifice wastes a charged Midas Touch; keep one of them in a drawer."
    }
   ],
   "confidence": "medium",
