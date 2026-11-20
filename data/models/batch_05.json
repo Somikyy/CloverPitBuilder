@@ -2042,7 +2042,8 @@
    "sacred",
    "retrigger",
    "chain",
-   "fruit"
+   "fruit",
+   "gems"
   ],
   "provides": [
    "repetition",

@@ -97,7 +97,7 @@
   "id": "eternity",
   "kind": "charm",
   "summary": "Sacred: each 999 you score makes every Pattern trigger one extra time for the rest of that Round; several 999s in a Round stack.",
-  "tip": "Only as good as your 999 rate: Necronomicon, Book of Shadows or Evil Deal raise it, and Possessed Cell Phone can force a 999 on the first spin so the whole Round is doubled.",
+  "tip": "Only as good as your 999 rate: Necronomicon, Book of Shadows or Evil Deal raise it, and Possessed Cell Phone can force a 999 on the first spin so the rest of the Round triggers twice.",
   "tier": "B",
   "ratings": {
    "power": 3,
@@ -134,7 +134,7 @@
   "synergies": [
    {
     "id": "possessed_cell_phone",
-    "why": "Forces a 999 on demand; press it before the first spin so the extra trigger covers the whole Round."
+    "why": "Forces a 999 on demand; pressed before the first spin, the extra trigger covers the rest of the Round."
    },
    {
     "id": "necronomicon",
@@ -153,10 +153,16 @@
     "why": "More 999s, and each one hands out extra spins that get the extra trigger."
    }
   ],
-  "antiSynergies": [],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "A 999 counts as a 666 for charms, so the Bible likely blocks it and wastes the trigger."
+   }
+  ],
   "confidence": "high",
   "assumptions": [
-   "In Sacred Mode every 666 is a 999, so anything that raises the 666 chance feeds it."
+   "In Sacred Mode every 666 is a 999, so anything that raises the 666 chance feeds it.",
+   "Assumed Holy Bible also cancels 999s, since a 999 counts as a 666 for charms."
   ]
  },
  {
@@ -203,11 +209,11 @@
    },
    {
     "id": "necronomicon",
-    "why": "+2 Patterns Multiplier to double, and +3% 999 chance in Sacred Mode."
+    "why": "Its +3% 666 chance becomes +3% 999 chance in Sacred Mode: more doubled Rounds."
    },
    {
     "id": "evil_deal",
-    "why": "Doubles both the 999 chance and the Patterns Multiplier that gets doubled again."
+    "why": "Doubling the 666 chance doubles the 999 chance in Sacred Mode, so twice as many doubled Rounds."
    },
    {
     "id": "eternity",
@@ -218,18 +224,24 @@
     "why": "The Jackpot after a 999 is scored with the doubled multiplier."
    }
   ],
-  "antiSynergies": [],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "A 999 counts as a 666 for charms, so the Bible likely blocks it and wastes the trigger."
+   }
+  ],
   "confidence": "high",
   "assumptions": [
    "Encoded as doubling every Pattern's value for the Round, which pays exactly like doubling the Patterns Multiplier (the engine has no Round-long Patterns Multiplier doubling).",
-   "Assumed repeated 999s in one Round keep doubling."
+   "Assumed repeated 999s in one Round keep doubling.",
+   "Assumed Holy Bible also cancels 999s, since a 999 counts as a 666 for charms."
   ]
  },
  {
   "id": "ophanim_wheels",
   "kind": "charm",
   "summary": "Sacred: each 999 you score forces a Jackpot on the next spin; extra Jackpots queue up for later spins.",
-  "tip": "Best with a high 999 rate (Necronomicon, Evil Deal) or Possessed Cell Phone, whose forced 999 becomes a sure Jackpot. I can't quit now doubles every Jackpot it hands out.",
+  "tip": "Best with a high 999 rate (Necronomicon, Evil Deal) or Possessed Cell Phone, whose forced 999 becomes a sure Jackpot. I can't quit now! doubles the Jackpot Pattern in each one.",
   "tier": "A",
   "ratings": {
    "power": 5,
@@ -263,7 +275,11 @@
   "synergies": [
    {
     "id": "i_cant_quit_now",
-    "why": "Doubles Jackpot value, so every forced Jackpot pays double."
+    "why": "Doubles the Jackpot Pattern's value, the biggest Pattern of every forced Jackpot (about +25% per Jackpot spin)."
+   },
+   {
+    "id": "eye_of_god",
+    "why": "Every forced Jackpot contains an Eye, so each 999 is followed by an Eye that pays all your 999 coins again."
    },
    {
     "id": "possessed_cell_phone",
@@ -278,18 +294,20 @@
     "why": "A Jackpot is about 10 Patterns, so it doubles Symbol values for the rest of the Round."
    },
    {
-    "id": "chonky_cat",
-    "why": "A Jackpot alone is about 10 Patterns, enough to pay double Interest."
-   },
-   {
     "id": "necronomicon",
     "why": "+3% 666 chance means more 999s in Sacred Mode."
    }
   ],
-  "antiSynergies": [],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "A 999 counts as a 666 for charms, so the Bible likely blocks it and wastes the trigger."
+   }
+  ],
   "confidence": "high",
   "assumptions": [
-   "Assumed the Jackpot lands on the very next spin; the simulator queues only one at a time."
+   "Assumed the Jackpot lands on the very next spin; the simulator queues only one at a time.",
+   "Assumed Holy Bible also cancels 999s, since a 999 counts as a 666 for charms."
   ]
  },
  {
@@ -340,10 +358,6 @@
    {
     "id": "heresy",
     "why": "Revenge on every Symbol on top, scaling with your 666 chance."
-   },
-   {
-    "id": "gluttony",
-    "why": "Another charm that cashes in the coins you lost to 666."
    }
   ],
   "antiSynergies": [],
@@ -393,10 +407,6 @@
   ],
   "synergies": [
    {
-    "id": "ras_book",
-    "why": "If it triggers while you are dying it pays the whole inflated debt."
-   },
-   {
     "id": "lucky_cat",
     "why": "+10% Interest raises every Cat payout for the rest of the Deadline."
    }
@@ -411,8 +421,8 @@
     "why": "Recharges it before every spin and doubles the debt on each press as well."
    },
    {
-    "id": "delusions_of_grandeur",
-    "why": "Debts are already doubled; Limbo multiplies them again."
+    "id": "ancient_coin",
+    "why": "You press the button for it every Round, and each press also fires a recharged Limbo: another debt rise."
    }
   ],
   "confidence": "medium",
@@ -743,7 +753,7 @@
    "scaling": 4,
    "economy": 4,
    "utility": 0,
-   "risk": 6
+   "risk": 5
   },
   "archetypes": [
    "devil"
@@ -791,8 +801,8 @@
     "why": "+3% 666 chance adds +6% Revenge."
    },
    {
-    "id": "gluttony",
-    "why": "Another way to cash in the coins your 666s take."
+    "id": "book_of_shadows",
+    "why": "Its +1.5% 666 chance adds +3% Revenge, and each 666 hands out extra spins."
    }
   ],
   "antiSynergies": [],
@@ -1020,7 +1030,8 @@
    "devil"
   ],
   "provides": [
-   "debt"
+   "debt",
+   "discard"
   ],
   "cares": [
    "drawers"
@@ -1077,7 +1088,8 @@
    "devil"
   ],
   "provides": [
-   "debt"
+   "debt",
+   "discard"
   ],
   "cares": [
    "drawers"
@@ -1134,7 +1146,8 @@
    "devil"
   ],
   "provides": [
-   "debt"
+   "debt",
+   "discard"
   ],
   "cares": [
    "drawers"
@@ -1191,7 +1204,8 @@
    "devil"
   ],
   "provides": [
-   "debt"
+   "debt",
+   "discard"
   ],
   "cares": [
    "drawers"
@@ -1235,7 +1249,7 @@
   "id": "skull",
   "kind": "charm",
   "summary": "Cadaver piece (1 ticket): sits on the slot machine for good, +5% Debt, and each Deadline spawns a free charm in a drawer per Corpse piece you have equipped.",
-  "tip": "Worth a ticket once you have or expect Corpse pieces (a Round with a 666 drops one): four pieces mean four free charms every Deadline to sell, use, fuse or feed Dung Beetle.",
+  "tip": "Buy it once you hold Corpse pieces: a Round with a 666 drops one, and charms left in drawers at the end of a run become pieces next run. Four pieces = four free charms every Deadline.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1327,7 +1341,8 @@
   "provides": [
    "symbolValue",
    "allSymbols",
-   "instant"
+   "instant",
+   "surgery"
   ],
   "cares": [
    "drawers"
@@ -1359,10 +1374,6 @@
    {
     "id": "black_hole",
     "why": "Discarding it returns the charms used in your last surgery, so you can fuse them again."
-   },
-   {
-    "id": "cigarettes",
-    "why": "The same +base value on every Symbol, so the two stack into fast base growth."
    }
   ],
   "antiSynergies": [],
@@ -1389,7 +1400,8 @@
   ],
   "provides": [
    "symbolsMult",
-   "instant"
+   "instant",
+   "surgery"
   ],
   "cares": [
    "drawers"
@@ -1420,10 +1432,6 @@
    {
     "id": "black_hole",
     "why": "Discarding it returns the charms used in your last surgery, so you can fuse them again."
-   },
-   {
-    "id": "evil_deal",
-    "why": "Doubles your Symbols Multiplier, including this +1."
    }
   ],
   "antiSynergies": [],
@@ -1450,7 +1458,8 @@
   ],
   "provides": [
    "patternsMult",
-   "instant"
+   "instant",
+   "surgery"
   ],
   "cares": [
    "drawers"
@@ -1481,10 +1490,6 @@
    {
     "id": "black_hole",
     "why": "Discarding it returns the charms used in your last surgery, so you can fuse them again."
-   },
-   {
-    "id": "adams_ribcage",
-    "why": "Every 999 doubles your Patterns Multiplier for the Round, including this +1."
    }
   ],
   "antiSynergies": [],
@@ -1528,9 +1533,10 @@
     "add": 7,
     "when": {
      "spin": "every",
-     "n": 6
+     "n": 5
     },
-    "duration": "spin"
+    "duration": "spin",
+    "note": "One of the three effects fires every 2nd spin, so each fires about 1 spin in 6. Intervals are staggered (5/6/7 spins) so the simulator does not stack all three on the same spin, which never happens in game."
    },
    {
     "type": "forcePattern",
@@ -1542,7 +1548,8 @@
     "when": {
      "spin": "every",
      "n": 6
-    }
+    },
+    "note": "Exact average rate (1 spin in 6)."
    },
    {
     "type": "retrigger",
@@ -1550,9 +1557,10 @@
     "scope": "all",
     "when": {
      "spin": "every",
-     "n": 6
+     "n": 7
     },
-    "duration": "spin"
+    "duration": "spin",
+    "note": "Slightly under the true 1-in-6 rate; Luck (every 5) is slightly over."
    }
   ],
   "synergies": [
@@ -1580,7 +1588,7 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed one of the three effects fires every 2nd spin, so each one averages 1 spin in 6; encoded that way, which makes the simulator fire all three on the same spin.",
+   "Assumed one effect fires every 2nd spin, so each averages 1 spin in 6; encoded as Luck every 5, ZIG/ZAG every 6 and retrigger every 7 spins so they never land on the same spin (the old same-spin encoding roughly doubled its value).",
    "Assumed it counts spins across Rounds, like the Discs."
   ]
  },
@@ -1644,7 +1652,7 @@
    },
    {
     "id": "mad_emperor",
-    "why": "Puts modifiers of every kind on the grid for Copy to become."
+    "why": "Puts modifiers of every kind on the grid for Copy to become, and Amalgama is a Surgery Charm on the table, so it raises Mad Emperor's bonus by 10%."
    },
    {
     "id": "greedy_king",
@@ -1667,9 +1675,9 @@
   "kind": "charm",
   "summary": "Surgery (Red + Green Pepper), triggers randomly (7%): Luck +3 for the rest of the Round. Never breaks.",
   "tip": "Weaker than either Pepper it is made from, but permanent and one slot instead of two. Horseshoe doubles its rate, and an early trigger helps more spins.",
-  "tier": "D",
+  "tier": "C",
   "ratings": {
-   "power": 1,
+   "power": 2,
    "scaling": 1,
    "economy": 0,
    "utility": 1,
@@ -1693,7 +1701,8 @@
     "when": {
      "chance": 0.07
     },
-    "duration": "round"
+    "duration": "round",
+    "note": "The engine applies the +3 only to the spin that triggers; the real bonus lasts the rest of the Round (see the special), so its true value is about 4x the simulated one."
    },
    {
     "type": "special",
@@ -1763,7 +1772,8 @@
      "patternsAtLeast": 3
     },
     "stack": true,
-    "reset": "round"
+    "reset": "round",
+    "note": "Growing chance (+5% per 3+ Pattern spin, reset each Round): the engine only values the base 10%, so ratings carry the growth."
    },
    {
     "type": "coins",
