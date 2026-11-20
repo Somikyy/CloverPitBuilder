@@ -83,6 +83,9 @@ python3 tools/merge_models.py
    GitHub Actions**.
 3. The workflow in `.github/workflows/pages.yml` runs the tests and publishes the site on every
    push to `main`. The address appears in the workflow run and under Settings → Pages.
+4. Link previews (Discord, etc.) use `assets/og.png` via an absolute URL that assumes the default
+   address `https://somikyy.github.io/CloverPitBuilder/`. If you use a custom domain, update the
+   `og:image` tags in the three HTML pages.
 
 ## Credits
 

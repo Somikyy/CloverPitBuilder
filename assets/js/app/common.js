@@ -238,10 +238,19 @@ export function openItem(db, id, opts = {}) {
 }
 
 // ------------------------------------------------------------------ search
+// Nicknames players use for items (search only).
+const ALIASES = {
+  number_2: 'poop jar dump toilet shit', number_1: 'pee jar leak toilet', lemon_picture: 'lemon photo lemons luck',
+  cherry_picture: 'cherry photo', clover_picture: 'clover photo', bell_picture: 'bell photo', diamond_picture: 'diamond photo',
+  treasure_picture: 'treasure photo chest', seven_picture: 'seven photo 7', gabihbbh: 'gabibbh gabibb', cat_food: 'spins',
+  rotated_hamsa: 'inverted hamsa hand', hamsa: 'hand', '7_sins_stone': 'seven sins', jimbo: 'balatro joker',
+  holy_bible: 'bible protection', rosary: 'protection', ankh: 'extra life revive', lost_briefcase: 'suitcase',
+  d4: 'dice', d6: 'dice', d20: 'dice', necronomicon: 'evil book', book_of_shadows: 'evil book', megaphone: 'phone double',
+};
 export function searchText(it) {
   if (!it._search) {
     const m = it.model || {};
-    it._search = [it.name, it.description, m.summary, (m.provides || []).join(' '), (m.archetypes || []).join(' '), it.rarity, it.category, it.type].join(' ').toLowerCase();
+    it._search = [it.name, it.description, m.summary, (m.provides || []).join(' '), (m.archetypes || []).join(' '), it.rarity, it.category, it.type, it.unlock, ALIASES[it.id] || ''].join(' ').toLowerCase();
   }
   return it._search;
 }

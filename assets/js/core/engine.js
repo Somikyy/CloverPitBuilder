@@ -139,7 +139,12 @@ function buildCtx(state, db, built, opt) {
   const roundsPerDeadline = Math.max(1, cfg.roundsPerDeadline);
   const evRound = ev * spinsPerRound;
   const info = deadlineInfo(env.deadline);
-  const debt = info.debt * d.debtMul * (state.mode && state.mode.memory === 'delusions_of_grandeur' ? 2 : 1) * (state.mode && state.mode.memory === 'old_wounds' ? 0.5 : 1);
+  // memory cards like Delusions of Grandeur (x2) or Old Wounds (x0.5) reach debtMul through their models
+  let debt = info.debt * d.debtMul;
+  const memModel = state.mode && db.byId.get(state.mode.memory);
+  const memHasDebt = memModel && memModel.model && memModel.model.effects.some((e) => e.type === 'debt');
+  if (!memHasDebt && state.mode && state.mode.memory === 'delusions_of_grandeur') debt *= 2;
+  if (!memHasDebt && state.mode && state.mode.memory === 'old_wounds') debt *= 0.5;
   const deposited = num(state.deposited);
   const depositEst = deposited !== null ? deposited : Math.min(debt * 0.5, 0.5 * evRound * roundsPerDeadline);
   const interestCoins = (d.interest / 100) * depositEst;
@@ -646,7 +651,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   if (measured && quant > 0) power = 0.8 * quant * coinScore + (1 - 0.8 * quant) * prior * careFactor;
   else power = prior * careFactor;
   const devilBuild = ctx.arch.some((x) => x.id === 'devil' && x.weight > 0.15);
-  const riskPenalty = (r.risk || 0) * (devilBuild && (model.provides || []).includes('666') ? 0.3 : 1.4);
+  const riskPenalty = (r.risk || 0) * (devilBuild && ((model && model.provides) || []).includes('666') ? 0.3 : 1.4);
   let score = power + 0.3 * econScore * (ctx.g > 0.5 ? 1 : 1.2) + 0.35 * utility + syn + archBonus - riskPenalty
     + 0.12 * (r.economy || 0) * 10 * (1 - quant) + 0.1 * (r.utility || 0) * 10 * (1 - quant);
 

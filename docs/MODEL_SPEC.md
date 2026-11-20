@@ -181,3 +181,20 @@ Horseshoe cares `triggersRandomly`; Nuclear Button cares `redButton`; Toy Train 
  {"id":"first_love","kind":"memory","summary":"Phone abilities trigger twice, but the store starts empty every Deadline.","tip":"Phone-centric run: value ticket-free power from calls; restocks become your shop.","tier":"A","ratings":{"power":0,"scaling":7,"economy":0,"utility":0,"risk":4},"archetypes":["phone"],"provides":["phone"],"cares":["restock"],"effects":[{"type":"phone","extraTriggers":1},{"type":"special","text":"Store is empty at the start of every Deadline (restock to fill it)."}],"synergies":[{"id":"megaphone","why":"Phone abilities trigger three times."}],"antiSynergies":[],"confidence":"high","assumptions":[]}
 ]
 ```
+
+## 6. How the engine reads effects (write effects in these forms)
+
+Check any model with `node tools/explain_models.mjs <id ...>`: it lists effects the engine
+could not use ("unhandled") and the item's simulated value on a reference build.
+
+| You want to say | Write it like this |
+|---|---|
+| Permanent bonus while equipped | no `when` (e.g. `{"type":"patternsMult","add":2}`) |
+| One-time permanent change when bought | `"when":{"event":"instant"}` (+ `"duration":"permanent"`) |
+| Bonus that grows forever on a trigger | trigger in `when` + `"stack":true` (or `"duration":"permanent"`). Supported triggers: `patternsAtLeast`, `patternsExactly`, `noPatterns`, `patternSizeAtLeast`, `onlyPattern`, `noRewardStreak`, `scoredAll`, `on:666/999/jackpot`, `chance`, and events (`on:deadlineEnd`, `roundEnd`, `purchase`, `restock`, `discard`, `phonePick`, `phoneReroll`, `roundSkipped`, `charmTriggers`) |
+| Buff until the end of the round / deadline after a trigger | trigger in `when` + `"duration":"round"` or `"deadline"` (symbolValue `mul`/`addBase`, patternValue `mul`/`addBase`, symbolsMult `mul`/`add`, retrigger) |
+| Luck on specific spins | `luck` with `when` `spin:first/last`, `spin:every`, `round:first/last`, `chance`, `noRewardStreak` (next spin), `on:666` (next spin), `on:roundStart`, `on:charmTriggers` |
+| Red Button activation | `"when":{"redButton":true}`; symbolChance (`"duration":"deadline"`), retrigger (round), luck (next spin), spins (extra spin), addPatterns, forcePattern, symbolsMult/patternsMult `add` (permanent), symbolValue `addBase` (scored this round, permanent), rounds, interest |
+| Value that depends on a resource the player has right now | `perUnit` on symbolsMult/patternsMult with `of`: `tickets`, `freeRestocks`, `traitsEquipped`, `resellTotal`, or run-wide counters the text says count "during the run" (`phoneRerolls`, `redCallsRefused`). Do NOT use perUnit for bonuses that only start counting after you buy the charm (e.g. Calendar): that is growth on an event (`on:deadlineEnd` + `stack`) |
+| Extra spins | `spins` `add` (passive, per round) or with `when.chance` / a trigger (one-off extra spins) |
+| Things the engine cannot express (bans, respawns, store manipulation, random effects, accumulating luck pools) | a `special` effect with a clear `text`; the engine then values the item from `ratings`, `cares` and `synergies`, so make those accurate |

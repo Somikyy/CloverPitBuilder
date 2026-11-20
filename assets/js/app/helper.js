@@ -70,6 +70,12 @@ function onResult(msg) {
 
 function describeStatus() {
   const empty = !state.charms.length && !Object.keys(state.phone).length;
+  if (activeTab === 'charms' && state.tickets > 0 && result.recommendations.charms.length) {
+    const top = result.recommendations.charms[0];
+    const best = result.recommendations.charms.find((x) => x.affordable);
+    if (best && best !== top) return `Best you can afford with ${state.tickets} tickets: ${best.name}`;
+  }
+  if (activeTab === 'phone') return "At the phone? Add its options under What's offered now to compare them.";
   if (empty) return 'General picks for this deadline. Add your charms for personal advice.';
   const a = result.build.archetypes[0];
   return a ? `Reading your ${a.label} build` : 'Reading your build';
@@ -352,6 +358,7 @@ function selectTab(tab) {
   renderResults();
   lastTopKey = '';
   renderReels(true);
+  if (result) $('status-left').textContent = describeStatus();
 }
 
 function currentList() {
