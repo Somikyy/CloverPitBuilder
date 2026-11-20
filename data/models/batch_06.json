@@ -1,0 +1,537 @@
+[
+ {
+  "id": "the_body",
+  "kind": "charm",
+  "summary": "Sacred: 15% of Lemons and Cherries carry Token, 15% of Clovers and Bells carry Ticket, and 15% of Diamonds, Treasures and Sevens are Golden.",
+  "tip": "Keep it whenever Help! hands it to you: coins, tickets and permanent gem growth from one slot. Gem chance, retriggers and higher Interest all make it better.",
+  "tier": "A",
+  "ratings": {
+   "power": 4,
+   "scaling": 7,
+   "economy": 8,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "golden",
+   "tickets",
+   "gems",
+   "interest"
+  ],
+  "provides": [
+   "golden",
+   "token",
+   "ticketMod",
+   "symbolValue",
+   "tickets",
+   "coins",
+   "sacred"
+  ],
+  "cares": [
+   "diamond",
+   "treasure",
+   "seven",
+   "retrigger",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "lemon",
+     "cherry"
+    ],
+    "add": 0.15
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "clover",
+     "bell"
+    ],
+    "add": 0.15
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "diamond",
+     "treasure",
+     "seven"
+    ],
+    "add": 0.15
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_blood",
+    "why": "Its Repetition on fruit retriggers Token fruit Patterns, paying those Tokens again."
+   },
+   {
+    "id": "amalgama",
+    "why": "Copy modifiers turn into the nearby Golden, Ticket or Token modifiers, spreading them."
+   },
+   {
+    "id": "stonks",
+    "why": "+5% Interest makes every Token pay more."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Ticket modifiers keep your ticket pile, and its Symbols Multiplier, growing."
+   },
+   {
+    "id": "im_being_constant",
+    "why": "Every Pattern triggers twice, so every modifier is scored twice."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed retriggered Patterns score their modifiers again, as with the store modifier charms."
+  ]
+ },
+ {
+  "id": "eternity",
+  "kind": "charm",
+  "summary": "Sacred: each 999 you score makes every Pattern trigger one extra time for the rest of that Round; several 999s in a Round stack.",
+  "tip": "Only as good as your 999 rate: Necronomicon, Book of Shadows or Evil Deal raise it, and Possessed Cell Phone can force a 999 on the first spin so the whole Round is doubled.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "retrigger"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount",
+   "sacred"
+  ],
+  "cares": [
+   "999"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "all",
+    "when": {
+     "on": "999"
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "Forces a 999 on demand; fire it on the first spin so the extra trigger covers the whole Round."
+   },
+   {
+    "id": "necronomicon",
+    "why": "Its +3% 666 chance becomes +3% 999 chance in Sacred Mode, plus Patterns Multiplier +2."
+   },
+   {
+    "id": "adams_ribcage",
+    "why": "Same 999 trigger: extra triggers and a doubled Patterns Multiplier stack for the Round."
+   },
+   {
+    "id": "ophanim_wheels",
+    "why": "The Jackpot that follows a 999 triggers twice, about 20 Patterns."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "More 999s, and each one hands out extra spins that get the extra trigger."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "In Sacred Mode every 666 is a 999, so anything that raises the 666 chance feeds it."
+  ]
+ },
+ {
+  "id": "adams_ribcage",
+  "kind": "charm",
+  "summary": "Sacred: each 999 you score doubles your Patterns Multiplier until the Round ends; several 999s in one Round multiply (x4, x8...).",
+  "tip": "Raise your 999 rate (Necronomicon, Evil Deal) or force one early with Possessed Cell Phone so most of the Round is doubled. Stacks with Eternity, which also fires on 999s.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "multiplier"
+  ],
+  "provides": [
+   "patternsMult",
+   "sacred"
+  ],
+  "cares": [
+   "999"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "all",
+    "mul": 2,
+    "when": {
+     "on": "999"
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "Forces a 999 on demand; early in a Round it doubles almost every spin."
+   },
+   {
+    "id": "necronomicon",
+    "why": "+2 Patterns Multiplier to double, and +3% 999 chance in Sacred Mode."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles both the 999 chance and the Patterns Multiplier that gets doubled again."
+   },
+   {
+    "id": "eternity",
+    "why": "Same 999 trigger: a doubled multiplier and extra Pattern triggers for the Round."
+   },
+   {
+    "id": "ophanim_wheels",
+    "why": "The Jackpot after a 999 is scored with the doubled multiplier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Encoded as doubling every Pattern's value for the Round, which pays exactly like doubling the Patterns Multiplier (the engine has no Round-long Patterns Multiplier doubling).",
+   "Assumed repeated 999s in one Round keep doubling."
+  ]
+ },
+ {
+  "id": "ophanim_wheels",
+  "kind": "charm",
+  "summary": "Sacred: each 999 you score forces a Jackpot on the next spin; extra Jackpots queue up for later spins.",
+  "tip": "Best with a high 999 rate (Necronomicon, Evil Deal) or Possessed Cell Phone, which turns a charge into a sure Jackpot. I can't quit now doubles every Jackpot it hands out.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "jackpot"
+  ],
+  "provides": [
+   "jackpot",
+   "patternCount",
+   "sacred"
+  ],
+  "cares": [
+   "999"
+  ],
+  "effects": [
+   {
+    "type": "forcePattern",
+    "pattern": "JACKPOT",
+    "when": {
+     "on": "999"
+    },
+    "duration": "spin"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "i_cant_quit_now",
+    "why": "Doubles Jackpot value, so every forced Jackpot pays double."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Each forced 999 becomes a guaranteed Jackpot on the following spin."
+   },
+   {
+    "id": "eternity",
+    "why": "With Eternity's extra trigger the Jackpot spin scores about 20 Patterns."
+   },
+   {
+    "id": "vines_soup",
+    "why": "A Jackpot is about 10 Patterns, so it doubles Symbol values for the rest of the Round."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "A Jackpot alone is about 10 Patterns, enough to pay double Interest."
+   },
+   {
+    "id": "necronomicon",
+    "why": "+3% 666 chance means more 999s in Sacred Mode."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed the Jackpot lands on the very next spin; the simulator queues only one at a time."
+  ]
+ },
+ {
+  "id": "sloth",
+  "kind": "charm",
+  "summary": "Evil: your most likely Symbol(s) get a 20% chance of Revenge; each scored Revenge pays 5% of all coins you have lost to 666 this run.",
+  "tip": "Useless until a 666 has taken coins; then it turns old losses into steady income. Pump one symbol's chance to focus it, and add Violence to double every payout.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 4,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "revenge",
+   "coins"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "revenge",
+    "symbols": "mostProbable",
+    "add": 0.2
+   },
+   {
+    "type": "special",
+    "text": "Revenge: each scored Revenge symbol pays 5% of all coins lost to 666 so far this run, so it pays nothing until a 666 has taken coins."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "violence",
+    "why": "Revenge pays double: 10% of your 666 losses per scored symbol."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "+1 chance for the most likely Symbol, so Sloth's target shows up even more."
+   },
+   {
+    "id": "heresy",
+    "why": "Revenge on every Symbol on top, scaling with your 666 chance."
+   },
+   {
+    "id": "gluttony",
+    "why": "Another charm that cashes in the coins you lost to 666."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed tied Symbols all count as most likely (Lemon and Cherry at base)."
+  ]
+ },
+ {
+  "id": "limbo",
+  "kind": "charm",
+  "summary": "Evil, Red Button (1 charge): +10% Interest until the Deadline ends, but your Debt permanently rises by a random 100% to 500%.",
+  "tip": "Almost always a trap: one press can make every later debt 2-6x bigger for a few rounds of Interest. Store it in a drawer or discard it, especially if you run other Red Button charms.",
+  "tier": "D",
+  "ratings": {
+   "power": 2,
+   "scaling": 0,
+   "economy": 2,
+   "utility": 0,
+   "risk": 10
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "interest",
+   "redButton",
+   "debt"
+  ],
+  "cares": [
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "interest",
+    "add": 10,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   },
+   {
+    "type": "debt",
+    "addPct": 300,
+    "when": {
+     "redButton": true
+    },
+    "duration": "permanent"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "ras_book",
+    "why": "If it triggers while you are dying it pays the whole inflated debt."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "+10% Interest raises every Cat payout for the rest of the Deadline."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers Limbo twice: two debt rises."
+   },
+   {
+    "id": "exotic_matter",
+    "why": "Recharges it before every spin and doubles the debt on each press as well."
+   },
+   {
+    "id": "delusions_of_grandeur",
+    "why": "Debts are already doubled; Limbo multiplies them again."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "The rise is random between +100% and +500% (x2 to x6); encoded as its +300% average.",
+   "Assumed the higher debt carries into every later Deadline.",
+   "Assumed a Red Button press fires every charged button charm, so Limbo fires on any press while charged."
+  ]
+ },
+ {
+  "id": "lover_1",
+  "kind": "charm",
+  "summary": "Evil: every Symbol gets +5% chance of Revenge (each scored one pays 5% of your 666 losses this run). Fuses with Lover 2 into Lust.",
+  "tip": "Too weak to earn a slot alone; keep it in a drawer for the Lust surgery, or use it in a Revenge build next to Violence.",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 2,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "revenge",
+   "coins"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "revenge",
+    "symbols": "all",
+    "add": 0.05
+   },
+   {
+    "type": "special",
+    "text": "Revenge: each scored Revenge symbol pays 5% of all coins lost to 666 so far this run, so it pays nothing until a 666 has taken coins."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lover_2",
+    "why": "Surgery: Lover 1 + Lover 2 fuse into Lust (DLC)."
+   },
+   {
+    "id": "violence",
+    "why": "Revenge pays double."
+   },
+   {
+    "id": "heresy",
+    "why": "Stacks more Revenge chance on every Symbol."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "lover_2",
+  "kind": "charm",
+  "summary": "Evil: +3% chance of 666 and nothing else. Its real use is fusing with Lover 1 into Lust.",
+  "tip": "Pure downside unless you run 666 payoffs (Baphomet, Gabihbb'h, Revenge charms). Otherwise keep it in a drawer for the Lust surgery or get rid of it.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 0,
+   "risk": 5
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "666"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "chance666",
+    "add": 3
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lover_1",
+    "why": "Surgery: Lover 1 + Lover 2 fuse into Lust (DLC)."
+   },
+   {
+    "id": "heresy",
+    "why": "Heresy's Revenge chance is double your 666 chance, so +3% adds +6% Revenge."
+   },
+   {
+    "id": "baphomet",
+    "why": "More 666s, each doubling Above and Below for good."
+   },
+   {
+    "id": "rage",
+    "why": "More 666s make the third one in a Deadline, and its extra Round, likelier."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "More 666s, each doubling your Symbols Multiplier for the Round."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "evil_deal",
+    "why": "Doubles the 666 chance, so this +3% becomes +6%."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ }
+]
