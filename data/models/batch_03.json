@@ -52,7 +52,7 @@
    },
    {
     "id": "cloverpet",
-    "why": "+4 held tickets is almost another +1 Symbols Multiplier."
+    "why": "Nets +2 held tickets per buy (+4 if a discount makes it free), building toward its next +1."
    }
   ],
   "antiSynergies": [],
@@ -83,20 +83,8 @@
   ],
   "effects": [
    {
-    "type": "tickets",
-    "add": 1,
-    "per": "deadline",
-    "when": {
-     "on": "deadlineEnd"
-    },
-    "perUnit": {
-     "of": "tickets",
-     "per": 1
-    }
-   },
-   {
     "type": "special",
-    "text": "X, the tickets needed per bonus ticket, equals the current Deadline number, so the payout is tickets held divided by the Deadline (rounded down): x2 after Deadline 1, +50% after Deadline 2, +33% after Deadline 3, and so on."
+    "text": "At the end of each Deadline, gain 1 Clover Ticket for every D tickets you hold (rounded down), where D is the number of the Deadline that is ending: x2 after Deadline 1, +50% after 2, +33% after 3, and so on. A pile you keep therefore earns about the same number of tickets every Deadline."
    }
   ],
   "synergies": [
@@ -129,7 +117,8 @@
   ],
   "confidence": "high",
   "assumptions": [
-   "Payout = tickets held at the end of Deadline N divided by N, rounded down."
+   "Payout = tickets held at the end of Deadline N divided by N, rounded down.",
+   "Not expressible as a fixed effect (the divisor changes every Deadline), so the engine values it from the ratings."
   ]
  },
  {
@@ -185,7 +174,7 @@
    },
    {
     "id": "clover_voucher",
-    "why": "+4 tickets for 2 is almost another +1 Symbols Multiplier."
+    "why": "Nets +2 tickets per buy without using a slot, building toward the next +1."
    }
   ],
   "antiSynergies": [
@@ -299,11 +288,8 @@
     },
     "duration": "round",
     "stack": true,
-    "reset": "round"
-   },
-   {
-    "type": "special",
-    "text": "One +1x base stack per Pattern beyond the second in the spin (retriggers count): 5 Patterns add 3 stacks. Stacks build up over the Round's spins and clear at Round end."
+    "reset": "round",
+    "note": "+1x base for every Pattern triggered after the second one in the spin (retriggers count), so 5 Patterns add 3 stacks; stacks clear at Round end."
    }
   ],
   "synergies": [
@@ -321,7 +307,7 @@
    },
    {
     "id": "vines_soup",
-    "why": "Both reward big spins, and Vine's Soup doubles the value Mushrooms added."
+    "why": "Big spins trigger both: base value per extra Pattern here, a Round-long x2 on all Symbols there."
    },
    {
     "id": "cat_food",
@@ -397,7 +383,7 @@
    },
    {
     "id": "mushrooms",
-    "why": "Mushrooms adds value on big spins and Vine's Soup doubles it."
+    "why": "Big spins trigger both: Mushrooms adds base value per extra Pattern, Vine's Soup doubles all Symbols."
    }
   ],
   "antiSynergies": [],
@@ -632,10 +618,6 @@
   ],
   "effects": [
    {
-    "type": "phone",
-    "extraTriggers": 1
-   },
-   {
     "type": "special",
     "text": "Only the first phone ability picked while Barathrum is equipped: it works as usual, is banned (not offered again) until Barathrum is discarded, then is unbanned and triggers once more. Holds 1 ability at a time."
    }
@@ -652,10 +634,6 @@
    {
     "id": "im_being_constant",
     "why": "A second permanent +1 trigger for every Pattern."
-   },
-   {
-    "id": "dear_diary",
-    "why": "An extra option makes the doubled pick a better one."
    },
    {
     "id": "abyssu",
@@ -770,7 +748,7 @@
   "synergies": [
    {
     "id": "nose",
-    "why": "Forces Above/Below after 3 spins without one, so it fires most Rounds."
+    "why": "After 3 spins without a 5+ symbol Pattern it forces Above/Below, so the Painting fires most Rounds."
    },
    {
     "id": "little_star",
@@ -795,11 +773,11 @@
   "id": "pareidolia",
   "kind": "charm",
   "summary": "When the Eye is the only Pattern in a spin, the value of every Pattern doubles permanently.",
-  "tip": "Lone Eyes almost never happen naturally; take it only with Eye Jar in a gem build. Each lone Eye then doubles all Patterns for the rest of the run.",
+  "tip": "Lone Eyes almost never happen naturally; take it only with Eye Jar in a gem build. A forced Eye is alone when the 5 outer cells differ from its Symbol, and each one doubles all Patterns.",
   "tier": "C",
   "ratings": {
    "power": 0,
-   "scaling": 7,
+   "scaling": 9,
    "economy": 0,
    "utility": 0,
    "risk": 0
@@ -840,15 +818,11 @@
     "why": "More Treasures keep Eye Jar's gem streak going."
    }
   ],
-  "antiSynergies": [
-   {
-    "id": "angels_hand",
-    "why": "Its small 2-symbol Patterns form easily and stop the Eye from being alone."
-   }
-  ],
+  "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed retriggers of the Eye itself do not count as other Patterns."
+   "Assumed retriggers of the Eye itself do not count as other Patterns.",
+   "With an Eye on the grid, the 5 cells outside it touch no other outer cell, so no other Pattern (not even a 2-symbol one) can form unless one of them matches the Eye."
   ]
  },
  {
@@ -907,7 +881,7 @@
    },
    {
     "id": "cardboard_house",
-    "why": "A free permanent slot offsets its -1."
+    "why": "Takes no slot itself and adds a permanent one, cancelling the -1."
    },
    {
     "id": "please_dont_throw_my_stuff_away",
@@ -1002,7 +976,7 @@
   "id": "7_sins_stone",
   "kind": "charm",
   "summary": "If 7+ Sevens land in one spin, they all turn Golden: each one scored permanently adds +7 to the Seven's value.",
-  "tip": "Only for heavy Seven builds: stack Seven chance (Seven Picture, I didn't hurt anybody) until 7-Seven spins are common, then each one gilds a whole batch.",
+  "tip": "Only for Seven builds: raise Seven chance (Seven Picture, I didn't hurt anybody) and Luck. A Luck 7+ spin that picks Sevens usually triggers it, gilding the whole batch.",
   "tier": "C",
   "ratings": {
    "power": 1,
@@ -1021,7 +995,8 @@
    "seven"
   ],
   "cares": [
-   "seven"
+   "seven",
+   "luck"
   ],
   "effects": [
    {
@@ -1037,6 +1012,10 @@
    {
     "id": "i_didnt_hurt_anybody",
     "why": "Permanent +1 Seven chance toward 7-Seven spins."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Its Luck +7 last spin lays down 7 Sevens whenever the lucky Symbol is a Seven."
    },
    {
     "id": "golden_seven",
@@ -1064,7 +1043,8 @@
   "confidence": "medium",
   "assumptions": [
    "Read as 7 or more Sevens.",
-   "Assumed the Sevens turn Golden before scoring, so the ones inside Patterns gild in that same spin."
+   "Assumed the Sevens turn Golden before scoring, so the ones inside Patterns gild in that same spin.",
+   "Luck N places N copies of one Symbol picked by the Symbols' chances, so Luck 7+ on Sevens meets the condition unless 6s cover some of them."
   ]
  },
  {
@@ -1267,7 +1247,7 @@
    },
    {
     "id": "rotated_hamsa",
-    "why": "Firing on the last spin stacks to Luck 14, one short of a guaranteed Jackpot."
+    "why": "Firing on the last spin adds to its Luck +7 for Luck 14: 14 matching Symbols, a near-Jackpot."
    },
    {
     "id": "dung_beetle",
@@ -1311,16 +1291,8 @@
   ],
   "effects": [
    {
-    "type": "luck",
-    "add": 0,
-    "when": {
-     "chance": 0.1
-    },
-    "duration": "spin"
-   },
-   {
     "type": "special",
-    "text": "The Luck bonus grows by +3 for every spin in which 3+ Patterns trigger (retriggers count) and resets at the end of the Deadline; it is applied only on the 10% random triggers."
+    "text": "Triggers randomly (10%): adds its stored Luck bonus to that spin. The bonus starts at +0, grows by +3 after every spin in which 3+ Patterns trigger (retriggers count) and resets to 0 at the end of the Deadline."
    }
   ],
   "synergies": [
@@ -1379,16 +1351,8 @@
   ],
   "effects": [
    {
-    "type": "luck",
-    "add": 0,
-    "when": {
-     "chance": 0.1
-    },
-    "duration": "spin"
-   },
-   {
     "type": "special",
-    "text": "The Luck bonus grows by +2 for every store restock done this Deadline (free restocks included) and resets at the end of the Deadline; it is applied only on the 10% random triggers."
+    "text": "Triggers randomly (10%): adds its stored Luck bonus to that spin. The bonus starts at +0, grows by +2 for every store restock made this Deadline (free restocks included) and resets at the end of the Deadline."
    }
   ],
   "synergies": [
@@ -1421,8 +1385,8 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Assumed forced store refreshes from charms like Cigarettes or Fortune Cookie do not count.",
-   "Unclear whether phone rerolls count as restocks here."
+   "Forced store refreshes from Cigarettes, Fortune Cookie or Photo Book do not count (wiki activation notes).",
+   "The wiki activation notes say phone rerolls also count as restocks for this step; not confirmed in-game."
   ]
  },
  {
@@ -1451,16 +1415,8 @@
   ],
   "effects": [
    {
-    "type": "luck",
-    "add": 4,
-    "when": {
-     "chance": 0.15
-    },
-    "duration": "spin",
-    "perUnit": {
-     "of": "skippedRounds",
-     "per": 1
-    }
+    "type": "special",
+    "text": "Triggers randomly (15%): Luck +4 for every Round you skipped in the previous Deadline, on that spin only. The bonus is fixed for the whole Deadline and recalculated at the next one; +0 if you skipped none."
    }
   ],
   "synergies": [
@@ -1497,7 +1453,7 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "skippedRounds counts Rounds skipped in the previous Deadline; the bonus stays fixed for the current one."
+   "Counts only the Rounds skipped in the previous Deadline (not the whole run), so it needs early debt payments every Deadline."
   ]
  },
  {
@@ -1554,7 +1510,7 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "Assumed 999s in Sacred Mode trigger it too, since the wiki counts them as 666s for charms."
+   "999s in Sacred Mode count as 666s for charms (wiki Sacred Mode page), so they trigger it too."
   ]
  },
  {
@@ -1686,7 +1642,7 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "Assumed 999s in Sacred Mode count too, since the wiki treats them as 666s for charms."
+   "999s in Sacred Mode count as 666s for charms (wiki Sacred Mode page), so they double Above/Below too."
   ]
  },
  {
@@ -1719,10 +1675,9 @@
   "effects": [
    {
     "type": "patternsMult",
-    "add": 1,
+    "add": 0.5,
     "when": {
-     "redButton": true,
-     "n": 2
+     "redButton": true
     },
     "duration": "permanent",
     "stack": true,
@@ -1737,7 +1692,7 @@
    },
    {
     "type": "special",
-    "text": "Each Red Button use flips the Cross. It starts upright: odd flips turn it upside down (+3% 666 chance until the next flip), even flips turn it back up (+1 Patterns Multiplier, kept). With Nuclear Button both flips happen in one press."
+    "text": "Each Red Button use flips the Cross. It starts upright: odd flips turn it upside down (+3% 666 chance until the next flip), even flips turn it back up (+1 Patterns Multiplier, kept). That is +1 every second use, encoded as +0.5 per use; with Nuclear Button one press flips it down and up for +1 per press."
    }
   ],
   "synergies": [
@@ -1769,8 +1724,8 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed the Cross starts upright, so +1 Patterns Multiplier comes every second flip (when.n = 2).",
-   "Needs 2 charges per use and regains 1 per Round: about one flip per 2 Rounds without help."
+   "Assumed the Cross starts upright, so +1 Patterns Multiplier comes every second flip (encoded as the average +0.5 per use).",
+   "Needs 2 charges per use and regains 1 per Round: one flip per 2 Rounds, so +1 Patterns Multiplier per 4 Rounds without help."
   ]
  },
  {
@@ -1831,7 +1786,7 @@
   "id": "book_of_shadows",
   "kind": "charm",
   "summary": "+1.5% chance of 666, but each 666 grants extra spins: +3, then +2, then +1, then none, resetting every Round.",
-  "tip": "The extra spins win back much of a 666's loss. Best with charms that pay off after a 666 (Crystal Skull, Gabihbb'h, Demon's Horn) or with Holy Bible blocking it.",
+  "tip": "Its extra spins claw back part of a 666's loss, but from Deadline 7 a 666 takes all your coins. Best with Holy Bible or 666 payoffs (Crystal Skull, Gabihbb'h, Demon's Horn).",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -1860,11 +1815,8 @@
     "add": 3,
     "when": {
      "on": "666"
-    }
-   },
-   {
-    "type": "special",
-    "text": "Extra spins shrink within a Round: +3 for the first 666, +2 for the second, +1 for the third, then +0; back to +3 when the Round ends."
+    },
+    "note": "+3 spins for the first 666 of a Round, +2 for the second, +1 for the third, then +0; back to +3 when the Round ends."
    }
   ],
   "synergies": [
