@@ -365,8 +365,10 @@ function econOf(entries, ctx, d2, stats = ctx.base) {
       case 'coins': {
         let amt = e.amount || 0;
         if (e.debtFraction) amt = e.debtFraction * ctx.debt;
-        if (e.mul) amt = (ctx.coins ?? ctx.evRound) * (e.mul - 1);
-        if (e.set === 0) amt = -(ctx.coins ?? ctx.evRound);
+        // coins held: if unknown, assume the player deposits first and keeps a small purse
+        const held = ctx.coins ?? 0.25 * ctx.evRound;
+        if (e.mul) amt = held * (e.mul - 1);
+        if (e.set === 0) amt = -held;
         if (per === 'instant') out.coinsInstant += amt;
         else if (per === 'round') out.coinsPerRound += amt;
         else if (per === 'deadline') out.coinsPerRound += amt / R;
@@ -570,9 +572,11 @@ export function evaluateItem(it, ctx, extra = {}) {
     if (!equipped && m.target !== 'store') continue;
     if (m.target === 'store') continue;
     const tr = m.apply === 'random' ? null : m.apply;
-    if (tr) applyTrait(d2, tr, it.id);
-    else { // random trait: average of the seven
-      d2.smAdd += 2 / 7; d2.pmAdd += 1 / 7; d2.interest += 3 / 7; d2.chance666Add += 0.6 / 7;
+    for (let k = 0; k < times; k++) {
+      if (tr) applyTrait(d2, tr, it.id);
+      else { // random trait: average of the seven
+        d2.smAdd += 2 / 7; d2.pmAdd += 1 / 7; d2.interest += 3 / 7; d2.chance666Add += 0.6 / 7;
+      }
     }
   }
 

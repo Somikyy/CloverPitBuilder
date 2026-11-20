@@ -131,7 +131,7 @@ def mk_charm(name, rarity, cost, raw_desc, unlock, category, recipe=None):
         'unlock': clean(unlock) if unlock else (clean(pt.get('Unlocking', '')) if pt else ''),
         'recipe': recipe, 'redButtonCharges': ch if rb else None,
         'triggersRandomly': int(tr.group(1)) if tr else None,
-        'noSpace': bool(re.match(r"\s*Doesn't take space", desc)),
+        'noSpace': bool(re.match(r"\s*Doesn't take space", desc)) or category == 'cadaver',  # corpse pieces sit on the slot machine
         'storeRerollChance': reroll.get(cid),
         'icon': img, 'wiki': 'https://cloverpit.wiki.gg/wiki/' + name.replace(' ', '_'),
         'wikiNotes': notes[:2500] if notes else '',

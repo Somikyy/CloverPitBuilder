@@ -42,7 +42,7 @@
    },
    {
     "id": "overdose",
-    "why": "No Round-end recharges there, so every battery or refill charge goes further when presses cost 1 less."
+    "why": "No Round-end recharges there, so each +1 charge from batteries goes further when presses cost 1 less."
    },
    {
     "id": "cross",
@@ -459,7 +459,7 @@
  {
   "id": "fixation",
   "kind": "memory",
-  "summary": "Run-long: 7 Rounds of only 1 spin per Deadline (7 spins instead of 21); ending a Deadline early pays 2 tickets per skipped Round, not 4.",
+  "summary": "Run-long: each Deadline has 7 Rounds of just 1 spin (7 spins instead of 21); ending a Deadline early pays 2 tickets per skipped Round, not 4.",
   "tip": "Each spin is a whole Round: Hamsa and Rotated Hamsa fire every spin, Red Button charms recharge 7 times a Deadline and a 666 only wipes that spin. Cat Food gives 21 spins back.",
   "tier": "C",
   "ratings": {

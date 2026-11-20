@@ -384,6 +384,7 @@ export function simulate(cfg, opt = {}) {
           }
         }
         if (cfg.transforms && cfg.transforms.d4 && rng() < Math.min(1, cfg.transforms.d4 * randomMul)) {
+          countTrig();
           let inPat = 0;
           for (let k = 0; k < instCount; k++) inPat |= INST_MASK[scored[k]];
           for (let c = 0; c < 15; c++) if (!(inPat & (1 << c)) && grid[c] !== SIX) grid[c] = pickWeighted(weights, wTotal, rng());
