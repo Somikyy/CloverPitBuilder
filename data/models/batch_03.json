@@ -1,0 +1,1905 @@
+[
+ {
+  "id": "clover_voucher",
+  "kind": "charm",
+  "summary": "Takes no slot: instantly gives 4 Clover Tickets, a net profit of 2 tickets at its normal price.",
+  "tip": "Buy it whenever you have 2 spare tickets. Fidelity Card makes it net +3, and the purchase still counts for Ace of Clubs and Raging Capitalist.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 4,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "tickets",
+   "instant",
+   "purchase"
+  ],
+  "cares": [
+   "discount"
+  ],
+  "effects": [
+   {
+    "type": "tickets",
+    "add": 4,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fidelity_card",
+    "why": "Costs 1 instead of 2, so each Voucher nets +3 tickets."
+   },
+   {
+    "id": "can_i_eat_something",
+    "why": "With the 2-ticket store discount it is free: a clean +4."
+   },
+   {
+    "id": "ace_of_clubs",
+    "why": "The 2 tickets spent count toward its 3-ticket steps, and you get them back with profit."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "A cheap purchase that raises its Ticket modifier chance by 1%."
+   },
+   {
+    "id": "cloverpet",
+    "why": "+4 held tickets is almost another +1 Symbols Multiplier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "cloverpot",
+  "kind": "charm",
+  "summary": "At each Deadline's end, earns 1 ticket per X tickets you hold, where X is the Deadline number: it doubles your pile after Deadline 1, then pays less.",
+  "tip": "Buy it early and finish Deadlines with tickets saved. It feeds Lost Wallet and CloverPet, which also reward a big pile; sell it once the payouts get small.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 7,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "tickets"
+  ],
+  "cares": [
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "tickets",
+    "add": 1,
+    "per": "deadline",
+    "when": {
+     "on": "deadlineEnd"
+    },
+    "perUnit": {
+     "of": "tickets",
+     "per": 1
+    }
+   },
+   {
+    "type": "special",
+    "text": "X, the tickets needed per bonus ticket, equals the current Deadline number, so the payout is tickets held divided by the Deadline (rounded down): x2 after Deadline 1, +50% after Deadline 2, +33% after Deadline 3, and so on."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lost_wallet",
+    "why": "Grows the ticket pile that powers its Patterns Multiplier."
+   },
+   {
+    "id": "cloverpet",
+    "why": "A bigger pile means a bigger Symbols Multiplier."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Ticket modifiers keep adding to the pile it pays on."
+   },
+   {
+    "id": "i_like_cryptic_values",
+    "why": "Doubling your tickets also doubles the next payout."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "i_dont_care_about_the_price",
+    "why": "Sets your tickets to 0, wiping the pile it pays on."
+   },
+   {
+    "id": "give_me_back_my_money",
+    "why": "Sets your tickets to 0, wiping the pile it pays on."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Payout = tickets held at the end of Deadline N divided by N, rounded down."
+  ]
+ },
+ {
+  "id": "cloverpet",
+  "kind": "charm",
+  "summary": "Symbols Multiplier +1 for every 5 Clover Tickets you are holding.",
+  "tip": "Cheap and strong if you can sit on tickets: holding 20 gives +4. Spending lowers it, so back it with ticket income such as CloverPot or Ticket modifiers.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 5,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult"
+  ],
+  "cares": [
+   "tickets",
+   "ticketMod"
+  ],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "add": 1,
+    "perUnit": {
+     "of": "tickets",
+     "per": 5
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lost_wallet",
+    "why": "Same ticket pile, other multiplier: their bonuses multiply together."
+   },
+   {
+    "id": "cloverpot",
+    "why": "Adds tickets every Deadline, raising the multiplier."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Ticket modifiers keep the pile growing."
+   },
+   {
+    "id": "i_like_cryptic_values",
+    "why": "Doubling your tickets doubles the bonus."
+   },
+   {
+    "id": "clover_voucher",
+    "why": "+4 tickets for 2 is almost another +1 Symbols Multiplier."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "i_dont_care_about_the_price",
+    "why": "Sets your tickets to 0, erasing the bonus."
+   },
+   {
+    "id": "give_me_back_my_money",
+    "why": "Sets your tickets to 0, erasing the bonus."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Counts tickets currently held, so the bonus drops as you spend them."
+  ]
+ },
+ {
+  "id": "cloverfield",
+  "kind": "charm",
+  "summary": "At the end of every Round, each charm on your table gains +1 resell value, so selling charms later returns more tickets.",
+  "tip": "A slow ticket bank early on and a must with Dark Lotus, whose multiplier counts table resell value. Sardines grow twice as fast.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 4,
+   "economy": 6,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "discard"
+  ],
+  "provides": [
+   "resell",
+   "tickets"
+  ],
+  "cares": [
+   "charmCount",
+   "discard"
+  ],
+  "effects": [
+   {
+    "type": "resellValue",
+    "add": 1,
+    "per": "round"
+   },
+   {
+    "type": "special",
+    "text": "Applies to every charm on the table (CloverField included), not only to itself; charms in drawers do not grow."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "dark_lotus",
+    "why": "Its Symbols Multiplier equals total table resell value, so it climbs by about +7 every Round."
+   },
+   {
+    "id": "sardines",
+    "why": "Doubled resell value turns +1 per Round into +2."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Selling grown charms pays well while also feeding the Beetle."
+   },
+   {
+    "id": "property_certificate",
+    "why": "More charms on the table means more resell value growing each Round."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed CloverField raises its own resell value too and that charms in drawers do not grow."
+  ]
+ },
+ {
+  "id": "mushrooms",
+  "kind": "charm",
+  "summary": "Each Pattern past the second in a spin raises all Symbols by their base value until the Round ends.",
+  "tip": "Cheap boost for Luck and retrigger builds: a Jackpot spin alone adds about +8x base to every Symbol for the rest of the Round. Fades late, when values are far above base.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "retrigger",
+   "jackpot"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols"
+  ],
+  "cares": [
+   "patternCount",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "all",
+    "addBase": 1,
+    "when": {
+     "patternsAtLeast": 3
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   },
+   {
+    "type": "special",
+    "text": "One +1x base stack per Pattern beyond the second in the spin (retriggers count): 5 Patterns add 3 stacks. Stacks build up over the Round's spins and clear at Round end."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "hamsa",
+    "why": "Doubles the first spin's Patterns, stacking value for the whole Round."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Retriggers count as extra Patterns."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers piles up stacks on every spin."
+   },
+   {
+    "id": "vines_soup",
+    "why": "Both reward big spins, and Vine's Soup doubles the value Mushrooms added."
+   },
+   {
+    "id": "cat_food",
+    "why": "Two more spins per Round to use the stacked value."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed new stacks apply from the next spin on, not to Patterns already scored in that spin."
+  ]
+ },
+ {
+  "id": "vines_soup",
+  "kind": "charm",
+  "summary": "Every spin with 5+ Patterns doubles the value of all Symbols until the Round ends.",
+  "tip": "Gets stronger as your build lands more Patterns (Luck, retriggers). Hamsa can set it off on the first spin so the whole Round pays double.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "retrigger",
+   "jackpot",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols"
+  ],
+  "cares": [
+   "patternCount",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "all",
+    "mul": 2,
+    "when": {
+     "patternsAtLeast": 5
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "hamsa",
+    "why": "First-spin retriggers make an early 5+ spin, doubling the rest of the Round."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Retriggered spins reach 5+ Patterns much more often."
+   },
+   {
+    "id": "number_1",
+    "why": "Yellow retriggers for a whole Round push many spins past 5 Patterns."
+   },
+   {
+    "id": "pentacle",
+    "why": "Same 5+ trigger: each big spin grows Pentacle and doubles Symbols."
+   },
+   {
+    "id": "one_trick_pony",
+    "why": "Its Jackpot is about 10 Patterns, a guaranteed trigger."
+   },
+   {
+    "id": "mushrooms",
+    "why": "Mushrooms adds value on big spins and Vine's Soup doubles it."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed repeated triggers stack (x2, x4, x8...) within the Round.",
+   "Assumed the doubling applies from the next spin on."
+  ]
+ },
+ {
+  "id": "very_big_mushroom",
+  "kind": "charm",
+  "summary": "Every spin with 15+ Patterns doubles the value of all Symbols until the Deadline ends.",
+  "tip": "Late-game pick for Jackpot plus retrigger builds: a Jackpot alone scores about 10 Patterns, so you need retriggers on top. Dead weight before that.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot",
+   "retrigger",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols"
+  ],
+  "cares": [
+   "patternCount",
+   "retrigger",
+   "jackpot",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "all",
+    "mul": 2,
+    "when": {
+     "patternsAtLeast": 15
+    },
+    "duration": "deadline",
+    "stack": true,
+    "reset": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "im_being_constant",
+    "why": "Every Pattern triggers twice for good, so any Jackpot reaches about 20."
+   },
+   {
+    "id": "hamsa",
+    "why": "A first-spin Jackpot triggers twice: about 20 Patterns."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "A retriggered Jackpot clears 15 Patterns."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers turns yellow Jackpots into 15+ spins."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers turns those Jackpots into 15+ spins."
+   },
+   {
+    "id": "vines_soup",
+    "why": "Both double Symbol values on big spins, and the doublings stack."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed repeated triggers stack (x2, x4...) until the Deadline ends.",
+   "A full-grid Jackpot scores about 10 Patterns, so 15+ needs retriggers."
+  ]
+ },
+ {
+  "id": "abyssu",
+  "kind": "charm",
+  "summary": "Banks the next 'Doesn't take space' charm you buy; when you discard Abyssu, that charm's effect fires again.",
+  "tip": "Equip it right before buying a big no-space charm: Cardboard House (2nd slot), Music Tape (another Round) or Lost Briefcase (30% of a later, bigger debt).",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 3,
+   "utility": 5,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "instant",
+   "discard"
+  ],
+  "cares": [
+   "instant",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "The next 'Doesn't take space' charm bought while Abyssu is equipped is banned from the store (it still works on purchase). Discarding Abyssu unbans it and fires its effect again at once. Holds 1 charm at a time."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cardboard_house",
+    "why": "Bank it for a second permanent charm slot."
+   },
+   {
+    "id": "lost_briefcase",
+    "why": "Release it in a later Deadline, when 30% of the debt is far bigger."
+   },
+   {
+    "id": "music_tape",
+    "why": "Keep an extra Round on call for a Deadline that needs it."
+   },
+   {
+    "id": "car_battery",
+    "why": "A full recharge of all Red Button charms whenever you want it."
+   },
+   {
+    "id": "barathrum",
+    "why": "Abyssu, Barathrum and Vorago fuse into Black Hole (DLC)."
+   },
+   {
+    "id": "vorago",
+    "why": "Abyssu, Barathrum and Vorago fuse into Black Hole (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the bought charm still works when bought, so releasing it is a second activation.",
+   "Assumed only purchases made while Abyssu is on the table get banked."
+  ]
+ },
+ {
+  "id": "vorago",
+  "kind": "charm",
+  "summary": "Holds the next charm you discard from the table; discarding Vorago brings it back and equips it, even past your slot limit.",
+  "tip": "Recycle charms that break: One Trick Pony, Fruit Basket, Personal Trainer, Ankh. Discarding it from a drawer with a full table overstocks you by one charm.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 1,
+   "utility": 7,
+   "risk": 0
+  },
+  "archetypes": [
+   "discard"
+  ],
+  "provides": [
+   "discard",
+   "charmSpace"
+  ],
+  "cares": [
+   "discard",
+   "temporary",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "The first charm discarded from the table while Vorago is equipped (sold or broken) is banned from the store. Discarding Vorago unbans it, respawns it and equips it at once, even if your charm slots are full. Holds 1 charm at a time."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "one_trick_pony",
+    "why": "Get the Pony back after it breaks for another guaranteed Jackpot."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "A fresh basket gives 10 more Rounds of fruit retriggers."
+   },
+   {
+    "id": "personal_trainer",
+    "why": "Comes back at the full 25% Repetition."
+   },
+   {
+    "id": "ankh",
+    "why": "A second death save after the first Ankh is used up."
+   },
+   {
+    "id": "abyssu",
+    "why": "Abyssu, Barathrum and Vorago fuse into Black Hole (DLC)."
+   },
+   {
+    "id": "barathrum",
+    "why": "Abyssu, Barathrum and Vorago fuse into Black Hole (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Charms that break by themselves count as discards (the wiki confirms it for Fruit Basket, Green Pepper and Holy Bible).",
+   "Assumed the respawned charm comes back fresh, not with its old progress."
+  ]
+ },
+ {
+  "id": "barathrum",
+  "kind": "charm",
+  "summary": "Holds the next phone ability you pick; when you discard Barathrum, that ability triggers once more.",
+  "tip": "Save it for a big call: Please don't throw my stuff away (+1 slot), I'm being constant (+1 retrigger) or a multiplier call. With Megaphone the call fires 4 times.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 4,
+   "risk": 0
+  },
+  "archetypes": [
+   "phone"
+  ],
+  "provides": [
+   "phone",
+   "discard"
+  ],
+  "cares": [
+   "phone",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "phone",
+    "extraTriggers": 1
+   },
+   {
+    "type": "special",
+    "text": "Only the first phone ability picked while Barathrum is equipped: it works as usual, is banned (not offered again) until Barathrum is discarded, then is unbanned and triggers once more. Holds 1 ability at a time."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "megaphone",
+    "why": "Both triggers are doubled, so the held ability fires four times in total."
+   },
+   {
+    "id": "please_dont_throw_my_stuff_away",
+    "why": "A one-time +1 charm space becomes +2."
+   },
+   {
+    "id": "im_being_constant",
+    "why": "A second permanent +1 trigger for every Pattern."
+   },
+   {
+    "id": "dear_diary",
+    "why": "An extra option makes the doubled pick a better one."
+   },
+   {
+    "id": "abyssu",
+    "why": "Abyssu, Barathrum and Vorago fuse into Black Hole (DLC)."
+   },
+   {
+    "id": "vorago",
+    "why": "Abyssu, Barathrum and Vorago fuse into Black Hole (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the picked ability still triggers when picked, so the discard gives a second activation.",
+   "Assumed Megaphone also doubles the re-trigger if it is still equipped (per the wiki's 4x note)."
+  ]
+ },
+ {
+  "id": "stain",
+  "kind": "charm",
+  "summary": "Each spin that shows a Pattern of 4+ Symbols raises all Patterns by their base value until the Round ends.",
+  "tip": "Cheap and strong early: every big Pattern stacks another +1x base on every Pattern for the Round. Nose and Little Star make big Patterns reliable.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "patternValue"
+  ],
+  "cares": [
+   "largePatterns",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "all",
+    "addBase": 1,
+    "when": {
+     "patternSizeAtLeast": 4
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nose",
+    "why": "Forces Above/Below regularly, each one a sure trigger."
+   },
+   {
+    "id": "little_star",
+    "why": "Its forced HOR-XL is a 5-symbol Pattern."
+   },
+   {
+    "id": "abstract_painting",
+    "why": "Both fire on big Patterns: Stain adds base value, the Painting doubles the total."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed each qualifying spin adds another +1x base (stacking) until Round end, applied from the next spin on."
+  ]
+ },
+ {
+  "id": "abstract_painting",
+  "kind": "charm",
+  "summary": "Each spin that shows a Pattern of 5+ Symbols doubles the value of all Patterns until the Round ends.",
+  "tip": "Gets strong with Luck or forced big Patterns: Nose (Above/Below) and Little Star (HOR-XL) set it off reliably, and early triggers double the rest of the Round.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 5,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot",
+   "multiplier"
+  ],
+  "provides": [
+   "patternValue"
+  ],
+  "cares": [
+   "largePatterns",
+   "luck",
+   "aboveBelow"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "all",
+    "mul": 2,
+    "when": {
+     "patternSizeAtLeast": 5
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nose",
+    "why": "Forces Above/Below after 3 spins without one, so it fires most Rounds."
+   },
+   {
+    "id": "little_star",
+    "why": "Its forced HOR-XL is a 5-symbol Pattern."
+   },
+   {
+    "id": "stain",
+    "why": "Both fire on big Patterns: Stain adds base value, the Painting doubles the total."
+   },
+   {
+    "id": "eye_jar",
+    "why": "A forced Eye is a 10-symbol Pattern."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed repeated triggers stack (x2, x4...) within the Round and apply from the next spin on."
+  ]
+ },
+ {
+  "id": "pareidolia",
+  "kind": "charm",
+  "summary": "When the Eye is the only Pattern in a spin, the value of every Pattern doubles permanently.",
+  "tip": "Lone Eyes almost never happen naturally; take it only with Eye Jar in a gem build. Each lone Eye then doubles all Patterns for the rest of the run.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "gems"
+  ],
+  "provides": [
+   "patternValue"
+  ],
+  "cares": [
+   "eye"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "all",
+    "mul": 2,
+    "when": {
+     "onlyPattern": "EYE"
+    },
+    "duration": "permanent",
+    "stack": true,
+    "reset": "never"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "eye_jar",
+    "why": "Forces Eye Patterns; roughly half of them land alone and double every Pattern."
+   },
+   {
+    "id": "please_ill_give_you_anything",
+    "why": "More Diamonds keep Eye Jar's gem streak going."
+   },
+   {
+    "id": "i_need_money",
+    "why": "More Treasures keep Eye Jar's gem streak going."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "angels_hand",
+    "why": "Its small 2-symbol Patterns form easily and stop the Eye from being alone."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed retriggers of the Eye itself do not count as other Patterns."
+  ]
+ },
+ {
+  "id": "hourglass",
+  "kind": "charm",
+  "summary": "Starts at +0; at the end of every Deadline it gains +1, alternating between Symbols and Patterns Multiplier. Uses an extra charm slot.",
+  "tip": "Buy it in the first Deadlines or not at all: it only grows with time. Property Certificate or Cardboard House pays for the lost slot.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 5,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult",
+   "patternsMult"
+  ],
+  "cares": [
+   "charmSpace"
+  ],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "add": 1,
+    "when": {
+     "on": "deadlineEnd",
+     "n": 2
+    },
+    "stack": true,
+    "reset": "never"
+   },
+   {
+    "type": "patternsMult",
+    "add": 1,
+    "when": {
+     "on": "deadlineEnd",
+     "n": 2
+    },
+    "stack": true,
+    "reset": "never"
+   },
+   {
+    "type": "charmSpace",
+    "add": -1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "property_certificate",
+    "why": "+2 charm space covers its -1."
+   },
+   {
+    "id": "cardboard_house",
+    "why": "A free permanent slot offsets its -1."
+   },
+   {
+    "id": "please_dont_throw_my_stuff_away",
+    "why": "+1 charm space offsets its -1."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the Symbols Multiplier rises first, then the Patterns Multiplier, so each gets +1 every second Deadline.",
+   "Only Deadlines that end while it is equipped count."
+  ]
+ },
+ {
+  "id": "fruit_basket",
+  "kind": "charm",
+  "summary": "Every Lemon or Cherry Pattern triggers one extra time; breaks after 10 Rounds.",
+  "tip": "Fruits are the most common symbols, so this is strong even outside fruit builds. When it breaks, Vorago can bring it back and Dung Beetle gets a stack.",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "fruit",
+   "lemon",
+   "cherry",
+   "retrigger"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount",
+   "lemon",
+   "cherry",
+   "fruit",
+   "temporary",
+   "discard"
+  ],
+  "cares": [
+   "fruit",
+   "golden"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "fruit",
+    "discardAfter": {
+     "count": 10,
+     "of": "rounds"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_lemon",
+    "why": "Retriggered Golden Lemons gild twice."
+   },
+   {
+    "id": "golden_cherry",
+    "why": "Retriggered Golden Cherries gild twice."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Doubled fruit values get paid twice."
+   },
+   {
+    "id": "clicker",
+    "why": "Repetition on fruits stacks even more retriggers."
+   },
+   {
+    "id": "vorago",
+    "why": "Bring it back after it breaks for 10 more Rounds."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its break counts as a discard for the Beetle."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves Lemon and Cherry chances, so fewer fruit Patterns."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "7_sins_stone",
+  "kind": "charm",
+  "summary": "If 7+ Sevens land in one spin, they all turn Golden: each one scored permanently adds +7 to the Seven's value.",
+  "tip": "Only for heavy Seven builds: stack Seven chance (Seven Picture, I didn't hurt anybody) until 7-Seven spins are common, then each one gilds a whole batch.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "seven"
+  ],
+  "cares": [
+   "seven",
+   "symbolChance",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "When 7 or more Sevens appear in a single spin, all of them gain the Golden modifier: each scored Golden Seven permanently raises Seven value by its base value (+7)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "seven_picture",
+    "why": "+2 Seven chance for the Deadline makes 7-Seven spins realistic."
+   },
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "Permanent +1 Seven chance toward 7-Seven spins."
+   },
+   {
+    "id": "golden_seven",
+    "why": "Both gild Sevens, so Seven value climbs from two sources."
+   },
+   {
+    "id": "number_1",
+    "why": "Yellow retriggers score the gilded Sevens again for more growth."
+   },
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Tripling Seven value after gilding multiplies the gains."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "Bans your most valuable symbol, which is usually the Seven."
+   },
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Seven's chance to appear."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Read as 7 or more Sevens.",
+   "Assumed the Sevens turn Golden before scoring, so the ones inside Patterns gild in that same spin."
+  ]
+ },
+ {
+  "id": "necklace",
+  "kind": "charm",
+  "summary": "When the only Pattern of a spin is made of Diamonds or Treasures, it triggers 2 more times and the last trigger pays double (4x total).",
+  "tip": "Cheap power for Diamond/Treasure builds, best early. The 3 triggers also count for 3+ Pattern charms like Lucky Cat and Rotten Pepper.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "diamond",
+   "treasure",
+   "gems",
+   "retrigger"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount",
+   "diamond",
+   "treasure"
+  ],
+  "cares": [
+   "diamond",
+   "treasure",
+   "golden"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 2,
+    "scope": "singleDiamondTreasure",
+    "when": {
+     "patternsExactly": 1
+    }
+   },
+   {
+    "type": "special",
+    "text": "The last of the three triggers pays double coins, so the lone Diamond or Treasure Pattern pays 4x in total."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_diamond",
+    "why": "Each extra trigger re-scores Golden Diamonds."
+   },
+   {
+    "id": "golden_treasure",
+    "why": "Each extra trigger re-scores Golden Treasures."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Doubled Diamond and Treasure values, paid 4x."
+   },
+   {
+    "id": "diamond_picture",
+    "why": "More Diamonds means more lone Diamond Patterns."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "The 3 triggers count as 3+ Patterns, so Lucky Cat pays Interest."
+   },
+   {
+    "id": "rotten_pepper",
+    "why": "The 3 triggers count as a 3+ Pattern spin, growing its Luck."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Read 'only 1 Pattern' as exactly one Pattern scored in the spin, made of Diamonds or Treasures.",
+   "Assumed the 2 extra triggers count toward 3+ Pattern conditions, like other retriggers."
+  ]
+ },
+ {
+  "id": "cloverbell",
+  "kind": "charm",
+  "summary": "Gives 3 free store restocks whenever a spin scores both Clovers and Bells.",
+  "tip": "Fires often in Clover/Bell builds (pictures, phone chance boosts). Feeds Shopping Cart, Bell Pepper and Electricity Meter.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 5,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "clover",
+   "bell",
+   "restock"
+  ],
+  "provides": [
+   "restock"
+  ],
+  "cares": [
+   "clover",
+   "bell",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "freeRestocks",
+    "add": 3,
+    "when": {
+     "scoredAll": [
+      "clover",
+      "bell"
+     ]
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "shopping_cart",
+    "why": "Each held free restock is +2 Symbols Multiplier."
+   },
+   {
+    "id": "bell_pepper",
+    "why": "Every restock you spend adds +2 to its Luck bonus."
+   },
+   {
+    "id": "electricity_meter",
+    "why": "Every restock recharges a Red Button charm."
+   },
+   {
+    "id": "clover_picture",
+    "why": "More Clovers on the grid, more triggers."
+   },
+   {
+    "id": "bell_picture",
+    "why": "More Bells on the grid, more triggers."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves Clover and Bell chances."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Fires at most once per spin, however many Clover and Bell Patterns score."
+  ]
+ },
+ {
+  "id": "green_pepper",
+  "kind": "charm",
+  "summary": "15% chance each spin to give Luck +7 on that spin; breaks after 9 activations.",
+  "tip": "Cheap early Luck. Horseshoe doubles its rate but burns its 9 uses faster. Fuses with Red Pepper into Black Pepper (DLC).",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "luck",
+   "triggersRandomly",
+   "temporary",
+   "discard"
+  ],
+  "cares": [
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 7,
+    "when": {
+     "chance": 0.15
+    },
+    "duration": "spin",
+    "discardAfter": {
+     "count": 9,
+     "of": "activations"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "red_pepper",
+    "why": "The two fuse into Black Pepper (DLC)."
+   },
+   {
+    "id": "horseshoe",
+    "why": "Fires twice as often (30%)."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Guarantees its Luck +7 on the spin you choose."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "On the last spin 7 + 7 Luck can top 15 with a little spontaneous Luck: a Jackpot."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its break counts as a discard for the Beetle."
+   },
+   {
+    "id": "vorago",
+    "why": "Bring back a fresh one after it breaks."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "rotten_pepper",
+  "kind": "charm",
+  "summary": "10% chance each spin to add its Luck bonus, which starts at 0 and grows by 3 for each spin with 3+ Patterns, resetting every Deadline.",
+  "tip": "Shines once most spins hit 3+ Patterns: after 5 such spins a trigger gives Luck +15, a near-certain Jackpot. Horseshoe and Golden Horseshoe make it fire more.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot",
+   "retrigger"
+  ],
+  "provides": [
+   "luck",
+   "jackpot",
+   "triggersRandomly"
+  ],
+  "cares": [
+   "patternCount",
+   "triggersRandomly",
+   "retrigger"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 0,
+    "when": {
+     "chance": 0.1
+    },
+    "duration": "spin"
+   },
+   {
+    "type": "special",
+    "text": "The Luck bonus grows by +3 for every spin in which 3+ Patterns trigger (retriggers count) and resets at the end of the Deadline; it is applied only on the 10% random triggers."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles the trigger rate to 20%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Force a trigger once the bonus is big for an on-demand Jackpot."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Retriggers push spins to 3+ Patterns, growing the bonus."
+   },
+   {
+    "id": "hamsa",
+    "why": "First-spin retriggers count toward 3+ Pattern spins."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone gem Pattern triggers 3 times, counting as a 3+ spin."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the bonus grows once per qualifying spin, not once per Pattern.",
+   "Assumed 15+ total Luck from this charm still guarantees a Jackpot, as other Luck does."
+  ]
+ },
+ {
+  "id": "bell_pepper",
+  "kind": "charm",
+  "summary": "10% chance each spin to add its Luck bonus, which grows by 2 for every store restock you make this Deadline.",
+  "tip": "Restock early in each Deadline to grow it: 8 restocks means Luck +16 per trigger. Free restocks from Crowbar or CloverBell make it cheap.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "restock",
+   "jackpot"
+  ],
+  "provides": [
+   "luck",
+   "triggersRandomly"
+  ],
+  "cares": [
+   "restock",
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 0,
+    "when": {
+     "chance": 0.1
+    },
+    "duration": "spin"
+   },
+   {
+    "type": "special",
+    "text": "The Luck bonus grows by +2 for every store restock done this Deadline (free restocks included) and resets at the end of the Deadline; it is applied only on the 10% random triggers."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "crowbar",
+    "why": "+3 free restocks: +6 to the bonus at no coin cost."
+   },
+   {
+    "id": "cloverbell",
+    "why": "3 free restocks per Clover+Bell spin to spend on growth."
+   },
+   {
+    "id": "horseshoe",
+    "why": "Doubles the trigger rate to 20%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Force a trigger once the bonus is big."
+   },
+   {
+    "id": "electricity_meter",
+    "why": "Each restock also recharges a Red Button charm."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "shopping_cart",
+    "why": "The Cart wants free restocks kept unspent; this pepper wants them spent."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed forced store refreshes from charms like Cigarettes or Fortune Cookie do not count.",
+   "Unclear whether phone rerolls count as restocks here."
+  ]
+ },
+ {
+  "id": "golden_pepper",
+  "kind": "charm",
+  "summary": "15% chance each spin to give Luck +4 for each Round you skipped in the previous Deadline (+0 if you skipped none).",
+  "tip": "Pay debts early to skip Rounds: 2 skips means Luck +8 per trigger all next Deadline. Pairs with Calendar and Greedy King, which also reward skipping.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "luck",
+   "triggersRandomly"
+  ],
+  "cares": [
+   "roundSkip",
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 4,
+    "when": {
+     "chance": 0.15
+    },
+    "duration": "spin",
+    "perUnit": {
+     "of": "skippedRounds",
+     "per": 1
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "calendar",
+    "why": "Both turn skipped Rounds into power."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Skipped Rounds also raise its Golden chance."
+   },
+   {
+    "id": "music_tape",
+    "why": "An extra Round you can skip adds +4."
+   },
+   {
+    "id": "lost_briefcase",
+    "why": "30% of the debt up front makes paying early and skipping easy."
+   },
+   {
+    "id": "horseshoe",
+    "why": "Doubles the trigger rate to 30%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Force a trigger on the spin you choose."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "screen_addiction",
+    "why": "Only 1 Round per Deadline leaves nothing to skip."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "skippedRounds counts Rounds skipped in the previous Deadline; the bonus stays fixed for the current one."
+  ]
+ },
+ {
+  "id": "demons_horn",
+  "kind": "charm",
+  "summary": "After a 666 shows up, the next spin of the same Round gets Luck +10.",
+  "tip": "Weak alone since 666s are rare. In a 666 build add Book of Shadows for spins to use it on, and Holy Bible, which blocks the loss but still lets it fire.",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil",
+   "jackpot"
+  ],
+  "provides": [
+   "luck"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 10,
+    "when": {
+     "on": "666"
+    },
+    "duration": "spin"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "necronomicon",
+    "why": "Its +3% 666 chance means more Luck +10 spins."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "Guarantees extra spins after a 666 to use the Luck on."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Order a 666, then cash in Luck +10 on the next spin."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Cancels the 666's coin loss while Demon's Horn still triggers."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed 999s in Sacred Mode trigger it too, since the wiki counts them as 666s for charms."
+  ]
+ },
+ {
+  "id": "holy_bible",
+  "kind": "charm",
+  "summary": "Cancels the next 666 by turning it into normal Symbols, then has a 50% chance to break.",
+  "tip": "1-ticket insurance from Deadline 3, vital from Deadline 7 when a 666 takes all your coins. 666-triggered charms still fire. Fuses with Ankh into Ra's Book (DLC).",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 7,
+   "risk": 1
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "temporary",
+   "discard"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "protect666",
+    "chance": 1,
+    "discardChance": 0.5
+   }
+  ],
+  "synergies": [
+   {
+    "id": "ankh",
+    "why": "The two fuse into Ra's Book (DLC), a death save that can pay the whole debt."
+   },
+   {
+    "id": "baphomet",
+    "why": "A cancelled 666 still doubles Above/Below, with no coin loss."
+   },
+   {
+    "id": "demons_horn",
+    "why": "A cancelled 666 still grants Luck +10 next spin."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "A cancelled 666 still grants the extra spins."
+   },
+   {
+    "id": "necronomicon",
+    "why": "Covers the extra 666 risk of its +2 Patterns Multiplier."
+   },
+   {
+    "id": "vorago",
+    "why": "Get a fresh Bible back after it breaks."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "baphomet",
+  "kind": "charm",
+  "summary": "Every 666 that appears permanently doubles the value of the Above and Below Patterns.",
+  "tip": "Devil-build scaler: raise 666 odds (Necronomicon, Possessed Cell Phone) and use Nose to force Above/Below. Holy Bible lets 666s count without the coin loss.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "patternValue",
+   "aboveBelow"
+  ],
+  "cares": [
+   "666",
+   "aboveBelow"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": [
+     "ABOVE",
+     "BELOW"
+    ],
+    "mul": 2,
+    "when": {
+     "on": "666"
+    },
+    "duration": "permanent",
+    "stack": true,
+    "reset": "never"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nose",
+    "why": "Forces the Above/Below Patterns that Baphomet keeps doubling."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Buys 666s on demand from Deadline 3."
+   },
+   {
+    "id": "holy_bible",
+    "why": "A cancelled 666 still counts, so you scale without losing coins."
+   },
+   {
+    "id": "necronomicon",
+    "why": "+3% 666 chance and +2 Patterns Multiplier."
+   },
+   {
+    "id": "cross",
+    "why": "+3% 666 chance while upside down, and its Patterns Multiplier stacks on top."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "More 666s, and extra spins to recover after each one."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed 999s in Sacred Mode count too, since the wiki treats them as 666s for charms."
+  ]
+ },
+ {
+  "id": "cross",
+  "kind": "charm",
+  "summary": "Red Button flips the Cross: each time it turns back upright, +1 Patterns Multiplier for good; while upside down, +3% 666 chance.",
+  "tip": "Nuclear Button flips it down and up in one press: +1 Patterns Multiplier per use, never upside down. Charge sources speed it up. Fuses with Corpse (Left Arm) into Sacrifice.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "redButton",
+   "multiplier",
+   "devil"
+  ],
+  "provides": [
+   "patternsMult",
+   "redButton",
+   "666"
+  ],
+  "cares": [
+   "charges",
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "patternsMult",
+    "add": 1,
+    "when": {
+     "redButton": true,
+     "n": 2
+    },
+    "duration": "permanent",
+    "stack": true,
+    "reset": "never"
+   },
+   {
+    "type": "chance666",
+    "add": 3,
+    "when": {
+     "redButton": true
+    }
+   },
+   {
+    "type": "special",
+    "text": "Each Red Button use flips the Cross. It starts upright: odd flips turn it upside down (+3% 666 chance until the next flip), even flips turn it back up (+1 Patterns Multiplier, kept). With Nuclear Button both flips happen in one press."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nuclear_button",
+    "why": "Each press flips it twice: +1 Patterns Multiplier with no upside-down window."
+   },
+   {
+    "id": "potato_battery",
+    "why": "Extra charges mean more flips and faster growth."
+   },
+   {
+    "id": "im_feeling_more_energetic_recently",
+    "why": "Needing 1 charge instead of 2, it can flip every Round."
+   },
+   {
+    "id": "super_capacitor",
+    "why": "Spare charges from full charms feed more flips."
+   },
+   {
+    "id": "baphomet",
+    "why": "The 666s from the down position double Above/Below."
+   },
+   {
+    "id": "corpse_left_arm",
+    "why": "The two fuse into Sacrifice (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the Cross starts upright, so +1 Patterns Multiplier comes every second flip (when.n = 2).",
+   "Needs 2 charges per use and regains 1 per Round: about one flip per 2 Rounds without help."
+  ]
+ },
+ {
+  "id": "rosary",
+  "kind": "charm",
+  "summary": "35% chance to cancel each 666 by turning it into normal Symbols; never breaks.",
+  "tip": "Unreliable but permanent 666 insurance; Horseshoe raises it to 70%. For Deadlines you cannot afford to lose, Holy Bible is the surer block.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 5,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "triggersRandomly"
+  ],
+  "cares": [
+   "666",
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "protect666",
+    "chance": 1,
+    "when": {
+     "chance": 0.35
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Raises the block chance to 70%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Fire it before a risky spin to guarantee the block."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Two layers of 666 protection."
+   },
+   {
+    "id": "necronomicon",
+    "why": "Softens the extra 666 risk of its +2 Patterns Multiplier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "book_of_shadows",
+  "kind": "charm",
+  "summary": "+1.5% chance of 666, but each 666 grants extra spins: +3, then +2, then +1, then none, resetting every Round.",
+  "tip": "The extra spins win back much of a 666's loss. Best with charms that pay off after a 666 (Crystal Skull, Gabihbb'h, Demon's Horn) or with Holy Bible blocking it.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 3,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "spins",
+   "666"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "chance666",
+    "add": 1.5
+   },
+   {
+    "type": "spins",
+    "add": 3,
+    "when": {
+     "on": "666"
+    }
+   },
+   {
+    "type": "special",
+    "text": "Extra spins shrink within a Round: +3 for the first 666, +2 for the second, +1 for the third, then +0; back to +3 when the Round ends."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "demons_horn",
+    "why": "Guarantees a spin to use its Luck +10 on."
+   },
+   {
+    "id": "crystal_skull",
+    "why": "Tripled Diamond/Treasure/Seven values, plus extra spins to score them."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "A doubled Symbols Multiplier for the rest of the Round, plus extra spins to use it."
+   },
+   {
+    "id": "holy_bible",
+    "why": "A cancelled 666 still grants the spins, with no coin loss."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Order 666s for spins; pair with protection."
+   },
+   {
+    "id": "baphomet",
+    "why": "More 666s to double Above/Below, and spins to recover."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ }
+]
