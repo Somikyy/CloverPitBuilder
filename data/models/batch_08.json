@@ -38,11 +38,7 @@
    },
    {
     "id": "my_head_hurts",
-    "why": "Released from Barathrum during the call that offers this, it fires this too, on top of picking it."
-   },
-   {
-    "id": "hourglass",
-    "why": "The extra slot pays for its -1 charm space."
+    "why": "Discarding Barathrum while it holds My Head Hurts and this call is on offer fires this call too: one more slot (wiki trick)."
    }
   ],
   "antiSynergies": [],
@@ -85,11 +81,11 @@
   "synergies": [
    {
     "id": "one_trick_pony",
-    "why": "Its guaranteed Jackpot pays double."
+    "why": "Its guaranteed Jackpot scores the doubled Jackpot Pattern, about +25% on that spin."
    },
    {
     "id": "ophanim_wheels",
-    "why": "Every 999 forces a Jackpot on the next spin, each one worth double."
+    "why": "Every 999 forces a Jackpot next spin, so the doubled Jackpot pays far more often."
    },
    {
     "id": "i_found_a_winning_strategy",
@@ -100,8 +96,8 @@
     "why": "Its Luck bonus grows past 15, which guarantees a Jackpot when it fires."
    },
    {
-    "id": "fortune_teller",
-    "why": "Chain symbols scored in a Jackpot raise its value permanently, and this doubles the raised value."
+    "id": "ill_take_back_control_of_my_life",
+    "why": "Its Sacred x2 on big Patterns also doubles the Jackpot: 4x its value together."
    }
   ],
   "antiSynergies": [],
@@ -170,7 +166,7 @@
   "id": "can_i_eat_something",
   "kind": "phone",
   "summary": "Every charm in the store right now costs 2 tickets less, until the store is next restocked.",
-  "tip": "Pause the call and restock until the store shows charms you want, then take it: up to 8 tickets saved on 4 charms. Stacks with Fidelity Card, making cheap charms free.",
+  "tip": "Pause it and restock until the store holds charms you want, then take it: up to 8 tickets saved on 4 charms. With Fidelity Card it is 3 off each, so cheap charms can become free.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -202,7 +198,7 @@
   "synergies": [
    {
     "id": "fidelity_card",
-    "why": "The discounts stack to 3 tickets off each charm, so 1-3 ticket charms are free."
+    "why": "The discounts stack to 3 tickets off each charm, so 1-3 ticket charms likely cost nothing."
    },
    {
     "id": "clover_voucher",
@@ -213,10 +209,6 @@
     "why": "That memory card's permanent 1-ticket discount stacks with this one."
    },
    {
-    "id": "megaphone",
-    "why": "A second trigger should take another 2 tickets off each charm."
-   },
-   {
     "id": "raging_capitalist",
     "why": "More purchases for the same tickets, each raising its Ticket chance by 1%."
    }
@@ -225,6 +217,7 @@
   "confidence": "medium",
   "assumptions": [
    "Assumed the discount covers only the charms in the store when you take the call and ends at the next restock, including ones caused by charms like Cigarettes.",
+   "Assumed a discount larger than the price makes a charm free (price floor 0).",
    "Assumed a Megaphone retrigger stacks a second 2-ticket discount."
   ]
  },
@@ -232,7 +225,7 @@
   "id": "can_i_get_some_energy_drinks",
   "kind": "phone",
   "summary": "Instantly refills every Red Button charm to full charge.",
-  "tip": "Worth it only when costly button charms are empty (Weird Clock, Number 1/2, Midas Touch). Barathrum can bank it for a second refill later; a lifeline with Overdose.",
+  "tip": "Pause it and take it between Rounds once costly button charms are spent (Weird Clock, Number 1/2, Midas Touch). Barathrum banks a second refill; a lifeline with Overdose.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -290,7 +283,8 @@
   ],
   "confidence": "high",
   "assumptions": [
-   "Assumed only equipped Red Button charms are refilled, as with Car Battery."
+   "Assumed only equipped Red Button charms are refilled, as with Car Battery.",
+   "Assumed the paused call can be taken between Rounds of the same Deadline, like other paused calls."
   ]
  },
  {
@@ -395,7 +389,7 @@
    },
    {
     "id": "barathrum",
-    "why": "Bank it and discard Barathrum later for another Avid charm."
+    "why": "Discarding Barathrum later rolls Avid onto another random equipped charm."
    }
   ],
   "antiSynergies": [],
@@ -439,7 +433,7 @@
   "synergies": [
    {
     "id": "the_collector",
-    "why": "Ambitious gives +1 Patterns Multiplier, and +1 more through The Collector."
+    "why": "On a charm with no Trait yet, The Collector adds another +1 Patterns Multiplier."
    },
    {
     "id": "graded_card",
@@ -451,7 +445,7 @@
    },
    {
     "id": "barathrum",
-    "why": "Bank it and discard Barathrum later for another Ambitious charm."
+    "why": "Discarding Barathrum later rolls Ambitious onto another random equipped charm."
    }
   ],
   "antiSynergies": [],
@@ -526,12 +520,12 @@
   "id": "its_kinda_fun",
   "kind": "phone",
   "summary": "Gives a random equipped charm the Gambler Trait: +1 free store restock every Deadline while that charm stays equipped.",
-  "tip": "Weak on its own. Pick it for Shopping Cart (each held free restock is +2 Symbols Multiplier) or restock payoffs like Bell Pepper and Electricity Meter.",
-  "tier": "D",
+  "tip": "Modest alone: one free restock per Deadline while the charm stays. Better with Shopping Cart (each held free restock is +2 Symbols Multiplier) or restock payoffs (Bell Pepper, Electricity Meter).",
+  "tier": "C",
   "ratings": {
    "power": 0,
    "scaling": 2,
-   "economy": 3,
+   "economy": 4,
    "utility": 1,
    "risk": 1
   },
@@ -565,7 +559,7 @@
    },
    {
     "id": "electricity_meter",
-    "why": "Each restock recharges a Red Button charm."
+    "why": "Each restock adds 1 charge to a random Red Button charm."
    },
    {
     "id": "the_collector",
@@ -623,10 +617,6 @@
    {
     "id": "naughty_dealer",
     "why": "Token symbols pay half your Interest each."
-   },
-   {
-    "id": "stonks",
-    "why": "Stacks to 15% Interest (7 + 5 + 3)."
    },
    {
     "id": "the_collector",
@@ -688,7 +678,7 @@
    },
    {
     "id": "scratch_and_hope",
-    "why": "Cherries become the single most likely symbol, so they get +1 more."
+    "why": "Breaks the Lemon-Cherry tie for most likely symbol, so its +1 goes to Cherries alone."
    },
    {
     "id": "number_2",
@@ -756,6 +746,10 @@
    {
     "id": "number_2",
     "why": "Clovers are non-yellow, so its retriggers hit more Patterns."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "Clovers become the most likely symbol, so its +1 moves from the two fruits to them."
    }
   ],
   "antiSynergies": [
@@ -819,6 +813,10 @@
    {
     "id": "number_1",
     "why": "Bells are yellow, so its retriggers hit more Patterns."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "Bells become the most likely symbol, so its +1 moves from the two fruits to them."
    }
   ],
   "antiSynergies": [
@@ -883,6 +881,10 @@
    {
     "id": "ace_of_diamonds",
     "why": "More Diamond lines help form 4+ Patterns, and each raise hits a symbol you see often."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "Diamonds become the most likely symbol, so its +1 moves from the two fruits to them."
    }
   ],
   "antiSynergies": [
@@ -947,6 +949,10 @@
    {
     "id": "number_1",
     "why": "Treasures are yellow, so its retriggers hit more Patterns."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "Treasures become the most likely symbol, so its +1 moves from the two fruits to them."
    }
   ],
   "antiSynergies": [
@@ -994,7 +1000,7 @@
   "synergies": [
    {
     "id": "im_gonna_go_all_in",
-    "why": "Tripled Seven value on a symbol you now see three times as often."
+    "why": "Tripled Seven value on a symbol you now see about 2.6 times as often."
    },
    {
     "id": "golden_seven",
@@ -1002,15 +1008,15 @@
    },
    {
     "id": "7_sins_stone",
-    "why": "Permanent +1 Seven chance toward 7-Seven spins."
+    "why": "Seven Sevens in one spin go from almost never to about 1 spin in 64."
    },
    {
     "id": "scratch_and_hope",
     "why": "One +1 Seven call makes Sevens the most likely symbol for good, so it adds +1 more."
    },
    {
-    "id": "seven_picture",
-    "why": "Its +2 Seven chance for a Deadline stacks on top."
+    "id": "eye_jar",
+    "why": "Sevens count for its 3-spin gem streak, which now holds far more often."
    }
   ],
   "antiSynergies": [
@@ -1222,7 +1228,7 @@
    },
    {
     "id": "expired_meds",
-    "why": "Tripled Sevens are surely your most valuable symbol, so they get banned."
+    "why": "Tripled Sevens are almost certainly your most valuable symbol, so they get banned."
    }
   ],
   "confidence": "high",
@@ -1231,7 +1237,7 @@
  {
   "id": "im_thinking_of_some_strategies",
   "kind": "phone",
-  "summary": "Adds base value to every Pattern of 3 or fewer Symbols (HOR, VER, DIAG and the 2-symbol ones). The first pick doubles them.",
+  "summary": "Adds base value to every Pattern of 3 or fewer Symbols (HOR, VER, DIAG and the 2-symbol ones); at base value the first pick doubles them.",
   "tip": "Strong early, while 3-symbol lines earn a big share of your coins. Each repeat adds only +1x base; the Sacred call I want to address some stuff doubles them instead.",
   "tier": "B",
   "ratings": {
@@ -1277,7 +1283,7 @@
  {
   "id": "i_found_a_winning_strategy",
   "kind": "phone",
-  "summary": "Adds base value to every Pattern of 4+ Symbols (HOR-L, HOR-XL, Zig, Zag, Above, Below, Eye, Jackpot). The first pick doubles them.",
+  "summary": "Adds base value to every Pattern of 4+ Symbols (HOR-L, HOR-XL, Zig, Zag, Above, Below, Eye, Jackpot); at base value the first pick doubles them.",
   "tip": "Best with Luck or forced big Patterns (Nose, Little Star, Disc C, Eye Jar). Take it before I can't quit now! or the Sacred x2 on big Patterns, which double the raised value.",
   "tier": "B",
   "ratings": {
@@ -1358,7 +1364,8 @@
   ],
   "cares": [
    "tickets",
-   "drawers"
+   "drawers",
+   "restock"
   ],
   "effects": [
    {
@@ -1375,15 +1382,11 @@
   "synergies": [
    {
     "id": "the_collector",
-    "why": "Traits the whole store; even the Devious it adds to you counts."
+    "why": "Every traited charm you buy adds +1 Patterns Multiplier, as does Devious if it lands on an untraited charm."
    },
    {
     "id": "graded_card",
     "why": "Avid or Ambitious charms bought from the traited store give x2 multipliers instead."
-   },
-   {
-    "id": "fidelity_card",
-    "why": "Takes 1 ticket off each traited charm, softening the Trait surcharge."
    }
   ],
   "antiSynergies": [
@@ -1394,8 +1397,9 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Random Traits from calls pick each of the 7 Traits with equal chance (wiki), so about 2 in 7 store charms get Avid or Ambitious.",
+   "The text does not say whether one Trait is rolled for the whole store or one per charm; either way each of the 7 Traits is equally likely (wiki).",
    "Store Traits change prices: Ambitious/Obsessive +3, Avid/Speculative +2, Florid/Gambler +1, Devious -1 ticket.",
+   "Only charms in the store when you take it get Traits; charms from later restocks do not.",
    "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait)."
   ]
  },
@@ -1403,7 +1407,7 @@
   "id": "i_like_cryptic_values",
   "kind": "phone",
   "summary": "Doubles the Clover Tickets you hold, but sets your coins in hand to 0.",
-  "tip": "Pause the call and deposit your coins into the ATM first so you lose little. Best when holding a big ticket pile that feeds Lost Wallet, CloverPet or CloverPot. Locks you out of Sacred Mode.",
+  "tip": "Pause it and deposit your coins first (deposits go up to the debt), then take it on a big ticket pile; Lost Wallet and CloverPet love it. Locks you out of Sacred Mode.",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -1457,8 +1461,8 @@
     "why": "Funds many phone rerolls, each worth +1 Symbols Multiplier."
    },
    {
-    "id": "can_i_borrow_some_green",
-    "why": "Tickets borrowed earlier get doubled too."
+    "id": "megaphone",
+    "why": "Fires twice: your Clover Tickets are quadrupled."
    }
   ],
   "antiSynergies": [
@@ -1470,14 +1474,15 @@
   "confidence": "medium",
   "assumptions": [
    "Assumed only coins in hand are affected; coins already deposited in the ATM are safe.",
-   "The call can be paused until the Deadline ends, so you can deposit before taking it."
+   "The call can be paused until the Deadline ends, so you can deposit before taking it.",
+   "Deposits cannot exceed the current debt without ending the Deadline, which skips the call, so coins above that are lost."
   ]
  },
  {
   "id": "i_dont_care_about_the_price",
   "kind": "phone",
   "summary": "Two random charms in the store become free, but your Clover Tickets drop to 0.",
-  "tip": "Pause the call and spend your tickets first, then take it when the store holds pricey charms you want (Evil Deal, Megaphone, Barathrum). Locks you out of Sacred Mode.",
+  "tip": "Pause it and spend tickets on the cheap charms you want; with only two pricey charms left in the store, both go free. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1543,6 +1548,7 @@
   "confidence": "medium",
   "assumptions": [
    "The 2 free charms are picked at random among the charms in the store.",
+   "Assumed bought charms leave their slot empty until the next restock, so the free picks come from what is left.",
    "Assumed a Megaphone retrigger frees two more charms (your tickets are already 0)."
   ]
  },
@@ -1593,7 +1599,11 @@
    },
    {
     "id": "please_dont_throw_my_stuff_away",
-    "why": "Released from Barathrum when that call is offered, it adds a slot on top of picking it."
+    "why": "Released from Barathrum while that once-per-run call is on offer, it fires it for an extra slot (wiki trick)."
+   },
+   {
+    "id": "megaphone",
+    "why": "Each extra trigger fires the other options again, drawbacks included."
    }
   ],
   "antiSynergies": [
@@ -1604,7 +1614,8 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Read 'all other current phone abilities' as the other options in the current call, per the wiki's Barathrum combo note.",
+   "Read 'all other current phone abilities' as the other options of the call on offer; the wiki's Barathrum + Please don't throw my stuff away! trick supports this.",
+   "Assumed Megaphone and First Love extra triggers re-fire the other options.",
    "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait)."
   ]
  },
@@ -1656,6 +1667,10 @@
    {
     "id": "rosary",
     "why": "A 35% shield against 666 while you hold your coins."
+   },
+   {
+    "id": "megaphone",
+    "why": "Fires twice: the coins you hold are quadrupled."
    }
   ],
   "antiSynergies": [
@@ -1670,10 +1685,6 @@
    {
     "id": "cloverpot",
     "why": "Sets your tickets to 0, wiping the pile it pays on."
-   },
-   {
-    "id": "voicemail",
-    "why": "No tickets left for the rerolls it feeds on."
    },
    {
     "id": "chastity_belt",
@@ -1699,7 +1710,11 @@
    "utility": 0,
    "risk": 4
   },
-  "archetypes": [],
+  "archetypes": [
+   "gems",
+   "clover",
+   "bell"
+  ],
   "provides": [
    "symbolChance",
    "666",
@@ -1725,7 +1740,7 @@
    },
    {
     "id": "wait_what_day_is_it",
-    "why": "Halving Clovers and Bells too leaves mostly gems on the grid."
+    "why": "Halving Clovers and Bells too puts gems at nearly half the grid (about 48%)."
    },
    {
     "id": "the_collector",
@@ -1777,7 +1792,9 @@
    "utility": 0,
    "risk": 3
   },
-  "archetypes": [],
+  "archetypes": [
+   "fruit"
+  ],
   "provides": [
    "symbolChance",
    "patternCount"
@@ -1795,16 +1812,28 @@
   ],
   "synergies": [
    {
+    "id": "fruit_basket",
+    "why": "Lemons and Cherries rise to about 46% of the grid, so more fruit Patterns get retriggered."
+   },
+   {
+    "id": "golden_lemon",
+    "why": "Lemons rise to about 23% of symbols, so more Golden Lemons get scored."
+   },
+   {
+    "id": "golden_cherry",
+    "why": "Cherries rise to about 23% of symbols, so more Golden Cherries get scored."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Fruits fill nearly half the grid, so doubled fruit values pay more."
+   },
+   {
     "id": "eye_jar",
-    "why": "More gem spins keep its streak going."
+    "why": "Gems rise to about 37% of symbols, which helps its 3-spin streak."
    },
    {
     "id": "theres_nothing_to_eat_but_mould",
-    "why": "Halving fruits too leaves mostly gems on the grid."
-   },
-   {
-    "id": "gold_and_diamonds_are_a_good_investment",
-    "why": "Diamonds and Treasures show up more, so doubling them pays more."
+    "why": "Halving fruits too puts gems at nearly half the grid (about 48%)."
    }
   ],
   "antiSynergies": [
@@ -1851,7 +1880,11 @@
    "utility": 0,
    "risk": 4
   },
-  "archetypes": [],
+  "archetypes": [
+   "fruit",
+   "clover",
+   "bell"
+  ],
   "provides": [
    "symbolChance",
    "patternCount"
@@ -1880,6 +1913,10 @@
    {
     "id": "im_feeling_lucky",
     "why": "Clovers and Bells take a bigger share of the grid."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Fruits rise to about 46% of the grid, so doubled fruit values pay more."
    }
   ],
   "antiSynergies": [
@@ -1956,11 +1993,11 @@
   "synergies": [
    {
     "id": "lover_1",
-    "why": "Spawning both Lovers lets you fuse them into Lust."
+    "why": "With Lover #1 owned, a later spawn of Lover #2 (about 1 in 10) lets you fuse them into Lust."
    },
    {
     "id": "lover_2",
-    "why": "Spawning both Lovers lets you fuse them into Lust."
+    "why": "With Lover #2 owned, a later spawn of Lover #1 (about 1 in 10) lets you fuse them into Lust."
    },
    {
     "id": "possessed_cell_phone",
@@ -1984,10 +2021,10 @@
   "id": "im_re_organizing_my_mind",
   "kind": "phone",
   "summary": "Sacred call: Symbols Multiplier +3 for the rest of the run, with no drawback.",
-  "tip": "Take it early in a Sacred run: +3 is huge while the multiplier is small, and every copy stacks. Megaphone or First Love makes it +6.",
+  "tip": "Sacred calls only come after you refuse three Red calls, so this lands mid-run: still strong unless your Symbols Multiplier is already big. Megaphone or First Love make it +6.",
   "tier": "A",
   "ratings": {
-   "power": 7,
+   "power": 6,
    "scaling": 4,
    "economy": 0,
    "utility": 0,
@@ -2010,10 +2047,6 @@
   ],
   "synergies": [
    {
-    "id": "chastity_belt",
-    "why": "The refused Red calls that unlock Sacred Mode also power its Patterns Multiplier."
-   },
-   {
     "id": "megaphone",
     "why": "Triggers twice: Symbols Multiplier +6."
    },
@@ -2034,10 +2067,10 @@
   "id": "i_see_the_patterns_in_my_behaviour",
   "kind": "phone",
   "summary": "Sacred call: Patterns Multiplier +1 for the rest of the run, with no drawback.",
-  "tip": "The Patterns Multiplier starts at 1, so the first copy can double your coins, and copies stack. Megaphone or First Love makes it +2.",
+  "tip": "Patterns Multiplier sources are scarce, so +1 is a big relative gain even mid-run, when Sacred calls arrive. Copies stack; Megaphone or First Love make it +2.",
   "tier": "A",
   "ratings": {
-   "power": 7,
+   "power": 6,
    "scaling": 4,
    "economy": 0,
    "utility": 0,
@@ -2059,10 +2092,6 @@
    }
   ],
   "synergies": [
-   {
-    "id": "chastity_belt",
-    "why": "A Sacred call that adds another Patterns Multiplier +1 on top of its bonus."
-   },
    {
     "id": "megaphone",
     "why": "Triggers twice: Patterns Multiplier +2."
