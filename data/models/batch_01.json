@@ -467,7 +467,7 @@
     },
     "discardAfter": {
      "count": 1,
-     "of": "activations"
+     "of": "rounds"
     }
    }
   ],
@@ -496,7 +496,7 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed the Jackpot lands on the first spin of the next Round; encoded as a first-spin Jackpot that breaks after one activation."
+   "Assumed the Jackpot lands on the first spin of the next Round; encoded as a first-spin Jackpot with the charm gone after that one Round, so exactly one Jackpot is counted."
   ]
  },
  {
