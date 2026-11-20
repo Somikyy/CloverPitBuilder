@@ -1782,5 +1782,290 @@
    "Assumed a full-grid Jackpot counts as scoring an Eye, since Jackpots do not hide smaller Patterns.",
    "Assumed 666-chance charms raise 999 chance in Sacred Mode (all 6s become 9s) and that Holy Bible cancels 999s because they count as 666s for charms."
   ]
+ },
+ {
+  "id": "holy_spirit",
+  "kind": "charm",
+  "summary": "Every 999 gives each charm on your table a random Trait, replacing any Trait it already had.",
+  "tip": "Each 999 is like a free Trait call for every equipped charm, huge with The Collector. In Sacred Mode, 666-chance charms like Necronomicon raise your 999 odds.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 2,
+   "utility": 1,
+   "risk": 1
+  },
+  "archetypes": [
+   "sacred",
+   "traits"
+  ],
+  "provides": [
+   "traits"
+  ],
+  "cares": [
+   "999",
+   "sacred"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "random",
+    "target": "allEquipped",
+    "when": {
+     "on": "999"
+    }
+   },
+   {
+    "type": "special",
+    "text": "A charm holds only one Trait, so each 999 re-rolls the Trait of every charm on the table, good ones included; charms in drawers or bought later get nothing until the next 999."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "Every traited charm adds Patterns Multiplier +1, so one 999 can add about +7."
+   },
+   {
+    "id": "graded_card",
+    "why": "Turns the Avid and Ambitious Traits it hands out into x2 multipliers (DLC)."
+   },
+   {
+    "id": "necronomicon",
+    "why": "In Sacred Mode its +3% 666 chance becomes +3% 999 chance."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "+1.5% 999 chance in Sacred Mode, plus extra spins after each one."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Assumed to cancel 999s like 666s, wasting the trigger."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Read 'a random Trait' as each charm rolling its own Trait; it may be one shared Trait for all.",
+   "Devious adds 666 chance, which becomes 999 chance in Sacred Mode, so it is not a drawback here.",
+   "Assumed 666-chance charms raise 999 chance in Sacred Mode and that Holy Bible cancels 999s because they count as 666s for charms."
+  ]
+ },
+ {
+  "id": "sacred_heart",
+  "kind": "charm",
+  "summary": "Each Red Button press has a 50% chance to use no charges, so button charms fire about twice as often.",
+  "tip": "Roughly doubles uses of Midas Touch, Number 1/2, Ring Bell and the Pictures with no charm-space cost. Useless without button charms. Fuses with Horseshoe and Nuclear Button into Glorious Trumpet (DLC).",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "sacred"
+  ],
+  "provides": [
+   "charges",
+   "redButton"
+  ],
+  "cares": [
+   "redButton",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "redButton",
+    "noConsumeChance": 0.5
+   }
+  ],
+  "synergies": [
+   {
+    "id": "midas_touch",
+    "why": "More presses means more Rounds of permanent symbol growth."
+   },
+   {
+    "id": "ring_bell",
+    "why": "Every free press is another permanent +1 Symbols Multiplier."
+   },
+   {
+    "id": "number_1",
+    "why": "Free presses make Rounds of yellow retriggers far more frequent."
+   },
+   {
+    "id": "weird_clock",
+    "why": "Saving its 12-charge cost half the time means extra Rounds much more often."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Free presses still trigger twice; with Horseshoe the three fuse into Glorious Trumpet (DLC)."
+   },
+   {
+    "id": "horseshoe",
+    "why": "With Nuclear Button, fuses with Sacred Heart into Glorious Trumpet (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed the 50% roll is made per press and a free press still triggers every charged charm."
+  ]
+ },
+ {
+  "id": "halo",
+  "kind": "charm",
+  "summary": "When a spin has exactly one Pattern, every symbol touching it turns into that Pattern's symbol, usually forming much bigger Patterns.",
+  "tip": "Lone Patterns are common, and one in the middle row can spread over most of the grid. Big-Pattern payoffs (Stain, Abstract Painting, Ace of Diamonds) love it; small-Pattern makers hurt it.",
+  "tier": "A",
+  "ratings": {
+   "power": 7,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "jackpot"
+  ],
+  "provides": [
+   "largePatterns",
+   "patternCount",
+   "jackpot"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "transform",
+    "mode": "spreadSinglePattern",
+    "when": {
+     "patternsExactly": 1
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "abstract_painting",
+    "why": "The spread usually makes a 5+ Pattern, doubling all Patterns for the Round."
+   },
+   {
+    "id": "stain",
+    "why": "The spread usually makes a 4+ Pattern, raising all Patterns for the Round."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "Each spread that makes a 4+ Pattern raises Diamonds and Treasures for good."
+   },
+   {
+    "id": "ill_take_back_control_of_my_life",
+    "why": "Doubles the big Patterns the spread creates."
+   },
+   {
+    "id": "vines_soup",
+    "why": "A spread often scores 5+ Patterns at once, doubling Symbols for the Round."
+   },
+   {
+    "id": "pentacle",
+    "why": "A spread often scores 5+ Patterns at once, growing its Symbols Multiplier."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "angels_hand",
+    "why": "Its 2-symbol Patterns form so easily that spins rarely have exactly one Pattern."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed 'adjacent' includes diagonal neighbours, as the simulator does; with side neighbours only, a middle-row Pattern still grows into an Eye.",
+   "Assumed the transformed grid scores in the same spin."
+  ]
+ },
+ {
+  "id": "the_blood",
+  "kind": "charm",
+  "summary": "Lemons and Cherries get 15% Repetition, Clovers and Bells 5% Battery, and Diamonds, Treasures and Sevens 15% Chain.",
+  "tip": "Three modifier charms in one slot: fruit Repetition retriggers the commonest Patterns, Chain grows gem Patterns for good, and Battery fuels Red Button builds.",
+  "tier": "A",
+  "ratings": {
+   "power": 5,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "retrigger",
+   "chain",
+   "fruit"
+  ],
+  "provides": [
+   "repetition",
+   "retrigger",
+   "patternCount",
+   "chain",
+   "patternValue",
+   "battery",
+   "charges"
+  ],
+  "cares": [
+   "fruit",
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "repetition",
+    "symbols": "fruit",
+    "add": 0.15
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "battery",
+    "symbols": [
+     "clover",
+     "bell"
+    ],
+    "add": 0.05
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "chain",
+    "symbols": "gems",
+    "add": 0.15
+   }
+  ],
+  "synergies": [
+   {
+    "id": "clicker",
+    "why": "Repetition chances add up to 30% on Lemons and Cherries."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Fruit Patterns trigger again on top of their Repetition retriggers."
+   },
+   {
+    "id": "crystal_sphere",
+    "why": "Chain chances add up to 27% on Diamonds, Treasures and Sevens."
+   },
+   {
+    "id": "aa_batteries",
+    "why": "Battery chances add up to 11% on Clovers and Bells."
+   },
+   {
+    "id": "the_body",
+    "why": "Its Token fruit gets re-scored by The Blood's Repetition retriggers."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "The Chain line has no '+' sign but is read as +15% like the others."
+  ]
  }
 ]
