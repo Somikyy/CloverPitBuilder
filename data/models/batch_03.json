@@ -64,11 +64,11 @@
   "kind": "charm",
   "summary": "At each Deadline's end, earns 1 ticket per X tickets you hold, where X is the Deadline number: it doubles your pile after Deadline 1, then pays less.",
   "tip": "Buy it early and finish Deadlines with tickets saved. It feeds Lost Wallet and CloverPet, which also reward a big pile; sell it once the payouts get small.",
-  "tier": "B",
+  "tier": "C",
   "ratings": {
    "power": 0,
    "scaling": 3,
-   "economy": 7,
+   "economy": 6,
    "utility": 0,
    "risk": 0
   },
@@ -137,9 +137,9 @@
   "kind": "charm",
   "summary": "Symbols Multiplier +1 for every 5 Clover Tickets you are holding.",
   "tip": "Cheap and strong if you can sit on tickets: holding 20 gives +4. Spending lowers it, so back it with ticket income such as CloverPot or Ticket modifiers.",
-  "tier": "B",
+  "tier": "A",
   "ratings": {
-   "power": 5,
+   "power": 6,
    "scaling": 5,
    "economy": 0,
    "utility": 0,
@@ -268,10 +268,10 @@
   "kind": "charm",
   "summary": "Each Pattern past the second in a spin raises all Symbols by their base value until the Round ends.",
   "tip": "Cheap boost for Luck and retrigger builds: a Jackpot spin alone adds about +8x base to every Symbol for the rest of the Round. Fades late, when values are far above base.",
-  "tier": "C",
+  "tier": "B",
   "ratings": {
-   "power": 4,
-   "scaling": 1,
+   "power": 5,
+   "scaling": 2,
    "economy": 0,
    "utility": 0,
    "risk": 0
@@ -412,7 +412,7 @@
   "kind": "charm",
   "summary": "Every spin with 15+ Patterns doubles the value of all Symbols until the Deadline ends.",
   "tip": "Late-game pick for Jackpot plus retrigger builds: a Jackpot alone scores about 10 Patterns, so you need retriggers on top. Dead weight before that.",
-  "tier": "B",
+  "tier": "C",
   "ratings": {
    "power": 1,
    "scaling": 7,
@@ -485,7 +485,7 @@
   "id": "abyssu",
   "kind": "charm",
   "summary": "Banks the next 'Doesn't take space' charm you buy; when you discard Abyssu, that charm's effect fires again.",
-  "tip": "Equip it right before buying a big no-space charm: Cardboard House (2nd slot), Music Tape (another Round) or Lost Briefcase (30% of a later, bigger debt).",
+  "tip": "Equip it right before buying a big no-space charm: Cardboard House (another +1 slot), Music Tape (another Round) or Lost Briefcase (30% of a later, bigger debt).",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -547,10 +547,10 @@
   "kind": "charm",
   "summary": "Holds the next charm you discard from the table; discarding Vorago brings it back and equips it, even past your slot limit.",
   "tip": "Recycle charms that break: One Trick Pony, Fruit Basket, Personal Trainer, Ankh. Discarding it from a drawer with a full table overstocks you by one charm.",
-  "tier": "B",
+  "tier": "C",
   "ratings": {
    "power": 0,
-   "scaling": 3,
+   "scaling": 4,
    "economy": 1,
    "utility": 7,
    "risk": 0
@@ -737,7 +737,7 @@
   "tier": "B",
   "ratings": {
    "power": 4,
-   "scaling": 5,
+   "scaling": 6,
    "economy": 0,
    "utility": 0,
    "risk": 0
@@ -829,7 +829,7 @@
   "synergies": [
    {
     "id": "eye_jar",
-    "why": "Forces Eye Patterns; roughly half of them land alone and double every Pattern."
+    "why": "Forces Eye Patterns, and each one that lands alone doubles every Pattern."
    },
    {
     "id": "please_ill_give_you_anything",
@@ -854,12 +854,12 @@
  {
   "id": "hourglass",
   "kind": "charm",
-  "summary": "Starts at +0; at the end of every Deadline it gains +1, alternating between Symbols and Patterns Multiplier. Uses an extra charm slot.",
+  "summary": "Starts at +0 and gains +1 at the end of every Deadline, alternating between Symbols and Patterns Multiplier. Also -1 charm space.",
   "tip": "Buy it in the first Deadlines or not at all: it only grows with time. Property Certificate or Cardboard House pays for the lost slot.",
-  "tier": "C",
+  "tier": "B",
   "ratings": {
    "power": 0,
-   "scaling": 5,
+   "scaling": 6,
    "economy": 0,
    "utility": 0,
    "risk": 2
@@ -950,8 +950,7 @@
    "discard"
   ],
   "cares": [
-   "fruit",
-   "golden"
+   "fruit"
   ],
   "effects": [
    {
@@ -1022,9 +1021,7 @@
    "seven"
   ],
   "cares": [
-   "seven",
-   "symbolChance",
-   "luck"
+   "seven"
   ],
   "effects": [
    {
@@ -1097,8 +1094,7 @@
   ],
   "cares": [
    "diamond",
-   "treasure",
-   "golden"
+   "treasure"
   ],
   "effects": [
    {
@@ -1170,8 +1166,7 @@
   ],
   "cares": [
    "clover",
-   "bell",
-   "symbolChance"
+   "bell"
   ],
   "effects": [
    {
@@ -1272,7 +1267,7 @@
    },
    {
     "id": "rotated_hamsa",
-    "why": "On the last spin 7 + 7 Luck can top 15 with a little spontaneous Luck: a Jackpot."
+    "why": "Firing on the last spin stacks to Luck 14, one short of a guaranteed Jackpot."
    },
    {
     "id": "dung_beetle",
@@ -1705,7 +1700,7 @@
    "scaling": 7,
    "economy": 0,
    "utility": 0,
-   "risk": 3
+   "risk": 4
   },
   "archetypes": [
    "redButton",
@@ -1839,7 +1834,7 @@
   "tip": "The extra spins win back much of a 666's loss. Best with charms that pay off after a 666 (Crystal Skull, Gabihbb'h, Demon's Horn) or with Holy Bible blocking it.",
   "tier": "C",
   "ratings": {
-   "power": 3,
+   "power": 2,
    "scaling": 1,
    "economy": 0,
    "utility": 3,
