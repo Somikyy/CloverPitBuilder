@@ -3,7 +3,7 @@
   "id": "gabihbbh",
   "kind": "charm",
   "summary": "Every 666 you see doubles your Symbols Multiplier for the rest of that Round.",
-  "tip": "Needs a 666 engine: force one early in a Round with Possessed Cell Phone (deposit first from Deadline 7), then play the rest doubled. 999s count too in Sacred Mode.",
+  "tip": "Force a 666 early in a Round with Possessed Cell Phone, then play the rest doubled. Holy Bible or Rosary cancel the coin loss and it still triggers; 999s count in Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 4,
@@ -40,12 +40,12 @@
     "why": "Forces the 666 on demand, ideally on the first spin of a Round."
    },
    {
-    "id": "book_of_shadows",
-    "why": "Each 666 also grants bonus spins, all played at the doubled multiplier."
+    "id": "holy_bible",
+    "why": "A cancelled 666 still doubles your Symbols Multiplier, without losing the Round's coins."
    },
    {
-    "id": "demons_horn",
-    "why": "Its +10 Luck spin after a 666 lands while the multiplier is doubled."
+    "id": "book_of_shadows",
+    "why": "Each 666 also grants bonus spins, all played at the doubled multiplier."
    },
    {
     "id": "crystal_skull",
@@ -60,26 +60,18 @@
     "why": "Doubles the 666 chance and your Symbols Multiplier on top of this."
    }
   ],
-  "antiSynergies": [
-   {
-    "id": "holy_bible",
-    "why": "Turns the 666 into normal symbols, so this never triggers."
-   },
-   {
-    "id": "rosary",
-    "why": "Cancels 35% of 666s before they can trigger this."
-   }
-  ],
+  "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed a second 666 in the same Round doubles again (x4)."
+   "Assumed a second 666 in the same Round doubles again (x4).",
+   "Wiki notes: charms triggered by 666 still trigger when Holy Bible cancels the 666 (no Cadaver Piece then); the Golden Horseshoe note says the same for Rosary, so both are synergies, not clashes."
   ]
  },
  {
   "id": "possessed_cell_phone",
   "kind": "charm",
   "summary": "Red Button (3 charges): guarantees a 666 on your next spin, from Deadline 3 on. Turns 666-payoff charms into on-demand power.",
-  "tip": "Press it on the first spin of a Round so the 666 wipes almost nothing (deposit first from Deadline 7). Core of 666 builds with Baphomet, Gabihbb'h or Book of Shadows.",
+  "tip": "Press it before a Round's first spin so the 666 wipes almost nothing (deposit first from Deadline 7). Holy Bible cancels the loss while Baphomet and Gabihbb'h still trigger.",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -111,7 +103,7 @@
    },
    {
     "type": "special",
-    "text": "The forced 666 acts like a normal one: it wipes the coins earned this Round (Deadlines 3-6) or all coins in hand (Deadline 7+), drops a Cadaver Piece in a drawer, and in the last Round of a Deadline makes the next phone call Red.",
+    "text": "The forced 666 acts like a normal one: it wipes the coins earned this Round (Deadlines 3-6) or all coins in hand (Deadline 7+), drops a Cadaver Piece in a drawer (replacing a stored charm if all drawers are full; not if Holy Bible cancels it), and a 666 in the Round before you answer the phone turns that call Red.",
     "when": {
      "redButton": true
     }
@@ -121,6 +113,10 @@
    {
     "id": "baphomet",
     "why": "Every forced 666 permanently doubles the Above and Below Patterns."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Cancels the forced 666's coin loss while 666 charms still trigger; the Bible breaks half the time."
    },
    {
     "id": "gabihbbh",
@@ -135,35 +131,24 @@
     "why": "Triples Diamond, Treasure and Seven values for the rest of the Round."
    },
    {
-    "id": "demons_horn",
-    "why": "Luck +10 on the spin right after each forced 666."
-   },
-   {
     "id": "nuclear_button",
     "why": "Each press triggers twice, queuing two 666s."
    }
   ],
-  "antiSynergies": [
-   {
-    "id": "holy_bible",
-    "why": "Converts the forced 666 into normal symbols, wasting the charge, and may break."
-   },
-   {
-    "id": "rosary",
-    "why": "Can randomly cancel the forced 666."
-   }
-  ],
+  "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed Holy Bible and Rosary can cancel the forced 666.",
-   "Unclear whether stacked presses put several 666s on one spin or one 666 on each following spin."
+   "Unclear whether stacked presses put several 666s on one spin or one 666 on each following spin.",
+   "Assumed Holy Bible and Rosary can cancel the forced 666 like a natural one.",
+   "Wiki notes: 666 charms still trigger when Holy Bible (or Rosary) cancels the 666, so protection removes the coin loss.",
+   "A community note pairs it with Baphomet and Nuclear Button once Sacred Mode is unlocked (6s become coin-doubling 999s); not verified, so not claimed."
   ]
  },
  {
   "id": "magical_tomato",
   "kind": "charm",
   "summary": "After a 666, Lemon and Cherry Patterns trigger one extra time for the rest of that Round.",
-  "tip": "A fruit build's 666 payoff. Force the 666 early in a Round with Possessed Cell Phone; Fruit Basket and Clicker stack more fruit retriggers on top.",
+  "tip": "A fruit build's 666 payoff: force the 666 early in a Round with Possessed Cell Phone. Holy Bible cancels the coin loss and it still triggers; Fruit Basket and Clicker stack on top.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -204,6 +189,10 @@
     "why": "Forces the 666 on demand, early in the Round."
    },
    {
+    "id": "holy_bible",
+    "why": "A cancelled 666 still adds the fruit retrigger, without losing the Round's coins."
+   },
+   {
     "id": "book_of_shadows",
     "why": "The bonus spins after each 666 all get the fruit retrigger."
    },
@@ -218,21 +207,9 @@
    {
     "id": "lemon_picture",
     "why": "More Lemon Patterns to retrigger."
-   },
-   {
-    "id": "cherry_picture",
-    "why": "More Cherry Patterns to retrigger."
    }
   ],
   "antiSynergies": [
-   {
-    "id": "holy_bible",
-    "why": "Turns the 666 into normal symbols, so this never triggers."
-   },
-   {
-    "id": "rosary",
-    "why": "Cancels 35% of 666s before they can trigger this."
-   },
    {
     "id": "theres_nothing_to_eat_but_mould",
     "why": "Halves the base chance of Lemons and Cherries."
@@ -240,7 +217,8 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Assumed each further 666 in the same Round adds another retrigger."
+   "Assumed each further 666 in the same Round adds another retrigger.",
+   "Wiki notes: charms triggered by 666 still trigger when Holy Bible cancels the 666 (no Cadaver Piece then); the Golden Horseshoe note says the same for Rosary, so both are synergies, not clashes."
   ]
  },
  {
@@ -281,40 +259,37 @@
     "why": "Each press is worth 3 free restocks."
    },
    {
+    "id": "holy_bible",
+    "why": "A cancelled 666 still pays the 3 free restocks, without the coin loss."
+   },
+   {
     "id": "shopping_cart",
     "why": "+2 Symbols Multiplier for every free restock you keep."
    },
    {
     "id": "bell_pepper",
-    "why": "Each restock adds +2 to its Luck for the Deadline."
+    "why": "Each restock you spend adds +2 to its Luck bonus for the Deadline."
    },
    {
     "id": "electricity_meter",
-    "why": "Each restock recharges a Red Button charge."
+    "why": "Each restock you spend recharges a Red Button charm, which can refill Possessed Cell Phone."
    },
    {
-    "id": "rwd_cart",
-    "why": "Doubles the free restocks you hold (DLC)."
+    "id": "necronomicon",
+    "why": "Its +3% 666 chance triples how often natural 666s pay out restocks."
    }
   ],
-  "antiSynergies": [
-   {
-    "id": "holy_bible",
-    "why": "Turns the 666 into normal symbols, so this never triggers."
-   },
-   {
-    "id": "rosary",
-    "why": "Cancels 35% of 666s before they can trigger this."
-   }
-  ],
+  "antiSynergies": [],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Wiki notes: charms triggered by 666 still trigger when Holy Bible cancels the 666 (no Cadaver Piece then); the Golden Horseshoe note says the same for Rosary, so both are synergies, not clashes."
+  ]
  },
  {
   "id": "crystal_skull",
   "kind": "charm",
   "summary": "After a 666, Diamonds, Treasures and Sevens are worth triple for the rest of that Round.",
-  "tip": "A gem build's 666 payoff. Force the 666 early in a Round with Possessed Cell Phone and raise gem chances with Pictures first.",
+  "tip": "A gem build's 666 payoff: force the 666 early in a Round with Possessed Cell Phone. Holy Bible or Rosary cancel the coin loss and it still triggers; raise gem chances first.",
   "tier": "C",
   "ratings": {
    "power": 4,
@@ -358,6 +333,10 @@
     "why": "Forces the 666 on demand, early in the Round."
    },
    {
+    "id": "holy_bible",
+    "why": "A cancelled 666 still triples gem values, without losing the Round's coins."
+   },
+   {
     "id": "book_of_shadows",
     "why": "The bonus spins after each 666 score gems at triple value."
    },
@@ -372,21 +351,9 @@
    {
     "id": "diamond_picture",
     "why": "More Diamonds on the grid to triple."
-   },
-   {
-    "id": "treasure_picture",
-    "why": "More Treasures on the grid to triple."
    }
   ],
   "antiSynergies": [
-   {
-    "id": "holy_bible",
-    "why": "Turns the 666 into normal symbols, so this never triggers."
-   },
-   {
-    "id": "rosary",
-    "why": "Cancels 35% of 666s before they can trigger this."
-   },
    {
     "id": "ive_already_bet_it_all",
     "why": "Halves the base chance of Diamonds, Treasures and Sevens."
@@ -394,14 +361,15 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Assumed a second 666 in the same Round triples gem values again."
+   "Assumed a second 666 in the same Round triples gem values again.",
+   "Wiki notes: charms triggered by 666 still trigger when Holy Bible cancels the 666 (no Cadaver Piece then); the Golden Horseshoe note says the same for Rosary, so both are synergies, not clashes."
   ]
  },
  {
   "id": "evil_deal",
   "kind": "charm",
   "summary": "Doubles Symbols and Patterns Multipliers, Interest and end-of-Round/Deadline tickets, plus 2 free restocks per Deadline, but doubles 666 chance.",
-  "tip": "A 50-ticket luxury that roughly quadruples scoring. Save up with a ticket engine, and cover the extra 666s with Holy Bible or Rosary unless you run 666 payoffs.",
+  "tip": "A 50-ticket luxury that roughly quadruples scoring; save up with a ticket engine. Holy Bible or Rosary cover the extra 666s, and in Sacred Mode they become coin-doubling 999s.",
   "tier": "A",
   "ratings": {
    "power": 9,
@@ -438,8 +406,8 @@
     "mul": 2
    },
    {
-    "type": "special",
-    "text": "Doubles your Interest rate while equipped (7% becomes 14%), which also doubles Cat and Token payouts."
+    "type": "interest",
+    "add": 7
    },
    {
     "type": "ticketIncome",
@@ -470,7 +438,7 @@
    },
    {
     "id": "raging_capitalist",
-    "why": "A ticket engine is the realistic way to afford 50 tickets."
+    "why": "Ticket modifiers on every symbol are the realistic way to save up 50 tickets."
    },
    {
     "id": "corpse_right_leg",
@@ -483,9 +451,11 @@
     "why": "Its +3% 666 chance gets doubled too: 9% per spin with the base 1.5%."
    }
   ],
-  "confidence": "high",
+  "confidence": "medium",
   "assumptions": [
-   "Assumed the doubling applies to your total 666 chance after other bonuses (still capped at 30%)."
+   "Assumed the doubling applies to your total 666 chance after other bonuses (still capped at 30%).",
+   "The engine has no Interest multiplier: doubling is written as +7 points, exact at the base 7%; with Stonks or Speculative the real gain is larger.",
+   "In Sacred Mode 999s use the 666 chance, so the doubled chance means more coin-doubling 999s there."
   ]
  },
  {
@@ -509,7 +479,7 @@
    "patternsMult"
   ],
   "cares": [
-   "phone"
+   "sacred"
   ],
   "effects": [
    {
@@ -520,10 +490,6 @@
      "per": 1
     },
     "cap": 3
-   },
-   {
-    "type": "special",
-    "text": "After 3 refused Red Calls the phone turns Sacred and Red Calls stop, so the bonus tops out at +3."
    }
   ],
   "synergies": [
@@ -547,15 +513,16 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed Red Calls refused before you bought it also count (run-wide total)."
+   "Assumed Red Calls refused before you bought it also count (run-wide total, like the strikes on the 666 Disk).",
+   "cap 3: after 3 refused Red Calls the phone turns Sacred and Red Calls stop (wiki note)."
   ]
  },
  {
   "id": "photo_book",
   "kind": "charm",
   "summary": "Takes no space: instantly refills the store with Symbol Pictures, using normal charms for any boxes left over.",
-  "tip": "A 1-ticket targeted reroll for Seven, Diamond or Treasure Pictures. Best once your build has a clear symbol to push.",
-  "tier": "D",
+  "tip": "A 1-ticket store reroll that digs for Seven, Diamond or Treasure Pictures. Buy what you want first: the restock replaces the other offers.",
+  "tier": "C",
   "ratings": {
    "power": 0,
    "scaling": 1,
@@ -968,7 +935,7 @@
   "id": "seven_picture",
   "kind": "charm",
   "summary": "Red Button (4 charges): Sevens appear more often (+2) for the rest of the Deadline.",
-  "tip": "The strongest Picture: Sevens are worth the most and +2 makes them line up far more often. Golden Seven and Number 1 turn it into lasting scaling.",
+  "tip": "Sevens are worth the most, and +2 makes them line up far more often. Pair with Golden Seven for lasting growth and Number 1 to retrigger Seven Patterns.",
   "tier": "B",
   "ratings": {
    "power": 7,
@@ -1174,7 +1141,7 @@
    },
    {
     "id": "midas_touch",
-    "why": "Extra presses in one Round mean more permanent symbol growth."
+    "why": "Battery recharges let Midas Touch fire far more often than once every 4 Rounds."
    }
   ],
   "antiSynergies": [
@@ -1190,7 +1157,7 @@
   "id": "crystal_sphere",
   "kind": "charm",
   "summary": "Diamonds, Treasures and Sevens get a 12% chance to carry Chain: each one scored permanently raises its Pattern's value.",
-  "tip": "Slow but permanent Pattern growth for gem builds; the more gems you score per spin, the faster it grows. Pictures and Necklace speed it up.",
+  "tip": "Permanent Pattern growth for gem builds: every chained gem scored adds its Pattern's base value. Gem Pictures and Necklace speed it up.",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -1242,7 +1209,7 @@
    },
    {
     "id": "eye_jar",
-    "why": "Gem streaks force the EYE Pattern, where each Chain adds +8 to its value."
+    "why": "Its gem streaks force EYE Patterns; each chained gem in an EYE adds +8 to the EYE's value."
    }
   ],
   "antiSynergies": [
@@ -1382,6 +1349,10 @@
    {
     "id": "lost_briefcase",
     "why": "Pays 30% of the debt at once, making early finishes easier."
+   },
+   {
+    "id": "fixation",
+    "why": "7 one-spin Rounds per Deadline: once the debt is paid, every Round left can be skipped for +2%."
    },
    {
     "id": "naughty_dealer",
@@ -1533,7 +1504,7 @@
    },
    {
     "id": "vorago",
-    "why": "Brings it back at a full 5% after it breaks."
+    "why": "Discard Vorago after Electrician breaks to get a fresh 5% copy back."
    },
    {
     "id": "dung_beetle",
@@ -1607,7 +1578,7 @@
    },
    {
     "id": "vorago",
-    "why": "Respawns it at a fresh 25% after it breaks."
+    "why": "Discard Vorago after it breaks to get a fresh 25% copy back."
    },
    {
     "id": "dung_beetle",
