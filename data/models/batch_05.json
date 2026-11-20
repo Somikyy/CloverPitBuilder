@@ -46,6 +46,10 @@
     "why": "Doubles your Interest, so every Token pays double."
    },
    {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
+   },
+   {
     "id": "life_gave_me_lemons",
     "why": "+1 Lemon chance for good means more Token Lemons scored."
    },
@@ -56,10 +60,6 @@
    {
     "id": "fruit_basket",
     "why": "Retriggered Lemon Patterns pay their Tokens again."
-   },
-   {
-    "id": "grandmas_purse",
-    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
    }
   ],
   "antiSynergies": [
