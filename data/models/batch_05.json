@@ -1203,5 +1203,584 @@
    "Modelled as one raise per purchase (when.on purchase), matching an average charm price of about 3 tickets.",
    "The ticket price of Ace of Clubs itself does not count."
   ]
+ },
+ {
+  "id": "ace_of_diamonds",
+  "kind": "charm",
+  "summary": "Every spin that scores a Pattern of 4+ Symbols permanently raises Diamonds and Treasures by their base value (+5 each).",
+  "tip": "A strong gem scaler: HOR-L and bigger Patterns are common, and Nose or Little Star force them. Pushing both gems past the Seven makes Expired Meds ban them. Aces fuse into Poker Deck (DLC).",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "diamond",
+   "treasure",
+   "gems"
+  ],
+  "provides": [
+   "symbolValue",
+   "diamond",
+   "treasure"
+  ],
+  "cares": [
+   "largePatterns",
+   "luck",
+   "diamond",
+   "treasure"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": [
+     "diamond",
+     "treasure"
+    ],
+    "addBase": 1,
+    "when": {
+     "patternSizeAtLeast": 4
+    },
+    "stack": true,
+    "reset": "never"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nose",
+    "why": "Forces Above/Below after 3 spins without a 5+ Pattern: a guaranteed trigger."
+   },
+   {
+    "id": "little_star",
+    "why": "Its forced HOR-XL after a blank spin is a 5-symbol Pattern."
+   },
+   {
+    "id": "diamond_picture",
+    "why": "More Diamonds on the grid to cash in the raised value."
+   },
+   {
+    "id": "treasure_picture",
+    "why": "More Treasures on the grid to cash in the raised value."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Doubles the Diamond and Treasure values it has built up; take it later."
+   },
+   {
+    "id": "ace_of_spades",
+    "why": "With Ace of Spades, Hearts and Clubs, fuses into Poker Deck (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "Once Diamonds and Treasures pass the Seven they tie as most valuable and stop appearing."
+   },
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves Diamond and Treasure chances, so the raised gems show up less."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Fires once per spin however many 4+ Patterns score, and a 4+ Pattern of any symbol counts.",
+   "The raise is permanent symbol value, so it stays after the charm is sold."
+  ]
+ },
+ {
+  "id": "ace_of_spades",
+  "kind": "charm",
+  "summary": "Every 7 charm activations (counted across Rounds) permanently raise the Seven by its base value (+7).",
+  "tip": "Needs charms that fire often (D4, Broken Calculator, Hamsas, Lucky Cat, Red Button charms) and Sevens worth scoring. The gains stay if you sell it; all four Aces fuse into Poker Deck (DLC).",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 5,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven",
+   "gems"
+  ],
+  "provides": [
+   "symbolValue",
+   "seven"
+  ],
+  "cares": [
+   "seven",
+   "triggersRandomly",
+   "charmCount"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": [
+     "seven"
+    ],
+    "addBase": 1,
+    "when": {
+     "on": "charmTriggers",
+     "n": 7
+    },
+    "stack": true,
+    "reset": "never"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "seven_picture",
+    "why": "More Sevens on the grid to cash in the raised value."
+   },
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "+1 Seven chance for good, so the raised Seven scores more often."
+   },
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Triples the Seven value it has built up; take it later."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Fires on about 35% of spins, a steady source of activations."
+   },
+   {
+    "id": "d4",
+    "why": "Fires on about 30% of spins, a cheap source of activations."
+   },
+   {
+    "id": "ace_of_clubs",
+    "why": "With Ace of Clubs, Hearts and Diamonds, fuses into Poker Deck (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "The Seven is usually your most valuable symbol, so it stops appearing."
+   },
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Seven's chance, so the raised Seven shows up less."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Read as 7 activations of any equipped charms (not 7 different charms), with the count carrying over between Rounds.",
+   "Always-on passive charms (Stonks, Cat Food) are assumed not to count as triggering."
+  ]
+ },
+ {
+  "id": "jimbo",
+  "kind": "charm",
+  "summary": "Randomly rolled: 1 downside plus 2 upsides, from huge (every Pattern retriggers, Symbols Mult +5, Patterns Mult +3) to small (+3 tickets).",
+  "tip": "Read the roll before buying: 'all Patterns trigger again', SM +5, PM +3 and +2 spins are great; -3 spins is the worst downside. A drawer keeps a good roll; Vorago re-rolls a bad one.",
+  "tier": "A",
+  "ratings": {
+   "power": 7,
+   "scaling": 4,
+   "economy": 2,
+   "utility": 1,
+   "risk": 4
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult",
+   "patternsMult",
+   "retrigger",
+   "spins"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Each copy rolls 1 downside when it spawns and keeps it: 666 chance +1.5%; 666 chance +3%; -2 spins per Round; -3 spins per Round (minimum 1 spin); discard after 3 Rounds; or discard after 5 Rounds."
+   },
+   {
+    "type": "special",
+    "text": "Each copy also rolls 2 different upsides: all Patterns trigger one more time; +5% Interest; Symbols Multiplier +5; Patterns Multiplier +3; +3 Tickets at the end of every Deadline; Luck+5 on the first spin of every Round; +2 spins per Round; Lemons+Cherries, Clovers+Bells, Diamonds+Treasures or Sevens manifest more often (+2); or +2 Free Restocks when a Deadline begins."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "vorago",
+    "why": "Discard a bad Jimbo, then Vorago, to respawn it with a fresh roll."
+   },
+   {
+    "id": "d20",
+    "why": "Jimbo and D20 fuse into Booster Pack (DLC)."
+   },
+   {
+    "id": "cat_food",
+    "why": "+2 spins per Round cancels a -2 spins downside."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Blocks the next 666 if the downside raised your 666 chance."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "The effects are rolled per copy and cannot be simulated, so the ratings describe an average roll.",
+   "Assumed every listed option is equally likely; the +2 symbol-chance upside comes in four versions.",
+   "Drawer storage and the Vorago re-roll come from the wiki's strategy notes."
+  ]
+ },
+ {
+  "id": "d4",
+  "kind": "charm",
+  "summary": "30% chance each spin to reroll every symbol that is not part of a Pattern, giving the spin a second shot at more Patterns.",
+  "tip": "Cheap, steady extra Patterns at any stage. Horseshoe makes it 60%, and its frequent activations feed Tarot Deck, Channeler of Fortune and Ace of Spades.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "triggersRandomly",
+   "patternCount"
+  ],
+  "cares": [
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "transform",
+    "mode": "rerollNonPattern",
+    "when": {
+     "chance": 0.3
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles its chance to 60%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Guarantees the reroll on the spin you choose."
+   },
+   {
+    "id": "tarot_deck",
+    "why": "Fires on about 30% of spins, helping keep the streak going."
+   },
+   {
+    "id": "channeler_of_fortune",
+    "why": "A cheap, frequent activation toward its 5 per Round."
+   },
+   {
+    "id": "ace_of_spades",
+    "why": "Each activation counts toward its 7, growing the Seven."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed the reroll happens before scoring, so Patterns it forms score in the same spin; symbols already in a Pattern stay put."
+  ]
+ },
+ {
+  "id": "d6",
+  "kind": "charm",
+  "summary": "At the end of every Round the store restocks for free, so you see a fresh set of charms each Round without paying coins.",
+  "tip": "Good for hunting key charms. Unbought offers vanish at Round end, so buy what you want first. Refills First Love's empty store and lets Shopping Cart keep its hoard.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 4,
+   "utility": 4,
+   "risk": 1
+  },
+  "archetypes": [
+   "restock"
+  ],
+  "provides": [
+   "restock",
+   "store"
+  ],
+  "cares": [
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "freeRestocks",
+    "add": 1,
+    "per": "round",
+    "when": {
+     "on": "roundEnd"
+    }
+   },
+   {
+    "type": "special",
+    "text": "The free restock happens automatically when each Round ends and cannot be saved: it does not add to the free restocks you hold, and any offers you did not buy are replaced."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "shopping_cart",
+    "why": "Refreshes the store every Round without spending the free restocks the Cart counts."
+   },
+   {
+    "id": "first_love",
+    "why": "That memory card starts each Deadline with an empty store; D6 refills it after every Round."
+   },
+   {
+    "id": "fixation",
+    "why": "7 one-spin Rounds per Deadline means 7 free restocks."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "A fresh store each Round supplies cheap charms to buy and sell as fodder."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "screen_addiction",
+    "why": "Only 1 Round per Deadline, so it restocks just once."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Valued as one free restock per Round.",
+   "Unclear whether this automatic restock counts as a restock for Bell Pepper or Electricity Meter, so they are not listed as synergies."
+  ]
+ },
+ {
+  "id": "d20",
+  "kind": "charm",
+  "summary": "At the end of every Round, each charm in your drawers is swapped for a new random charm.",
+  "tip": "Needs unlocked drawers. Park cheap charms there and collect a fresh random charm per drawer each Round: keep the good ones or sell them (great with Dung Beetle). Never store charms you need.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 4,
+   "utility": 5,
+   "risk": 2
+  },
+  "archetypes": [
+   "discard"
+  ],
+  "provides": [
+   "drawers",
+   "discard"
+  ],
+  "cares": [
+   "drawers",
+   "discard"
+  ],
+  "effects": [
+   {
+    "type": "spawnCharm",
+    "pool": "random",
+    "where": "drawer",
+    "when": {
+     "on": "roundEnd"
+    }
+   },
+   {
+    "type": "special",
+    "text": "At each Round's end every charm stored in a drawer is replaced by a random new one and the old charm is lost; empty drawers stay empty, so leave a charm in each drawer to keep rolling. Charms on the table are not affected."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "dung_beetle",
+    "why": "Sell the fresh drawer charms every Round: each sale grows the Beetle and pays tickets."
+   },
+   {
+    "id": "jimbo",
+    "why": "D20 and Jimbo fuse into Booster Pack (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "megaphone",
+    "why": "Usually parked in a drawer until a phone call, where D20 would replace it."
+   },
+   {
+    "id": "ankh",
+    "why": "Kept in a drawer as death insurance, where D20 would replace it."
+   },
+   {
+    "id": "ace_of_clubs",
+    "why": "Its drawer trick fails: D20 replaces it while it waits there."
+   }
+  ],
+  "confidence": "low",
+  "assumptions": [
+   "Assumed the new charms come from the normal store pool and sell for their usual resell value.",
+   "Assumed the replaced charms do not count as discards (no Dung Beetle stack or Vorago ban for them).",
+   "Assumed D20 must be on the table, not in a drawer, to work."
+  ]
+ },
+ {
+  "id": "angels_hand",
+  "kind": "charm",
+  "summary": "Red Button (6 charges): adds a random 2-symbol Pattern (HOR-S, VER-S or DIAG-S, worth x0.5) for the rest of the Round.",
+  "tip": "Pairs line up constantly, so a press adds many small hits and big Pattern counts: good with Pentacle, Mushrooms and Lucky Cat. It ruins lone-Pattern charms like Halo or Pain Killers.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "sacred"
+  ],
+  "provides": [
+   "smallPatterns",
+   "patternCount",
+   "redButton",
+   "sacred"
+  ],
+  "cares": [
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "addPatterns",
+    "patterns": [
+     "HOR_S",
+     "VER_S",
+     "DIAG_S"
+    ],
+    "pick": "random",
+    "when": {
+     "redButton": true
+    },
+    "duration": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "sacred_heart",
+    "why": "Half the presses cost no charge, so its 6-charge cost bites less."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice, often adding two different small Patterns."
+   },
+   {
+    "id": "pentacle",
+    "why": "Small Patterns push spins past 5 Patterns, growing its Symbols Multiplier."
+   },
+   {
+    "id": "mushrooms",
+    "why": "Every Pattern past the second raises all Symbols for the Round."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "Small Patterns make 3+ Pattern spins routine, so it pays Interest often."
+   },
+   {
+    "id": "i_want_to_address_some_stuff",
+    "why": "Doubles small Patterns, the 2-symbol ones included."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "halo",
+    "why": "Pairs form so easily that spins rarely have exactly one Pattern."
+   },
+   {
+    "id": "pain_killers",
+    "why": "Needs a lone Pattern, which small Patterns make rare."
+   },
+   {
+    "id": "pareidolia",
+    "why": "Small Patterns stop the Eye from being alone."
+   },
+   {
+    "id": "necklace",
+    "why": "Needs a lone Diamond or Treasure Pattern, which small Patterns make rare."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A 2-symbol Pattern only scores where no bigger Pattern covers it.",
+   "Per the wiki, up to 3 presses can unlock all three small Patterns; extra presses add nothing."
+  ]
+ },
+ {
+  "id": "eye_of_god",
+  "kind": "charm",
+  "summary": "Each time you score an Eye Pattern, you earn again the total coins that all your 999s have paid so far this run.",
+  "tip": "A Sacred Mode payoff that grows with every 999. Eye Jar forces Eyes, and a full-grid Jackpot includes an Eye, so Luck builds and Ophanim Wheels cash it in often. Useless before a 999.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 7,
+   "economy": 4,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "jackpot",
+   "gems"
+  ],
+  "provides": [
+   "coins"
+  ],
+  "cares": [
+   "eye",
+   "999",
+   "jackpot",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Whenever an Eye Pattern scores (alone or with others, including the Eye inside a full-grid Jackpot), you earn again the total coins earned from every 999 so far this run. Pays nothing before your first 999."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "eye_jar",
+    "why": "Forces the Eye after 3 gem spins in a row, cashing the 999 total again."
+   },
+   {
+    "id": "ophanim_wheels",
+    "why": "Each 999 forces a Jackpot next spin, and its Eye pays the fresh total at once."
+   },
+   {
+    "id": "one_trick_pony",
+    "why": "Its guaranteed Jackpot includes an Eye."
+   },
+   {
+    "id": "necronomicon",
+    "why": "In Sacred Mode its +3% 666 chance means more 999s to bank."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Assumed to cancel 999s like 666s, so fewer 999s to bank."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "A 999 pays the coins earned so far in that Round; Eye of God repays the run total of those bonuses each time.",
+   "Assumed a full-grid Jackpot counts as scoring an Eye, since Jackpots do not hide smaller Patterns.",
+   "Assumed 666-chance charms raise 999 chance in Sacred Mode (all 6s become 9s) and that Holy Bible cancels 999s because they count as 666s for charms."
+  ]
  }
 ]

@@ -605,7 +605,7 @@
    },
    {
     "id": "broken_calculator",
-    "why": "Its frequent trigger keeps the streak alive and retriggers Patterns too."
+    "why": "Fires on 35% of spins (70% with Horseshoe), keeping the streak alive, and retriggers Patterns too."
    },
    {
     "id": "d4",
@@ -1583,7 +1583,7 @@
   "id": "lost_briefcase",
   "kind": "charm",
   "summary": "Instantly gives coins equal to 30% of the current Deadline's debt. Doesn't take a slot.",
-  "tip": "Great when debts are huge, or as a bailout during the death countdown. Abyssu can bank it for an emergency.",
+  "tip": "Always worth 30% of the debt, so it matters most when you are falling short; also a bailout during the death countdown. Abyssu can bank it.",
   "tier": "B",
   "ratings": {
    "power": 5,
