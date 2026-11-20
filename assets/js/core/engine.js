@@ -159,14 +159,14 @@ function buildCtx(state, db, built, opt) {
 }
 
 // Events per round for "when.on" triggers (rough averages from typical runs).
-function eventsPerRound(ev, ctx, n = 1) {
+function eventsPerRound(ev, ctx, n = 1, stats = ctx.base) {
   const R = ctx.roundsPerDeadline;
   const map = {
     roundStart: 1, roundEnd: 1,
     deadlineStart: 1 / R, deadlineEnd: 1 / R,
     purchase: 2 / R, restock: (1.5 + freeRestocksPerDeadline(ctx)) / R, discard: 0.6 / R,
     phonePick: 1 / R, phoneReroll: 0.6 / R, roundSkipped: 0.4 / R,
-    charmTriggers: ctx.base.pAnyCharmTrig * ctx.spinsPerRound, dying: 0,
+    charmTriggers: stats.pAnyCharmTrig * stats.spinsPerRound, dying: 0,
   };
   return (map[ev] ?? 0) / Math.max(1, n);
 }
@@ -197,18 +197,35 @@ function postRate(pc, stats, randomMul) {
 }
 
 // ------------------------------------------------------------------ valuation
-// Converts growth entries into per-round linear (A) and log (G) growth of coins.
+// Linear derivatives of coins per spin for a build (d) under simulated stats.
+function derivs(d, stats) {
+  const SM = totalSM(d), PM = totalPM(d), N = stats.N;
+  const dV = new Array(7).fill(0), dP = new Array(14).fill(0);
+  let ev = 0;
+  for (let s = 0; s < 7; s++) for (let p = 0; p < 14; p++) {
+    const n = N[s * 14 + p];
+    if (!n) continue;
+    dV[s] += d.patVals[p] * n * SM * PM;
+    dP[p] += d.values[s] * n * SM * PM;
+    ev += d.values[s] * d.patVals[p] * n * SM * PM;
+  }
+  return { dV, dP, ev: Math.max(ev, 1e-9), SM, PM };
+}
+
+// Converts growth entries into per-round linear (A) and log (G) growth of coins,
+// relative to the coins of build `d2` under `stats`.
 function growthOf(entries, ctx, d2, stats) {
   let A = 0, G = 0;
   const notes = [];
-  const SM = totalSM(d2), PM = totalPM(d2);
-  const ev = Math.max(stats.evNet, 1e-9);
+  const { dV, dP, ev, SM, PM } = derivs(d2, stats);
   const spr = stats.spinsPerRound;
+  const symShare = stats.symCoins.map((x) => x / Math.max(stats.ev, 1e-9));
+  const patShare = stats.patCoins.map((x) => x / Math.max(stats.ev, 1e-9));
   for (const gr of entries) {
     let perRound = 0;
     if (gr.rate) {
       if (gr.rate.post) perRound = postRate(gr.rate.post, stats, d2.randomMul) * spr;
-      else if (gr.rate.event) perRound = eventsPerRound(gr.rate.event, ctx, gr.rate.n);
+      else if (gr.rate.event) perRound = eventsPerRound(gr.rate.event, ctx, gr.rate.n, stats);
       else if (gr.rate.rb) perRound = Math.min(1, (1 + d2.rbExtra) / Math.max(1, gr.rate.rb - d2.rbCostReduce));
       else if (gr.rate.rbRound) perRound = Math.min(1, 1 / Math.max(1, gr.rate.rbRound - d2.rbCostReduce));
     }
@@ -219,19 +236,19 @@ function growthOf(entries, ctx, d2, stats) {
       case 'pmAdd': dA = (gr.amount * d2.pmMul) / Math.max(PM, 1e-9); break;
       case 'smMul': case 'pmMul': dG = Math.log(gr.mul || 1); break;
       case 'symAddBase': {
-        if (gr.mul) { let share = 0; for (const s of maskToList(gr.mask)) share += ctx.symShare[s]; dG = Math.log(1 + (gr.mul - 1) * share); break; }
+        if (gr.mul) { let share = 0; for (const s of maskToList(gr.mask)) share += symShare[s]; dG = Math.log(1 + (gr.mul - 1) * share); break; }
         let dev = 0;
-        for (const s of maskToList(gr.mask)) dev += gr.amount * BASE_VALUE[s] * ctx.dEVdV[s];
+        for (const s of maskToList(gr.mask)) dev += gr.amount * BASE_VALUE[s] * dV[s];
         dA = dev / ev; break;
       }
       case 'symAddBaseScored': {
         let dev = 0;
-        for (const s of maskToList(gr.mask)) dev += gr.amount * BASE_VALUE[s] * stats.cellEvents[s] * spr * ctx.dEVdV[s];
+        for (const s of maskToList(gr.mask)) dev += gr.amount * BASE_VALUE[s] * stats.cellEvents[s] * spr * dV[s];
         dA = dev / ev; break;
       }
-      case 'symMul': { let share = 0; for (const s of maskToList(gr.mask)) share += ctx.symShare[s]; dG = Math.log(1 + ((gr.mul || 2) - 1) * share); break; }
-      case 'patAddBase': { let dev = 0; for (const p of gr.pats) dev += gr.amount * PATTERN_BASE[p] * ctx.dEVdPV[p]; dA = dev / ev; break; }
-      case 'patMul': { let share = 0; for (const p of gr.pats) share += ctx.patShare[p]; dG = Math.log(1 + ((gr.mul || 2) - 1) * share); break; }
+      case 'symMul': { let share = 0; for (const s of maskToList(gr.mask)) share += symShare[s]; dG = Math.log(1 + ((gr.mul || 2) - 1) * share); break; }
+      case 'patAddBase': { let dev = 0; for (const p of gr.pats) dev += gr.amount * PATTERN_BASE[p] * dP[p]; dA = dev / ev; break; }
+      case 'patMul': { let share = 0; for (const p of gr.pats) share += patShare[p]; dG = Math.log(1 + ((gr.mul || 2) - 1) * share); break; }
       default: break;
     }
     if (gr.resets) { dA *= 0.5; dG *= 0.5; }
@@ -242,47 +259,49 @@ function growthOf(entries, ctx, d2, stats) {
   return { A, G, notes };
 }
 
-// Modifier chances added by a candidate -> growth / coins / tickets.
-function modifierValue(dBefore, dAfter, ctx, stats) {
+// All symbol-modifier chances of a build -> growth (golden/chain), coins (token/investor),
+// tickets (ticket) and an average Symbols Multiplier boost (rising).
+function modifierValue(d, ctx, stats) {
   let A = 0, coins = 0, tickets = 0, smBoost = 0;
+  const { dV, dP, ev } = derivs(d, stats);
   const spr = stats.spinsPerRound;
-  const ev = Math.max(stats.evNet, 1e-9);
+  const interestCoins = (d.interest / 100) * ctx.depositEst;
   for (let s = 0; s < 7; s++) {
-    const ev_s = stats.cellEvents[s];
-    const dGold = dAfter.mods[MOD.golden * 7 + s] - dBefore.mods[MOD.golden * 7 + s];
-    if (dGold) A += (dGold * ev_s * spr * BASE_VALUE[s] * ctx.dEVdV[s]) / ev;
-    const dTok = dAfter.mods[MOD.token * 7 + s] - dBefore.mods[MOD.token * 7 + s];
-    if (dTok) coins += dTok * ev_s * spr * (ctx.interestCoins / 2);
-    const dTic = dAfter.mods[MOD.ticket * 7 + s] - dBefore.mods[MOD.ticket * 7 + s];
-    if (dTic) tickets += dTic * ev_s * spr;
-    const dRise = dAfter.mods[MOD.rising * 7 + s] - dBefore.mods[MOD.rising * 7 + s];
-    if (dRise) smBoost += dRise * ev_s * spr;
-    const dInv = dAfter.mods[MOD.investor * 7 + s] - dBefore.mods[MOD.investor * 7 + s];
-    if (dInv) coins += dInv * ev_s * spr * 0.5 * (ctx.depositEst / 100);
-    const dChain = dAfter.mods[MOD.chain * 7 + s] - dBefore.mods[MOD.chain * 7 + s];
-    if (dChain) {
+    const ce = stats.cellEvents[s];
+    if (!ce) continue;
+    const gold = d.mods[MOD.golden * 7 + s];
+    if (gold) A += (gold * ce * spr * BASE_VALUE[s] * dV[s]) / ev;
+    const tok = d.mods[MOD.token * 7 + s];
+    if (tok) coins += tok * ce * spr * (interestCoins / 2);
+    const tic = d.mods[MOD.ticket * 7 + s];
+    if (tic) tickets += tic * ce * spr;
+    const rise = d.mods[MOD.rising * 7 + s];
+    if (rise) smBoost += rise * ce * spr;
+    const inv = d.mods[MOD.investor * 7 + s];
+    if (inv) coins += inv * ce * spr * 0.5 * (ctx.depositEst / 100);
+    const chain = d.mods[MOD.chain * 7 + s];
+    if (chain) {
       let dev = 0;
-      for (let p = 0; p < 14; p++) dev += dChain * ctx.N[s * 14 + p] * PATTERN_SIZE[p] * PATTERN_BASE[p] * ctx.dEVdPV[p] * spr;
+      for (let p = 0; p < 14; p++) dev += chain * stats.N[s * 14 + p] * PATTERN_SIZE[p] * PATTERN_BASE[p] * dP[p] * spr;
       A += dev / ev;
     }
   }
-  // Rising: +1 Symbols Multiplier per event until the end of the deadline -> average boost
-  const m = smBoost ? 1 + (smBoost * ctx.roundsPerDeadline * 0.5) / Math.max(totalSM(dAfter), 1e-9) : 1;
+  const m = smBoost ? 1 + (smBoost * ctx.roundsPerDeadline * 0.5) / Math.max(totalSM(d), 1e-9) : 1;
   return { A, coins, tickets, m };
 }
 
-function econOf(entries, ctx, d2) {
-  // Returns { tickets (per deadline), restocks (per deadline), coinsPerRound, coinsInstant, interestPts, rounds, deathSave, discount }
+function econOf(entries, ctx, d2, stats = ctx.base) {
+  // Returns { tickets (per deadline), restocks (per deadline), coinsPerRound, coinsInstant, rounds, deathSave, discount }
   const R = ctx.roundsPerDeadline;
-  const out = { tickets: 0, restocks: 0, coinsPerRound: 0, coinsInstant: 0, roundsPerDeadline: 0, roundsInstant: 0, deathSave: 0, discount: 0, ticketMul: 1, resell: 0, charges: 0, reasons: [] };
-  const stats = ctx.base;
+  const spr = stats.spinsPerRound;
+  const out = { tickets: 0, restocks: 0, coinsPerRound: 0, coinsInstant: 0, roundsPerDeadline: 0, roundsInstant: 0, deathSave: 0, discount: 0, ticketMul: 1, resell: 0, charges: 0 };
   for (const e of entries) {
     const per = e.per;
     const rateOf = () => {
       if (!e.when) return 1;
-      if (e.when.on) return eventsPerRound(e.when.on, ctx, e.when.n || 1) * R; // per deadline
-      const pc = e.when.chance !== undefined && Object.keys(e.when).length === 1 ? { kind: 'chance', p: e.when.chance } : null;
-      if (pc) return postRate(pc, stats, d2.randomMul) * ctx.spinsPerRound * R;
+      if (e.when.on) return eventsPerRound(e.when.on, ctx, e.when.n || 1, stats) * R; // per deadline
+      const pc = postCondOf(e.when);
+      if (pc) return postRate(pc, stats, d2.randomMul) * spr * R;
       return 1;
     };
     switch (e.kind) {
@@ -312,7 +331,7 @@ function econOf(entries, ctx, d2) {
           const pc = postCondOf(e.when);
           perSpin = pc ? postRate(pc, stats, d2.randomMul) : 0;
         }
-        out.coinsPerRound += perSpin * ctx.spinsPerRound * e.multiple * ((d2.interest / 100) * ctx.depositEst);
+        out.coinsPerRound += perSpin * spr * e.multiple * ((d2.interest / 100) * ctx.depositEst);
         break;
       }
       case 'coins': {
@@ -350,6 +369,11 @@ function econOf(entries, ctx, d2) {
   return out;
 }
 
+// Everything that pays coins every round besides the reels: Interest, cats, tokens, coin effects.
+function sideIncome(d, ctx, stats, econ, mods) {
+  return (d.interest / 100) * ctx.depositEst + econ.coinsPerRound + mods.coins;
+}
+
 function postCondOf(when) {
   if (when.patternsAtLeast) return { kind: 'patternsAtLeast', n: when.patternsAtLeast };
   if (when.chance !== undefined) return { kind: 'chance', p: when.chance };
@@ -359,14 +383,17 @@ function postCondOf(when) {
   return null;
 }
 
-function horizonValue(m, A, G, C, H, life = Infinity) {
-  // average coins per round over H rounds relative to the current build (=1)
-  let s = 0;
+// Average coins per round over H rounds, candidate vs current build.
+// cand/base: { m (coins-per-round multiplier, base=1), A, G (growth per round), C (side income per round, relative) }
+function horizonValue(cand, base, H, life = Infinity, instant = 0) {
+  let num = instant, den = 0;
   for (let t = 0; t < H; t++) {
-    const active = t < life;
-    s += active ? m * (1 + A * t) * Math.exp(Math.min(G * t, 8)) + C : 1;
+    const b = (1 + base.A * t) * Math.exp(Math.min(base.G * t, 8)) + base.C;
+    const c = cand.m * (1 + cand.A * t) * Math.exp(Math.min(cand.G * t, 8)) + cand.C;
+    num += t < life ? c : b;
+    den += b;
   }
-  return s / H;
+  return num / Math.max(den, 1e-9);
 }
 
 function lifetimeRounds(model, item, stats) {
@@ -452,6 +479,16 @@ function supportFor(tag, ctx) {
   }
 }
 
+// The current build's own growth and side income, measured the same way as candidates.
+function setBaseline(ctx) {
+  const S0 = ctx.cmp;
+  const g0 = growthOf(ctx.d.growth, ctx, ctx.d, S0);
+  ctx.baseMods = modifierValue(ctx.d, ctx, S0);
+  const e0 = econOf(ctx.d.econ, ctx, ctx.d, S0);
+  const evRound0 = Math.max(S0.evNet * S0.spinsPerRound, 1e-9);
+  ctx.baseline = { m: 1, A: g0.A + ctx.baseMods.A, G: g0.G, C: sideIncome(ctx.d, ctx, S0, e0, ctx.baseMods) / evRound0 };
+}
+
 // ------------------------------------------------------------------ candidates
 function candidatePool(ctx) {
   const { db, env, state } = ctx;
@@ -506,61 +543,56 @@ export function evaluateItem(it, ctx, extra = {}) {
     }
   }
 
-  // ---- coins now
+  // ---- coins from the reels, now
   const { stats, same } = simFor(d2, ctx);
+  const S1 = same ? ctx.cmp : stats;
   const SM2 = totalSM(d2), PM2 = totalPM(d2);
   let m;
-  if (same) {
-    const lin2 = linEV(d2.values, d2.patVals, SM2, PM2, ctx.N);
-    m = lin2 / ctx.lin;
-  } else {
-    // the candidate simulation already includes its value / multiplier changes
-    m = (stats.evNet * stats.spinsPerRound) / Math.max(ctx.cmp.evNet * ctx.cmp.spinsPerRound, 1e-9);
-  }
+  if (same) m = linEV(d2.values, d2.patVals, SM2, PM2, ctx.cmp.N) / Math.max(linEV(ctx.d.values, ctx.d.patVals, ctx.SM, ctx.PM, ctx.cmp.N), 1e-9);
+  else m = (stats.evNet * stats.spinsPerRound) / Math.max(ctx.cmp.evNet * ctx.cmp.spinsPerRound, 1e-9);
   if (!Number.isFinite(m) || m <= 0) m = 1e-6;
-  // 666 / protection changes that the linear path cannot see
-  if (same) {
+  if (same) { // 666 / protection changes the linear path cannot see
     const p1 = chance666(ctx.d, ctx.env.deadline), p2 = chance666(d2, ctx.env.deadline);
     if (p1 !== p2 || ctx.d.protect666 !== d2.protect666) {
       const loss = (p, pr) => 1 - Math.min(0.9, 3.5 * p * (1 - pr));
       m *= loss(p2, d2.protect666) / loss(p1, ctx.d.protect666);
     }
   }
-  // more rounds per deadline = more coins per deadline
   if (d2.roundsPerDeadline !== ctx.d.roundsPerDeadline) m *= d2.roundsPerDeadline / ctx.d.roundsPerDeadline;
   if (d2.debtMul !== ctx.d.debtMul) m /= d2.debtMul / ctx.d.debtMul;
 
-  // ---- growth
-  const newGrowth = d2.growth.slice(ctx.d.growth.length);
-  const gr = growthOf(newGrowth, ctx, d2, same ? ctx.base : stats);
-  const mv = modifierValue(ctx.d, d2, ctx, same ? ctx.base : stats);
-  m *= mv.m;
+  // ---- growth: the whole build (owned + candidate) under the candidate's spins,
+  // compared with the current build's own growth. This catches synergies such as
+  // "more patterns per spin makes the Pentacle you own grow faster".
+  const gr = growthOf(d2.growth, ctx, d2, S1);
+  const mv = modifierValue(d2, ctx, S1);
+  m *= mv.m / ctx.baseMods.m;
   let A = gr.A + mv.A, G = gr.G;
-  // per-unit multipliers (Lost Wallet, CloverPet, Shopping Cart, Dark Lotus, The Collector, ...)
-  for (const g of newGrowth) {
+  const newGrowth = d2.growth.slice(ctx.d.growth.length);
+  for (const g of newGrowth) { // per-unit multipliers (Lost Wallet, CloverPet, Shopping Cart, Dark Lotus...)
     if (g.kind !== 'smPerUnit' && g.kind !== 'pmPerUnit') continue;
     const units = unitsOf(g.unit, ctx);
     const per = g.unit.per || 1;
     const bonus = Math.floor(units / per) * g.amount;
-    const isSM = g.kind === 'smPerUnit';
-    const cur = isSM ? SM2 : PM2;
+    const cur = g.kind === 'smPerUnit' ? SM2 : PM2;
     m *= (cur + bonus) / Math.max(cur, 1e-9);
-    const growthUnits = unitGrowthPerRound(g.unit, ctx);
-    A += ((growthUnits / per) * g.amount) / Math.max(cur + bonus, 1e-9);
+    A += ((unitGrowthPerRound(g.unit, ctx) / per) * g.amount) / Math.max(cur + bonus, 1e-9);
   }
 
-  // ---- economy & coin income
-  const newEcon = d2.econ.slice(ctx.d.econ.length);
-  const ec = econOf(newEcon, ctx, d2);
+  // ---- economy & side income (Interest, cats, tokens, coin effects) for the whole build
   const R = ctx.roundsPerDeadline;
-  ec.tickets += mv.tickets * R;
+  const ecAll = econOf(d2.econ, ctx, d2, S1);
+  const ec = econOf(d2.econ.slice(ctx.d.econ.length), ctx, d2, S1); // the candidate's own economy
+  ec.tickets += (mv.tickets - ctx.baseMods.tickets) * R;
   if (ec.ticketMul !== 1) ec.tickets += (ec.ticketMul - 1) * (R * 1.2 + 1.5);
-  const evRound = Math.max(ctx.evRound, 1e-9);
-  const C = (ec.coinsPerRound + mv.coins) / evRound + (ec.roundsPerDeadline / R);
-  const instantC = ec.coinsInstant / evRound / Math.max(1, ctx.H);
+  const evRound0 = Math.max(ctx.cmp.evNet * ctx.cmp.spinsPerRound, 1e-9);
+  const C1 = sideIncome(d2, ctx, S1, ecAll, mv) / evRound0 + ec.roundsPerDeadline / R;
+  const dInterest = d2.interest - ctx.d.interest;
   const life = lifetimeRounds(model, it, stats);
-  const V = horizonValue(m, A, G, C + instantC + ec.roundsInstant / ctx.H, ctx.H, life);
-  const Vnow = horizonValue(m, A, G, C + ec.coinsInstant / evRound + ec.roundsInstant, 1, life);
+  const instant = ec.coinsInstant / evRound0 + ec.roundsInstant * m;
+  const cand = { m, A, G, C: C1 };
+  const V = horizonValue(cand, ctx.baseline, ctx.H, life, instant);
+  const Vnow = horizonValue(cand, ctx.baseline, 1, life, instant);
 
   // ---- scores
   const coinScore = 100 * Math.tanh(Math.log2(Math.max(V, 1e-6)) / 0.8);
@@ -606,7 +638,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   const archHits = [];
   for (const a of (model && model.archetypes) || []) {
     const hit = ctx.arch.find((x) => x.id === a);
-    if (hit) { archBonus += 22 * hit.weight; archHits.push(hit.label); }
+    if (hit) { archBonus += 22 * hit.weight; if (hit.weight >= 0.12) archHits.push(hit.label); }
   }
   archBonus = clamp(archBonus, 0, 15);
 
@@ -627,8 +659,9 @@ export function evaluateItem(it, ctx, extra = {}) {
       else reasons.push({ kind: avg >= 0 ? 'neutral' : 'bad', text: `Fades: ${fmtPct(avg)} on average over the next ${ctx.H} rounds` });
     }
   }
-  if (A > 0.004 || G > 0.002) {
-    const per = A + G;
+  const dGrowth = (A - ctx.baseline.A) + (G - ctx.baseline.G);
+  if (dGrowth > 0.006) {
+    const per = dGrowth;
     reasons.push({ kind: 'good', text: `Scales: about ${fmtPct(per)} more coins every round, permanently` });
   }
   topSymbolReason(it, model, ctx, reasons);
@@ -642,6 +675,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   if (ec.tickets > 0.5) reasons.push({ kind: 'good', text: `About +${ec.tickets.toFixed(1)} tickets per deadline` });
   if (ec.tickets < -0.5) reasons.push({ kind: 'bad', text: `Costs about ${Math.abs(ec.tickets).toFixed(1)} tickets per deadline` });
   if (ec.restocks > 0.4) reasons.push({ kind: 'good', text: `About +${ec.restocks.toFixed(1)} free restocks per deadline` });
+  if (dInterest) reasons.push({ kind: dInterest > 0 ? 'good' : 'bad', text: `Interest ${ctx.d.interest.toFixed(0)}% → ${d2.interest.toFixed(0)}%` });
   if (charmSpaceDelta) reasons.push({ kind: charmSpaceDelta > 0 ? 'good' : 'bad', text: `${charmSpaceDelta > 0 ? '+' : ''}${charmSpaceDelta} charm space` });
   const p1 = chance666(ctx.d, ctx.env.deadline), p2 = chance666(d2, ctx.env.deadline);
   if (p2 > p1 + 1e-6) reasons.push({ kind: devilBuild ? 'good' : 'bad', text: `666 chance ${(p1 * 100).toFixed(1)}% → ${(p2 * 100).toFixed(1)}%` });
@@ -654,7 +688,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   return {
     id: it.id, kind: it.kind, name: it.name, score, price, affordable,
     parts: { power: Math.round(power), coins: Math.round(coinScore), econ: Math.round(econScore), utility: Math.round(utility), synergy: Math.round(syn + archBonus), risk: Math.round(riskPenalty), prior: Math.round(prior) },
-    value: { now: Vnow, horizon: V, growthPerRound: A + G, ticketsPerDeadline: ec.tickets },
+    value: { now: Vnow, horizon: V, growthPerRound: dGrowth, ticketsPerDeadline: ec.tickets },
     quant, reasons: dedupeReasons(reasons).slice(0, 7), tier: model ? model.tier : null,
   };
 }
@@ -717,6 +751,7 @@ function ownedContributions(ctx) {
     const built = deriveBuild(st2, ctx.db);
     const ctx2 = buildCtx(st2, ctx.db, built, { ...ctx.opt, baseDeadlines: ctx.opt.ownedDeadlines ?? 140 });
     ctx2.arch = ctx.arch;
+    setBaseline(ctx2);
     ctx2.cache.set(ctx.key, ctx.cmp);
     const e = evaluateItem(it, ctx2, { trait: c.trait || null });
     out.push({
@@ -750,6 +785,7 @@ export function analyze(state, db, opt = {}) {
   const built = deriveBuild(state, db);
   const ctx = buildCtx(state, db, built, opt);
   ctx.arch = buildArchetypes(ctx);
+  setBaseline(ctx);
   const check = deadlineCheck(ctx);
   const owned = opt.skipOwned ? [] : ownedContributions(ctx);
   // weakest owned charm (for "replace" suggestions when the table is full)
@@ -774,9 +810,19 @@ export function analyze(state, db, opt = {}) {
     const ev = evaluateItem(it, ctx, { price: num(o.price) ?? (it.kind === 'charm' ? it.cost : 0), trait: o.trait || null });
     offers.push({ ...ev, offerPrice: num(o.price) });
   }
-  offers.sort((a, b) => b.score - a.score);
+  // Tickets are scarce: a pricier charm has to be clearly better to win. Unaffordable ones sink.
+  const tickets = num(state.tickets) ?? 0;
   for (const o of offers) {
-    if (o.kind === 'charm' && o.price) o.perTicket = o.score / Math.max(1, o.price);
+    const price = o.kind === 'charm' ? (o.price ?? 0) : 0;
+    o.affordable = o.kind !== 'charm' || tickets <= 0 || price <= tickets;
+    o.rankScore = o.score - 3 * price;
+    if (o.kind === 'charm' && price > 0) o.perTicket = o.score / price;
+  }
+  offers.sort((a, b) => (b.affordable - a.affordable) || (b.rankScore - a.rankScore));
+  const charmOffers = offers.filter((o) => o.kind === 'charm' && o.affordable && o.perTicket);
+  if (charmOffers.length > 1) {
+    const best = charmOffers.reduce((a, b) => (b.perTicket > a.perTicket ? b : a));
+    if (best !== offers[0]) best.reasons.unshift({ kind: 'good', text: 'Best value for your tickets' });
   }
 
   const st = ctx.base;

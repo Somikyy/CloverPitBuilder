@@ -142,7 +142,9 @@ export const reducedMotion = () => window.matchMedia && window.matchMedia('(pref
 
 // ------------------------------------------------------------------ sound (synthesised, no audio files)
 let ac = null, gestured = false;
-for (const ev of ['pointerdown', 'keydown', 'touchstart']) window.addEventListener(ev, () => { gestured = true; }, { capture: true, passive: true });
+if (typeof window !== 'undefined') {
+  for (const ev of ['pointerdown', 'keydown', 'touchstart']) window.addEventListener(ev, () => { gestured = true; }, { capture: true, passive: true });
+}
 function audio() {
   if (!settings.sound || !gestured) return null;
   try {

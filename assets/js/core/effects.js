@@ -125,6 +125,7 @@ export function applyModel(d, model, opt = {}) {
   const res = { handled: 0, total: 0, unhandled: [] };
   if (!model || !Array.isArray(model.effects)) return res;
   const src = model.id;
+  if (src === 'depression') d.flags.depression = true; // no spontaneous luck from the machine
   const isRB = model.effects.some((e) => e.when && e.when.redButton);
   let rbEntry = null;
   if (isRB) {
@@ -290,6 +291,8 @@ function applyEffect(d, e, c) {
       }
       const pc = postCond(w);
       if (pc) { d.temps.push({ trigger: pc, kind: 'luckNext', value: amount, src }); return true; }
+      if (w.on === 'roundStart') { d.luck.push({ add: amount, cond: { kind: 'spin', which: 'first' }, src }); return true; }
+      if (w.on === 'charmTriggers') { d.luck.push({ add: amount, cond: { kind: 'chance', p: 0.12 / Math.max(1, (w.n || 5) / 5) }, src }); return true; }
       return false;
     }
     case 'retrigger': {

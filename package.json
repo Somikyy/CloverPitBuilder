@@ -1,0 +1,13 @@
+{
+  "name": "cloverpit-build-helper",
+  "private": true,
+  "description": "Unofficial CloverPit build helper (static site, no build step).",
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "node --test tests/*.test.mjs",
+    "validate": "python3 tools/validate_models.py",
+    "models": "python3 tools/merge_models.py",
+    "data": "python3 tools/fetch_wiki.py && python3 tools/build_dataset.py && python3 tools/fetch_icons.py"
+  }
+}
