@@ -1,0 +1,638 @@
+[
+ {
+  "id": "ras_book",
+  "kind": "charm",
+  "summary": "Surgery (Holy Bible + Ankh): each time you would die, 40% chance it pays your whole Debt and sends you to the next Deadline. Breaks after 3 saves.",
+  "tip": "A coin-flip death save that ignores how big the debt is, so it shines late. Horseshoe raises it to 80%. Holy Bible and Ankh stay out of the store while it is equipped.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 2,
+   "utility": 8,
+   "risk": 2
+  },
+  "archetypes": [],
+  "provides": [
+   "deathSave",
+   "triggersRandomly",
+   "surgery"
+  ],
+  "cares": [
+   "triggersRandomly",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "deathSave",
+    "payDebt": true,
+    "when": {
+     "on": "dying",
+     "chance": 0.4
+    },
+    "discardAfter": {
+     "count": 3,
+     "of": "activations"
+    },
+    "note": "Rolled only when you are about to die (after the death countdown), not every spin; up to 3 successful saves."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles the save chance from 40% to 80%."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after fusing Ra's Book to get Holy Bible and Ankh back, keeping all three safety nets."
+   },
+   {
+    "id": "limbo",
+    "why": "However far Limbo inflates the debt, a successful save pays all of it."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Each would-be death rolls the 40% once; the charm breaks after its third successful save.",
+   "Assumed a save pays the remaining debt for you, so the coins in hand are kept.",
+   "Both Ankh and Ra's Book act at the Dying step (wiki Charm Activation page), so like Ankh it can probably wait in a drawer and be equipped during the death countdown.",
+   "Wiki: while a Surgery charm is equipped, its ingredients (Holy Bible, Ankh) are banned from the store."
+  ]
+ },
+ {
+  "id": "cat_toy",
+  "kind": "charm",
+  "summary": "Surgery (Cat Food + Toy Train): after 3 spins in a row with no reward, you get 2 extra spins with Luck +8.",
+  "tip": "Early builds miss about half their spins, so it fires roughly every other Round. It fades as Luck and symbol boosts make misses rare; Depression keeps the misses coming.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "noReward"
+  ],
+  "provides": [
+   "spins",
+   "luck",
+   "surgery"
+  ],
+  "cares": [
+   "noReward"
+  ],
+  "effects": [
+   {
+    "type": "spins",
+    "add": 2,
+    "when": {
+     "noRewardStreak": 3
+    }
+   },
+   {
+    "type": "luck",
+    "add": 8,
+    "when": {
+     "noRewardStreak": 3
+    },
+    "duration": "spin",
+    "note": "In the game both extra spins get Luck +8; the engine cannot put Luck on extra spins, so the Luck goes on the spin right after the streak instead."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "steam_locomotive",
+    "why": "Both fire after 3 straight misses: Symbols grow for good, then the lucky spins cash in."
+   },
+   {
+    "id": "diesel_locomotive",
+    "why": "Both fire after 3 straight misses: Patterns grow for good, then the lucky spins cash in."
+   },
+   {
+    "id": "depression",
+    "why": "Without the machine's own Luck, miss streaks come more often, so it fires more."
+   },
+   {
+    "id": "consolation_prize",
+    "why": "The empty spins that set off Cat Toy are the ones that can grow all Symbols."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after fusing Cat Toy to get Cat Food back: +2 spins every Round on top."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "bullet_train",
+    "why": "Three misses in a Round trigger Luck +8 spins that almost always score, ruining the empty Round Bullet Train needs."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed it can fire again if the miss streak continues (every 3 misses in a row).",
+   "Simulator: base builds miss about 55% of spins, giving roughly 0.5-0.8 triggers per 7-spin Round; luck-heavy builds trigger it less."
+  ]
+ },
+ {
+  "id": "10_fingers_hamsa",
+  "kind": "charm",
+  "summary": "Surgery (Hamsa + Rotated Hamsa): every Pattern triggers twice during the whole first Round of each Deadline, and the whole last Round has Luck +4.",
+  "tip": "One slot that covers 7 retriggered and 7 lucky spins per Deadline, far more than the two Hamsas. Cat Food adds 2 more of each; Rounds added by Music Tape or Weird Clock get nothing.",
+  "tier": "A",
+  "ratings": {
+   "power": 7,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "retrigger",
+   "jackpot"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount",
+   "luck",
+   "surgery"
+  ],
+  "cares": [
+   "spins"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "all",
+    "when": {
+     "round": "first"
+    }
+   },
+   {
+    "type": "luck",
+    "add": 4,
+    "when": {
+     "round": "last"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cat_food",
+    "why": "+2 spins in the first and last Rounds: 2 more retriggered and 2 more lucky spins per Deadline."
+   },
+   {
+    "id": "pentacle",
+    "why": "Doubled Patterns all first Round push many spins to 5+, growing its multiplier."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Golden symbols scored in the retriggered Round gain value twice."
+   },
+   {
+    "id": "vines_soup",
+    "why": "Retriggered spins reach 5+ Patterns more easily, doubling Symbols for the rest of the Round."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Hamsa and Rotated Hamsa back; their first- and last-spin bonuses stack on top."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "With only one Round in a Deadline, that Round should count as both first and last and get both bonuses (not verified)."
+  ]
+ },
+ {
+  "id": "first_place_prize",
+  "kind": "charm",
+  "summary": "Surgery (Consolation Prize + Midas Touch), triggers randomly (40%): every Symbol scored that spin gains its base value for good, like Golden on all of them.",
+  "tip": "Passive Midas Touch on 40% of spins: one of the best scaling charms. Horseshoe makes it 80%; retriggers and Luck mean more scored symbols to grow. Take it as early as you can.",
+  "tier": "S",
+  "ratings": {
+   "power": 3,
+   "scaling": 10,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "golden"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols",
+   "triggersRandomly",
+   "surgery"
+  ],
+  "cares": [
+   "retrigger",
+   "luck",
+   "patternCount"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": "all",
+    "add": 0.4,
+    "note": "Not a real Golden modifier: on 40% of spins every scored Symbol grows by its base value, which on average equals a 40% Golden chance on every Symbol; written this way so the engine counts growth per scored symbol (retriggers included)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles the trigger chance to 80%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Force a trigger before a big Luck or Jackpot spin to grow everything it scores."
+   },
+   {
+    "id": "10_fingers_hamsa",
+    "why": "A whole Round of retriggers scores every symbol twice, doubling the growth on triggering spins."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Retriggered Lemon and Cherry Patterns grow those symbols twice."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Luck +7 lays down many matching symbols on the last spin, so a trigger there grows a lot at once."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Read like Midas Touch (same wording): each scored symbol, retriggers included, adds its base value to that Symbol, so growth scales with how many symbols you score.",
+   "The engine has no per-scored-symbol growth outside the Golden modifier, so the effect is written as a 40% Golden chance; Horseshoe's doubling is not seen by the engine."
+  ]
+ },
+ {
+  "id": "lust",
+  "kind": "charm",
+  "summary": "Surgery (Lover 1 + Lover 2): forces a 666 on the last spin of Rounds 1 and 2 every Deadline; in the last Round every Symbol gets +30% Revenge chance.",
+  "tip": "Only for 666 builds: two sure 666s per Deadline feed Baphomet, Book of Shadows and Rage, and Revenge pays back part of the losses. Without payoffs it wipes two Rounds of coins every Deadline.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 5,
+   "economy": 3,
+   "utility": 2,
+   "risk": 8
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "666",
+   "revenge",
+   "coins",
+   "surgery"
+  ],
+  "cares": [
+   "patternCount",
+   "retrigger"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "A 666 is forced on the last spin of Rounds 1 and 2 of every Deadline. Each one wipes the coins earned that Round (Deadlines 3-6) or all coins in hand (Deadline 7+), triggers every 666 charm and drops a missing Cadaver piece into a drawer."
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "revenge",
+    "symbols": "all",
+    "add": 0.3,
+    "when": {
+     "round": "last"
+    },
+    "note": "Revenge: each scored Revenge symbol pays 5% of all coins lost to 666 so far this run."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "baphomet",
+    "why": "Two sure 666s every Deadline double Above and Below twice per Deadline, for good."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "Each forced 666 grants extra spins after the wipe, so those coins are kept."
+   },
+   {
+    "id": "violence",
+    "why": "Doubles every Revenge payout to 10% of your 666 losses."
+   },
+   {
+    "id": "rage",
+    "why": "Two of the three 666s it needs come free each Deadline: one more and you get an extra Round."
+   },
+   {
+    "id": "rosary",
+    "why": "Each forced 666 has a 35% chance to be cancelled, saving that Round's coins while 666 charms still fire."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "sin",
+    "why": "From Deadline 7 a 666 takes all coins in hand, the pile Sin wants you to hold, twice per Deadline."
+   },
+   {
+    "id": "old_ones_sigil",
+    "why": "Every 666 resets the Sigil's Rising growth, and Lust makes two each Deadline."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the forced 666 costs coins like a natural one; unclear whether it also happens in Deadlines 1-2.",
+   "The engine cannot force 666s or value Revenge, so its effects are not simulated; ratings carry it, and the build's coin estimate will be too high while it is equipped.",
+   "Wiki: a 666 drops a Cadaver piece only while pieces are missing, replacing a stored charm if all drawers are full."
+  ]
+ },
+ {
+  "id": "mad_emperor",
+  "kind": "charm",
+  "summary": "Surgery (Greedy King + Naughty Dealer + Raging Capitalist): every Symbol has a 10% chance of a random modifier, +10% per other Surgery charm on your table.",
+  "tip": "The payoff for stacking fusions: with 3 other Surgery charms it reaches 40%, spread over Golden, Chain, Repetition, Rising, Ticket and the rest. Alone it is weaker than its three ingredients.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 6,
+   "economy": 3,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "golden",
+   "chain"
+  ],
+  "provides": [
+   "golden",
+   "chain",
+   "repetition",
+   "rising",
+   "ticketMod",
+   "surgery"
+  ],
+  "cares": [
+   "surgery"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "repetition",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "battery",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "chain",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "investor",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "rising",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "copy",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "revenge",
+    "symbols": "all",
+    "add": 0.01
+   },
+   {
+    "type": "special",
+    "text": "The 10% grows by another 10% for each other Surgery charm on the table (e.g. 40% with three others), split the same way across all modifiers."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "amalgama",
+    "why": "Copy turns into the nearest modifier, multiplying the mix, and Amalgama counts as another Surgery charm (+10%)."
+   },
+   {
+    "id": "beach_hotel",
+    "why": "Its extra space holds more Surgery charms, and it counts as one itself (+10%)."
+   },
+   {
+    "id": "old_ones_sigil",
+    "why": "Adds its own Rising chance on top and counts as another Surgery charm (+10%)."
+   },
+   {
+    "id": "booster_pack",
+    "why": "Drops a random Surgery charm into a drawer; equip it for another +10%."
+   },
+   {
+    "id": "black_hole",
+    "why": "Counts as a Surgery charm while equipped; discard it to get the three ingredients back."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the modifier is picked evenly among all 10 kinds (Golden, Token, Ticket, Repetition, Battery, Chain, Investor, Rising, Copy, Revenge).",
+   "Only the base 10% is simulated; the engine cannot count Surgery charms on the table, so the bonus from them is carried by the ratings.",
+   "Charms that take no space are used up at once and do not stay on the table, so they do not count."
+  ]
+ },
+ {
+  "id": "bullet_train",
+  "kind": "charm",
+  "summary": "Surgery (Steam + Diesel Locomotive): every Round you finish without earning any coins permanently doubles both the Symbols and Patterns Multipliers.",
+  "tip": "Fish for empty Rounds: pick 3 spins in a Round you can spare (about 15% end empty, 25% with Depression). Each success is x4 coins for good. Luck charms work against it.",
+  "tier": "A",
+  "ratings": {
+   "power": 0,
+   "scaling": 10,
+   "economy": 0,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "noReward",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult",
+   "patternsMult",
+   "surgery"
+  ],
+  "cares": [
+   "noReward"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Each Round that ends with zero coins earned permanently doubles the Symbols Multiplier and doubles the Patterns Multiplier (x4 coins per trigger, compounding)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "depression",
+    "why": "With no spontaneous Luck, a 3-spin Round ends empty about 25% of the time instead of 15%."
+   },
+   {
+    "id": "sacrifice",
+    "why": "A sacrificed Round ends at once with no coins earned, which should count as an empty Round."
+   },
+   {
+    "id": "consolation_prize",
+    "why": "Fishing Rounds are full of empty spins, each a 25% chance to grow all Symbols."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get both Locomotives back; they grow on the same miss streaks."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "cat_toy",
+    "why": "Three misses trigger Luck +8 spins that almost always score, so the Round is no longer empty."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Luck +7 on every Round's last spin nearly always scores something."
+   },
+   {
+    "id": "toy_train",
+    "why": "Two misses in a row trigger Luck +5, which usually breaks the empty Round."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Simulator: 7-spin Rounds almost never end empty; 3-spin Rounds do about 15% of the time (25% with Depression).",
+   "Unclear whether Interest or other coins paid at Round end count as earning coins.",
+   "The engine has no 'empty Round' trigger, so the doubling is kept as text and the ratings carry its value."
+  ]
+ },
+ {
+  "id": "old_ones_sigil",
+  "kind": "charm",
+  "summary": "Surgery (Necronomicon + Pentacle): every Symbol has a 10% Rising chance, +1% per spin with 5+ Patterns (up to 50%); a 666 resets the growth.",
+  "tip": "Each scored Rising symbol adds +1 Symbols Multiplier until the Deadline ends, so it explodes in retrigger and Luck builds. Unlike Necronomicon it adds no 666 risk; Holy Bible guards the growth.",
+  "tier": "S",
+  "ratings": {
+   "power": 5,
+   "scaling": 9,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "multiplier",
+   "retrigger",
+   "jackpot"
+  ],
+  "provides": [
+   "rising",
+   "symbolsMult",
+   "surgery"
+  ],
+  "cares": [
+   "patternCount",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "rising",
+    "symbols": "all",
+    "add": 0.1
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "rising",
+    "symbols": "all",
+    "add": 0.01,
+    "when": {
+     "patternsAtLeast": 5
+    },
+    "stack": true,
+    "reset": "never",
+    "cap": 0.4,
+    "note": "The extra chance falls back to the base 10% whenever you score a 666."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "holy_bible",
+    "why": "Cancels 666s, so the Rising chance you built up is not reset."
+   },
+   {
+    "id": "10_fingers_hamsa",
+    "why": "A whole Round of retriggers pushes many spins past 5 Patterns and scores Rising symbols twice."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Retriggers push spins to 5+ Patterns, growing the chance faster."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Necronomicon and Pentacle back on top."
+   },
+   {
+    "id": "mad_emperor",
+    "why": "Adds more Rising chance, and each counts as a Surgery charm for the other's bonus."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "lust",
+    "why": "Forces two 666s every Deadline, resetting the growth each time."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "+1.5% 666 chance means more resets of the Rising growth."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "cap is the extra growth on top of the 10% base (50% total).",
+   "Assumed a 666 resets the chance to the base 10%, and a 666 cancelled by Holy Bible or Rosary does not count as scored.",
+   "Only the base 10% is simulated; the growth is carried by the ratings."
+  ]
+ }
+]

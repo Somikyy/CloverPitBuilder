@@ -3,7 +3,7 @@
   "id": "bricks",
   "kind": "charm",
   "summary": "Lemons get a 20% chance to carry Token: each scored Token Lemon pays you half your current Interest in coins.",
-  "tip": "A 1-ticket interest earner: Lemons are the most common symbol, so Tokens show up often. Raise Interest with Stonks and add Lemon chance or fruit retriggers.",
+  "tip": "A 1-ticket interest earner: Lemons tie Cherries as the most common symbol, so Tokens show up often. Raise Interest with Stonks or Grandma's Purse; add Lemon chance or fruit retriggers.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -23,7 +23,8 @@
   ],
   "cares": [
    "lemon",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -57,8 +58,8 @@
     "why": "Retriggered Lemon Patterns pay their Tokens again."
    },
    {
-    "id": "naughty_dealer",
-    "why": "Its Token chance on every symbol stacks with the 20% on Lemons."
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
    }
   ],
   "antiSynergies": [
@@ -81,7 +82,7 @@
   "id": "wood",
   "kind": "charm",
   "summary": "Cherries get a 20% chance to carry Token: each scored Token Cherry pays you half your current Interest in coins.",
-  "tip": "A 1-ticket interest earner: Cherries are as common as Lemons, so Tokens show up often. Raise Interest with Stonks and add Cherry chance or fruit retriggers.",
+  "tip": "A 1-ticket interest earner: Cherries tie Lemons as the most common symbol, so Tokens show up often. Raise Interest with Stonks or Grandma's Purse; add Cherry chance or fruit retriggers.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -101,7 +102,8 @@
   ],
   "cares": [
    "cherry",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -123,6 +125,10 @@
     "why": "Doubles your Interest, so every Token pays double."
    },
    {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
+   },
+   {
     "id": "i_used_to_eat_healthy",
     "why": "+1 Cherry chance for good means more Token Cherries scored."
    },
@@ -133,10 +139,6 @@
    {
     "id": "fruit_basket",
     "why": "Retriggered Cherry Patterns pay their Tokens again."
-   },
-   {
-    "id": "number_2",
-    "why": "A Round of non-yellow retriggers re-pays every Token Cherry."
    }
   ],
   "antiSynergies": [
@@ -178,7 +180,8 @@
   ],
   "cares": [
    "clover",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -198,6 +201,10 @@
    {
     "id": "evil_deal",
     "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
    },
    {
     "id": "todays_my_lucky_day",
@@ -251,7 +258,8 @@
   ],
   "cares": [
    "bell",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -271,6 +279,10 @@
    {
     "id": "evil_deal",
     "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
    },
    {
     "id": "i_need_to_be_there",
@@ -325,7 +337,8 @@
   ],
   "cares": [
    "diamond",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -347,6 +360,10 @@
     "why": "Doubles your Interest, so every Token pays double."
    },
    {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
+   },
+   {
     "id": "please_ill_give_you_anything",
     "why": "+1 Diamond chance for good means more Token Diamonds scored."
    },
@@ -357,10 +374,6 @@
    {
     "id": "necklace",
     "why": "A lone Diamond Pattern triggers 3 times, paying its Tokens 3 times."
-   },
-   {
-    "id": "number_2",
-    "why": "A Round of non-yellow retriggers re-pays every Token Diamond."
    }
   ],
   "antiSynergies": [
@@ -403,7 +416,8 @@
   ],
   "cares": [
    "treasure",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -425,6 +439,10 @@
     "why": "Doubles your Interest, so every Token pays double."
    },
    {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
+   },
+   {
     "id": "i_need_money",
     "why": "+1 Treasure chance for good means more Token Treasures scored."
    },
@@ -435,10 +453,6 @@
    {
     "id": "necklace",
     "why": "A lone Treasure Pattern triggers 3 times, paying its Tokens 3 times."
-   },
-   {
-    "id": "number_1",
-    "why": "A Round of yellow retriggers re-pays every Token Treasure."
    }
   ],
   "antiSynergies": [
@@ -481,7 +495,8 @@
   ],
   "cares": [
    "seven",
-   "interest"
+   "interest",
+   "retrigger"
   ],
   "effects": [
    {
@@ -501,6 +516,10 @@
    {
     "id": "evil_deal",
     "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "grandmas_purse",
+    "why": "+15% Interest at first (fading 3% per Round) roughly triples what each Token pays."
    },
    {
     "id": "i_didnt_hurt_anybody",
@@ -539,7 +558,7 @@
   "id": "wheelbarrow",
   "kind": "charm",
   "summary": "Lemons get a 20% chance to carry Ticket: each scored Ticket Lemon gives you 1 Clover Ticket.",
-  "tip": "Pricey at 4 tickets, but Lemons are the most common symbol, so it pays back fast. Lemon chance and fruit retriggers print more; hold the tickets for CloverPet or Lost Wallet.",
+  "tip": "Pricey at 4 tickets, but Lemons tie Cherries as the most common symbol, so it pays back fast. Lemon chance and fruit retriggers print more; hold the tickets for CloverPet or Lost Wallet.",
   "tier": "B",
   "ratings": {
    "power": 0,
@@ -558,7 +577,8 @@
    "tickets"
   ],
   "cares": [
-   "lemon"
+   "lemon",
+   "retrigger"
   ],
   "effects": [
    {
@@ -585,11 +605,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    },
    {
     "id": "cold_affection",
@@ -630,7 +650,8 @@
    "tickets"
   ],
   "cares": [
-   "cherry"
+   "cherry",
+   "retrigger"
   ],
   "effects": [
    {
@@ -661,11 +682,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    }
   ],
   "antiSynergies": [
@@ -701,7 +722,8 @@
    "tickets"
   ],
   "cares": [
-   "clover"
+   "clover",
+   "retrigger"
   ],
   "effects": [
    {
@@ -728,11 +750,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    },
    {
     "id": "ace_of_clubs",
@@ -772,7 +794,8 @@
    "tickets"
   ],
   "cares": [
-   "bell"
+   "bell",
+   "retrigger"
   ],
   "effects": [
    {
@@ -799,11 +822,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    },
    {
     "id": "ace_of_clubs",
@@ -844,7 +867,8 @@
    "tickets"
   ],
   "cares": [
-   "diamond"
+   "diamond",
+   "retrigger"
   ],
   "effects": [
    {
@@ -875,11 +899,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    }
   ],
   "antiSynergies": [
@@ -916,7 +940,8 @@
    "tickets"
   ],
   "cares": [
-   "treasure"
+   "treasure",
+   "retrigger"
   ],
   "effects": [
    {
@@ -947,11 +972,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    }
   ],
   "antiSynergies": [
@@ -988,7 +1013,8 @@
    "tickets"
   ],
   "cares": [
-   "seven"
+   "seven",
+   "retrigger"
   ],
   "effects": [
    {
@@ -1015,11 +1041,11 @@
    },
    {
     "id": "cloverpet",
-    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+    "why": "Turns the tickets you hold into Symbols Multiplier: +1 for every 5."
    },
    {
     "id": "lost_wallet",
-    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+    "why": "Turns the tickets you hold into Patterns Multiplier: +1 for every 15."
    }
   ],
   "antiSynergies": [
@@ -1041,7 +1067,7 @@
   "id": "ace_of_hearts",
   "kind": "charm",
   "summary": "Every spin with 3+ Patterns permanently raises Lemons and Cherries by their base value (+2 each).",
-  "tip": "A cheap fruit scaler: Luck and retriggers make 3+ Pattern spins common, and the gains stay even if you sell it later. All four Aces fuse into Poker Deck (DLC).",
+  "tip": "Scales fruit for good: Luck and retriggers make 3+ Pattern spins far more common, and the raised values stay if you sell it. All four Aces fuse into Poker Deck (DLC).",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -1082,19 +1108,19 @@
   "synergies": [
    {
     "id": "fruit_basket",
-    "why": "Fruit Patterns trigger twice, so fruit spins reach 3+ Patterns easily."
+    "why": "Fruit Patterns trigger twice, so two fruit Patterns already count as 4."
    },
    {
     "id": "clicker",
     "why": "Repetition retriggers push spins to 3+ Patterns."
    },
    {
-    "id": "hamsa",
-    "why": "Every first spin's Patterns trigger twice, often reaching 3+."
+    "id": "broken_calculator",
+    "why": "On 35% of spins every Pattern triggers again, so 2 Patterns count as 4."
    },
    {
     "id": "rotated_hamsa",
-    "why": "Luck+7 on the last spin usually lands a multi-Pattern hit."
+    "why": "Luck+7 on each Round's last spin gives about a 40% shot at 3+ Patterns."
    },
    {
     "id": "i_need_supplements",
@@ -1121,7 +1147,7 @@
   "id": "ace_of_clubs",
   "kind": "charm",
   "summary": "Every 3 tickets you spend in the store permanently raise Clovers and Bells by their base value (+3 each).",
-  "tip": "It does nothing at the slot machine, so park it in a drawer and equip it only to shop. Ticket income (Thimble, Iron, Raging Capitalist) means more raises. Aces fuse into Poker Deck (DLC).",
+  "tip": "It does nothing while spinning, so if you have a drawer, park it there and equip it only to shop. Ticket income (Thimble, Iron, Raging Capitalist) means more raises. Aces fuse into Poker Deck (DLC).",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1158,11 +1184,8 @@
      "on": "purchase"
     },
     "stack": true,
-    "reset": "never"
-   },
-   {
-    "type": "special",
-    "text": "Counts tickets spent on store purchases, not purchases: each 3 tickets spent raise Clovers and Bells by +3 each, so a typical 2-4 ticket charm gives about one raise. Free charms add nothing, and phone rerolls are not store spending."
+    "reset": "never",
+    "note": "Counts tickets spent at the store, not purchases: every 3 tickets spent raise Clovers and Bells by +3. One raise per purchase approximates a 2-4 ticket charm; free charms and phone rerolls add nothing."
    }
   ],
   "synergies": [
@@ -1208,7 +1231,7 @@
   "id": "ace_of_diamonds",
   "kind": "charm",
   "summary": "Every spin that scores a Pattern of 4+ Symbols permanently raises Diamonds and Treasures by their base value (+5 each).",
-  "tip": "A strong gem scaler: HOR-L and bigger Patterns are common, and Nose or Little Star force them. Pushing both gems past the Seven makes Expired Meds ban them. Aces fuse into Poker Deck (DLC).",
+  "tip": "A strong gem scaler: Luck makes 4+ Patterns (HOR-L and up) frequent, and Nose or Little Star force them. If both gems pass the Seven, Expired Meds bans them. Aces fuse into Poker Deck (DLC).",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -1377,7 +1400,7 @@
   "id": "jimbo",
   "kind": "charm",
   "summary": "Randomly rolled: 1 downside plus 2 upsides, from huge (every Pattern retriggers, Symbols Mult +5, Patterns Mult +3) to small (+3 tickets).",
-  "tip": "Read the roll before buying: 'all Patterns trigger again', SM +5, PM +3 and +2 spins are great; -3 spins is the worst downside. A drawer keeps a good roll; Vorago re-rolls a bad one.",
+  "tip": "Read the roll before buying: 'all Patterns trigger again', SM +5, PM +3 and +2 spins are great; -3 spins and +3% 666 hurt most. A drawer keeps a good roll; Vorago re-rolls a bad one.",
   "tier": "A",
   "ratings": {
    "power": 7,
@@ -1422,6 +1445,10 @@
    {
     "id": "holy_bible",
     "why": "Blocks the next 666 if the downside raised your 666 chance."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "Each 666 from a 666-chance downside also hands out extra spins (+3, +2, +1 per Round)."
    }
   ],
   "antiSynergies": [],
@@ -1440,7 +1467,7 @@
   "tip": "Cheap, steady extra Patterns at any stage. Horseshoe makes it 60%, and its frequent activations feed Tarot Deck, Channeler of Fortune and Ace of Spades.",
   "tier": "C",
   "ratings": {
-   "power": 4,
+   "power": 3,
    "scaling": 1,
    "economy": 0,
    "utility": 0,
@@ -1557,7 +1584,7 @@
   "confidence": "medium",
   "assumptions": [
    "Valued as one free restock per Round.",
-   "Unclear whether this automatic restock counts as a restock for Bell Pepper or Electricity Meter, so they are not listed as synergies."
+   "The wiki says item-forced restocks (Fortune Cookie, Cigarettes) do not count as restocks, so D6 probably does not feed Bell Pepper or Electricity Meter; they are not listed as synergies."
   ]
  },
  {
@@ -1577,7 +1604,6 @@
    "discard"
   ],
   "provides": [
-   "drawers",
    "discard"
   ],
   "cares": [
@@ -1633,7 +1659,7 @@
   "id": "angels_hand",
   "kind": "charm",
   "summary": "Red Button (6 charges): adds a random 2-symbol Pattern (HOR-S, VER-S or DIAG-S, worth x0.5) for the rest of the Round.",
-  "tip": "Pairs line up constantly, so each press adds many small hits and big Pattern counts (Pentacle, Mushrooms, Lucky Cat). 6 charges is slow without charge help. Ruins lone-Pattern charms like Halo.",
+  "tip": "Pairs line up constantly, so each press adds many small hits and big Pattern counts (Pentacle, Mushrooms, Lucky Cat). 6 charges is slow without charge help. While active, Halo rarely fires.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -1706,10 +1732,6 @@
     "why": "Needs a lone Pattern, which small Patterns make rare."
    },
    {
-    "id": "pareidolia",
-    "why": "Small Patterns stop the Eye from being alone."
-   },
-   {
     "id": "necklace",
     "why": "Needs a lone Diamond or Treasure Pattern, which small Patterns make rare."
    }
@@ -1735,11 +1757,11 @@
   },
   "archetypes": [
    "sacred",
-   "jackpot",
-   "gems"
+   "jackpot"
   ],
   "provides": [
-   "coins"
+   "coins",
+   "sacred"
   ],
   "cares": [
    "eye",
@@ -1763,12 +1785,20 @@
     "why": "Each 999 forces a Jackpot next spin, and its Eye pays the fresh total at once."
    },
    {
+    "id": "halo",
+    "why": "Spreading a lone Pattern can fill an Eye or the whole grid (a Jackpot), and each Eye repays your 999 total."
+   },
+   {
     "id": "one_trick_pony",
     "why": "Its guaranteed Jackpot includes an Eye."
    },
    {
     "id": "necronomicon",
     "why": "In Sacred Mode its +3% 666 chance means more 999s to bank."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Its forced 666 lands as a 999 in Sacred Mode (from Deadline 3), growing the total each Eye repays."
    }
   ],
   "antiSynergies": [
@@ -1788,7 +1818,7 @@
   "id": "holy_spirit",
   "kind": "charm",
   "summary": "Every 999 gives each charm on your table a random Trait, replacing any Trait it already had.",
-  "tip": "Each 999 is like a free Trait call for every equipped charm, huge with The Collector. In Sacred Mode, 666-chance charms like Necronomicon raise your 999 odds.",
+  "tip": "Your first 999 gives every charm on the table a Trait and later ones re-roll them, so it is huge with The Collector. Necronomicon and Book of Shadows raise your 999 odds.",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -1802,11 +1832,13 @@
    "traits"
   ],
   "provides": [
-   "traits"
+   "traits",
+   "sacred"
   ],
   "cares": [
    "999",
-   "sacred"
+   "sacred",
+   "charmCount"
   ],
   "effects": [
    {
@@ -1838,6 +1870,10 @@
    {
     "id": "book_of_shadows",
     "why": "+1.5% 999 chance in Sacred Mode, plus extra spins after each one."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Its forced 666 lands as a 999 in Sacred Mode (from Deadline 3), so new charms get Traits on demand."
    }
   ],
   "antiSynergies": [
@@ -1872,7 +1908,8 @@
   ],
   "provides": [
    "charges",
-   "redButton"
+   "redButton",
+   "sacred"
   ],
   "cares": [
    "redButton",
@@ -1907,7 +1944,7 @@
    },
    {
     "id": "horseshoe",
-    "why": "With Nuclear Button, fuses with Sacred Heart into Glorious Trumpet (DLC)."
+    "why": "With Nuclear Button, the three fuse into Glorious Trumpet (DLC)."
    }
   ],
   "antiSynergies": [],
@@ -1920,7 +1957,7 @@
   "id": "halo",
   "kind": "charm",
   "summary": "When a spin has exactly one Pattern, every symbol touching it turns into that Pattern's symbol, usually forming much bigger Patterns.",
-  "tip": "Lone Patterns come up on about 3 spins in 10, and each spread builds big Patterns, often doubling or tripling your coins. Stain, Abstract Painting and Ace of Diamonds love it; Angel's Hand hurts it.",
+  "tip": "Lone Patterns come up on about 3 spins in 10, and each spread builds big Patterns, often doubling or tripling your coins. Little Star, Stain and Vine's Soup love it; Angel's Hand hurts it.",
   "tier": "S",
   "ratings": {
    "power": 9,
@@ -1936,7 +1973,8 @@
   "provides": [
    "largePatterns",
    "patternCount",
-   "jackpot"
+   "jackpot",
+   "sacred"
   ],
   "cares": [],
   "effects": [
@@ -1950,8 +1988,8 @@
   ],
   "synergies": [
    {
-    "id": "abstract_painting",
-    "why": "The spread usually makes a 5+ Pattern, doubling all Patterns for the Round."
+    "id": "little_star",
+    "why": "Its forced middle-row HOR-XL, when alone, spreads over the whole grid: a Jackpot."
    },
    {
     "id": "stain",
@@ -1982,7 +2020,7 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Assumed 'adjacent' includes diagonal neighbours, as the simulator does; with side neighbours only, a middle-row Pattern still grows into an Eye.",
+   "Assumed 'adjacent' includes diagonal neighbours, as the simulator does; with side neighbours only, a centred middle-row HOR still grows into an Eye and a lone middle-row HOR-XL still fills the grid.",
    "Assumed the transformed grid scores in the same spin.",
    "Tier S from simulation: in a plain build it multiplied coins about 2.4-3x with side-only adjacency and 3.5-4.6x with diagonals."
   ]
@@ -1991,7 +2029,7 @@
   "id": "the_blood",
   "kind": "charm",
   "summary": "Lemons and Cherries get 15% Repetition, Clovers and Bells 5% Battery, and Diamonds, Treasures and Sevens 15% Chain.",
-  "tip": "Three modifier charms in one slot: fruit Repetition retriggers the commonest Patterns, Chain grows gem Patterns for good, and Battery fuels Red Button builds.",
+  "tip": "Three modifier charms in one slot: fruit Repetition retriggers the commonest Patterns, gem Chains permanently raise the Patterns they score in, and Battery fuels Red Button builds.",
   "tier": "A",
   "ratings": {
    "power": 5,
@@ -2013,7 +2051,8 @@
    "chain",
    "patternValue",
    "battery",
-   "charges"
+   "charges",
+   "sacred"
   ],
   "cares": [
    "fruit",
@@ -2062,6 +2101,10 @@
    {
     "id": "the_body",
     "why": "Its Token fruit gets re-scored by The Blood's Repetition retriggers."
+   },
+   {
+    "id": "golden_lemon",
+    "why": "Repetition retriggers score Golden Lemons again, so Lemon value grows faster."
    }
   ],
   "antiSynergies": [],
