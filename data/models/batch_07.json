@@ -141,7 +141,7 @@
   "id": "10_fingers_hamsa",
   "kind": "charm",
   "summary": "Surgery (Hamsa + Rotated Hamsa): every Pattern triggers twice during the whole first Round of each Deadline, and the whole last Round has Luck +4.",
-  "tip": "One slot that covers 7 retriggered and 7 lucky spins per Deadline, far more than the two Hamsas. Cat Food adds 2 more of each; Rounds added by Music Tape or Weird Clock get nothing.",
+  "tip": "One slot covering 7 retriggered and 7 lucky spins per Deadline, versus 3 and 3 for the two Hamsas. Cat Food adds 2 more of each; Rounds added by Music Tape or Weird Clock get nothing.",
   "tier": "A",
   "ratings": {
    "power": 7,
@@ -485,7 +485,7 @@
   "id": "bullet_train",
   "kind": "charm",
   "summary": "Surgery (Steam + Diesel Locomotive): every Round you finish without earning any coins permanently doubles both the Symbols and Patterns Multipliers.",
-  "tip": "Fish for empty Rounds: pick 3 spins in a Round you can spare (about 15% end empty, 25% with Depression). Each success is x4 coins for good. Luck charms work against it.",
+  "tip": "Fish for empty Rounds: pick 3 spins in a Round you can spare (about 15% end empty, 25% with Depression) and park Luck charms in a drawer. Each success is x4 coins for good.",
   "tier": "A",
   "ratings": {
    "power": 0,
@@ -619,7 +619,7 @@
    },
    {
     "id": "mad_emperor",
-    "why": "Adds more Rising chance, and each counts as a Surgery charm for the other's bonus."
+    "why": "Adds a little more Rising chance, and the Sigil counts as a Surgery charm for Mad Emperor's +10% bonus."
    }
   ],
   "antiSynergies": [
@@ -693,7 +693,7 @@
     "why": "One Symbol fills about 45% of the grid, so the others form far fewer Patterns."
    }
   ],
-  "confidence": "medium",
+  "confidence": "high",
   "assumptions": [
    "Simulator: rounds that score all 7 Symbols are about 0% in plain builds, 0.5% with Cat Food, Hamsas and Platinum Record, and about 4% with Angel's Hand's small Patterns added.",
    "The engine has no per-Round 'scored every Symbol' trigger (its scoredAll check is per spin), so the doubling is kept as text and the ratings carry it."
@@ -892,7 +892,7 @@
    },
    {
     "id": "golden_horseshoe",
-    "why": "Can force the 30% roll; the wiki reports a glitch where the two loop up to 99,999 triggers."
+    "why": "Per a wiki note it can guarantee the 30% roll, and the pair can glitch into up to 99,999 triggers."
    },
    {
     "id": "black_hole",
@@ -963,6 +963,10 @@
    {
     "id": "rotated_hamsa",
     "why": "Luck +7 usually picks the boosted Symbol, which then floods the grid toward a Jackpot."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Scratch and Hope back: +1 more on the boosted Symbol, since it is the most likely one."
    }
   ],
   "antiSynergies": [
@@ -1335,15 +1339,15 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed 'discarded during a Round' covers Charms that break or discard themselves mid-Round, and that they come back at their normal price.",
-   "Store charms and Rounds cannot both be open at once, so selling a charm presumably does not count."
+   "Assumed 'discarded during a Round' covers Charms that break or discard themselves mid-Round (Holy Bible, Peppers, Fruit Basket...), and that they come back at their normal price.",
+   "Unclear whether Charms you sell yourself count."
   ]
  },
  {
   "id": "sin",
   "kind": "charm",
   "summary": "Surgery (Corpse Right Leg + Evil Deal): your coins and tickets double at the end of every Round, but both are set to 0 when the Deadline ends.",
-  "tip": "Hold coins so they double each Round, then pay the debt (deposits stop at the debt) and spend your tickets before the Deadline ends. From Deadline 7 a 666 takes all coins in hand, so bring protection.",
+  "tip": "Hold coins so they double each Round, then pay the debt (deposits stop at the debt) and spend tickets before the Deadline ends. From Deadline 7 a 666 takes all coins in hand: bring protection.",
   "tier": "A",
   "ratings": {
    "power": 8,
@@ -1432,7 +1436,7 @@
   "id": "eternal_rest",
   "kind": "charm",
   "summary": "Surgery (Corpse Left Leg + Weird Clock): every Charm that is not an ingredient of some Surgery recipe is banned from the store.",
-  "tip": "Shrinks the store to about 50 recipe ingredients, so the parts for your next fusion show up far more often. It also bans strong non-recipe Charms, so keep it in a drawer when you are not hunting parts.",
+  "tip": "Shrinks the store to about 50 recipe ingredients, so parts for your next fusion show up far more often. It also bans strong non-recipe Charms: keep it in a drawer when not hunting parts.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1463,7 +1467,7 @@
    },
    {
     "id": "apocalypse",
-    "why": "One of the four ingredients of Apocalypse."
+    "why": "One of the four ingredients of Apocalypse, and it makes the other parts (Cross, Ankh, Evil Deal) show up more often."
    }
   ],
   "antiSynergies": [],
@@ -1477,7 +1481,7 @@
   "id": "apocalypse",
   "kind": "charm",
   "summary": "Surgery (Sacrifice + Resurrection + Sin + Eternal Rest): you die at once, then start a new run with the same memory card and all your table Charms.",
-  "tip": "Not a power pick: it ends the current run (a secret ending) and counts as a death. Make it to carry a full late-game table into a fresh run. Extra slots from 'Please don't throw my stuff away!' do not carry over.",
+  "tip": "Not a power pick: it ends the current run (a secret ending, counted as a death). Make it to carry a full late-game table into a fresh run; extra slots from the phone call do not carry over.",
   "tier": "C",
   "ratings": {
    "power": 0,
