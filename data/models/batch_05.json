@@ -606,5 +606,602 @@
   "assumptions": [
    "Each Ticket Lemon in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
   ]
+ },
+ {
+  "id": "shoe",
+  "kind": "charm",
+  "summary": "Cherries get a 20% chance to carry Ticket: each scored Ticket Cherry gives you 1 Clover Ticket.",
+  "tip": "Pricey at 4 tickets, but Cherries are among the most common symbols, so it pays back fast. Cherry chance and fruit retriggers print more; hold the tickets for CloverPet or Lost Wallet.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 7,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "cherry",
+   "fruit"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "cherry"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "cherry"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cherry_picture",
+    "why": "+2 Cherry chance for the Deadline means more Ticket Cherries scored."
+   },
+   {
+    "id": "i_used_to_eat_healthy",
+    "why": "+1 Cherry chance for good means more Ticket Cherries scored."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Retriggered Cherry Patterns pay their Tickets again."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers re-pays every Ticket Cherry."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Cherries, so fewer Tickets."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket symbol in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ },
+ {
+  "id": "thimble",
+  "kind": "charm",
+  "summary": "Clovers get a 20% chance to carry Ticket: each scored Ticket Clover gives you 1 Clover Ticket.",
+  "tip": "Cheap, steady ticket income for 2 tickets in any build that scores Clovers. Clover Picture or Today's my lucky day plus Number 2 retriggers turn it into a ticket printer.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 6,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "clover"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "clover"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "clover"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "clover_picture",
+    "why": "+2 Clover chance for the Deadline means more Ticket Clovers scored."
+   },
+   {
+    "id": "todays_my_lucky_day",
+    "why": "+1 Clover chance for good means more Ticket Clovers scored."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers re-pays every Ticket Clover."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   },
+   {
+    "id": "ace_of_clubs",
+    "why": "Spend the extra tickets in the store: every 3 raise Clovers and Bells by +3."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Clovers, so fewer Tickets."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket symbol in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ },
+ {
+  "id": "iron",
+  "kind": "charm",
+  "summary": "Bells get a 20% chance to carry Ticket: each scored Ticket Bell gives you 1 Clover Ticket.",
+  "tip": "Cheap, steady ticket income for 2 tickets in any build that scores Bells. Bell Picture or I need to be there plus Number 1 retriggers turn it into a ticket printer.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 6,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "bell"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "bell"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "bell"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "bell_picture",
+    "why": "+2 Bell chance for the Deadline means more Ticket Bells scored."
+   },
+   {
+    "id": "i_need_to_be_there",
+    "why": "+1 Bell chance for good means more Ticket Bells scored."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers re-pays every Ticket Bell."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   },
+   {
+    "id": "ace_of_clubs",
+    "why": "Spend the extra tickets in the store: every 3 raise Clovers and Bells by +3."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Bells, so fewer Tickets."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket symbol in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ },
+ {
+  "id": "car",
+  "kind": "charm",
+  "summary": "Diamonds get a 20% chance to carry Ticket: each scored Ticket Diamond gives you 1 Clover Ticket.",
+  "tip": "Diamonds rarely line up on their own, so it wants a Diamond build (Diamond Picture, Please, I'll give you anything!). Then Necklace and Number 2 make each Ticket Diamond pay several times.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 5,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "diamond",
+   "gems"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "diamond"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "diamond"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "diamond_picture",
+    "why": "+2 Diamond chance for the Deadline means more Ticket Diamonds scored."
+   },
+   {
+    "id": "please_ill_give_you_anything",
+    "why": "+1 Diamond chance for good means more Ticket Diamonds scored."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Diamond Pattern triggers 3 times, paying its Tickets 3 times."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers re-pays every Ticket Diamond."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, so fewer Tickets."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket symbol in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ },
+ {
+  "id": "ship",
+  "kind": "charm",
+  "summary": "Treasures get a 20% chance to carry Ticket: each scored Ticket Treasure gives you 1 Clover Ticket.",
+  "tip": "Treasures rarely line up on their own, so it wants a Treasure build (Treasure Picture, I need money!). Then Necklace and Number 1 make each Ticket Treasure pay several times.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 5,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "treasure",
+   "gems"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "treasure"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "treasure"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "treasure_picture",
+    "why": "+2 Treasure chance for the Deadline means more Ticket Treasures scored."
+   },
+   {
+    "id": "i_need_money",
+    "why": "+1 Treasure chance for good means more Ticket Treasures scored."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Treasure Pattern triggers 3 times, paying its Tickets 3 times."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers re-pays every Ticket Treasure."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Treasures, so fewer Tickets."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket symbol in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ },
+ {
+  "id": "tuba_hat",
+  "kind": "charm",
+  "summary": "Sevens get a 20% chance to carry Ticket: each scored Ticket Seven gives you 1 Clover Ticket.",
+  "tip": "Sevens are the rarest symbol, so this pays little unless Seven chance is pumped (Seven Picture, I didn't hurt anybody). In a Seven build, Number 1 retriggers re-pay every Ticket Seven.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 3,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "seven",
+   "gems"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "seven"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "seven"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "seven_picture",
+    "why": "+2 Seven chance for the Deadline means more Ticket Sevens scored."
+   },
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "+1 Seven chance for good means more Ticket Sevens scored."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers re-pays every Ticket Seven."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Sevens, so fewer Tickets."
+   },
+   {
+    "id": "expired_meds",
+    "why": "Sevens are usually your most valuable symbol, so it keeps them from appearing."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket symbol in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ },
+ {
+  "id": "ace_of_hearts",
+  "kind": "charm",
+  "summary": "Every spin with 3+ Patterns permanently raises Lemons and Cherries by their base value (+2 each).",
+  "tip": "A cheap fruit scaler: Luck and retriggers make 3+ Pattern spins common, and the gains stay even if you sell it later. All four Aces fuse into Poker Deck (DLC).",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "fruit",
+   "lemon",
+   "cherry"
+  ],
+  "provides": [
+   "symbolValue",
+   "fruit",
+   "lemon",
+   "cherry"
+  ],
+  "cares": [
+   "patternCount",
+   "fruit",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "fruit",
+    "addBase": 1,
+    "when": {
+     "patternsAtLeast": 3
+    },
+    "stack": true,
+    "reset": "never"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fruit_basket",
+    "why": "Fruit Patterns trigger twice, so fruit spins reach 3+ Patterns easily."
+   },
+   {
+    "id": "clicker",
+    "why": "Repetition retriggers push spins to 3+ Patterns."
+   },
+   {
+    "id": "hamsa",
+    "why": "Every first spin's Patterns trigger twice, often reaching 3+."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Luck+7 on the last spin usually lands a multi-Pattern hit."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Doubles the fruit value it has built up; take it later."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "With Ace of Diamonds, Spades and Clubs, fuses into Poker Deck (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves Lemon and Cherry chances, so the raised fruit is scored less often."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Retriggers count toward the 3+ Patterns, as for Lucky Cat.",
+   "The raise is permanent symbol value, so it stays after the charm is sold."
+  ]
+ },
+ {
+  "id": "ace_of_clubs",
+  "kind": "charm",
+  "summary": "Every 3 tickets you spend in the store permanently raise Clovers and Bells by their base value (+3 each).",
+  "tip": "It does nothing at the slot machine, so park it in a drawer and equip it only to shop. Ticket income (Thimble, Iron, Raging Capitalist) means more raises. Aces fuse into Poker Deck (DLC).",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 5,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "clover",
+   "bell",
+   "tickets"
+  ],
+  "provides": [
+   "symbolValue",
+   "clover",
+   "bell"
+  ],
+  "cares": [
+   "tickets",
+   "purchase",
+   "clover",
+   "bell"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": [
+     "clover",
+     "bell"
+    ],
+    "addBase": 1,
+    "when": {
+     "on": "purchase"
+    },
+    "stack": true,
+    "reset": "never"
+   },
+   {
+    "type": "special",
+    "text": "Counts tickets spent on store purchases, not purchases: each 3 tickets spent raise Clovers and Bells by +3 each, so a typical 2-4 ticket charm gives about one raise. Free charms add nothing, and phone rerolls are not store spending."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "thimble",
+    "why": "Ticket Clovers fund more shopping, and Clovers are one of the symbols it raises."
+   },
+   {
+    "id": "iron",
+    "why": "Ticket Bells fund more shopping, and Bells are one of the symbols it raises."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Its Ticket modifiers fund more purchases, and every purchase grows it too."
+   },
+   {
+    "id": "clover_voucher",
+    "why": "Its 2-ticket price counts toward the next raise, and it refunds 4."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Doubles the Clover and Bell values it has built up; take it later."
+   },
+   {
+    "id": "ace_of_hearts",
+    "why": "With Ace of Hearts, Diamonds and Spades, fuses into Poker Deck (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves Clover and Bell chances, so the raised symbols show up less."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Spent tickets are counted cumulatively, so leftovers carry over to the next purchase.",
+   "Modelled as one raise per purchase (when.on purchase), matching an average charm price of about 3 tickets.",
+   "The ticket price of Ace of Clubs itself does not count."
+  ]
  }
 ]
