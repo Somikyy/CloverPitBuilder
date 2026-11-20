@@ -113,6 +113,7 @@ function postCondOk(c, o, rng, randomMul) {
     case 'onJackpot': return o.jackpot;
     case 'scoredAll': return (o.scoredMask & c.mask) === c.mask;
     case 'scoredAny': return (o.scoredMask & c.mask) !== 0;
+    case 'noRewardStreak': return o.noRewardStreak > 0 && o.noRewardStreak % c.n === 0;
     case 'and': return c.all.every((x) => postCondOk(x, o, rng, randomMul));
     default: return false;
   }
@@ -124,7 +125,10 @@ function postCondOk(c, o, rng, randomMul) {
  * @param {object} [opt] { seed, deadlines }
  */
 export function simulate(cfg, opt = {}) {
-  const rng = makeRng(opt.seed ?? 1234567);
+  const seed = opt.seed ?? 1234567;
+  const rng = makeRng(seed);                 // misc: conditions, sixes, spontaneous luck
+  const rg = makeRng((seed * 2654435761) >>> 0 ^ 0x5bd1e995); // grid cells + luck placement
+  const rmod = makeRng((seed + 0x9e3779b9) >>> 0);           // symbol modifiers
   const nDeadlines = opt.deadlines ?? 400;
   const D = cfg.deadline;
   const roundsPerDeadline = cfg.roundsPerDeadline;
@@ -156,6 +160,7 @@ export function simulate(cfg, opt = {}) {
   const hist = new Float64Array(64);
   const modEvents = new Float64Array(70);
   const cellsScored = new Float64Array(7);
+  const cellEvents = new Float64Array(7);
   const symCoins = new Float64Array(7);
   const patCoins = new Float64Array(14);
   let spins = 0, rounds = 0, coins = 0, coinsNet = 0, linear = 0;
@@ -186,7 +191,7 @@ export function simulate(cfg, opt = {}) {
     let dlSM = 0, dlPM = 0;
     for (const rb of rbItems) rb.activeDeadline = false;
     let roundsThisDeadline = roundsPerDeadline;
-    let noRewardStreak = 0, prevPatterns = 1, gemStreak = 0, no5Streak = 0;
+    let noRewardStreak = 0, prevPatterns = 1, gemStreak = 0, no5Streak = 0, spinInDeadline = 0;
 
     for (let r = 0; r < roundsThisDeadline; r++) {
       rounds++;
@@ -225,7 +230,7 @@ export function simulate(cfg, opt = {}) {
       }
 
       for (let si = 0; si < spinsThisRound; si++) {
-        spins++; globalSpin++;
+        spins++; globalSpin++; spinInDeadline++;
         const ctx = {
           spinIdx: si, spinsThisRound, roundIdx: r, roundsThisDeadline, globalSpin,
           noRewardStreak, prevPatterns, after666, gemStreak, no5Streak, randomMul,
@@ -237,7 +242,7 @@ export function simulate(cfg, opt = {}) {
         if (si >= baseSpins && pendingExtra.length) luck += pendingExtra.shift().luck;
         if (cfg.spontaneous) {
           if (D <= 1) {
-            const sn = globalSpin;
+            const sn = spinInDeadline;
             if (sn > 1 && (sn + ilsOffset + 1) % (4 + Math.floor(sn / 6)) === 0) {
               const roll = Math.floor(rng() * 6); // 4,5,6,6,7,8
               luck += [4, 5, 6, 6, 7, 8][roll];
@@ -258,14 +263,15 @@ export function simulate(cfg, opt = {}) {
         // ---- grid
         let wTotal = 0;
         for (let s = 0; s < 7; s++) wTotal += weights[s];
-        for (let c = 0; c < 15; c++) grid[c] = pickWeighted(weights, wTotal, rng());
+        for (let c = 0; c < 15; c++) grid[c] = pickWeighted(weights, wTotal, rg());
+        const luckU = rg();
         if (luck > 0) {
-          const ls = pickWeighted(weights, wTotal, rng());
+          const ls = pickWeighted(weights, wTotal, luckU);
           if (luck >= 15) grid.fill(ls);
           else {
             for (let i = 0; i < 15; i++) idx15[i] = i;
             for (let i = 0; i < luck; i++) {
-              const j = i + Math.floor(rng() * (15 - i));
+              const j = i + Math.floor(rg() * (15 - i));
               const t = idx15[i]; idx15[i] = idx15[j]; idx15[j] = t;
               grid[idx15[i]] = ls;
             }
@@ -302,7 +308,9 @@ export function simulate(cfg, opt = {}) {
           const s = grid[c];
           if (s === SIX) continue;
           const t = modTable[s];
-          for (let k = 0; k < t.length; k++) if (rng() < t[k][1]) { cellMod[c] = t[k][0]; break; }
+          const u = rmod();
+          let acc = 0;
+          for (let k = 0; k < t.length; k++) { acc += t[k][1]; if (u < acc) { cellMod[c] = t[k][0]; break; } }
         }
 
         // ---- detection (with optional transforms)
@@ -375,6 +383,7 @@ export function simulate(cfg, opt = {}) {
           if (p === 10) jackpot = true;
           if (p === 9) onlyEye = true;
           N[s * 14 + p] += t;
+          cellEvents[s] += t * INST_SIZE[i];
           const symV = values[s] * rSymMul[s] * dlSymMul[s] + rSymAddBase[s] * (cfg.baseValues ? cfg.baseValues[s] : 0);
           const patV = patVals[p] * rPatMul[p] + rPatAddBase[p] * (cfg.basePatVals ? cfg.basePatVals[p] : 0);
           const c = symV * patV * t;
@@ -413,7 +422,7 @@ export function simulate(cfg, opt = {}) {
         }
 
         // ---- post-spin triggered temporaries
-        const o = { patCount, instCount, maxSize, onlyEye, is666, jackpot, scoredMask };
+        const o = { patCount, instCount, maxSize, onlyEye, is666, jackpot, scoredMask, noRewardStreak: patCount > 0 ? 0 : noRewardStreak + 1 };
         let anyTrig = false;
         for (let ti = 0; ti < temps.length; ti++) {
           const T = temps[ti];
@@ -515,6 +524,7 @@ export function simulate(cfg, opt = {}) {
     pAnyCharmTrig: per(cntAnyCharmTrig), pAllSymbolsRound: cntAllSymbolsRound / rounds,
     modEvents: modEvents.map(per),
     cellsScored: cellsScored.map(per),
+    cellEvents: cellEvents.map(per),
     symCoins: symCoins.map(per), patCoins: patCoins.map(per),
     luckAvg: luckSum / spins,
     extraSpinsPerRound: extraSpinsTotal / rounds,

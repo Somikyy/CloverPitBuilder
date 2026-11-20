@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CloverPit Build Helper</title>
+  <meta name="description" content="Unofficial CloverPit build helper: enter your charms, phone calls and in-game numbers and get the best next pick, ranked by a real slot-machine simulation.">
+  <meta name="theme-color" content="#171d1a">
+  <meta property="og:title" content="CloverPit Build Helper">
+  <meta property="og:description" content="Which charm or phone call should you take next? Unofficial helper with a slot-machine simulator, item list and tier list.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/handjet-latin-full.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="./"><span class="brand-mark">Clover<b>Pit</b> Build Helper</span><span class="brand-note">Unofficial fan tool</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="./" aria-current="page">Helper</a>
+      <a href="items.html">Items</a>
+      <a href="tiers.html">Tier list</a>
+    </nav>
+    <div class="toggles">
+      <button id="toggle-sound" class="icon-btn" type="button" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 6h3l4-3v10L5 10H2z"/><path fill="none" stroke="currentColor" stroke-width="1.4" d="M11 5.5c1 .8 1 4.2 0 5M12.8 4c2 1.6 2 6.4 0 8"/></svg><span>Sound on</span></button>
+      <button id="toggle-fx" class="icon-btn" type="button" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path stroke="currentColor" stroke-width="1" d="M3 6h10M3 8h10M3 10h10" opacity=".6"/><path stroke="currentColor" stroke-width="1.4" d="M6 14h4"/></svg><span>CRT on</span></button>
+    </div>
+  </header>
+
+  <main class="helper" id="helper">
+    <!-- your run: the table -->
+    <section class="zone-build prop table-prop" aria-labelledby="build-title">
+      <h2 class="prop-title" id="build-title">Your run</h2>
+      <p class="prop-sub">Add what you have. Everything updates as you go and is saved in this browser.</p>
+
+      <div class="section">
+        <div class="memory-pick">
+          <img id="memory-art" src="assets/icons/memory/erased_memory_card.webp" alt="">
+          <label class="field"><span>Memory card</span><select id="memory" class="select"></select></label>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <label class="field"><span>Deadline</span>
+            <span class="stepper"><button type="button" data-step="-1" aria-label="Previous deadline">−</button><input id="deadline" class="input num" type="number" min="1" max="30" inputmode="numeric"><button type="button" data-step="1" aria-label="Next deadline">+</button></span>
+          </label>
+          <label class="field"><span>Clover tickets</span><input id="tickets" class="input num" type="number" min="0" inputmode="numeric"></label>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <label class="field"><span>Coins held <span class="muted">(optional)</span></span><input id="coins" class="input num" type="number" min="0" inputmode="numeric" placeholder="–"></label>
+          <label class="field"><span>Deposited <span class="muted">(optional)</span></span><input id="deposited" class="input num" type="number" min="0" inputmode="numeric" placeholder="–"></label>
+        </div>
+        <div class="row" style="margin-top:12px; gap:14px">
+          <label class="check"><input id="hard" type="checkbox"> Hard mode</label>
+          <label class="check"><input id="sacred" type="checkbox"> Sacred mode</label>
+          <label class="check"><input id="dlc" type="checkbox"> Unholy Fusion DLC</label>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>Charms on the table</h3><span class="count" id="space-count">0/7</span></div>
+        <div class="sockets" id="sockets"></div>
+        <p class="note">Click a charm to set its trait, move it to a drawer or remove it.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>Phone calls taken</h3><button class="btn small" type="button" id="add-call">Add call</button></div>
+        <ul class="calls" id="calls"></ul>
+      </div>
+
+      <div class="section">
+        <details class="boards" id="boards">
+          <summary>In-game numbers</summary>
+          <p class="note" style="margin-top:4px">Optional, but it makes the advice much sharper.</p>
+          <p class="note">Copy the values from the Symbols and Patterns boards. Leave a box empty to use the calculated value shown in grey.</p>
+          <div class="board" id="symbols-board"></div>
+          <div class="row" style="margin-top:10px">
+            <label class="field"><span>Symbols multiplier</span><input id="sm" class="input num" type="number" step="any" min="0"></label>
+            <label class="field"><span>Patterns multiplier</span><input id="pm" class="input num" type="number" step="any" min="0"></label>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <label class="field"><span>Interest %</span><input id="interest" class="input num" type="number" step="any" min="0"></label>
+            <label class="field"><span>Charm space</span><input id="charmspace" class="input num" type="number" min="0"></label>
+          </div>
+          <div class="board" id="patterns-board" style="margin-top:12px"></div>
+          <button class="link-btn" type="button" id="reset-stats" style="margin-top:10px">Clear all in-game numbers</button>
+        </details>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>Save and share</h3></div>
+        <div class="row">
+          <button class="btn" type="button" id="copy-link">Copy share link</button>
+          <button class="btn ghost" type="button" id="save-build">Save build</button>
+          <button class="btn ghost" type="button" id="new-run">New run</button>
+        </div>
+        <div id="saved-list" class="small" style="margin-top:8px"></div>
+      </div>
+    </section>
+
+    <!-- the machine: best picks -->
+    <section class="zone-machine" aria-labelledby="machine-title">
+      <div class="prop machine">
+        <div class="machine-top">
+          <h2 class="prop-title" id="machine-title">Best picks</h2>
+          <span class="small" style="color:#e7cfae" id="machine-mode">Charms</span>
+        </div>
+        <div class="screen fx" id="screen">
+          <div class="reels" id="reels" aria-hidden="true"></div>
+          <div id="reel-labels" class="reels"></div>
+          <div class="screen-status"><span id="status-left" class="live">Loading the machine…</span><span id="status-right"></span></div>
+        </div>
+        <div class="lever-row">
+          <label class="horizon">
+            <span class="horizon-labels"><span>Survive this deadline</span><span>Scale for later</span></span>
+            <input id="horizon" class="range" type="range" min="0" max="1" step="0.05" aria-label="Plan horizon: survive now or scale for later">
+          </label>
+          <button class="lever" type="button" id="lever"><span class="knob" aria-hidden="true"></span>Spin the picks</button>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="tabs" role="tablist" aria-label="Recommendation lists">
+          <button class="tab" role="tab" aria-selected="true" data-tab="charms" id="tab-charms">Charms<span class="n" id="n-charms"></span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="phone" id="tab-phone">Phone calls<span class="n" id="n-phone"></span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="offers" id="tab-offers">What's offered now<span class="n" id="n-offers"></span></button>
+        </div>
+        <div id="offers-bar" class="row" style="margin-bottom:10px" hidden>
+          <button class="btn small amber" type="button" id="add-offer-charm">Add a store charm</button>
+          <button class="btn small" type="button" id="add-offer-phone">Add a phone option</button>
+          <button class="btn small ghost" type="button" id="clear-offers">Clear offers</button>
+        </div>
+        <ol class="picks" id="picks" role="tabpanel"></ol>
+        <button class="btn ghost show-more" type="button" id="show-more" hidden>Show more</button>
+      </div>
+    </section>
+
+    <!-- the ATM: your numbers -->
+    <aside class="zone-atm prop atm" aria-labelledby="atm-title">
+      <h2 class="prop-title" id="atm-title">Your numbers</h2>
+      <div class="led-panel" aria-live="polite">
+        <div class="led-row"><span class="led-label">Deadline <span id="led-deadline">1</span> debt</span><span class="led-value" id="led-debt">75</span></div>
+        <div class="led-row"><span class="led-label">Expected this deadline</span><span class="led-value green small" id="led-expected">–</span></div>
+        <div class="led-row"><span class="led-label">Coins per spin</span><span class="led-value gold small" id="led-ev">–</span></div>
+      </div>
+      <p class="status-line"><span class="lamp" id="lamp"></span><span id="status-text">Add your build to see if you're on track.</span></p>
+      <h3>Where your coins come from</h3>
+      <div class="bars" id="sym-bars"></div>
+      <h3>Each spin</h3>
+      <div class="odds" id="odds"></div>
+      <h3>Build type</h3>
+      <div class="arch-chips" id="arch"></div>
+      <h3>Your charms, best to weakest</h3>
+      <ul class="owned-list" id="owned"></ul>
+      <div id="weakest"></div>
+      <p class="note">Numbers come from simulating thousands of spins of your build. They're estimates, not promises.</p>
+    </aside>
+  </main>
+
+  <footer class="site-foot">
+    <p><b>Unofficial fan tool.</b> Not affiliated with Panik Arcade or Future Friends Games. CloverPit and its art belong to their owners.</p>
+    <p>Item names, descriptions and icons come from the <a href="https://cloverpit.wiki.gg" target="_blank" rel="noopener">CloverPit Wiki</a> (text under CC BY-SA 4.0). Advice, tiers and synergies are this site's own estimates; tell us when they're wrong.</p>
+    <p>Fonts: Handjet and Barlow Semi Condensed (SIL Open Font License).</p>
+  </footer>
+
+  <script type="module" src="assets/js/app/helper.js"></script>
+</body>
+</html>

@@ -239,44 +239,6 @@
   "assumptions": []
  },
  {
-  "id": "horseshoe",
-  "kind": "charm",
-  "summary": "Charms that trigger randomly roll twice as often.",
-  "tip": "Only worth a slot with 2+ random-trigger charms (Peppers, Broken Calculator, Rosary...).",
-  "tier": "C",
-  "ratings": {
-   "power": 1,
-   "scaling": 2,
-   "economy": 0,
-   "utility": 2,
-   "risk": 0
-  },
-  "archetypes": [
-   "jackpot"
-  ],
-  "provides": [
-   "triggersRandomly"
-  ],
-  "cares": [
-   "triggersRandomly"
-  ],
-  "effects": [
-   {
-    "type": "randomTriggers",
-    "mul": 2
-   }
-  ],
-  "synergies": [
-   {
-    "id": "broken_calculator",
-    "why": "35% retrigger becomes 70%."
-   }
-  ],
-  "antiSynergies": [],
-  "confidence": "high",
-  "assumptions": []
- },
- {
   "id": "personal_trainer",
   "kind": "charm",
   "summary": "25% of all Symbols get Repetition (retrigger their Patterns); -5% each Round, breaks at 0%.",
@@ -316,47 +278,6 @@
    }
   ],
   "synergies": [],
-  "antiSynergies": [],
-  "confidence": "high",
-  "assumptions": []
- },
- {
-  "id": "hamsa",
-  "kind": "charm",
-  "summary": "All Patterns trigger one extra time on the first spin of every Round.",
-  "tip": "Good with Golden/Chain modifiers and pattern-count charms.",
-  "tier": "B",
-  "ratings": {
-   "power": 3,
-   "scaling": 2,
-   "economy": 0,
-   "utility": 0,
-   "risk": 0
-  },
-  "archetypes": [
-   "retrigger"
-  ],
-  "provides": [
-   "retrigger",
-   "patternCount"
-  ],
-  "cares": [],
-  "effects": [
-   {
-    "type": "retrigger",
-    "add": 1,
-    "scope": "all",
-    "when": {
-     "spin": "first"
-    }
-   }
-  ],
-  "synergies": [
-   {
-    "id": "rotated_hamsa",
-    "why": "Both Hamsas fuse into 10 Fingers Hamsa (DLC)."
-   }
-  ],
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": []

@@ -1,0 +1,1800 @@
+[
+ {
+  "id": "ankh",
+  "kind": "charm",
+  "summary": "Death insurance: if you would fail a Deadline you get 2 extra Rounds to pay instead. Breaks after it saves you.",
+  "tip": "Once you have drawers, keep it in one and equip it during the death countdown so it never wastes a slot.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 7,
+   "risk": 1
+  },
+  "archetypes": [],
+  "provides": [
+   "deathSave",
+   "rounds",
+   "discard",
+   "temporary"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "deathSave",
+    "rounds": 2,
+    "when": {
+     "on": "dying"
+    },
+    "discardAfter": {
+     "count": 1,
+     "of": "activations"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "holy_bible",
+    "why": "Fuses with Ankh into Ra's Book (DLC), a death save that can pay the whole debt."
+   },
+   {
+    "id": "vorago",
+    "why": "Vorago bans the Ankh when it breaks; sell Vorago later to get a fresh Ankh back."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its self-discard counts as a discard for Dung Beetle."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "fixation",
+    "why": "Rounds only have 1 spin, so the 2 bonus Rounds are just 2 spins."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "horseshoe",
+  "kind": "charm",
+  "summary": "Doubles the activation chance of every charm with 'Triggers randomly' (D4, Fake Coin, Peppers, Rosary, Broken Calculator...).",
+  "tip": "Only worth a slot with 2+ random-trigger charms. Best partners: Fake Coin (more spins) and D4.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot",
+   "retrigger"
+  ],
+  "provides": [
+   "triggersRandomly"
+  ],
+  "cares": [
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "randomTriggers",
+    "mul": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fake_coin",
+    "why": "10% becomes 20%: roughly one or two bonus spins with Luck+4 per Round."
+   },
+   {
+    "id": "d4",
+    "why": "30% becomes 60% chance to reroll symbols outside Patterns."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "35% becomes 70% chance to retrigger every Pattern."
+   },
+   {
+    "id": "rosary",
+    "why": "35% becomes 70% chance to cancel a 666."
+   },
+   {
+    "id": "green_pepper",
+    "why": "Luck+7 fires twice as often (it also burns its 9 uses faster)."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "With Nuclear Button and Sacred Heart, fuses into Glorious Trumpet (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "golden_horseshoe",
+  "kind": "charm",
+  "summary": "Red Button: every 'Triggers randomly' charm is guaranteed to fire on the next spin. Small break chance if used 5+ times in a Round.",
+  "tip": "Spend charges on key spins: guarantee Rosary before a risky spin, Fake Coin for a free spin, or Broken Calculator on a high-Luck spin.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 3,
+   "risk": 2
+  },
+  "archetypes": [
+   "redButton",
+   "jackpot"
+  ],
+  "provides": [
+   "triggersRandomly",
+   "redButton"
+  ],
+  "cares": [
+   "triggersRandomly",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Red Button: every equipped 'Triggers randomly' charm activates on the next spin, if its own condition allows.",
+    "when": {
+     "redButton": true
+    },
+    "duration": "spin"
+   },
+   {
+    "type": "special",
+    "text": "When used 5 or more times in the same Round, each use has a 10% chance to discard this charm."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fake_coin",
+    "why": "Each charge guarantees a bonus spin with Luck+4, so you can stay spin-neutral."
+   },
+   {
+    "id": "rosary",
+    "why": "Fire it before a risky spin to guarantee a 666 is cancelled."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Guarantees a retrigger on the spin you choose, ideally a high-Luck one."
+   },
+   {
+    "id": "d4",
+    "why": "Guarantees a reroll of non-pattern symbols on the chosen spin."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press banks two guaranteed activations."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Charms with their own conditions (Dynamo at Round end, Consolation Prize on blank spins) only fire if that condition is met.",
+   "Break roll assumed to apply to each use from the 5th one in a Round; banked extra activations are lost if it breaks."
+  ]
+ },
+ {
+  "id": "hamsa",
+  "kind": "charm",
+  "summary": "Every Pattern triggers one extra time on the first spin of each Round.",
+  "tip": "Cheap steady retrigger. Press Red Shiny Rock before the first spin; with the Fixation memory card every spin is a first spin.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "retrigger"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "all",
+    "when": {
+     "spin": "first"
+    },
+    "duration": "spin"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "rotated_hamsa",
+    "why": "Both Hamsas fuse into 10 Fingers Hamsa (DLC)."
+   },
+   {
+    "id": "red_shiny_rock",
+    "why": "Use its Luck+4 on the first spin so the doubled spin is a big one."
+   },
+   {
+    "id": "fixation",
+    "why": "Every Round is a single spin, so Hamsa doubles every spin."
+   },
+   {
+    "id": "pentacle",
+    "why": "Doubled Patterns on the first spin help reach Pentacle's 5+ threshold."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "screen_addiction",
+    "why": "Only one Round per Deadline, so it fires once every ~21 spins."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "rotated_hamsa",
+  "kind": "charm",
+  "summary": "Luck+7 on the last spin of every Round, which usually turns that spin into a multi-Pattern hit.",
+  "tip": "Strong early pick. If you gain a bonus spin after the last spin (Fake Coin, Ancient Coin), the new last spin gets Luck+7 again.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "luck"
+  ],
+  "cares": [
+   "spins"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 7,
+    "when": {
+     "spin": "last"
+    },
+    "duration": "spin"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "hamsa",
+    "why": "Both Hamsas fuse into 10 Fingers Hamsa (DLC)."
+   },
+   {
+    "id": "fixation",
+    "why": "Every Round is a single spin, so every spin gets Luck+7."
+   },
+   {
+    "id": "ancient_coin",
+    "why": "Used on the last spin, its extra Luck+7 spin also gets Rotated Hamsa's Luck+7."
+   },
+   {
+    "id": "fake_coin",
+    "why": "A bonus spin after the last spin triggers Luck+7 a second time."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "screen_addiction",
+    "why": "Only one Round per Deadline, so only one boosted spin in ~21."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "chonky_cat",
+  "kind": "charm",
+  "summary": "Whenever a spin triggers 7+ Patterns (retriggers count), you earn twice your current Interest in coins. Max once per spin.",
+  "tip": "Needs retriggers or heavy Luck to reach 7+; raise Interest with Stonks or Grandma's Purse. With Lucky and Swole Cat it fuses into Cosmic Cat (DLC).",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 5,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "retrigger"
+  ],
+  "provides": [
+   "coins"
+  ],
+  "cares": [
+   "patternCount",
+   "interest",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "coins",
+    "interestMultiple": 2,
+    "when": {
+     "patternsAtLeast": 7
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lucky_cat",
+    "why": "With Lucky Cat and Swole Cat, fuses into Cosmic Cat (DLC)."
+   },
+   {
+    "id": "stonks",
+    "why": "+5% Interest raises every payout."
+   },
+   {
+    "id": "grandmas_purse",
+    "why": "+15% Interest for a few Rounds makes each payout much bigger."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of doubled yellow Patterns makes 7+ Pattern spins much more likely."
+   },
+   {
+    "id": "im_being_constant",
+    "why": "A permanent extra trigger on every Pattern doubles your count."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "swole_cat",
+  "kind": "charm",
+  "summary": "Whenever a spin triggers 15+ Patterns (retriggers count), you earn 4x your current Interest in coins. Max once per spin.",
+  "tip": "Only for heavy retrigger builds: even a Jackpot is about 10 Patterns. Otherwise it is mainly a piece of the Cosmic Cat fusion (DLC).",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 5,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "retrigger"
+  ],
+  "provides": [
+   "coins"
+  ],
+  "cares": [
+   "patternCount",
+   "interest",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "coins",
+    "interestMultiple": 4,
+    "when": {
+     "patternsAtLeast": 15
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "chonky_cat",
+    "why": "With Lucky Cat and Chonky Cat, fuses into Cosmic Cat (DLC)."
+   },
+   {
+    "id": "number_1",
+    "why": "Extra triggers on yellow Patterns are the main way to reach 15+."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Doubled Number 1/2 presses stack extra Pattern triggers toward 15+."
+   },
+   {
+    "id": "im_being_constant",
+    "why": "A permanent extra trigger on every Pattern doubles your count."
+   },
+   {
+    "id": "stonks",
+    "why": "+5% Interest makes each 4x payout bigger."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "one_trick_pony",
+  "kind": "charm",
+  "summary": "Gives one guaranteed Jackpot in the next Round, then breaks.",
+  "tip": "A cheap bailout often worth a big chunk of a Deadline. Pair with I can't quit now! (x2 Jackpot value) or keep Vorago to get it back.",
+  "tier": "B",
+  "ratings": {
+   "power": 8,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 3,
+   "risk": 1
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "jackpot",
+   "patternCount",
+   "temporary",
+   "discard"
+  ],
+  "cares": [
+   "jackpot"
+  ],
+  "effects": [
+   {
+    "type": "forcePattern",
+    "pattern": "JACKPOT",
+    "when": {
+     "on": "roundStart"
+    },
+    "discardAfter": {
+     "count": 1,
+     "of": "activations"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "i_cant_quit_now",
+    "why": "Doubles Jackpot value, so the free Jackpot pays double."
+   },
+   {
+    "id": "vines_soup",
+    "why": "The Jackpot spin has ~10 Patterns, doubling Symbol values for the rest of the Round."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "A Jackpot alone is ~10 Patterns, enough to trigger it."
+   },
+   {
+    "id": "vorago",
+    "why": "Vorago bans the Pony when it breaks; sell Vorago to get it back for another Jackpot."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its self-discard counts as a discard for Dung Beetle."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the Jackpot lands on the first spin of the next Round (encoded as a one-time roundStart event)."
+  ]
+ },
+ {
+  "id": "red_shiny_rock",
+  "kind": "charm",
+  "summary": "Red Button (1 charge): Luck+4 on the next spin. Recharges every Round, so you get one use per Round.",
+  "tip": "Use it on Hamsa's first spin or on your last spin. Left full, it lets Super Capacitor feed your other button charms. Cheap early filler.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "jackpot"
+  ],
+  "provides": [
+   "luck",
+   "redButton"
+  ],
+  "cares": [
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 4,
+    "when": {
+     "redButton": true
+    },
+    "duration": "spin"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "hamsa",
+    "why": "Luck+4 on the first spin makes Hamsa's doubled spin bigger."
+   },
+   {
+    "id": "super_capacitor",
+    "why": "A full 1-charge charm donates a charge to another button charm every spin."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press gives Luck+8 instead of Luck+4."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "tarot_deck",
+  "kind": "charm",
+  "summary": "Symbols Multiplier that grows by 1 each spin a charm triggers and drops back to 0 after any spin where no charm triggers.",
+  "tip": "Only good with charms that fire almost every spin (D4, Broken Calculator, Lucky Cat), ideally doubled by Horseshoe.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult"
+  ],
+  "cares": [
+   "triggersRandomly",
+   "charmCount",
+   "patternCount"
+  ],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "add": 1,
+    "when": {
+     "on": "charmTriggers"
+    },
+    "stack": true,
+    "reset": "round"
+   },
+   {
+    "type": "special",
+    "text": "The accumulated bonus resets to 0 after any spin in which no Lucky Charm triggers."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles random triggers so fewer spins pass with no charm firing."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Its frequent trigger keeps the streak alive and retriggers Patterns too."
+   },
+   {
+    "id": "d4",
+    "why": "Fires on 30% of spins, helping keep the streak going."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "Triggers on every 3+ Pattern spin, extending the streak."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed +1 per spin in which at least one charm triggers, not +1 per charm.",
+   "Unclear which activations count as a trigger; passive charms like Stonks probably do not.",
+   "reset:round is the closest allowed value: the real reset is after any spin with no charm trigger (often sooner), though a streak can carry into the next Round."
+  ]
+ },
+ {
+  "id": "dung_beetle",
+  "kind": "charm",
+  "summary": "Each other charm you discard (sell) or that breaks adds +1x base value to all Symbols, as long as the Beetle stays on the table.",
+  "tip": "Buy cheap charms and sell them to grow it. Fidelity Card, the Sacrifices card and charms that break on their own speed it up.",
+  "tier": "A",
+  "ratings": {
+   "power": 2,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "discard",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols"
+  ],
+  "cares": [
+   "discard",
+   "discount",
+   "restock"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "all",
+    "addBase": 1,
+    "when": {
+     "on": "discard"
+    },
+    "stack": true,
+    "reset": "never"
+   },
+   {
+    "type": "special",
+    "text": "The bonus only applies while Dung Beetle is equipped; only discards made while it is on the table count, and progress carries over to a re-bought Dung Beetle."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fidelity_card",
+    "why": "Cheaper charms make cheaper discard fodder."
+   },
+   {
+    "id": "sacrifices",
+    "why": "A permanent store discount makes buy-and-sell fodder cheap."
+   },
+   {
+    "id": "skull",
+    "why": "With Corpse pieces it spawns free charms every Deadline to discard."
+   },
+   {
+    "id": "red_pepper",
+    "why": "A 1-ticket charm that breaks by itself, adding a stack."
+   },
+   {
+    "id": "cloverfield",
+    "why": "Higher resell values refund more tickets when you sell fodder."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "grandmas_purse",
+  "kind": "charm",
+  "summary": "+15% Interest that drops by 3% after each Round; it breaks after 5 Rounds when the bonus reaches 0.",
+  "tip": "Buy it when you can deposit early or run Lucky/Chonky Cat or Token modifiers. Vorago can bring a fresh one back after it breaks.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 1,
+   "economy": 5,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "interest"
+  ],
+  "provides": [
+   "interest",
+   "temporary",
+   "discard"
+  ],
+  "cares": [
+   "token"
+  ],
+  "effects": [
+   {
+    "type": "interest",
+    "add": 15,
+    "decay": {
+     "add": -3,
+     "per": "round"
+    },
+    "discardAfter": {
+     "count": 5,
+     "of": "rounds"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lucky_cat",
+    "why": "Each 3+ Pattern spin pays out your boosted Interest."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "Its double-Interest payouts get much bigger."
+   },
+   {
+    "id": "stonks",
+    "why": "Stacks to 27% Interest in the first Round."
+   },
+   {
+    "id": "vorago",
+    "why": "Vorago bans it when it runs out; sell Vorago for a fresh +15% Purse."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Breaking by itself counts as a discard."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "property_certificate",
+  "kind": "charm",
+  "summary": "+2 charm space. It uses one slot itself, so you net one extra charm slot.",
+  "tip": "Almost always worth 2 tickets. Covers the -1 space of Nuclear Button, Megaphone or Hourglass; fuses with Sardines into Beach Hotel (DLC).",
+  "tier": "A",
+  "ratings": {
+   "power": 0,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 9,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "charmSpace"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "charmSpace",
+    "add": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "sardines",
+    "why": "Fuses with Sardines into Beach Hotel (+3 space, DLC)."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Pays for Nuclear Button's -1 charm space."
+   },
+   {
+    "id": "megaphone",
+    "why": "Pays for Megaphone's -1 charm space."
+   },
+   {
+    "id": "hourglass",
+    "why": "Pays for Hourglass's -1 charm space."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "nuclear_button",
+  "kind": "charm",
+  "summary": "Every Red Button charm triggers one extra time per press, doubling its effect; -1 charm space.",
+  "tip": "Take it once you run 2+ strong Red Button charms (Number 1/2, Midas Touch, pictures). Core of overcharging with AA Batteries.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 1,
+   "risk": 2
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "redButton"
+  ],
+  "cares": [
+   "redButton",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "redButton",
+    "extraTriggers": 1
+   },
+   {
+    "type": "charmSpace",
+    "add": -1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "number_1",
+    "why": "Each press adds two extra triggers to yellow Patterns for the Round."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Each press doubles the permanent gain per scored symbol."
+   },
+   {
+    "id": "aa_batteries",
+    "why": "Battery recharges plus doubled presses are the core of overcharging."
+   },
+   {
+    "id": "ancient_coin",
+    "why": "Each press grants two extra spins with Luck+7."
+   },
+   {
+    "id": "property_certificate",
+    "why": "Covers the -1 charm space."
+   },
+   {
+    "id": "horseshoe",
+    "why": "With Horseshoe and Sacred Heart, fuses into Glorious Trumpet (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "dear_diary",
+  "kind": "charm",
+  "summary": "The telephone offers one extra ability to choose from (4 instead of 3).",
+  "tip": "With drawers, keep it stored and equip it just before answering the phone. Fuses with Fidelity Card into VIP Card (DLC).",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 4,
+   "risk": 0
+  },
+  "archetypes": [
+   "phone"
+  ],
+  "provides": [
+   "phone"
+  ],
+  "cares": [
+   "drawers",
+   "phone"
+  ],
+  "effects": [
+   {
+    "type": "phone",
+    "extraOptions": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "megaphone",
+    "why": "More options to find an ability worth doubling."
+   },
+   {
+    "id": "barathrum",
+    "why": "Pick the best of four, then trigger it again later with Barathrum."
+   },
+   {
+    "id": "first_love",
+    "why": "Abilities trigger twice with this card, so picking the right one matters more."
+   },
+   {
+    "id": "fidelity_card",
+    "why": "Fuses with Fidelity Card into VIP Card (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "super_capacitor",
+  "kind": "charm",
+  "summary": "After every spin, each fully charged Red Button charm you have gives 1 charge to another random equipped charm.",
+  "tip": "Keep a 1-charge charm like Red Shiny Rock or Ancient Coin full so it donates a charge every spin to Number 1/2 or Midas Touch.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "charges"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "charges",
+    "restore": 1,
+    "targets": "random",
+    "when": {
+     "spin": "every",
+     "n": 1
+    }
+   },
+   {
+    "type": "special",
+    "text": "Repeats once per fully charged Red Button charm equipped each spin; each charge goes to a different random equipped charm."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "red_shiny_rock",
+    "why": "Left full, this 1-charge charm donates a charge every spin."
+   },
+   {
+    "id": "ancient_coin",
+    "why": "Another 1-charge charm that can sit full and feed the others."
+   },
+   {
+    "id": "number_1",
+    "why": "Turns spare charges into frequent 5-charge Number 1 Rounds."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Refills Midas Touch's 4 charges much faster."
+   },
+   {
+    "id": "im_feeling_more_energetic_recently",
+    "why": "Lower charge costs leave more charms full and donating."
+   },
+   {
+    "id": "dynamo",
+    "why": "With Dynamo, Potato Battery and Electricity Meter, fuses into Exotic Matter (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the donated charge goes to a Red Button charm that is not full; if it can land on a full or non-button charm it is wasted."
+  ]
+ },
+ {
+  "id": "dynamo",
+  "kind": "charm",
+  "summary": "At the end of each Round, 40% chance to restore 1 charge to every equipped Red Button charm.",
+  "tip": "Worth it with several high-charge button charms (Number 1/2, Midas Touch, pictures). Horseshoe raises it to 80%.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "charges",
+   "triggersRandomly"
+  ],
+  "cares": [
+   "redButton",
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "charges",
+    "restore": 1,
+    "targets": "all",
+    "when": {
+     "on": "roundEnd",
+     "chance": 0.4
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "40% becomes 80% per Round."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Speeds up refilling its 4 charges."
+   },
+   {
+    "id": "number_1",
+    "why": "Speeds up refilling its 5 charges."
+   },
+   {
+    "id": "super_capacitor",
+    "why": "With Super Capacitor, Potato Battery and Electricity Meter, fuses into Exotic Matter (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "scratch_and_hope",
+  "kind": "charm",
+  "summary": "Your most likely symbol appears more often (+1 chance); ties all get it, so at the start both Lemons and Cherries are boosted.",
+  "tip": "Great in any one-symbol build: push your main symbol to the top with a picture or phone call and this adds +1 more on top.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 1,
+   "risk": 1
+  },
+  "archetypes": [],
+  "provides": [
+   "symbolChance"
+  ],
+  "cares": [
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": "mostProbable",
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "expired_meds",
+    "why": "Fuses with Expired Meds into Magic Potion (DLC)."
+   },
+   {
+    "id": "seven_picture",
+    "why": "Makes Sevens the most likely symbol, so Sevens get +1 more."
+   },
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "One +1 Seven call makes Sevens the most likely symbol for good."
+   },
+   {
+    "id": "golden_lemon",
+    "why": "Lemons start tied for most likely, so they get +1 and gild more often."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "stonks",
+  "kind": "charm",
+  "summary": "+5% Interest (7% to 12% at base), paid on your deposit at the end of every Round.",
+  "tip": "Small on its own; take it when Cats or Token modifiers turn Interest into coins during spins.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 4,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest"
+  ],
+  "provides": [
+   "interest"
+  ],
+  "cares": [
+   "token"
+  ],
+  "effects": [
+   {
+    "type": "interest",
+    "add": 5
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lucky_cat",
+    "why": "Every Lucky Cat payout grows with your Interest."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "Its double-Interest payouts grow too."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "Token symbols pay half your Interest each, so +5% boosts them."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "car_battery",
+  "kind": "charm",
+  "summary": "Instantly refills every equipped Red Button charm to full charge. Doesn't take a slot.",
+  "tip": "Buy it when your expensive button charms (Number 1/2, Midas Touch, Weird Clock) are empty. Abyssu can store it for later.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "charges",
+   "instant"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "charges",
+    "restore": "all",
+    "targets": "all",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "midas_touch",
+    "why": "Refills its 4 charges for another permanent-gain Round."
+   },
+   {
+    "id": "number_1",
+    "why": "An instant extra Round of yellow retriggers."
+   },
+   {
+    "id": "weird_clock",
+    "why": "Refills all 12 charges for another bonus Round."
+   },
+   {
+    "id": "abyssu",
+    "why": "Bank it in Abyssu and fire it when your best button charm is empty."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "expired_meds",
+  "kind": "charm",
+  "summary": "Your most valuable symbol never appears (Sevens at the start); symbols tied for most valuable are all banned.",
+  "tip": "Early it removes Sevens and slightly raises pattern odds, but sell it before your main symbol becomes your most valuable one or it gets banned.",
+  "tier": "D",
+  "ratings": {
+   "power": 2,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 1,
+   "risk": 6
+  },
+  "archetypes": [],
+  "provides": [
+   "symbolChance"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": "mostValuable",
+    "set": 0
+   }
+  ],
+  "synergies": [
+   {
+    "id": "scratch_and_hope",
+    "why": "Fuses with Scratch and Hope into Magic Potion (DLC)."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "Raising Diamonds and Treasures together makes them tie as most valuable, banning both."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "golden_seven",
+    "why": "Sevens are what it bans at the start, so gilded Sevens never show up."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Pumping your main symbol makes it the most valuable, and then it gets banned."
+   },
+   {
+    "id": "seven_picture",
+    "why": "Extra Seven chance is wasted while Sevens are banned."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "midas_touch",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): for the rest of the Round every scored symbol permanently gains its base value, as if all symbols were Golden.",
+  "tip": "Fire it on Rounds with Luck or retriggers. Nuclear Button, Number 1/2 and battery recharges turn it into huge permanent growth.",
+  "tier": "A",
+  "ratings": {
+   "power": 4,
+   "scaling": 9,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "golden"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols",
+   "redButton"
+  ],
+  "cares": [
+   "charges",
+   "retrigger",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "all",
+    "addBase": 1,
+    "when": {
+     "redButton": true
+    },
+    "duration": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nuclear_button",
+    "why": "Each press gives two base-value gains per scored symbol."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggered Patterns score their symbols again, multiplying the gains."
+   },
+   {
+    "id": "aa_batteries",
+    "why": "Battery recharges let you fire it again in the same Round."
+   },
+   {
+    "id": "super_capacitor",
+    "why": "Turns full 1-charge charms into Midas Touch charges."
+   },
+   {
+    "id": "car_battery",
+    "why": "An instant refill for another Midas Touch Round."
+   },
+   {
+    "id": "consolation_prize",
+    "why": "Fuses with Consolation Prize into First Place Prize (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "The symbol you pump becomes the most valuable and gets banned."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Red Button symbolValue/addBase with duration round means: every symbol scored during the activated Round permanently gains its base value (per symbol scored, retriggers included), like Golden on everything."
+  ]
+ },
+ {
+  "id": "number_1",
+  "kind": "charm",
+  "summary": "Red Button (5 charges): for the rest of the Round, Patterns of yellow symbols (Lemon, Bell, Treasure, Seven) trigger one extra time.",
+  "tip": "Fire it at the start of a Round. With AA Batteries on Bells and Nuclear Button you can recharge and stack it mid-Round (overcharging).",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "retrigger",
+   "bell",
+   "lemon",
+   "treasure",
+   "seven"
+  ],
+  "provides": [
+   "retrigger",
+   "yellow",
+   "patternCount",
+   "redButton"
+  ],
+  "cares": [
+   "yellow",
+   "charges",
+   "battery"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "yellow",
+    "when": {
+     "redButton": true
+    },
+    "duration": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "aa_batteries",
+    "why": "Battery Bells recharge it mid-Round so you can stack it again."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press adds two extra triggers instead of one."
+   },
+   {
+    "id": "bell_picture",
+    "why": "More Bells means more yellow Patterns and more Battery recharges."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Retriggers multiply Midas Touch's permanent gains."
+   },
+   {
+    "id": "super_capacitor",
+    "why": "Feeds its 5 charges far faster."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "number_2",
+  "kind": "charm",
+  "summary": "Red Button (5 charges): for the rest of the Round, Patterns of non-yellow symbols (Cherry, Clover, Diamond) trigger one extra time.",
+  "tip": "Fire it at the start of a Round. With AA Batteries on Clovers and Nuclear Button you can recharge and stack it mid-Round (overcharging).",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "retrigger",
+   "clover",
+   "cherry",
+   "diamond"
+  ],
+  "provides": [
+   "retrigger",
+   "nonYellow",
+   "patternCount",
+   "redButton"
+  ],
+  "cares": [
+   "nonYellow",
+   "charges",
+   "battery"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "nonYellow",
+    "when": {
+     "redButton": true
+    },
+    "duration": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "aa_batteries",
+    "why": "Battery Clovers recharge it mid-Round so you can stack it again."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press adds two extra triggers instead of one."
+   },
+   {
+    "id": "clover_picture",
+    "why": "More Clovers means more non-yellow Patterns and more Battery recharges."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Retriggers multiply Midas Touch's permanent gains."
+   },
+   {
+    "id": "super_capacitor",
+    "why": "Feeds its 5 charges far faster."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "pain_killers",
+  "kind": "charm",
+  "summary": "When a spin shows exactly one Pattern, its symbols turn into your most valuable symbol (Sevens at the start).",
+  "tip": "Best when your most valuable symbol is rare, like pumped Sevens; Little Star's forced HOR-XL is a great target. Weak if your common symbol is also your best.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven",
+   "noReward"
+  ],
+  "provides": [],
+  "cares": [
+   "symbolValue"
+  ],
+  "effects": [
+   {
+    "type": "transform",
+    "mode": "singlePatternToBest",
+    "when": {
+     "patternsExactly": 1
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "little_star",
+    "why": "The forced HOR-XL after a blank spin is often the only Pattern, so it becomes your best symbol."
+   },
+   {
+    "id": "golden_seven",
+    "why": "Sevens are rare but most valuable; gilding them makes every conversion pay more."
+   },
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Tripling Seven value makes each converted Pattern worth far more."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the converted Pattern scores with the new symbol; which symbol is used when several tie for most valuable is unknown."
+  ]
+ },
+ {
+  "id": "lost_wallet",
+  "kind": "charm",
+  "summary": "+1 Patterns Multiplier for every 15 Clover Tickets you are holding.",
+  "tip": "A ticket-hoarding payoff: pair with Cloverpot, Cloverpet and Ticket modifiers. Avoid phone calls that set tickets to 0.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "multiplier"
+  ],
+  "provides": [
+   "patternsMult"
+  ],
+  "cares": [
+   "tickets",
+   "ticketMod"
+  ],
+  "effects": [
+   {
+    "type": "patternsMult",
+    "add": 1,
+    "perUnit": {
+     "of": "tickets",
+     "per": 15
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cloverpot",
+    "why": "Grows your ticket pile every Deadline."
+   },
+   {
+    "id": "cloverpet",
+    "why": "The same ticket pile also feeds Cloverpet's Symbols Multiplier."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Ticket modifiers keep a big ticket stack coming."
+   },
+   {
+    "id": "i_like_cryptic_values",
+    "why": "Doubling your tickets can add several multiplier steps at once."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "i_dont_care_about_the_price",
+    "why": "Sets your tickets to 0."
+   },
+   {
+    "id": "give_me_back_my_money",
+    "why": "Sets your tickets to 0."
+   },
+   {
+    "id": "cold_affection",
+    "why": "No tickets from Rounds makes 15-ticket steps hard to hold."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "lost_briefcase",
+  "kind": "charm",
+  "summary": "Instantly gives coins equal to 30% of the current Deadline's debt. Doesn't take a slot.",
+  "tip": "Great when debts are huge, or as a bailout during the death countdown. Abyssu can bank it for an emergency.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 0,
+   "economy": 6,
+   "utility": 6,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "coins",
+   "instant"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "coins",
+    "debtFraction": 0.3,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "abyssu",
+    "why": "Bank it in Abyssu as an emergency 30% payment for a bad Deadline."
+   },
+   {
+    "id": "calendar",
+    "why": "Paying 30% of the debt up front helps you finish early and skip Rounds."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed 30% of the full debt of the current Deadline, not of the unpaid remainder."
+  ]
+ },
+ {
+  "id": "calendar",
+  "kind": "charm",
+  "summary": "At the end of each Deadline, permanently gain +1 Symbols Multiplier per Round you skipped, plus 1.",
+  "tip": "Pay debts early to skip Rounds; each skip also gives 4 tickets. Shares the skip plan with Greedy King and Golden Pepper.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult"
+  ],
+  "cares": [
+   "roundSkip"
+  ],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "add": 1,
+    "when": {
+     "on": "deadlineEnd"
+    },
+    "stack": true,
+    "reset": "never",
+    "perUnit": {
+     "of": "skippedRounds",
+     "per": 1
+    }
+   },
+   {
+    "type": "symbolsMult",
+    "add": 1,
+    "when": {
+     "on": "deadlineEnd"
+    },
+    "stack": true,
+    "reset": "never"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "greedy_king",
+    "why": "Also grows from skipped Rounds; skip early to grow both."
+   },
+   {
+    "id": "golden_pepper",
+    "why": "Gets +4 Luck per Round skipped in the previous Deadline."
+   },
+   {
+    "id": "lost_briefcase",
+    "why": "30% of the debt up front makes skipping Rounds easier."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "screen_addiction",
+    "why": "Only one Round per Deadline leaves almost nothing to skip."
+   }
+  ],
+  "confidence": "low",
+  "assumptions": [
+   "The '+1' at the end of the description is read as a flat +1 every Deadline; the wiki page omits it, so it may only be +1 per skipped Round.",
+   "skippedRounds here means Rounds skipped in the Deadline that just ended."
+  ]
+ },
+ {
+  "id": "little_star",
+  "kind": "charm",
+  "summary": "After a spin with no Patterns, the next spin is guaranteed a HOR-XL across the middle row.",
+  "tip": "A big early-game floor since most early spins are blank. Pairs with Pain Killers and Abstract Painting; it breaks the no-reward streaks trains need.",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "horXL",
+   "largePatterns"
+  ],
+  "cares": [
+   "noReward"
+  ],
+  "effects": [
+   {
+    "type": "forcePattern",
+    "pattern": "HOR_XL",
+    "when": {
+     "noRewardStreak": 1
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "pain_killers",
+    "why": "The forced HOR-XL is often the only Pattern, so it turns into your best symbol."
+   },
+   {
+    "id": "abstract_painting",
+    "why": "The 5-symbol HOR-XL doubles all Pattern values for the rest of the Round."
+   },
+   {
+    "id": "stain",
+    "why": "The HOR-XL counts as a 4+ Pattern, raising all Patterns for the Round."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "Each forced HOR-XL is a 4+ Pattern that grows Diamonds and Treasures."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "toy_train",
+    "why": "It never lets 2 spins in a row go without reward."
+   },
+   {
+    "id": "steam_locomotive",
+    "why": "Breaks the 3-spin no-reward streak it needs."
+   },
+   {
+    "id": "diesel_locomotive",
+    "why": "Breaks the 3-spin no-reward streak it needs."
+   },
+   {
+    "id": "potato_battery",
+    "why": "Breaks the 2-spin no-reward streak it needs."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "noRewardStreak:1 stands for 'the previous spin scored no Patterns'; the forced row's symbol is assumed to be rolled by normal symbol chances."
+  ]
+ },
+ {
+  "id": "fortune_cookie",
+  "kind": "charm",
+  "summary": "Instantly restocks the store with charms whose effect mentions Luck (Peppers, Rotated Hamsa, Fake Coin...). Doesn't take a slot.",
+  "tip": "A 1-ticket targeted reroll for Luck builds. Restock-triggered charms like Bell Pepper do not count it as a restock.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 2,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "instant",
+   "store"
+  ],
+  "cares": [
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Restocks the store with charms that have Luck in their effect; boxes it cannot fill get normal charms.",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "rotated_hamsa",
+    "why": "One of the best Luck charms it can dig up."
+   },
+   {
+    "id": "fake_coin",
+    "why": "A cheap Luck charm with bonus spins it can find."
+   },
+   {
+    "id": "horseshoe",
+    "why": "Makes the Peppers it finds trigger twice as often."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ }
+]

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tier list · CloverPit Build Helper</title>
+  <meta name="description" content="CloverPit tier list for lucky charms, phone calls and memory cards, plus a tier list re-ranked for your own build.">
+  <meta name="theme-color" content="#171d1a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/handjet-latin-full.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="./"><span class="brand-mark">Clover<b>Pit</b> Build Helper</span><span class="brand-note">Unofficial fan tool</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="./">Helper</a>
+      <a href="items.html">Items</a>
+      <a href="tiers.html" aria-current="page">Tier list</a>
+    </nav>
+    <div class="toggles">
+      <button id="toggle-sound" class="icon-btn" type="button" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 6h3l4-3v10L5 10H2z"/><path fill="none" stroke="currentColor" stroke-width="1.4" d="M11 5.5c1 .8 1 4.2 0 5M12.8 4c2 1.6 2 6.4 0 8"/></svg><span>Sound on</span></button>
+      <button id="toggle-fx" class="icon-btn" type="button" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path stroke="currentColor" stroke-width="1" d="M3 6h10M3 8h10M3 10h10" opacity=".6"/><path stroke="currentColor" stroke-width="1.4" d="M6 14h4"/></svg><span>CRT on</span></button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <h1>Tier list</h1>
+        <p id="tier-intro">General strength in an average run. Switch to “For my build” to re-rank everything for the build you set up in the helper.</p>
+      </div>
+    </div>
+    <div class="filters">
+      <div class="seg" role="group" aria-label="Tier list mode" id="mode-seg">
+        <button type="button" data-mode="base" aria-pressed="true">General</button>
+        <button type="button" data-mode="build" aria-pressed="false">For my build</button>
+      </div>
+      <div class="seg" role="group" aria-label="Item type" id="kind-seg">
+        <button type="button" data-kind="charm" aria-pressed="true">Charms</button>
+        <button type="button" data-kind="phone" aria-pressed="false">Phone calls</button>
+        <button type="button" data-kind="memory" aria-pressed="false">Memory cards</button>
+      </div>
+      <label class="field" style="flex:0 1 220px"><span class="sr-only">Highlight a build type</span><select id="arch" class="select" aria-label="Highlight a build type"><option value="">Highlight a build type…</option></select></label>
+      <label class="check"><input id="store-only" type="checkbox" checked> Store charms only</label>
+      <label class="check"><input id="dlc" type="checkbox" checked> Include DLC</label>
+    </div>
+    <p class="muted small" id="tier-status" aria-live="polite"></p>
+    <div class="tier-rows" id="rows"></div>
+    <p class="note" style="max-width:78ch">Tiers: S run-defining, A strong in most builds, B solid or great in its build, C situational, D weak or mostly a trap. General tiers are this site's own judgement; the “For my build” view comes from the same simulator as the helper.</p>
+  </main>
+
+  <footer class="site-foot">
+    <p><b>Unofficial fan tool.</b> Not affiliated with Panik Arcade or Future Friends Games. CloverPit and its art belong to their owners.</p>
+    <p>Item names and icons come from the <a href="https://cloverpit.wiki.gg" target="_blank" rel="noopener">CloverPit Wiki</a> (text under CC BY-SA 4.0).</p>
+  </footer>
+  <script type="module" src="assets/js/app/tiers.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All items · CloverPit Build Helper</title>
+  <meta name="description" content="Search every CloverPit lucky charm, phone call and memory card, with in-game text, strength ratings, synergies and unlock conditions.">
+  <meta name="theme-color" content="#171d1a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/handjet-latin-full.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="./"><span class="brand-mark">Clover<b>Pit</b> Build Helper</span><span class="brand-note">Unofficial fan tool</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="./">Helper</a>
+      <a href="items.html" aria-current="page">Items</a>
+      <a href="tiers.html">Tier list</a>
+    </nav>
+    <div class="toggles">
+      <button id="toggle-sound" class="icon-btn" type="button" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 6h3l4-3v10L5 10H2z"/><path fill="none" stroke="currentColor" stroke-width="1.4" d="M11 5.5c1 .8 1 4.2 0 5M12.8 4c2 1.6 2 6.4 0 8"/></svg><span>Sound on</span></button>
+      <button id="toggle-fx" class="icon-btn" type="button" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path stroke="currentColor" stroke-width="1" d="M3 6h10M3 8h10M3 10h10" opacity=".6"/><path stroke="currentColor" stroke-width="1.4" d="M6 14h4"/></svg><span>CRT on</span></button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <h1>Every item</h1>
+        <p id="items-intro">All lucky charms, phone calls and memory cards, straight from the in-game text.</p>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input id="q" class="input" type="search" placeholder="Search: lemon, luck, 666, retrigger, tickets…" aria-label="Search items">
+      <div class="seg" role="group" aria-label="Item type" id="kind-seg">
+        <button type="button" data-kind="charm" aria-pressed="true">Charms</button>
+        <button type="button" data-kind="phone" aria-pressed="false">Phone calls</button>
+        <button type="button" data-kind="memory" aria-pressed="false">Memory cards</button>
+      </div>
+    </div>
+    <div class="filters">
+      <label class="field" style="flex:0 1 170px"><span>Rarity</span>
+        <select id="rarity" class="select"><option value="">Any rarity</option><option>Common</option><option>Uncommon</option><option>Rare</option><option>Legendary</option></select>
+      </label>
+      <label class="field" style="flex:0 1 210px" id="cat-wrap"><span>Where it comes from</span>
+        <select id="cat" class="select">
+          <option value="">Anywhere</option>
+          <option value="store">Store</option>
+          <option value="surgery">Surgery (DLC)</option>
+          <option value="sacred">Sacred (Help! call)</option>
+          <option value="evil">Evil (DLC)</option>
+          <option value="cadaver">Corpse pieces</option>
+        </select>
+      </label>
+      <label class="field" style="flex:0 1 210px"><span>Build type</span><select id="arch" class="select"><option value="">Any build</option></select></label>
+      <label class="field" style="flex:0 1 170px"><span>Sort by</span>
+        <select id="sort" class="select"><option value="name">Name</option><option value="tier">Tier</option><option value="cost">Cost</option><option value="rarity">Rarity</option></select>
+      </label>
+      <label class="check" style="align-self:end; height:36px"><input id="dlc" type="checkbox" checked> Include DLC</label>
+    </div>
+    <p class="muted small" id="count" aria-live="polite"></p>
+    <div class="item-grid" id="grid"></div>
+  </main>
+
+  <footer class="site-foot">
+    <p><b>Unofficial fan tool.</b> Not affiliated with Panik Arcade or Future Friends Games. CloverPit and its art belong to their owners.</p>
+    <p>Item names, descriptions and icons come from the <a href="https://cloverpit.wiki.gg" target="_blank" rel="noopener">CloverPit Wiki</a> (text under CC BY-SA 4.0). Summaries, tiers and synergies are this site's own estimates.</p>
+  </footer>
+  <script type="module" src="assets/js/app/items.js"></script>
+</body>
+</html>
