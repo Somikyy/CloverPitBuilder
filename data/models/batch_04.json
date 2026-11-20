@@ -1121,7 +1121,7 @@
   "synergies": [
    {
     "id": "number_1",
-    "why": "Retriggered Bell Patterns score their Batteries again, refilling Number 1 itself."
+    "why": "Retriggered Bell Patterns score their Batteries again, which can refill Number 1 itself."
    },
    {
     "id": "number_2",
@@ -1521,7 +1521,9 @@
   ],
   "antiSynergies": [],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Assumed a copy respawned by Vorago comes back fresh at 5%."
+  ]
  },
  {
   "id": "fortune_teller",
@@ -1592,7 +1594,8 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "Assumed retriggered Patterns apply Chain again, like Ticket modifiers do."
+   "Assumed retriggered Patterns apply Chain again (each trigger scores the symbols once more).",
+   "Assumed a copy respawned by Vorago comes back fresh at 25%."
   ]
  },
  {
