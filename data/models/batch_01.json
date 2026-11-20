@@ -184,6 +184,10 @@
    {
     "id": "nuclear_button",
     "why": "Each press banks two guaranteed activations."
+   },
+   {
+    "id": "vorago",
+    "why": "When it breaks, Vorago bans it; discarding Vorago brings back a fresh Golden Horseshoe."
    }
   ],
   "antiSynergies": [],
