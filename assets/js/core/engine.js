@@ -161,7 +161,21 @@ function buildCtx(state, db, built, opt) {
     state, db, d, env, cfg, base, cmp, seed, opt, SM, PM, N, dEVdV, dEVdPV, lin, ev, evRound, spinsPerRound,
     roundsPerDeadline, debt, depositEst, interestCoins, g, H, symShare, patShare, ownedIds, drawerIds, phoneIds, p666,
     tickets: num(state.tickets) ?? 0, coins: num(state.coins), key: structKey(cfg), cache: new Map(),
+    ticketIncome: estimateTicketIncome(d, roundsPerDeadline),
   };
+}
+
+// Tickets per deadline a run usually earns: 1 per round (Most Spins) + a little from skipped rounds,
+// plus ticket effects you own (Florid traits, CloverPot...).
+function estimateTicketIncome(d, R) {
+  let t = R * 1 + 1.5;
+  for (const e of d.econ) {
+    if (e.kind !== 'tickets' || e.perUnit) continue;
+    if (e.per === 'deadline') t += e.amount || 0;
+    else if (e.per === 'round') t += (e.amount || 0) * R;
+  }
+  for (const e of d.econ) if (e.kind === 'ticketIncome') t *= e.set === 0 ? 0.3 : (e.mul || 1);
+  return Math.max(2, t);
 }
 
 // Events per round for "when.on" triggers (rough averages from typical runs).
@@ -662,11 +676,19 @@ export function evaluateItem(it, ctx, extra = {}) {
 
   let power;
   if (measured && quant > 0) power = 0.8 * quant * coinScore + (1 - 0.8 * quant) * prior * careFactor;
-  else power = prior * careFactor;
+  else power = prior * Math.min(careFactor, 1.25);
   const devilBuild = ctx.arch.some((x) => x.id === 'devil' && x.weight > 0.15);
   const riskPenalty = (r.risk || 0) * (devilBuild && ((model && model.provides) || []).includes('666') ? 0.3 : 1.4);
+  // Tickets are scarce: pricier charms must be clearly better, and charms you'd have to save up
+  // for over several deadlines (Evil Deal costs 50) sink.
+  const price = extra.price ?? (it.kind === 'charm' ? it.cost : 0);
+  let costPenalty = 0, waitDeadlines = 0;
+  if (it.kind === 'charm' && price > 0) {
+    waitDeadlines = Math.max(0, price - ctx.tickets) / ctx.ticketIncome;
+    costPenalty = 1.2 * price + Math.min(60, 14 * waitDeadlines);
+  }
   let score = power + 0.3 * econScore * (ctx.g > 0.5 ? 1 : 1.2) + 0.35 * utility + syn + archBonus - riskPenalty
-    + 0.12 * (r.economy || 0) * 10 * (1 - quant) + 0.1 * (r.utility || 0) * 10 * (1 - quant);
+    + 0.12 * (r.economy || 0) * 10 * (1 - quant) + 0.1 * (r.utility || 0) * 10 * (1 - quant) - costPenalty;
 
   // ---- reasons (most important first)
   if (measured && Math.abs(V - 1) > 0.004) {
@@ -699,13 +721,13 @@ export function evaluateItem(it, ctx, extra = {}) {
   if (p2 > p1 + 1e-6) reasons.push({ kind: devilBuild ? 'good' : 'bad', text: `666 chance ${(p1 * 100).toFixed(1)}% → ${(p2 * 100).toFixed(1)}%` });
   if (d2.protect666 > ctx.d.protect666 + 1e-6) reasons.push({ kind: 'good', text: 'Protects you from 666' });
   if (Number.isFinite(life) && life < ctx.H) reasons.push({ kind: 'neutral', text: `Temporary: lasts about ${Math.max(1, Math.round(life))} round${life >= 1.5 ? 's' : ''}` });
+  if (waitDeadlines >= 1.5) reasons.push({ kind: 'bad', text: `Costs ${price} tickets: about ${Math.round(waitDeadlines)} deadlines of saving` });
   if (quant < 0.5 && model && model.tip) reasons.push({ kind: 'neutral', text: model.tip });
 
-  const price = extra.price ?? (it.kind === 'charm' ? it.cost : 0);
   const affordable = it.kind !== 'charm' || price == null || price <= ctx.tickets;
   return {
     id: it.id, kind: it.kind, name: it.name, score, price, affordable,
-    parts: { power: Math.round(power), coins: Math.round(coinScore), econ: Math.round(econScore), utility: Math.round(utility), synergy: Math.round(syn + archBonus), risk: Math.round(riskPenalty), prior: Math.round(prior) },
+    parts: { power: Math.round(power), coins: Math.round(coinScore), econ: Math.round(econScore), utility: Math.round(utility), synergy: Math.round(syn + archBonus), risk: Math.round(riskPenalty), prior: Math.round(prior), cost: Math.round(costPenalty) },
     value: { now: Vnow, horizon: V, growthPerRound: dGrowth, ticketsPerDeadline: ec.tickets },
     quant, reasons: dedupeReasons(reasons).slice(0, 7), tier: model ? model.tier : null,
   };
@@ -833,7 +855,7 @@ export function analyze(state, db, opt = {}) {
   for (const o of offers) {
     const price = o.kind === 'charm' ? (o.price ?? 0) : 0;
     o.affordable = o.kind !== 'charm' || tickets <= 0 || price <= tickets;
-    o.rankScore = o.score - 3 * price;
+    o.rankScore = o.score - 1.5 * price;
     if (o.kind === 'charm' && price > 0) o.perTicket = o.score / price;
   }
   offers.sort((a, b) => (b.affordable - a.affordable) || (b.rankScore - a.rankScore));
