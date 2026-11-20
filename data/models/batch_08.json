@@ -1182,7 +1182,7 @@
   "antiSynergies": [
    {
     "id": "ive_already_bet_it_all",
-    "why": "Halves the Diamond, Treasure and Seven base chances."
+    "why": "Halves the Diamond and Treasure base chances (about 12% to 7% each), so the doubled values pay less."
    }
   ],
   "confidence": "high",
@@ -1249,7 +1249,7 @@
   "antiSynergies": [
    {
     "id": "ive_already_bet_it_all",
-    "why": "Halves the Diamond, Treasure and Seven base chances."
+    "why": "Halves the Seven base chance: at base odds Sevens fall from 7.5% to about 4.4%, so the tripled value pays less."
    },
    {
     "id": "expired_meds",
