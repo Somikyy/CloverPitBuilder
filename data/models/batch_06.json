@@ -134,7 +134,7 @@
   "synergies": [
    {
     "id": "possessed_cell_phone",
-    "why": "Forces a 999 on demand; fire it on the first spin so the extra trigger covers the whole Round."
+    "why": "Forces a 999 on demand; press it before the first spin so the extra trigger covers the whole Round."
    },
    {
     "id": "necronomicon",
@@ -229,7 +229,7 @@
   "id": "ophanim_wheels",
   "kind": "charm",
   "summary": "Sacred: each 999 you score forces a Jackpot on the next spin; extra Jackpots queue up for later spins.",
-  "tip": "Best with a high 999 rate (Necronomicon, Evil Deal) or Possessed Cell Phone, which turns a charge into a sure Jackpot. I can't quit now doubles every Jackpot it hands out.",
+  "tip": "Best with a high 999 rate (Necronomicon, Evil Deal) or Possessed Cell Phone, whose forced 999 becomes a sure Jackpot. I can't quit now doubles every Jackpot it hands out.",
   "tier": "A",
   "ratings": {
    "power": 5,
@@ -1007,7 +1007,7 @@
   "id": "corpse_left_arm",
   "kind": "charm",
   "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
-  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Cross into Sacrifice before the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece each Deadline) or for the Skeleton Key ending. Otherwise leave it in the drawer: fuse it with Cross into Sacrifice (DLC) or let it vanish.",
   "tier": "D",
   "ratings": {
    "power": 0,
@@ -1042,7 +1042,7 @@
    },
    {
     "id": "cross",
-    "why": "Surgery: Corpse (Left Arm) + Cross fuse into Sacrifice (DLC)."
+    "why": "Surgery: this Corpse piece + Cross fuse into Sacrifice (DLC)."
    },
    {
     "id": "dung_beetle",
@@ -1064,7 +1064,7 @@
   "id": "corpse_right_arm",
   "kind": "charm",
   "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
-  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Ankh into Resurrection before the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece each Deadline) or for the Skeleton Key ending. Otherwise leave it in the drawer: fuse it with Ankh into Resurrection (DLC) or let it vanish.",
   "tier": "D",
   "ratings": {
    "power": 0,
@@ -1121,7 +1121,7 @@
   "id": "corpse_left_leg",
   "kind": "charm",
   "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
-  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Weird Clock into Eternal Rest before the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece each Deadline) or for the Skeleton Key ending. Otherwise leave it in the drawer: fuse it with Weird Clock into Eternal Rest (DLC) or let it vanish.",
   "tier": "D",
   "ratings": {
    "power": 0,
@@ -1178,7 +1178,7 @@
   "id": "corpse_right_leg",
   "kind": "charm",
   "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
-  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Evil Deal into Sin before the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece each Deadline) or for the Skeleton Key ending. Otherwise leave it in the drawer: fuse it with Evil Deal into Sin (DLC) or let it vanish.",
   "tier": "D",
   "ratings": {
    "power": 0,
@@ -1312,7 +1312,7 @@
   "id": "garbage",
   "kind": "charm",
   "summary": "Surgery (any 2 charms), takes no slot: every Symbol permanently gains its base value once.",
-  "tip": "Turns two spare charms into a permanent boost that is biggest early, while values are low. Free charms from Skull or D20 make good fodder; each surgery raises the next one's coin cost.",
+  "tip": "Turns two spare charms into a permanent boost that is biggest early, while values are low. Skull's free charms or cheap commons make good fodder; each surgery raises the next one's coin cost.",
   "tier": "C",
   "ratings": {
    "power": 4,
@@ -1349,8 +1349,8 @@
     "why": "With Corpse pieces it drops free charms into your drawers every Deadline: ready-made fodder."
    },
    {
-    "id": "d20",
-    "why": "Refills your drawers with new random charms every Round, free fodder."
+    "id": "fidelity_card",
+    "why": "Charms cost 1 ticket less, so cheap commons become near-free fodder."
    },
    {
     "id": "dangerous_experiments",
@@ -1375,7 +1375,7 @@
   "id": "trash_can",
   "kind": "charm",
   "summary": "Surgery (any 3 charms), takes no slot: Symbols Multiplier +1, permanently.",
-  "tip": "A clean permanent multiplier for three spare charms, strongest while your Symbols Multiplier is still small. Skull or D20 fodder and Dangerous Experiments make repeat fusions cheap.",
+  "tip": "A clean permanent multiplier for three spare charms, strongest while your Symbols Multiplier is still small. Skull's free charms and Dangerous Experiments make repeat fusions cheap.",
   "tier": "B",
   "ratings": {
    "power": 5,
@@ -1410,8 +1410,8 @@
     "why": "With Corpse pieces it drops free charms into your drawers every Deadline: ready-made fodder."
    },
    {
-    "id": "d20",
-    "why": "Refills your drawers with new random charms every Round, free fodder."
+    "id": "fidelity_card",
+    "why": "Charms cost 1 ticket less, so cheap commons become near-free fodder."
    },
    {
     "id": "dangerous_experiments",
@@ -1436,7 +1436,7 @@
   "id": "dumpster",
   "kind": "charm",
   "summary": "Surgery (any 4 charms), takes no slot: Patterns Multiplier +1, permanently.",
-  "tip": "Needs all four drawers of fodder but buys a permanent Patterns Multiplier, which few charms give. Repeat it with Skull or D20 fodder; Dangerous Experiments makes the surgeries free.",
+  "tip": "Needs all four drawers of fodder but buys a permanent Patterns Multiplier, which few charms give. Repeat it with Skull's free charms; Dangerous Experiments makes the surgeries free.",
   "tier": "A",
   "ratings": {
    "power": 6,
@@ -1471,8 +1471,8 @@
     "why": "With Corpse pieces it drops free charms into your drawers every Deadline: ready-made fodder."
    },
    {
-    "id": "d20",
-    "why": "Refills your drawers with new random charms every Round, free fodder."
+    "id": "fidelity_card",
+    "why": "Charms cost 1 ticket less, so cheap commons become near-free fodder."
    },
    {
     "id": "dangerous_experiments",

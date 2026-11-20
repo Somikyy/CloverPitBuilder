@@ -129,6 +129,9 @@ export function simulate(cfg, opt = {}) {
   const rng = makeRng(seed);                 // misc: conditions, sixes, spontaneous luck
   const rg = makeRng((seed * 2654435761) >>> 0 ^ 0x5bd1e995); // grid cells + luck placement
   const rmod = makeRng((seed + 0x9e3779b9) >>> 0);           // symbol modifiers
+  const rl = makeRng((seed ^ 0x85ebca6b) >>> 0);             // the machine's own (spontaneous) luck
+  const rs = makeRng((seed * 31 + 0xc2b2ae35) >>> 0);        // 6 / 66 / 666 rolls and placement
+  const rc = makeRng((seed * 7 + 0x27d4eb2f) >>> 0);         // charm trigger chances
   const nDeadlines = opt.deadlines ?? 400;
   const D = cfg.deadline;
   const roundsPerDeadline = cfg.roundsPerDeadline;
@@ -180,8 +183,8 @@ export function simulate(cfg, opt = {}) {
   const spinRetrig = new Float64Array(7);
 
   let globalSpin = (D - 1) * roundsPerDeadline * baseSpins;
-  let nextOLS = D <= 1 ? Infinity : globalSpin + 1 + Math.floor(rng() * 5);
-  const ilsOffset = Math.floor(rng() * 5);
+  let nextOLS = D <= 1 ? Infinity : globalSpin + 1 + Math.floor(rl() * 5);
+  const ilsOffset = Math.floor(rl() * 5);
 
   for (let d = 0; d < nDeadlines; d++) {
     // deadline-scoped temporary state
@@ -237,26 +240,26 @@ export function simulate(cfg, opt = {}) {
         };
         // ---- luck
         let charmLuck = luckNext; luckNext = 0;
-        for (const L of luckSrc) if (preCondOk(L.cond, ctx, rng)) charmLuck += L.add;
+        for (const L of luckSrc) if (preCondOk(L.cond, ctx, rc)) charmLuck += L.add;
         let luck = charmLuck;
         if (si >= baseSpins && pendingExtra.length) luck += pendingExtra.shift().luck;
         if (cfg.spontaneous) {
           if (D <= 1) {
             const sn = spinInDeadline;
             if (sn > 1 && (sn + ilsOffset + 1) % (4 + Math.floor(sn / 6)) === 0) {
-              const roll = Math.floor(rng() * 6); // 4,5,6,6,7,8
+              const roll = Math.floor(rl() * 6); // 4,5,6,6,7,8
               luck += [4, 5, 6, 6, 7, 8][roll];
             }
           } else if (globalSpin >= nextOLS) {
-            let add = globalSpin % 3 === 0 ? 5 + Math.floor(rng() * 3) : 3 + Math.floor(rng() * 3);
-            if (globalSpin % 7 === 0) add += 7 + Math.floor(rng() * 3);
+            let add = globalSpin % 3 === 0 ? 5 + Math.floor(rl() * 3) : 3 + Math.floor(rl() * 3);
+            if (globalSpin % 7 === 0) add += 7 + Math.floor(rl() * 3);
             luck += add;
-            nextOLS = globalSpin + 4 + (D - 1) + (rng() < 0.5 ? 1 : 0);
+            nextOLS = globalSpin + 4 + (D - 1) + (rl() < 0.5 ? 1 : 0);
           }
           if (noRewardStreak >= 4) luck += 5 + (noRewardStreak - 4);
-          if (charmLuck >= 1 && charmLuck <= 4) { if (rng() < 0.5) luck += 1 + Math.floor(rng() * 2); }
-          else if (charmLuck >= 5 && charmLuck <= 6) { if (rng() < 0.25) luck += 1; }
-          else if (charmLuck === 7) { if (rng() < 1 / 6) luck += 1; }
+          if (charmLuck >= 1 && charmLuck <= 4) { { const a = rl(), b = rl(); if (a < 0.5) luck += 1 + Math.floor(b * 2); } }
+          else if (charmLuck >= 5 && charmLuck <= 6) { if (rl() < 0.25) luck += 1; }
+          else if (charmLuck === 7) { if (rl() < 1 / 6) luck += 1; }
         }
         luckSum += luck;
 
@@ -279,7 +282,7 @@ export function simulate(cfg, opt = {}) {
         }
         // ---- forced patterns
         let force = pendingForce; pendingForce = null;
-        for (const F of forceSrc) if (preCondOk(F.cond, ctx, rng)) force = F.all ? F.pats : [F.pats[Math.floor(rng() * F.pats.length)]];
+        for (const F of forceSrc) if (preCondOk(F.cond, ctx, rc)) force = F.all ? F.pats : [F.pats[Math.floor(rng() * F.pats.length)]];
         if (force) {
           for (const p of force) {
             const fs = pickWeighted(weights, wTotal, rng());
@@ -290,14 +293,14 @@ export function simulate(cfg, opt = {}) {
         // ---- sixes
         let is666 = false;
         if (cfg.sixes) {
-          const u = rng();
+          const u1 = rs(), u2 = rs(), u3 = rs();
           let n6 = 0;
-          if (u < cfg.p666) { n6 = 3; is666 = true; }
-          else if (rng() < cfg.p66) n6 = 2;
-          else if (rng() < cfg.p6) n6 = 1;
+          if (u1 < cfg.p666) { n6 = 3; is666 = true; }
+          else if (u2 < cfg.p66) n6 = 2;
+          else if (u3 < cfg.p6) n6 = 1;
           for (let i = 0; i < 15; i++) idx15[i] = i;
           for (let i = 0; i < n6; i++) {
-            const j = i + Math.floor(rng() * (15 - i));
+            const j = i + Math.floor(rs() * (15 - i));
             const t = idx15[i]; idx15[i] = idx15[j]; idx15[j] = t;
             grid[idx15[i]] = SIX;
           }
@@ -359,7 +362,7 @@ export function simulate(cfg, opt = {}) {
         let lastAdd = 0;
         for (let s = 0; s < 7; s++) spinRetrig[s] = rRetrig[s];
         for (const R of retrigSrc) {
-          if (!preCondOk(R.cond, ctx, rng)) continue;
+          if (!preCondOk(R.cond, ctx, rc)) continue;
           if (R.last) lastAdd += R.add;
           else for (let s = 0; s < 7; s++) if (R.mask & (1 << s)) spinRetrig[s] += R.add;
         }
@@ -416,7 +419,7 @@ export function simulate(cfg, opt = {}) {
           if (cfg.sacred) { cnt999++; roundCoins += roundCoins; }
           else {
             cnt666++;
-            if (cfg.protect666 && rng() < cfg.protect666) { cntBlocked666++; is666 = false; }
+            if (cfg.protect666 && rs() < cfg.protect666) { cntBlocked666++; is666 = false; }
             else if (D >= 3) roundCoins = 0;
           }
         }
@@ -426,7 +429,7 @@ export function simulate(cfg, opt = {}) {
         let anyTrig = false;
         for (let ti = 0; ti < temps.length; ti++) {
           const T = temps[ti];
-          if (!postCondOk(T.trigger, o, rng, randomMul)) continue;
+          if (!postCondOk(T.trigger, o, rc, randomMul)) continue;
           tempTriggerCounts[ti]++;
           anyTrig = true;
           const v = T.value;
@@ -462,7 +465,7 @@ export function simulate(cfg, opt = {}) {
 
         // ---- extra spins from pre-spin sources (Fake Coin etc.)
         for (const X of extraSrc) {
-          if (preCondOk(X.cond, ctx, rng)) {
+          if (preCondOk(X.cond, ctx, rc)) {
             for (let q = 0; q < X.n; q++) pendingExtra.push({ luck: X.luck || 0 });
             spinsThisRound += X.n; extraSpinsTotal += X.n;
           }
