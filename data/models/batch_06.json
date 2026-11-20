@@ -167,7 +167,7 @@
   "tier": "B",
   "ratings": {
    "power": 3,
-   "scaling": 3,
+   "scaling": 2,
    "economy": 0,
    "utility": 0,
    "risk": 0
@@ -230,9 +230,9 @@
   "kind": "charm",
   "summary": "Sacred: each 999 you score forces a Jackpot on the next spin; extra Jackpots queue up for later spins.",
   "tip": "Best with a high 999 rate (Necronomicon, Evil Deal) or Possessed Cell Phone, which turns a charge into a sure Jackpot. I can't quit now doubles every Jackpot it hands out.",
-  "tier": "B",
+  "tier": "A",
   "ratings": {
-   "power": 4,
+   "power": 5,
    "scaling": 2,
    "economy": 0,
    "utility": 0,
@@ -296,7 +296,7 @@
   "id": "sloth",
   "kind": "charm",
   "summary": "Evil: your most likely Symbol(s) get a 20% chance of Revenge; each scored Revenge pays 5% of all coins you have lost to 666 this run.",
-  "tip": "Useless until a 666 has taken coins; then it turns old losses into steady income. Pump one symbol's chance to focus it, and add Violence to double every payout.",
+  "tip": "Useless until a 666 has taken coins; then it turns old losses into steady income. It covers every Symbol tied for most likely (Lemon and Cherry at first); Violence doubles each payout.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -310,7 +310,8 @@
   ],
   "provides": [
    "revenge",
-   "coins"
+   "coins",
+   "evil"
   ],
   "cares": [
    "666"
@@ -370,7 +371,8 @@
   "provides": [
    "interest",
    "redButton",
-   "debt"
+   "debt",
+   "evil"
   ],
   "cares": [
    "interest"
@@ -416,7 +418,7 @@
   "confidence": "medium",
   "assumptions": [
    "The rise is random between +100% and +500% (x2 to x6); encoded as its +300% average.",
-   "The debt effect has no Red Button condition on purpose: the engine cannot apply debt on a press, and a charged Limbo on the table fires with any press, so owning it is treated as paying one rise (each further press compounds it).",
+   "The debt effect has no Red Button condition on purpose: the engine cannot add debt on a press, and a press presumably fires every charged button charm (Limbo included), so owning it is treated as paying one rise; each further press compounds it.",
    "Assumed the higher debt carries into every later Deadline."
   ]
  },
@@ -438,7 +440,8 @@
   ],
   "provides": [
    "revenge",
-   "coins"
+   "coins",
+   "evil"
   ],
   "cares": [
    "666"
@@ -490,7 +493,8 @@
    "devil"
   ],
   "provides": [
-   "666"
+   "666",
+   "evil"
   ],
   "cares": [],
   "effects": [
@@ -548,7 +552,8 @@
    "discard"
   ],
   "provides": [
-   "coins"
+   "coins",
+   "evil"
   ],
   "cares": [
    "666",
@@ -613,7 +618,8 @@
    "investor",
    "interest",
    "coins",
-   "666"
+   "666",
+   "evil"
   ],
   "cares": [
    "patternCount",
@@ -668,7 +674,7 @@
   "id": "rage",
   "kind": "charm",
   "summary": "Evil: when the third 666 of a Deadline shows up, you get one extra Round in that Deadline.",
-  "tip": "Three 666s in one Deadline are rare unless your 666 chance is near 10%. Lust (two forced 666s every Deadline), Possessed Cell Phone or Heartbreak make it fire reliably.",
+  "tip": "Three 666s in one Deadline are rare unless your 666 chance is near 10%. Lust (two forced 666s every Deadline) or Possessed Cell Phone make it reliable; Heartbreak's forced 666 helps.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -681,7 +687,8 @@
    "devil"
   ],
   "provides": [
-   "rounds"
+   "rounds",
+   "evil"
   ],
   "cares": [
    "666"
@@ -744,7 +751,8 @@
   "provides": [
    "revenge",
    "666",
-   "coins"
+   "coins",
+   "evil"
   ],
   "cares": [
    "666"
@@ -811,7 +819,8 @@
   ],
   "provides": [
    "revenge",
-   "coins"
+   "coins",
+   "evil"
   ],
   "cares": [
    "666",
@@ -874,7 +883,8 @@
   ],
   "provides": [
    "restock",
-   "discard"
+   "discard",
+   "evil"
   ],
   "cares": [
    "restock"
@@ -945,7 +955,8 @@
   ],
   "provides": [
    "revenge",
-   "triggersRandomly"
+   "triggersRandomly",
+   "evil"
   ],
   "cares": [
    "666"
@@ -995,7 +1006,7 @@
  {
   "id": "corpse_left_arm",
   "kind": "charm",
-  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
   "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Cross into Sacrifice before the Deadline ends.",
   "tier": "D",
   "ratings": {
@@ -1052,7 +1063,7 @@
  {
   "id": "corpse_right_arm",
   "kind": "charm",
-  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
   "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Ankh into Resurrection before the Deadline ends.",
   "tier": "D",
   "ratings": {
@@ -1109,7 +1120,7 @@
  {
   "id": "corpse_left_leg",
   "kind": "charm",
-  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
   "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Weird Clock into Eternal Rest before the Deadline ends.",
   "tier": "D",
   "ratings": {
@@ -1166,7 +1177,7 @@
  {
   "id": "corpse_right_leg",
   "kind": "charm",
-  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "summary": "Cadaver piece a 666 drops in your drawers: equipped, it sits on the slot machine for good and adds +5% Debt; left in the drawer, it is gone at Deadline end.",
   "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Evil Deal into Sin before the Deadline ends.",
   "tier": "D",
   "ratings": {
@@ -1316,8 +1327,7 @@
   "provides": [
    "symbolValue",
    "allSymbols",
-   "instant",
-   "surgery"
+   "instant"
   ],
   "cares": [
    "drawers"
@@ -1379,8 +1389,7 @@
   ],
   "provides": [
    "symbolsMult",
-   "instant",
-   "surgery"
+   "instant"
   ],
   "cares": [
    "drawers"
@@ -1428,9 +1437,9 @@
   "kind": "charm",
   "summary": "Surgery (any 4 charms), takes no slot: Patterns Multiplier +1, permanently.",
   "tip": "Needs all four drawers of fodder but buys a permanent Patterns Multiplier, which few charms give. Repeat it with Skull or D20 fodder; Dangerous Experiments makes the surgeries free.",
-  "tier": "B",
+  "tier": "A",
   "ratings": {
-   "power": 5,
+   "power": 6,
    "scaling": 3,
    "economy": 0,
    "utility": 1,
@@ -1441,8 +1450,7 @@
   ],
   "provides": [
    "patternsMult",
-   "instant",
-   "surgery"
+   "instant"
   ],
   "cares": [
    "drawers"
@@ -1507,7 +1515,8 @@
    "zigZag",
    "largePatterns",
    "retrigger",
-   "patternCount"
+   "patternCount",
+   "surgery"
   ],
   "cares": [
    "largePatterns",
@@ -1594,7 +1603,8 @@
   ],
   "provides": [
    "copy",
-   "temporary"
+   "temporary",
+   "surgery"
   ],
   "cares": [
    "golden",
@@ -1670,7 +1680,8 @@
   ],
   "provides": [
    "luck",
-   "triggersRandomly"
+   "triggersRandomly",
+   "surgery"
   ],
   "cares": [
    "triggersRandomly"
@@ -1700,7 +1711,7 @@
    },
    {
     "id": "rotated_hamsa",
-    "why": "Its Luck +7 on the last spin plus this +3 reaches Luck 10."
+    "why": "After a trigger, the Round's last spin gets Luck +7 +3 = 10."
    }
   ],
   "antiSynergies": [],
@@ -1728,7 +1739,8 @@
   "provides": [
    "investor",
    "coins",
-   "interest"
+   "interest",
+   "surgery"
   ],
   "cares": [
    "patternCount",
