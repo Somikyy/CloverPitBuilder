@@ -1263,7 +1263,7 @@
    },
    {
     "id": "sin",
-    "why": "The sacrificed Round still ends normally, so Sin doubles your held coins without spending a spin."
+    "why": "The sacrificed Round still ends normally, so Sin doubles your held coins without playing a spin."
    },
    {
     "id": "apocalypse",
@@ -1287,7 +1287,7 @@
   "id": "resurrection",
   "kind": "charm",
   "summary": "Surgery (Corpse Right Arm + Ankh): Charms discarded during a Round, such as ones that break, come back in the next store restocks to buy again.",
-  "tip": "Makes one-shot Charms repeatable: buy back Holy Bible, One Trick Pony, Fruit Basket or Peppers after they break. You still pay full price, and Weird Clock is excluded.",
+  "tip": "Makes one-shot Charms repeatable: buy back Holy Bible, One Trick Pony or the Peppers after they break. You still pay full price, and Weird Clock is excluded.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1324,8 +1324,8 @@
     "why": "Buy it back after it breaks for another guaranteed Jackpot."
    },
    {
-    "id": "fruit_basket",
-    "why": "Comes back after its 10 Rounds for 10 more Rounds of fruit retriggers."
+    "id": "green_pepper",
+    "why": "Comes back after its 9 activations, ready for 9 more Luck +7 spins."
    },
    {
     "id": "dung_beetle",
@@ -1339,8 +1339,8 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed 'discarded during a Round' covers Charms that break or discard themselves mid-Round (Holy Bible, Peppers, Fruit Basket...), and that they come back at their normal price.",
-   "Unclear whether Charms you sell yourself count."
+   "Assumed 'discarded during a Round' covers Charms that break or discard themselves mid-Round (Holy Bible, Peppers, One Trick Pony), and that they come back at their normal price.",
+   "Unclear whether Charms that decay away at a Round's end (Fruit Basket, Personal Trainer) or Charms you sell yourself count."
   ]
  },
  {
@@ -1412,7 +1412,11 @@
    },
    {
     "id": "sacrifice",
-    "why": "A sacrificed Round still ends, doubling your held coins without spending a spin."
+    "why": "A sacrificed Round still ends, so your held coins double without playing a spin."
+   },
+   {
+    "id": "apocalypse",
+    "why": "One of the four ingredients of Apocalypse."
    }
   ],
   "antiSynergies": [

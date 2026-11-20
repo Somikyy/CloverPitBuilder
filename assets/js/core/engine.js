@@ -207,7 +207,7 @@ function postRate(pc, stats, randomMul) {
     case 'onlyEye': return stats.pOnlyEye;
     case 'on666': return stats.p666 + stats.p999;
     case 'onJackpot': return stats.pJackpot;
-    case 'scoredAll': return stats.pCloverBell;
+    case 'scoredAll': return pc.mask === 127 ? stats.pAllSymbolsRound / Math.max(1, stats.spinsPerRound) : stats.pCloverBell;
     case 'scoredAny': return stats.pGem;
     case 'noRewardStreak': return pc.n >= 4 ? stats.pNoReward4 : pc.n === 3 ? stats.pNoReward3 : stats.pNoReward2;
     case 'chance': return Math.min(1, pc.p * randomMul);
@@ -429,6 +429,9 @@ function horizonValue(cand, base, H, life = Infinity, instant = 0) {
 function lifetimeRounds(model, item, stats) {
   let life = Infinity;
   for (const e of (model && model.effects) || []) {
+    // break counters on event triggers (dying, purchases...) don't wear out with ordinary spins
+    if (e.when && e.when.on) continue;
+    if (e.type === 'deathSave') continue;
     const da = e.discardAfter;
     if (da) {
       if (da.of === 'rounds') life = Math.min(life, da.count);
@@ -632,7 +635,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   const spaceNet = charmSpaceDelta - (charmSpaceDelta && it.kind === 'charm' && !it.noSpace ? 1 : 0);
   let utility = 0;
   if (spaceNet) utility += 35 * spaceNet;
-  if (ec.deathSave) utility += 30;
+  if (ec.deathSave) utility += ctx.check && ctx.check.ratio < 1 ? 75 : 30; // worth most when you're short of the debt
   if (d2.protect666 > ctx.d.protect666 && ctx.env.deadline >= 2) utility += 60 * (d2.protect666 - ctx.d.protect666) * Math.min(1, ctx.p666 * 25 + 0.2);
   const r = (model && model.ratings) || { power: 3, scaling: 3, economy: 2, utility: 2, risk: 1 };
   const prior = 10 * (r.power * (1 - ctx.g) + r.scaling * ctx.g);
@@ -720,6 +723,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   const p1 = chance666(ctx.d, ctx.env.deadline), p2 = chance666(d2, ctx.env.deadline);
   if (p2 > p1 + 1e-6) reasons.push({ kind: devilBuild ? 'good' : 'bad', text: `666 chance ${(p1 * 100).toFixed(1)}% → ${(p2 * 100).toFixed(1)}%` });
   if (d2.protect666 > ctx.d.protect666 + 1e-6) reasons.push({ kind: 'good', text: 'Protects you from 666' });
+  if (ec.deathSave && ctx.check && ctx.check.ratio < 1) reasons.push({ kind: 'good', text: "Saves the run if you can't pay this deadline" });
   if (Number.isFinite(life) && life < ctx.H) reasons.push({ kind: 'neutral', text: `Temporary: lasts about ${Math.max(1, Math.round(life))} round${life >= 1.5 ? 's' : ''}` });
   if (waitDeadlines >= 1.5) reasons.push({ kind: 'bad', text: `Costs ${price} tickets: about ${Math.round(waitDeadlines)} deadlines of saving` });
   if (quant < 0.5 && model && model.tip) reasons.push({ kind: 'neutral', text: model.tip });
@@ -827,6 +831,7 @@ export function analyze(state, db, opt = {}) {
   ctx.arch = buildArchetypes(ctx);
   setBaseline(ctx);
   const check = deadlineCheck(ctx);
+  ctx.check = check;
   const owned = opt.skipOwned ? [] : ownedContributions(ctx);
   // weakest owned charm (for "replace" suggestions when the table is full)
   const spaceUsed = (state.charms || []).filter((c) => !c.drawer && !(db.byId.get(c.id) || {}).noSpace).length;

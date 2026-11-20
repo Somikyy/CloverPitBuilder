@@ -195,6 +195,14 @@ function applyEffect(d, e, c) {
   switch (e.type) {
     // ================================================= scoring stats
     case 'symbolChance': {
+      if (e.symbols === 'random' && (!w || w.event === 'instant')) { // expected value over the 7 symbols
+        const f = Math.min(1, (e.count || 1) / 7);
+        for (let s = 0; s < 7; s++) {
+          if (e.add !== undefined) d.weights[s] = Math.max(0, d.weights[s] + e.add * n * f);
+          else if (e.mulBase !== undefined) d.weights[s] = Math.max(0, d.weights[s] - BASE_WEIGHT[s] * (1 - Math.pow(e.mulBase, n)) * f);
+        }
+        return true;
+      }
       const mask = symbolsFromSpec(e.symbols, ctx);
       if (!mask) return false;
       if (w && !(w.event === 'instant')) {
@@ -210,6 +218,14 @@ function applyEffect(d, e, c) {
       return true;
     }
     case 'symbolValue': {
+      if (e.symbols === 'random' && (!w || w.event === 'instant')) {
+        const f = Math.min(1, (e.count || 1) / 7);
+        for (let s = 0; s < 7; s++) {
+          if (e.mul !== undefined) d.values[s] *= 1 + (Math.pow(e.mul, n) - 1) * f;
+          if (e.addBase !== undefined) d.values[s] += e.addBase * BASE_VALUE[s] * n * f;
+        }
+        return true;
+      }
       const mask = symbolsFromSpec(e.symbols || 'all', ctx);
       if (!mask) return false;
       if (!w || w.event === 'instant') {
@@ -325,8 +341,11 @@ function applyEffect(d, e, c) {
       if (m === undefined) return false;
       const mask = symbolsFromSpec(e.symbols || 'all', ctx);
       if (w && !(w.event === 'instant')) {
-        // growing chances (Naughty Dealer, Greedy King...) -> take the starting value
-        return false;
+        // growing chances (Naughty Dealer, Greedy King...): count about half of what builds up
+        if (!e.stack) return false;
+        const grown = Math.min(e.cap ?? 0.25, (e.add || 0) * 4) * 0.5;
+        for (const s of maskToList(mask)) d.mods[m * 7 + s] = Math.min(1, d.mods[m * 7 + s] + grown * n);
+        return true;
       }
       for (const s of maskToList(mask)) d.mods[m * 7 + s] = Math.min(1, d.mods[m * 7 + s] + (e.add || 0) * n);
       if (e.decay) d.flags['decay_' + src] = e.decay;
