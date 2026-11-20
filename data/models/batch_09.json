@@ -38,7 +38,7 @@
    },
    {
     "id": "midas_touch",
-    "why": "Needs 3 charges instead of 4, so its permanent value Rounds come every 3 Rounds instead of 4."
+    "why": "Needs 3 charges instead of 4: a Round of permanent Symbol gains every 3 Rounds instead of 4."
    },
    {
     "id": "number_1",
@@ -60,8 +60,7 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed the cheaper cost stays with each charm even if it is moved to a drawer and back.",
-   "The engine applies the reduction to all Red Button charms, including ones bought later."
+   "Assumed the cheaper cost stays with each charm even if it is moved to a drawer and back."
   ]
  },
  {
@@ -189,11 +188,11 @@
   "id": "help",
   "kind": "phone",
   "summary": "Sacred call: spawns a random Sacred charm on your table (even past your slot limit), then halves the coins you are holding.",
-  "tip": "Deposit or spend coins before answering to shrink the loss. Most Sacred charms trigger on 999s, so extra 666/999 odds (Devious Traits, Necronomicon) make them stronger.",
+  "tip": "Deposit or spend coins before answering to shrink the loss. Several Sacred charms feed on 999s (Eternity, Adam's Ribcage, Ophanim Wheels), so extra 666 odds help them.",
   "tier": "A",
   "ratings": {
    "power": 5,
-   "scaling": 6,
+   "scaling": 7,
    "economy": 0,
    "utility": 5,
    "risk": 3
@@ -241,7 +240,7 @@
    },
    {
     "id": "necronomicon",
-    "why": "In Sacred Mode its +3% 666 chance means more 999s for the Sacred charms."
+    "why": "In Sacred Mode its +3% 666 chance means more 999s for the 999-triggered Sacred charms."
    },
    {
     "id": "bright_outside_dark_inside",
@@ -354,8 +353,8 @@
     "why": "Forces Above or Below, both doubled by this call."
    },
    {
-    "id": "disc_c",
-    "why": "Forces Zig and Zag every 7 spins, both doubled by this call."
+    "id": "halo",
+    "why": "Spreads a lone Pattern's Symbol to its neighbours, building the big Patterns this doubles."
    },
    {
     "id": "baphomet",
@@ -457,7 +456,7 @@
   "id": "fixation",
   "kind": "memory",
   "summary": "Run-long: 7 Rounds per Deadline but only 1 spin per Round; ending a Deadline early pays 2 tickets per skipped Round instead of 4.",
-  "tip": "Each spin is both first and last of its Round: Hamsa and Rotated Hamsa fire every spin and Red Button charms recharge 7 times a Deadline. Cat Food brings you back to 3 spins per Round.",
+  "tip": "Each spin is both first and last of its Round: Hamsa and Rotated Hamsa fire every spin and Red Button charms recharge 7 times a Deadline. Cat Food makes it 3 spins per Round.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -516,6 +515,10 @@
    {
     "id": "stonks",
     "why": "Interest pays at every Round's end, 7 times per Deadline instead of 3."
+   },
+   {
+    "id": "calendar",
+    "why": "Rounds are single spins, so once the debt is paid you can skip several for +1 each."
    }
   ],
   "antiSynergies": [
@@ -723,6 +726,10 @@
    {
     "id": "voicemail",
     "why": "Its growth needs phone rerolls, which cost tickets you no longer earn each Round."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Holding 15-ticket steps is hard with no tickets from Rounds."
    }
   ],
   "confidence": "medium",
@@ -1272,7 +1279,7 @@
    },
    {
     "id": "skull",
-    "why": "Spawns free charms in drawers every Deadline to gamble with."
+    "why": "Spawns free drawer charms each Deadline (one per Corpse piece) to gamble with."
    },
    {
     "id": "d20",
@@ -1343,7 +1350,7 @@
   "id": "heartbreak",
   "kind": "memory",
   "summary": "From Deadline 3 on, the last Round of every Deadline is guaranteed to show at least one 666.",
-  "tip": "Deposit before the last Round so the 666 takes little. Devil builds love a sure 666 (Baphomet, Gabihbb'h), Holy Bible can cancel it, and it turns the next phone call Red.",
+  "tip": "The 666 wipes that Round's earnings (all held coins from Deadline 7), so deposit early. Devil builds love a sure 666 (Baphomet, Gabihbb'h); Holy Bible can cancel it.",
   "tier": "C",
   "ratings": {
    "power": 1,
@@ -1578,7 +1585,7 @@
   "id": "living_on_the_edge",
   "kind": "memory",
   "summary": "Run-long: coins can only be deposited after the last Round of each Deadline, so everything you earn stays in hand until then.",
-  "tip": "Interest and the Cats pay little with nothing deposited, you can't skip Rounds, and a 666 hits your whole stash. Guard with Holy Bible or Rosary; Sin (DLC) doubles held coins each Round.",
+  "tip": "Interest and the Cats pay little with nothing deposited and you can't skip Rounds. From Deadline 7 a 666 takes your whole stash, so guard with Holy Bible or Rosary.",
   "tier": "D",
   "ratings": {
    "power": 0,
