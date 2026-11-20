@@ -30,7 +30,7 @@ EFFECTS = {'symbolChance', 'symbolValue', 'patternValue', 'symbolsMult', 'patter
            'charmSpace', 'spins', 'rounds', 'chance666', 'protect666', 'debt', 'charges', 'redButton', 'phone', 'randomTriggers',
            'resellValue', 'trait', 'deathSave', 'spawnCharm', 'special'}
 WHEN_KEYS = {'event', 'chance', 'spin', 'n', 'patternsAtLeast', 'patternsExactly', 'noPatterns', 'noRewardStreak', 'patternSizeAtLeast',
-             'onlyPattern', 'scored', 'streak', 'scoredAll', 'on', 'redButton', 'round'}
+             'onlyPattern', 'scored', 'streak', 'scoredAll', 'on', 'redButton', 'round', 'noLargeStreak'}
 ON_EVENTS = {'666', '999', 'jackpot', 'roundStart', 'roundEnd', 'deadlineStart', 'deadlineEnd', 'purchase', 'restock', 'discard',
              'phonePick', 'phoneReroll', 'roundSkipped', 'charmTriggers', 'dying'}
 DURATIONS = {'spin', 'round', 'deadline', 'permanent'}

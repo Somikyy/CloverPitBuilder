@@ -30,6 +30,7 @@ export function newDerived() {
     debtMul: 1,
     mods: new Array(70).fill(0),
     luck: [], retrig: [], force: [], extraSpins: [], temps: [], rb: [],
+    charges: [], roundEndCharges: [], trigLuck: [],
     transforms: { painKillers: false, halo: false, d4: 0 },
     growth: [],   // {kind, ...} permanent scaling, valued by the engine
     econ: [],     // {kind, amount, per, ...}
@@ -46,6 +47,7 @@ export function cloneDerived(d) {
     mods: d.mods.slice(),
     luck: d.luck.slice(), retrig: d.retrig.slice(), force: d.force.slice(), extraSpins: d.extraSpins.slice(),
     temps: d.temps.slice(), rb: d.rb.slice(), transforms: { ...d.transforms },
+    charges: d.charges.slice(), roundEndCharges: d.roundEndCharges.slice(), trigLuck: d.trigLuck.slice(),
     growth: d.growth.slice(), econ: d.econ.slice(), risk: d.risk.slice(), meta: d.meta.slice(), flags: { ...d.flags },
   };
 }
@@ -70,10 +72,13 @@ function preCond(when) {
   if (!when) return { kind: 'always' };
   if (when.chance !== undefined && Object.keys(when).length === 1) return { kind: 'chance', p: when.chance };
   if (when.spin === 'first' || when.spin === 'last') return { kind: 'spin', which: when.spin };
-  if (when.spin === 'every') return { kind: 'every', n: when.n || 7 };
+  // "every N spins" counts from when the charm was bought, so its phase vs. the Round is unknown:
+  // use a neutral mid-Round phase instead of always landing on the last spin.
+  if (when.spin === 'every') return { kind: 'every', n: when.n || 7, phase: Math.floor((when.n || 7) / 2) };
   if (when.round === 'first' || when.round === 'last') return { kind: 'round', which: when.round };
   if (when.noRewardStreak) return { kind: 'noRewardStreak', n: when.noRewardStreak };
   if (when.noPatterns) return { kind: 'noPatternsPrev' };
+  if (when.noLargeStreak) return { kind: 'no5Streak', n: when.noLargeStreak };
   if (when.scored && when.streak) return { kind: 'scoredStreak', n: when.streak };
   if (when.on === '666') return { kind: 'after666' };
   return null;
@@ -126,6 +131,7 @@ export function applyModel(d, model, opt = {}) {
   if (!model || !Array.isArray(model.effects)) return res;
   const src = model.id;
   if (src === 'depression') d.flags.depression = true; // no spontaneous luck from the machine
+  if (src === 'super_capacitor') d.flags.superCap = true; // full button charms feed charges to others every spin
   const isRB = model.effects.some((e) => e.when && e.when.redButton);
   let rbEntry = null;
   if (isRB) {
@@ -140,6 +146,8 @@ export function applyModel(d, model, opt = {}) {
     if (ok) res.handled++;
     else res.unhandled.push(e.type === 'special' ? e.text : e.type);
   }
+  // charms whose behaviour is simulated through a flag count as fully simulated
+  if (src === 'depression' || src === 'super_capacitor') res.handled = res.total;
   if (rbEntry && rbEntry.effects.length) {
     rbEntry.extraTriggers = d.rbExtra;
     rbEntry.noConsume = d.rbNoConsume;
@@ -293,15 +301,15 @@ function applyEffect(d, e, c) {
       const pc = postCond(w);
       if (pc) { d.temps.push({ trigger: pc, kind: 'luckNext', value: amount, src }); return true; }
       if (w.on === 'roundStart') { d.luck.push({ add: amount, cond: { kind: 'spin', which: 'first' }, src }); return true; }
-      if (w.on === 'charmTriggers') { d.luck.push({ add: amount, cond: { kind: 'chance', p: 0.12 / Math.max(1, (w.n || 5) / 5) }, src }); return true; }
+      if (w.on === 'charmTriggers') { d.trigLuck.push({ n: w.n || 5, add: amount, src }); return true; }
       return false;
     }
     case 'retrigger': {
       const add = (e.add || 1) * n;
       if (e.scope === 'lastPattern') { d.retrig.push({ add, mask: 127, last: true, cond: preCond(w) || { kind: 'always' }, src }); return true; }
-      if (e.scope === 'singleDiamondTreasure') {
-        d.growth.push({ kind: 'note', src }); // Necklace: valued via ratings
-        return false;
+      if (e.scope === 'singleDiamondTreasure') { // Necklace: simulated (2 extra triggers, last pays double)
+        d.retrig.push({ add: 0, mask: 0, necklace: true, cond: { kind: 'always' }, src });
+        return true;
       }
       const mask = scopeMask(e.scope, symCtx(d));
       if (!w) { d.retrig.push({ add, mask, cond: { kind: 'always' }, src }); return true; }
@@ -407,11 +415,18 @@ function applyEffect(d, e, c) {
       else if (e.addPct !== undefined) d.debtMul *= 1 + (e.addPct / 100) * n;
       else return false;
       return true;
-    case 'charges':
+    case 'charges': {
       d.econ.push({ kind: 'charges', restore: e.restore, targets: e.targets, when: w, src });
-      if (!w && src === 'dynamo') d.dynamo = 0.4;
-      if (w && w.chance && w.on === 'roundEnd') d.dynamo = Math.max(d.dynamo, w.chance);
-      return true;
+      const amount = typeof e.restore === 'number' ? e.restore : e.restore === 'all' ? 9 : 1;
+      const all = e.targets === 'all' || e.restore === 'all';
+      if (!w && src === 'dynamo') { d.dynamo = 0.4; return true; }
+      if (w && w.on === 'roundEnd') { d.roundEndCharges.push({ chance: w.chance ?? 1, amount, all, src }); return true; }
+      if (w && w.on === 'restock') { d.roundEndCharges.push({ chance: 0.8 / Math.max(1, w.n || 1), amount, all, src }); return true; }
+      if (w && w.on === 'roundStart') { d.roundEndCharges.push({ chance: 1, amount, all, src }); return true; }
+      const pc = w && postCond(w);
+      if (pc) { d.charges.push({ trigger: pc, amount, all, src }); return true; }
+      return !!(w && w.event === 'instant'); // instant refills (Car Battery) are valued from ratings
+    }
     case 'redButton':
       if (e.extraTriggers) d.rbExtra += e.extraTriggers * n;
       if (e.costReduce) d.rbCostReduce += e.costReduce * n;
@@ -495,7 +510,7 @@ export function compileSim(d, env) {
     protect666: d.protect666,
     mods: d.mods.slice(),
     luck: d.luck.map((x) => ({ add: x.add, cond: x.cond })),
-    retrig: d.retrig.map((x) => ({ add: x.add, mask: x.mask, last: !!x.last, cond: x.cond })),
+    retrig: d.retrig.map((x) => ({ add: x.add, mask: x.mask, last: !!x.last, necklace: !!x.necklace, cond: x.cond })),
     force: d.force.map((x) => ({ pats: x.pats, all: x.all, cond: x.cond })),
     extraSpins: d.extraSpins.map((x) => ({ n: x.n, luck: x.luck, cond: x.cond })),
     temps: d.temps.map((x) => ({ ...x })),
@@ -503,7 +518,11 @@ export function compileSim(d, env) {
     transforms: { ...d.transforms },
     randomMul: d.randomMul,
     dynamo: d.dynamo * d.randomMul,
+    charges: d.charges.map((x) => ({ trigger: x.trigger, amount: x.amount, all: x.all })),
+    roundEndCharges: d.roundEndCharges.map((x) => ({ chance: x.chance, amount: x.amount, all: x.all })),
+    trigLuck: d.trigLuck.map((x) => ({ n: x.n, add: x.add })),
+    superCap: !!d.flags.superCap,
   };
 }
 
-export { SYM, PAT };
+export { SYM, PAT, postCond };

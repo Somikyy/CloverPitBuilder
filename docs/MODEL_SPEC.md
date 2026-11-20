@@ -128,6 +128,7 @@ JACKPOT HOR_S VER_S DIAG_S`) or `"small"` (3 or fewer symbols), `"large"` (4+), 
 | `{"patternsAtLeast":3}` | when 3+ Patterns trigger in a spin (retriggers count) |
 | `{"patternsExactly":1}` / `{"noPatterns":true}` | exactly one / zero Patterns in the spin |
 | `{"noRewardStreak":2}` | after N consecutive spins with no reward |
+| `{"noLargeStreak":3}` | after N consecutive spins without a Pattern of 5+ symbols (Nose) |
 | `{"patternSizeAtLeast":4}` | a Pattern of 4+ symbols is seen in the spin |
 | `{"onlyPattern":"EYE"}` | the only Pattern of the spin is EYE |
 | `{"scored":["diamond","treasure","seven"],"streak":3}` | scored those symbols N spins in a row |
@@ -138,6 +139,7 @@ JACKPOT HOR_S VER_S DIAG_S`) or `"small"` (3 or fewer symbols), `"large"` (4+), 
 | `{"round":"first"}` / `{"round":"last"}` | first / last Round of a Deadline (whole round) |
 
 Extras on any effect:
+- `"note": "..."` – free text explaining an encoding choice (shown to maintainers, ignored by the engine except for a few documented hints).
 - `"stack": true` – the effect accumulates every time the condition happens (scaling charms).
 - `"reset": "round" | "deadline" | "never"` – when an accumulated/temporary bonus resets.
 - `"cap": n` – maximum accumulated value.

@@ -14,7 +14,7 @@
 
 import { simulate } from './sim.js';
 import {
-  newDerived, cloneDerived, applyModel, applyTrait, compileSim, totalSM, totalPM, chance666,
+  newDerived, cloneDerived, applyModel, applyTrait, compileSim, totalSM, totalPM, chance666, postCond,
 } from './effects.js';
 import {
   SYMBOLS, SYMBOL_NAMES, PATTERNS, PATTERN_NAMES, BASE_VALUE, BASE_WEIGHT, PATTERN_BASE, PATTERN_SIZE,
@@ -120,7 +120,8 @@ function linEV(values, patVals, SM, PM, N) {
 function structKey(cfg) {
   return JSON.stringify([cfg.weights.map((w) => w.toFixed(4)), cfg.enabled, cfg.mods.slice(21, 35), cfg.mods.slice(56, 63), cfg.luck, cfg.retrig,
     cfg.force, cfg.extraSpins, cfg.temps.map((t) => [t.kind, t.trigger, t.value, t.mask, t.pats]), cfg.rb.map((r) => [r.cost, r.effects, r.extraTriggers, r.noConsume]),
-    cfg.transforms, cfg.randomMul, cfg.dynamo, cfg.spinsPerRound, cfg.roundsPerDeadline, cfg.p666.toFixed(5), cfg.protect666.toFixed(4), cfg.sacred, cfg.spontaneous]);
+    cfg.transforms, cfg.randomMul, cfg.dynamo, cfg.spinsPerRound, cfg.roundsPerDeadline, cfg.p666.toFixed(5), cfg.protect666.toFixed(4), cfg.sacred, cfg.spontaneous,
+    cfg.charges, cfg.roundEndCharges, cfg.trigLuck, cfg.superCap]);
 }
 
 function buildCtx(state, db, built, opt) {
@@ -171,7 +172,7 @@ function eventsPerRound(ev, ctx, n = 1, stats = ctx.base) {
     deadlineStart: 1 / R, deadlineEnd: 1 / R,
     purchase: 2 / R, restock: (1.5 + freeRestocksPerDeadline(ctx)) / R, discard: 0.6 / R,
     phonePick: 1 / R, phoneReroll: 0.6 / R, roundSkipped: 0.4 / R,
-    charmTriggers: stats.pAnyCharmTrig * stats.spinsPerRound, dying: 0,
+    charmTriggers: stats.charmTriggersPerRound ?? stats.pAnyCharmTrig * stats.spinsPerRound, dying: 0,
   };
   return (map[ev] ?? 0) / Math.max(1, n);
 }
@@ -304,16 +305,22 @@ function econOf(entries, ctx, d2, stats = ctx.base) {
   const out = { tickets: 0, restocks: 0, coinsPerRound: 0, coinsInstant: 0, roundsPerDeadline: 0, roundsInstant: 0, deathSave: 0, discount: 0, ticketMul: 1, resell: 0, charges: 0 };
   for (const e of entries) {
     const per = e.per;
-    const rateOf = () => {
+    const rateOf = () => { // events per deadline
       if (!e.when) return 1;
-      if (e.when.on) return eventsPerRound(e.when.on, ctx, e.when.n || 1, stats) * R; // per deadline
-      const pc = postCondOf(e.when);
+      const pc = postCond(e.when);
       if (pc) return postRate(pc, stats, d2.randomMul) * spr * R;
+      if (e.when.on) return eventsPerRound(e.when.on, ctx, e.when.n || 1, stats) * R;
       return 1;
     };
     switch (e.kind) {
       case 'tickets': {
-        if (e.perUnit) break;
+        if (e.perUnit) { // e.g. CloverPot: +1 ticket per X tickets held, X = current deadline
+          const per = e.perUnit.per === 'deadline' ? ctx.env.deadline : (e.perUnit.per || 1);
+          const units = e.perUnit.of === 'tickets' ? ctx.tickets : unitsOf(e.perUnit, ctx);
+          const amt = (e.amount || 1) * Math.floor(units / Math.max(1, per));
+          out.tickets += per === 'instant' ? amt / Math.max(1, ctx.H / R) : amt;
+          break;
+        }
         if (e.mul) { out.tickets += (ctx.tickets * (e.mul - 1)) / Math.max(1, ctx.H / R); break; }
         if (e.set === 0) { out.tickets -= ctx.tickets / Math.max(1, ctx.H / R); break; }
         const amt = e.amount || 0;
@@ -335,8 +342,8 @@ function econOf(entries, ctx, d2, stats = ctx.base) {
       case 'coinsInterest': {
         let perSpin = 1;
         if (e.when) {
-          const pc = postCondOf(e.when);
-          perSpin = pc ? postRate(pc, stats, d2.randomMul) : 0;
+          const pc = postCond(e.when);
+          perSpin = pc ? postRate(pc, stats, d2.randomMul) : e.when.on ? eventsPerRound(e.when.on, ctx, e.when.n || 1, stats) / spr : 0;
         }
         out.coinsPerRound += perSpin * spr * e.multiple * ((d2.interest / 100) * ctx.depositEst);
         break;
@@ -368,7 +375,13 @@ function econOf(entries, ctx, d2, stats = ctx.base) {
       }
       case 'discount': out.discount += (e.amount || 0) * 2 + (e.freeCharms || 0) * 3; break;
       case 'deathSave': out.deathSave += 1; break;
-      case 'resell': out.resell += e.amount || 0; break;
+      case 'resell': { // resell value turns into tickets when you sell; Dark Lotus also reads it
+        const onTable = Math.max(1, ctx.ownedIds.size);
+        const perDeadline = e.per === 'round' ? (e.amount || 0) * onTable * R : e.mul ? 1 : (e.amount || 0);
+        out.resell += perDeadline;
+        out.tickets += 0.35 * perDeadline;
+        break;
+      }
       case 'charges': out.charges += 1; break;
       default: break;
     }
@@ -381,23 +394,19 @@ function sideIncome(d, ctx, stats, econ, mods) {
   return (d.interest / 100) * ctx.depositEst + econ.coinsPerRound + mods.coins;
 }
 
-function postCondOf(when) {
-  if (when.patternsAtLeast) return { kind: 'patternsAtLeast', n: when.patternsAtLeast };
-  if (when.chance !== undefined) return { kind: 'chance', p: when.chance };
-  if (when.on === '666') return { kind: 'on666' };
-  if (when.noPatterns) return { kind: 'noPatterns' };
-  if (when.patternSizeAtLeast) return { kind: 'sizeAtLeast', n: when.patternSizeAtLeast };
-  return null;
-}
 
 // Average coins per round over H rounds, candidate vs current build.
 // cand/base: { m (coins-per-round multiplier, base=1), A, G (growth per round), C (side income per round, relative) }
 function horizonValue(cand, base, H, life = Infinity, instant = 0) {
   let num = instant, den = 0;
+  const L = Number.isFinite(life) ? Math.max(0, life) : Infinity;
+  // permanent gains (golden values, chains, multipliers) earned while the charm was active
+  const keptA = Math.max(0, cand.A - base.A) * (Number.isFinite(L) ? L : 0);
+  const keptG = Math.max(0, cand.G - base.G) * (Number.isFinite(L) ? L : 0);
   for (let t = 0; t < H; t++) {
     const b = (1 + base.A * t) * Math.exp(Math.min(base.G * t, 8)) + base.C;
     const c = cand.m * (1 + cand.A * t) * Math.exp(Math.min(cand.G * t, 8)) + cand.C;
-    num += t < life ? c : b;
+    num += t < L ? c : b * (1 + keptA) * Math.exp(Math.min(keptG, 8));
     den += b;
   }
   return num / Math.max(den, 1e-9);
@@ -605,8 +614,10 @@ export function evaluateItem(it, ctx, extra = {}) {
   const coinScore = 100 * Math.tanh(Math.log2(Math.max(V, 1e-6)) / 0.8);
   const econScore = 100 * Math.tanh((ec.tickets + 0.5 * ec.restocks + ec.discount) / 6);
   const charmSpaceDelta = d2.charmSpace - ctx.d.charmSpace;
+  // a charm that sits on the table uses a slot itself (Property Certificate nets +1, Megaphone -2)
+  const spaceNet = charmSpaceDelta - (charmSpaceDelta && it.kind === 'charm' && !it.noSpace ? 1 : 0);
   let utility = 0;
-  if (charmSpaceDelta) utility += 35 * charmSpaceDelta;
+  if (spaceNet) utility += 35 * spaceNet;
   if (ec.deathSave) utility += 30;
   if (d2.protect666 > ctx.d.protect666 && ctx.env.deadline >= 2) utility += 60 * (d2.protect666 - ctx.d.protect666) * Math.min(1, ctx.p666 * 25 + 0.2);
   const r = (model && model.ratings) || { power: 3, scaling: 3, economy: 2, utility: 2, risk: 1 };
@@ -667,7 +678,7 @@ export function evaluateItem(it, ctx, extra = {}) {
     }
   }
   const dGrowth = (A - ctx.baseline.A) + (G - ctx.baseline.G);
-  if (dGrowth > 0.006) {
+  if (dGrowth > 0.006 && !(Number.isFinite(life) && life < ctx.H)) {
     const per = dGrowth;
     reasons.push({ kind: 'good', text: `Scales: about ${fmtPct(per)} more coins every round, permanently` });
   }
@@ -727,7 +738,7 @@ function unitsOf(unit, ctx) {
     case 'tickets': return ctx.tickets;
     case 'freeRestocks': return freeRestocksPerDeadline(ctx) * 0.5 + 1;
     case 'phoneRerolls': return Math.max(0, ctx.env.deadline - 1) * 0.6;
-    case 'redCallsRefused': return Math.max(0, Math.floor((ctx.env.deadline - 1) / 3));
+    case 'redCallsRefused': return ctx.env.sacred ? Math.max(3, Math.floor((ctx.env.deadline - 1) / 2)) : Math.max(0, Math.floor((ctx.env.deadline - 1) / 3));
     case 'traitsEquipped': return (ctx.state.charms || []).filter((c) => c.trait).length;
     case 'resellTotal': return [...ctx.ownedIds].reduce((a, id) => { const x = ctx.db.byId.get(id); return a + Math.max(1, Math.floor(((x && x.cost) || 2) / 2)); }, 0);
     case 'skippedRounds': return Math.max(0, ctx.env.deadline - 1) * 0.4;
