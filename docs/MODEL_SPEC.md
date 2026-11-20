@@ -108,7 +108,7 @@ JACKPOT HOR_S VER_S DIAG_S`) or `"small"` (3 or fewer symbols), `"large"` (4+), 
 | `protect666` | `chance` (0-1), `discardChance` (0-1) | Holy Bible = `{"chance":1,"discardChance":0.5}` |
 | `debt` | `mul` or `addPct` | |
 | `charges` | `restore` (`"all"` or number), `targets` (`"all"`/`"random"`) | |
-| `redButton` | `extraTriggers` or `costReduce` or `noConsumeChance` | Nuclear Button = `{"extraTriggers":1}` |
+| `redButton` | `extraTriggers`, `costReduce`, `noConsumeChance` (0-1) or `noRecharge` (true) | Nuclear Button = `{"extraTriggers":1}`; Overdose adds `{"noRecharge":true}` |
 | `phone` | `extraTriggers`, `extraOptions`, `ban` | Megaphone = `{"extraTriggers":1}` |
 | `randomTriggers` | `mul` | Horseshoe = `{"mul":2}` (charms with Triggers randomly) |
 | `resellValue` | `add` / `mul`, `per` | |

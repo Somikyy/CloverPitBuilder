@@ -403,9 +403,9 @@ function renderPick(r, i) {
   const chips = itemChips(it, { tickets: state.tickets, price: r.price });
   return h('li', { class: 'pick' },
     h('span', { class: 'rank' }, String(i + 1)),
-    h('button', { class: 'art', type: 'button', 'aria-label': `Details: ${r.name}`, onclick: () => openItem(db, r.id, { onAdd: take, addLabel: takeLabel }) }, itemIcon(it)),
+    h('button', { class: 'art', type: 'button', 'aria-label': `Details: ${r.name}`, onclick: () => openItem(db, r.id, { onAdd: take, addLabel: takeLabel, insight: r.reasons }) }, itemIcon(it)),
     h('div', {},
-      h('h4', {}, h('button', { type: 'button', onclick: () => openItem(db, r.id, { onAdd: take, addLabel: takeLabel }) }, r.name), chips),
+      h('h4', {}, h('button', { type: 'button', onclick: () => openItem(db, r.id, { onAdd: take, addLabel: takeLabel, insight: r.reasons }) }, r.name), chips),
       r.kind === 'charm' && !r.affordable && state.tickets > 0 ? h('div', { class: 'small', style: { color: '#ffb3aa' } }, `Costs ${r.price}, you have ${state.tickets} tickets`) : null,
       h('ul', { class: 'why' }, (r.reasons || []).slice(0, i < 3 ? 6 : 4).map((x) => h('li', { class: x.kind }, x.text))),
       offer && r.kind === 'charm' ? h('label', { class: 'small row', style: { marginTop: '6px', gap: '6px' } }, 'Price in store', h('input', { class: 'input num', style: { width: '72px', height: '28px', fontSize: '17px' }, type: 'number', min: '0', value: offer.price ?? '', oninput: (e) => { offer.price = e.target.value === '' ? null : +e.target.value; run(); } })) : null,
@@ -529,7 +529,7 @@ function renderAtm() {
     const it = db.byId.get(o.id);
     const pct = Math.round((o.horizon - 1) * 100);
     owned.append(h('li', { title: (o.reasons || []).map((r) => r.text).join('\n') },
-      itemIcon(it), h('button', { class: 'link-btn', type: 'button', style: { color: 'var(--bone)', textDecoration: 'none', textAlign: 'left' }, onclick: () => openItem(db, o.id) }, o.name),
+      itemIcon(it), h('button', { class: 'link-btn', type: 'button', style: { color: 'var(--bone)', textDecoration: 'none', textAlign: 'left' }, onclick: () => openItem(db, o.id, { insight: [{ kind: 'neutral', text: `Without it your build would make ${Math.round((1 - 1 / Math.max(o.horizon, 0.01)) * 100)}% less over the next ${result.build.horizonRounds} rounds.` }, ...(o.reasons || [])] }) }, o.name),
       h('span', { class: `val${pct < 0 ? ' neg' : ''}` }, Math.abs(pct) >= 1 ? `${pct > 0 ? '+' : ''}${pct}%` : `${Math.round(o.score)} pts`)));
   }
   const weak = $('weakest');

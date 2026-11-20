@@ -129,7 +129,8 @@ export function applyModel(d, model, opt = {}) {
   const isRB = model.effects.some((e) => e.when && e.when.redButton);
   let rbEntry = null;
   if (isRB) {
-    const cost = Math.max(1, (item.redButtonCharges || 1) - d.rbCostReduce);
+    // raw charge cost; cost reductions (e.g. "I'm feeling more energetic recently.") are applied in compileSim
+    const cost = Math.max(1, item.redButtonCharges || 1);
     rbEntry = { src, cost, max: cost, duration: 'round', effects: [] };
   }
 
@@ -414,6 +415,7 @@ function applyEffect(d, e, c) {
     case 'redButton':
       if (e.extraTriggers) d.rbExtra += e.extraTriggers * n;
       if (e.costReduce) d.rbCostReduce += e.costReduce * n;
+      if (e.noRecharge) d.rbNoRecharge = true;
       if (e.noConsumeChance) d.rbNoConsume = 1 - (1 - d.rbNoConsume) * (1 - e.noConsumeChance);
       d.meta.push({ kind: 'redButton', e, src });
       for (const rb of d.rb) { rb.extraTriggers = d.rbExtra; rb.noConsume = d.rbNoConsume; }

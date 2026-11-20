@@ -213,6 +213,8 @@ export function openItem(db, id, opts = {}) {
     h('div', {},
       h('div', { class: `rar rarity-${it.rarity || ''}` }, typeLine),
       m ? h('p', { class: 'summary' }, m.summary) : null,
+      opts.insight && opts.insight.length ? [h('h3', {}, 'In your build'), h('ul', { class: 'why', style: { margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: '2px' } },
+        opts.insight.map((x) => h('li', { class: x.kind, style: { display: 'grid', gridTemplateColumns: '14px 1fr', gap: '6px' } }, h('span', { style: { color: x.kind === 'good' ? 'var(--ticket)' : x.kind === 'bad' ? 'var(--led)' : 'var(--grime-2)', fontWeight: 700 } }, x.kind === 'good' ? '+' : x.kind === 'bad' ? '−' : '•'), x.text)))] : null,
       h('h3', {}, 'In-game text'),
       h('div', { class: 'official', html: richText(it.description) }),
       it.recipe ? h('p', { class: 'small' }, h('b', {}, 'Recipe: '), it.recipe.map((r) => (db.byId.get(r) ? db.byId.get(r).name : r)).join(' + ')) : null,
