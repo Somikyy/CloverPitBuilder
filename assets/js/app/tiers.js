@@ -6,7 +6,11 @@ import { loadLocal } from './state.js';
 const $ = (id) => document.getElementById(id);
 const TIERS = ['S', 'A', 'B', 'C', 'D'];
 const TIER_COLORS = { S: '#ff9f2a', A: '#e0c34f', B: '#73b86d', C: '#5c8fb3', D: '#6f6f6f' };
-let db, mode = 'base', kind = 'charm', arch = '', storeOnly = true, dlc = true, buildResult = null, busy = false;
+let db, mode = 'base', kind = 'charm', arch = '', storeOnly = true, dlc = true, buildResult = null, busy = false, failed = false;
+const INTRO = {
+  base: 'General strength in an average run. Switch to “For my build” to re-rank everything for the build you set up in the helper.',
+  build: 'Re-ranked by the helper’s simulator for the build you set up in the helper. Switch to “General” for the overall tiers.',
+};
 
 init().catch((e) => { $('tier-status').textContent = 'Could not load: ' + e.message; });
 
@@ -26,34 +30,46 @@ async function init() {
 }
 
 function runBuild() {
-  if (buildResult || busy) return;
+  if (buildResult || busy || failed) return;
   busy = true;
   $('tier-status').innerHTML = '<span class="busy-dot"></span> Simulating your build…';
   const state = loadLocal();
   try {
     const w = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
-    w.onmessage = (e) => { busy = false; if (e.data.error) { $('tier-status').textContent = 'The simulator failed for this build.'; return; } buildResult = e.data.res; w.terminate(); draw(); };
+    w.onmessage = (e) => { busy = false; w.terminate(); if (e.data.error) { failed = true; $('tier-status').textContent = 'The simulator failed for this build.'; return; } buildResult = e.data.res; draw(); };
     w.onerror = () => { w.terminate(); fallback(state); };
     w.postMessage({ id: 1, state, base: location.href });
   } catch { fallback(state); }
 }
 
 function fallback(state) {
-  setTimeout(() => { try { buildResult = analyze(state, db); } catch { /* shown below */ } busy = false; draw(); }, 20);
+  setTimeout(() => {
+    try { buildResult = analyze(state, db); } catch { failed = true; }
+    busy = false;
+    if (failed) $('tier-status').textContent = 'The simulator failed for this build. Check your build in the helper.';
+    else draw();
+  }, 20);
 }
 
 function draw() {
+  if (mode === 'build' && kind === 'memory') kind = 'charm';
   $('mode-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
   $('kind-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.kind === kind)));
-  if (mode === 'build' && kind === 'memory') kind = 'charm';
   $('kind-seg').querySelector('[data-kind="memory"]').disabled = mode === 'build';
+  $('tier-intro').textContent = INTRO[mode];
+  const all = kind === 'charm' ? db.charms : kind === 'phone' ? db.phone : db.memory;
+  const inView = (it) => !storeOnly || kind !== 'charm' || it.category === 'store';
+  // no store charm is DLC: then the DLC switch can't change anything
+  const dlcMatters = all.some((it) => it.dlc && inView(it));
+  $('dlc').disabled = !dlcMatters;
+  $('dlc').closest('label').title = dlcMatters ? '' : 'No DLC items in this view';
+  $('store-only').disabled = kind !== 'charm';
   const p = new URLSearchParams();
   if (mode === 'build') p.set('mode', 'build');
   if (kind !== 'charm') p.set('kind', kind);
   history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname);
 
-  const pool = (kind === 'charm' ? db.charms : kind === 'phone' ? db.phone : db.memory)
-    .filter((it) => (dlc || !it.dlc) && (!storeOnly || kind !== 'charm' || it.category === 'store'));
+  const pool = all.filter((it) => (dlc || !it.dlc) && inView(it));
   const rows = Object.fromEntries(TIERS.map((t) => [t, []]));
   const unrated = [];
   if (mode === 'base') {
@@ -77,18 +93,24 @@ function draw() {
   }
   const box = $('rows');
   box.replaceChildren();
-  for (const t of TIERS) box.append(row(t, rows[t]));
+  for (const t of TIERS) {
+    let empty = 'Nothing here';
+    if (mode === 'base' && !rows[t].length && kind === 'charm' && storeOnly && db.charms.some((it) => it.model && it.model.tier === t && (dlc || !it.dlc))) {
+      empty = `No store charm is ${t} tier. Untick “Store charms only” to see the special ones.`;
+    }
+    box.append(row(t, rows[t], empty));
+  }
   if (unrated.length) box.append(row('?', unrated.map((x) => x)));
 }
 
-function row(t, entries) {
+function row(t, entries, empty = 'Nothing here') {
   const items = entries.sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || a.it.name.localeCompare(b.it.name));
-  return h('section', { class: 'tier-row', 'aria-label': t === '?' ? 'Not rated yet' : `Tier ${t}` },
+  return h('section', { class: `tier-row kind-${kind}`, 'aria-label': t === '?' ? 'Not rated yet' : `Tier ${t}` },
     h('div', { class: 'tier-label', style: { background: TIER_COLORS[t] || '#3a453e', color: t === '?' ? 'var(--bone)' : '#161616' } }, t),
     h('div', { class: 'tier-items' },
       items.length ? items.map(({ it, score }) => {
         const dim = arch && !((it.model && it.model.archetypes) || []).includes(arch);
-        return h('button', { class: 'tier-item', type: 'button', style: dim ? { opacity: 0.22 } : null, title: it.model ? it.model.summary : it.name, onclick: () => openItem(db, it.id) },
+        return h('button', { class: 'tier-item', type: 'button', style: dim ? { opacity: 0.22 } : null, title: it.model ? `${it.name}\n${it.model.summary}` : it.name, onclick: () => openItem(db, it.id) },
           itemIcon(it), h('span', {}, it.name), score != null ? h('b', { class: 'sc' }, String(Math.round(score))) : null);
-      }) : h('span', { class: 'muted small', style: { alignSelf: 'center' } }, 'Nothing here')));
+      }) : h('span', { class: 'muted small', style: { alignSelf: 'center' } }, empty)));
 }

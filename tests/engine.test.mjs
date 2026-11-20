@@ -94,3 +94,64 @@ test('evaluateItem is deterministic', () => {
   assert.equal(a, b);
   assert.equal(typeof evaluateItem, 'function');
 });
+
+// ---- fixes from the final review
+import { deriveBuild } from '../assets/js/core/engine.js';
+import { totalSM, totalPM, protect666Of, compileSim } from '../assets/js/core/effects.js';
+const mk = (o) => Object.assign(defaultState(), o);
+const fast = { baseDeadlines: 80, cmpDeadlines: 40, ownedDeadlines: 40 };
+
+test('owned charms are not charged their shop price', () => {
+  const r = analyze(mk({ deadline: 5, tickets: 0, charms: ['evil_deal', 'golden_lemon', 'hamsa'].map((id) => ({ id })) }), db, fast);
+  const evil = r.owned.find((o) => o.id === 'evil_deal');
+  assert.ok(evil && evil.score === Math.max(...r.owned.map((o) => o.score)), r.owned.map((o) => `${o.id} ${Math.round(o.score)}`).join(', '));
+});
+
+test('trait phone calls and per-unit charms change the build, once', () => {
+  assert.equal(totalSM(deriveBuild(mk({ charms: [{ id: 'golden_lemon' }], phone: { this_time_im_betting_on_yellow: 1 } }), db).d), 3);
+  // the same Avid marked on the charm by hand is not counted twice
+  assert.equal(totalSM(deriveBuild(mk({ charms: [{ id: 'golden_lemon', trait: 'avid' }], phone: { this_time_im_betting_on_yellow: 1 } }), db).d), 3);
+  // no charm on the table: nothing to put the trait on
+  assert.equal(totalSM(deriveBuild(mk({ phone: { this_time_im_betting_on_yellow: 1 } }), db).d), 1);
+  assert.equal(totalPM(deriveBuild(mk({ tickets: 45, charms: [{ id: 'lost_wallet' }] }), db).d), 4);
+  assert.equal(totalPM(deriveBuild(mk({ deadline: 30, charms: [{ id: 'chastity_belt' }] }), db).d), 4); // capped at +3
+});
+
+test('First Love doubles calls already taken', () => {
+  const st = mk({ mode: { ...defaultState().mode, memory: 'first_love' }, phone: { im_re_organizing_my_mind: 1 } });
+  assert.equal(totalSM(deriveBuild(st, db).d), 7); // +3 twice
+});
+
+test('one typed chance is used as typed', () => {
+  const { d } = deriveBuild(mk({ stats: { chances: { seven: 30, lemon: -5 } } }), db);
+  const tot = d.weights.reduce((a, b) => a + b, 0);
+  assert.ok(Math.abs((100 * d.weights[6]) / tot - 30) < 1e-9);
+  assert.equal(d.weights[0], 0);
+});
+
+test('bad numbers from a link cannot break the engine', () => {
+  for (const deadline of ['x', {}, ['pentacle'], null, -4, 1e9]) {
+    const r = analyze(mk({ deadline, phone: { i_cant_quit_now: 1e6 } }), db, { ...fast, skipOwned: true });
+    assert.ok(Number.isFinite(r.check.debt) && r.recommendations.all.every((x) => Number.isFinite(x.score)));
+  }
+});
+
+test('Horseshoe doubles Rosary and Dynamo', () => {
+  const { d, env } = deriveBuild(mk({ deadline: 5, charms: ['rosary', 'dynamo', 'lemon_picture', 'horseshoe'].map((id) => ({ id })) }), db);
+  assert.ok(Math.abs(protect666Of(d) - 0.7) < 1e-9);
+  assert.deepEqual(compileSim(d, env).roundEndCharges.map((x) => x.chance), [0.8]);
+});
+
+test('charge sources speed up permanent Red Button growth', () => {
+  const st = mk({ deadline: 5, charms: [{ id: 'cross' }] });
+  const r = analyze(st, db, { ...fast, skipOwned: true, pool: ['dynamo', 'nuclear_button'].map((id) => db.byId.get(id)) });
+  for (const x of r.recommendations.all) assert.ok(x.value.growthPerRound > 0.001, `${x.id} ${x.value.growthPerRound}`);
+});
+
+test('a luck item and the base build see the same grids (per-spin random streams)', () => {
+  const base = cfg({ deadline: 4 });
+  const lucky = cfg({ deadline: 4, luck: [{ add: 2, cond: { kind: 'always' } }] });
+  const a = simulate(base, { deadlines: 40, seed: 3 }), b = simulate(lucky, { deadlines: 40, seed: 3 });
+  assert.equal(a.spins, b.spins);
+  assert.ok(b.ev > a.ev); // more luck never loses coins on the same grids
+});

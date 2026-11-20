@@ -98,7 +98,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .site-nav a:hover { color: var(--bone); background: var(--wall); }
 .site-nav a[aria-current="page"] { color: var(--bone); background: var(--wall); border-color: var(--wall-3); box-shadow: inset 0 -2px 0 var(--amber); }
 .toggles { display: flex; gap: 6px; }
-.icon-btn {
+.icon-btn { position: relative;
   display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px;
   background: var(--wall); border: 1px solid var(--wall-3); border-radius: var(--radius-s);
   color: var(--grime); cursor: pointer; font-size: 14px; font-weight: 600;
@@ -128,8 +128,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 1180px) {
   .helper { grid-template-columns: minmax(290px, 330px) minmax(0, 1fr); grid-template-areas: "build machine" "build atm"; }
 }
+.jump-picks { display: none; }
 @media (max-width: 800px) {
-  .helper { grid-template-columns: minmax(0, 1fr); grid-template-areas: "machine" "build" "atm"; padding: 12px 16px; }
+  /* phones: the machine (top 3 picks), then your run, then the full list, then your numbers */
+  .helper { grid-template-columns: minmax(0, 1fr); grid-template-areas: "machine" "build" "results" "atm"; padding: 12px 16px; }
+  .zone-machine { display: contents; }
+  .zone-machine > .machine { grid-area: machine; }
+  .zone-machine > .results { grid-area: results; margin-top: 0; scroll-margin-top: 12px; }
+  .jump-picks { display: inline-flex; }
 }
 
 /* ------------------------------------------------------------ props (panels) */
@@ -154,6 +160,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
 .section-head h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--bone); }
 .section-head .count { font-family: var(--font-led); font-size: 20px; color: var(--grime); }
+.section-head .count.over { color: var(--led); }
 
 /* form controls */
 .field { display: grid; gap: 4px; font-size: 14px; color: var(--grime); }
@@ -177,6 +184,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .check input { appearance: none; width: 18px; height: 18px; border: 1px solid #4b584f; border-radius: 3px; background: #121714; display: grid; place-content: center; margin: 0; }
 .check input::after { content: ''; width: 10px; height: 10px; background: var(--amber); transform: scale(0); transition: transform 0.12s; box-shadow: 0 0 6px var(--amber); }
 .check input:checked::after { transform: scale(1); }
+.check:has(input:disabled) { opacity: 0.45; cursor: not-allowed; }
 .range { width: 100%; accent-color: var(--amber); }
 
 .btn {
@@ -205,9 +213,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .socket > img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.6)); }
 .socket.empty { border-style: dashed; border-color: #3b4740; background: transparent; box-shadow: none; color: var(--grime-2); font-size: 26px; font-family: var(--font-led); }
 .socket.empty:hover { color: var(--amber); border-color: var(--amber-dim); }
-.socket.drawer { opacity: 0.55; }
+.socket.drawer > img { opacity: 0.5; }
 .socket .trait-dot { position: absolute; top: 4px; right: 4px; width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 6px currentColor; }
-.socket .badge { position: absolute; left: 3px; bottom: 2px; font-size: 11px; font-weight: 700; color: var(--grime); }
+.socket .badge { position: absolute; left: 3px; bottom: 2px; font-size: 11px; font-weight: 700; color: var(--bone); text-shadow: 0 1px 2px #000; }
 .socket:hover:not(.empty) { border-color: var(--grime-2); }
 
 /* phone call log */
@@ -315,7 +323,8 @@ details.boards[open] > summary::before { content: '−'; }
 }
 .tab:hover { color: var(--bone); }
 .tab[aria-selected="true"] { color: var(--bone); border-bottom-color: var(--amber); }
-.tab .n { font-family: var(--font-led); font-size: 18px; color: var(--grime-2); margin-left: 4px; }
+.tab .n { font-family: var(--font-led); font-size: 18px; color: var(--grime); margin-left: 4px; }
+.tab-short { display: none; }
 .picks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .pick {
   display: grid; grid-template-columns: 30px 64px minmax(0, 1fr) auto; gap: 12px; align-items: start;
@@ -412,6 +421,12 @@ dialog.sheet::backdrop { background: rgba(5, 7, 6, 0.72); backdrop-filter: blur(
 .sheet-head { position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; align-items: center; padding: 14px 16px; background: #1c2320; border-bottom: 1px solid #2f3a33; }
 .sheet-head h2 { margin: 0; font-family: var(--font-led); font-variation-settings: 'ELSH' 2; font-size: 28px; font-weight: 600; flex: 1; }
 .sheet-body { padding: 16px; overflow: auto; max-height: calc(min(86vh, 900px) - 70px); }
+/* the picker keeps one height while you type, so the search box doesn't jump */
+dialog.sheet.picker { height: min(86vh, 900px); }
+.saved-scroll { display: grid; gap: 4px; max-height: 232px; overflow: auto; padding-right: 4px; }
+.saved-row { justify-content: space-between; gap: 8px; flex-wrap: nowrap; }
+.saved-row .link-btn:first-child { text-align: left; overflow-wrap: anywhere; }
+.link-btn.dim { color: var(--grime); flex: none; }
 .close-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #3b4740; background: var(--wall); color: var(--bone); cursor: pointer; font-size: 20px; line-height: 1; }
 .close-btn:hover { border-color: var(--amber-dim); color: var(--amber-hi); }
 
@@ -432,7 +447,7 @@ dialog.sheet::backdrop { background: rgba(5, 7, 6, 0.72); backdrop-filter: blur(
 .tile > img { width: 88px; height: 88px; object-fit: contain; margin: 0 auto; filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.6)); }
 .tile .t-name { font-weight: 700; font-size: 15px; line-height: 1.2; }
 .tile .t-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-top: 4px; }
-.tile.owned::after { content: 'Owned'; position: absolute; top: 6px; left: 6px; font-size: 11px; font-weight: 700; color: var(--ticket); }
+.tile[data-badge]::after { content: attr(data-badge); position: absolute; top: 6px; left: 6px; font-size: 11px; font-weight: 700; color: var(--ticket); }
 .tile.phone > img { width: 64px; height: 64px; margin-top: 12px; }
 .tile.memory > img { width: 62px; height: 88px; object-fit: cover; border-radius: 3px; }
 .empty-state { padding: 30px; text-align: center; color: var(--grime); }
@@ -473,7 +488,12 @@ dialog.sheet::backdrop { background: rgba(5, 7, 6, 0.72); backdrop-filter: blur(
   .brand-mark { font-size: 27px; }
   .site-nav a { padding: 6px 9px; font-size: 15px; }
   .toggles { margin-left: auto; }
-  .icon-btn span { display: none; }
+  .icon-btn span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .tab { padding: 9px 10px; }
+  .tab-long { display: none; }
+  .tab-short { display: inline; }
+  .filters .seg { flex-wrap: wrap; flex: 1 1 100%; }
+  .filters .seg button { flex: 1 1 auto; }
   .icon-btn { padding: 0 9px; }
   .reel-label .name { font-size: 16px; overflow-wrap: anywhere; }
   .reel-label .meta { font-size: 12px; }
@@ -498,6 +518,9 @@ dialog.sheet::backdrop { background: rgba(5, 7, 6, 0.72); backdrop-filter: blur(
 .tier-item:hover { border-color: #4a574f; background: #232b27; }
 .tier-item img { width: 56px; height: 56px; object-fit: contain; }
 .tier-item span { font-size: 11px; line-height: 1.15; text-align: center; color: var(--grime); max-width: 66px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+/* phone call names are long ("This time I'm betting on Orange!"): wider tiles, three lines */
+.kind-phone .tier-item { width: 92px; }
+.kind-phone .tier-item span { max-width: 88px; -webkit-line-clamp: 3; }
 .tier-item .sc { font-family: var(--font-led); font-size: 14px; color: var(--amber); }
 
 /* toast */

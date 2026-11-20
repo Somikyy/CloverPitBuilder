@@ -91,8 +91,9 @@ export function itemChips(it, opts = {}) {
   const chips = [];
   if (it.model && it.model.tier && opts.tier !== false) chips.push(h('span', { class: `chip tier tier-${it.model.tier}`, title: 'Baseline tier' }, it.model.tier));
   if (it.kind === 'charm' && it.cost != null) {
-    const cant = opts.tickets != null && it.cost > opts.tickets;
-    chips.push(h('span', { class: `chip ticket${cant ? ' cant' : ''}`, title: `${it.cost} clover tickets` }, h('img', { src: `${ICON}Ticket.webp`, alt: '' }), String(opts.price ?? it.cost)));
+    const shown = opts.price ?? it.cost;
+    const cant = opts.tickets > 0 && shown > opts.tickets;
+    chips.push(h('span', { class: `chip ticket${cant ? ' cant' : ''}`, title: `${shown} clover tickets${cant ? ": more than you have" : ''}` }, h('img', { src: `${ICON}Ticket.webp`, alt: '' }), String(shown)));
   }
   if (it.redButtonCharges) chips.push(h('span', { class: 'chip charge', title: `Red Button charm: ${it.redButtonCharges} charges` }, h('img', { src: `${ICON}RedButton.webp`, alt: '' }), `${it.redButtonCharges}`));
   if (it.triggersRandomly) chips.push(h('span', { class: 'chip', title: 'Triggers randomly' }, `${it.triggersRandomly}%`));
@@ -131,7 +132,10 @@ export function initChrome() {
 
 export function toast(msg) {
   let t = document.querySelector('.toast');
-  if (!t) { t = h('div', { class: 'toast', role: 'status', 'aria-live': 'polite' }); document.body.append(t); }
+  if (!t) t = h('div', { class: 'toast', role: 'status', 'aria-live': 'polite' });
+  // inside an open dialog the toast must live in the dialog, or the backdrop covers it
+  const host = [...document.querySelectorAll('dialog[open]')].pop() || document.body;
+  if (t.parentElement !== host) host.append(t);
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(t._timer);
@@ -185,7 +189,37 @@ export const sfx = {
   ring() { for (let i = 0; i < 2; i++) { tone(440, 0.35, { type: 'sine', vol: 0.04, at: i * 0.5 }); tone(480, 0.35, { type: 'sine', vol: 0.04, at: i * 0.5 }); } },
 };
 
+// ------------------------------------------------------------------ focus
+// Lists that are re-rendered (sockets, call rows, picks) give their controls a data-fkey, so focus can
+// be put back on "the same" control after the old element is gone.
+const fkeySel = (key) => `[data-fkey="${window.CSS && CSS.escape ? CSS.escape(key) : key}"]`;
+export function keepFocus(container, render) {
+  const a = document.activeElement;
+  const key = a && a !== document.body && container.contains(a) && a.dataset ? a.dataset.fkey : null;
+  render();
+  if (key) { const el = container.querySelector(fkeySel(key)); if (el) el.focus({ preventScroll: true }); }
+}
+
+/** Give focus back to whatever opened a dialog when it closes (or to `fallback`). */
+export function returnFocusOnClose(dialog, fallback = null) {
+  const a = document.activeElement;
+  dialog._opener = { el: a, key: a && a.dataset ? a.dataset.fkey : null, fallback };
+  if (dialog._focusBound) return;
+  dialog._focusBound = true;
+  dialog.addEventListener('close', () => {
+    const o = dialog._opener || {};
+    // wait a tick: closing handlers may re-render the list the opener lived in
+    setTimeout(() => {
+      if (document.querySelector('dialog[open]')) return;
+      const el = (o.key && document.querySelector(fkeySel(o.key))) || (o.el && o.el.isConnected && o.el !== document.body ? o.el : null) || (o.fallback && o.fallback.isConnected ? o.fallback : null);
+      if (el) el.focus({ preventScroll: true });
+    }, 0);
+  });
+}
+
 // ------------------------------------------------------------------ item details dialog
+// opts: { onAdd, addLabel, insight, forItem }. forItem(item) returns the opts for a related item
+// opened from this dialog, so its add button acts on that item and not on the first one.
 let dialog = null;
 export function openItem(db, id, opts = {}) {
   const it = db.byId.get(id);
@@ -195,11 +229,13 @@ export function openItem(db, id, opts = {}) {
     dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
     document.body.append(dialog);
   }
+  if (!dialog.open) returnFocusOnClose(dialog);
   const m = it.model;
+  const relOpts = (o) => (opts.forItem ? { ...(opts.forItem(o) || {}), forItem: opts.forItem } : {});
   const rel = (list, anti) => (list || []).map((s) => {
     const o = db.byId.get(s.id);
     if (!o) return null;
-    return h('button', { class: `rel${anti ? ' anti' : ''}`, type: 'button', onclick: () => openItem(db, s.id, opts) },
+    return h('button', { class: `rel${anti ? ' anti' : ''}`, type: 'button', onclick: () => openItem(db, s.id, relOpts(o)) },
       itemIcon(o), h('span', {}, h('b', {}, o.name), h('span', { class: 'rel-why' }, s.why || '')));
   });
   const ratingRow = (label, v, risk) => [h('span', {}, label), h('div', { class: `bar${risk ? ' risk' : ''}` }, h('i', { style: { width: `${(v || 0) * 10}%` } })), h('span', { class: 'led-font' }, String(v ?? '–'))];
@@ -208,7 +244,8 @@ export function openItem(db, id, opts = {}) {
     h('div', { class: 'detail-art' },
       h('div', { class: `frame ${it.kind}` }, itemIcon(it)),
       h('div', { class: 'row', style: { justifyContent: 'center' } }, itemChips(it, { category: false })),
-      opts.onAdd ? h('button', { class: 'btn amber', type: 'button', onclick: () => { opts.onAdd(it); dialog.close(); } }, opts.addLabel || 'Add to my build') : null,
+      opts.onAdd ? h('button', { class: 'btn amber', type: 'button', onclick: (e) => { e.currentTarget.disabled = true; dialog.close(); opts.onAdd(it); } }, opts.addLabel || 'Add to my build') : null,
+      opts.note ? h('p', { class: 'small muted', style: { margin: 0, textAlign: 'center' } }, opts.note) : null,
     ),
     h('div', {},
       h('div', { class: `rar rarity-${it.rarity || ''}` }, typeLine),
@@ -237,6 +274,7 @@ export function openItem(db, id, opts = {}) {
   );
   if (!dialog.open) dialog.showModal();
   dialog.querySelector('.sheet-body').scrollTop = 0;
+  dialog.querySelector('.close-btn').focus({ preventScroll: true });
 }
 
 // ------------------------------------------------------------------ search

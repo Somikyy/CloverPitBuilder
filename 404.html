@@ -4,8 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Not found · CloverPit Build Helper</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    // GitHub Pages shows this page at any missing address, however deep, so the stylesheet and links
+    // are pointed at the site's root (the repository folder on github.io, or "/" on a custom domain).
+    (function () {
+      var parts = location.pathname.split('/');
+      var root = /\.github\.io$/.test(location.hostname) && parts.length > 2 ? '/' + parts[1] + '/' : '/';
+      var add = function (tag, attrs) { var el = document.createElement(tag); for (var k in attrs) el.setAttribute(k, attrs[k]); document.head.appendChild(el); };
+      add('base', { href: root });
+      add('link', { rel: 'icon', type: 'image/svg+xml', href: root + 'assets/favicon.svg' });
+      add('link', { rel: 'stylesheet', href: root + 'assets/css/site.css' });
+    })();
+  </script>
+  <noscript><link rel="stylesheet" href="assets/css/site.css"></noscript>
 </head>
 <body>
   <main class="page" style="min-height:70vh; display:grid; place-content:center; text-align:center">

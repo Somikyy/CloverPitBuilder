@@ -16,6 +16,7 @@ async function init() {
   db = await loadDb();
   const p = new URLSearchParams(location.search);
   for (const k of Object.keys(f)) if (p.has(k)) f[k] = k === 'dlc' ? p.get(k) !== '0' : p.get(k);
+  if (!['charm', 'phone', 'memory'].includes(f.kind)) f.kind = 'charm';
   const archSel = $('arch');
   for (const [id, label] of Object.entries(ARCH_LABELS)) archSel.append(h('option', { value: id }, label));
   $('q').value = f.q; $('rarity').value = f.rarity; $('cat').value = f.cat; $('arch').value = f.arch; $('sort').value = f.sort; $('dlc').checked = f.dlc;
@@ -30,14 +31,25 @@ async function init() {
   if (open && db.byId.has(open)) openItem(db, open, addOpts(db.byId.get(open)));
 }
 
+// The add button in the details dialog, chosen by the item's own kind (also for related items).
 function addOpts(it) {
-  if (it.kind === 'memory') return { onAdd: (x) => { const s = loadLocal(); s.mode.memory = x.id; saveLocal(s); toast(`Set ${x.name} as your memory card`); }, addLabel: 'Use this memory card' };
+  const s = loadLocal();
+  const base = { forItem: addOpts };
+  if (it.kind === 'memory') {
+    if (s.mode.memory === it.id) return { ...base, note: 'This is your memory card' };
+    return { ...base, onAdd: (x) => { const st = loadLocal(); st.mode.memory = x.id; saveLocal(st); sfx.add(); toast(`Set ${x.name} as your memory card`); }, addLabel: 'Use this memory card' };
+  }
+  if (it.kind === 'charm' && s.charms.some((c) => c.id === it.id)) return { ...base, note: 'Already in your build' };
   return {
+    ...base,
+    addLabel: it.kind === 'phone' ? 'Add to my calls' : 'Add to my build',
     onAdd: (x) => {
-      const s = loadLocal();
-      if (x.kind === 'charm') { if (!s.charms.some((c) => c.id === x.id)) s.charms.push({ id: x.id, trait: null, drawer: false }); }
-      else s.phone[x.id] = (s.phone[x.id] || 0) + 1;
-      saveLocal(s); sfx.add(); toast(`Added ${x.name} to your build`);
+      const st = loadLocal();
+      if (x.kind === 'charm') {
+        if (st.charms.some((c) => c.id === x.id)) { toast(`${x.name} is already in your build`); return; }
+        st.charms.push({ id: x.id, trait: null, drawer: false });
+      } else st.phone[x.id] = Math.min(99, (st.phone[x.id] || 0) + 1);
+      saveLocal(st); sfx.add(); toast(x.kind === 'phone' ? `Added ${x.name} to your calls` : `Added ${x.name} to your build`);
     },
   };
 }
@@ -60,8 +72,10 @@ function draw() {
     cost: (a, b) => (a.cost ?? 99) - (b.cost ?? 99) || a.name.localeCompare(b.name),
     rarity: (a, b) => (RARITY_ORDER[a.rarity] ?? 9) - (RARITY_ORDER[b.rarity] ?? 9) || a.name.localeCompare(b.name),
   };
-  const sorter = sorters[f.sort] || sorters.name;
-  list = list.sort((a, b) => (f.q ? relevance(a, f.q) - relevance(b, f.q) : 0) || sorter(a, b));
+  const sorter = Object.hasOwn(sorters, f.sort) ? sorters[f.sort] : sorters.name;
+  // best matches first only with the default name order; a chosen sort is kept while searching
+  const byMatch = f.q && sorter === sorters.name;
+  list = list.sort((a, b) => (byMatch ? relevance(a, f.q) - relevance(b, f.q) : 0) || sorter(a, b));
   const grid = $('grid');
   grid.replaceChildren();
   $('count').textContent = `${list.length} ${f.kind === 'charm' ? 'charms' : f.kind === 'phone' ? 'phone calls' : 'memory cards'}`;

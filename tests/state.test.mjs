@@ -26,3 +26,17 @@ test('bad share codes are ignored', async () => {
   assert.equal(await decodeShare('z!!!'), null);
   assert.equal(await decodeShare('jAAAA'), null);
 });
+
+test('normalize cleans junk and never shares nested objects', () => {
+  const src = { deadline: 'x', tickets: -3, phone: { a: 1e9, b: 'x', c: 2 }, stats: { values: { lemon: '7', cherry: 'y' }, sm: -2 }, charms: [{ id: 'pentacle', trait: 'bogus' }, { id: 'pentacle' }], prefs: { horizon: 9 } };
+  const s = normalize(src);
+  assert.equal(s.deadline, 1);
+  assert.equal(s.tickets, 0);
+  assert.deepEqual(s.phone, { a: 99, c: 2 });
+  assert.deepEqual(s.stats, { values: { lemon: 7 }, sm: 0 });
+  assert.deepEqual(s.charms, [{ id: 'pentacle', trait: null, drawer: false }]);
+  assert.equal(s.prefs.horizon, 1);
+  const t = normalize(s);
+  t.phone.c = 5; t.charms[0].trait = 'avid'; t.stats.values.lemon = 1;
+  assert.equal(s.phone.c, 2); assert.equal(s.charms[0].trait, null); assert.equal(s.stats.values.lemon, 7);
+});

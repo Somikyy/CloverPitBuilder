@@ -12,7 +12,8 @@ stronger, explaining why.
   text, strength ratings, synergies and unlock conditions. Searchable and filterable.
 - **Tier list**: general tiers, or a tier list re-ranked for *your* build.
 - **Share links**: "Copy share link" puts your whole build in the URL (no server needed).
-  Builds also save in your browser.
+  Builds also save in your browser; opening someone else's link keeps your own build under
+  Saved builds.
 
 It is a static site: plain HTML, CSS and JavaScript modules. No build step, no backend.
 

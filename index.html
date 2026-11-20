@@ -60,12 +60,14 @@
       <div class="section">
         <div class="section-head"><h3>Charms on the table</h3><span class="count" id="space-count">0/7</span></div>
         <div class="sockets" id="sockets"></div>
+        <p class="warn" id="space-warn" hidden></p>
         <p class="note">Click a charm to set its trait, move it to a drawer or remove it.</p>
       </div>
 
       <div class="section">
         <div class="section-head"><h3>Phone calls taken</h3><button class="btn small" type="button" id="add-call">Add call</button></div>
         <ul class="calls" id="calls"></ul>
+        <p class="note" id="calls-note" hidden></p>
       </div>
 
       <div class="section">
@@ -116,14 +118,15 @@
             <input id="horizon" class="range" type="range" min="0" max="1" step="0.05" aria-label="Plan horizon: survive now or scale for later">
           </label>
           <button class="lever" type="button" id="lever"><span class="knob" aria-hidden="true"></span>Spin the picks</button>
+          <a class="btn small ghost jump-picks" href="#results">See all picks</a>
         </div>
       </div>
 
-      <div class="results">
+      <div class="results" id="results">
         <div class="tabs" role="tablist" aria-label="Recommendation lists">
           <button class="tab" role="tab" aria-selected="true" data-tab="charms" id="tab-charms">Charms<span class="n" id="n-charms"></span></button>
           <button class="tab" role="tab" aria-selected="false" data-tab="phone" id="tab-phone">Phone calls<span class="n" id="n-phone"></span></button>
-          <button class="tab" role="tab" aria-selected="false" data-tab="offers" id="tab-offers">What's offered now<span class="n" id="n-offers"></span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="offers" id="tab-offers"><span class="tab-long">What's offered now</span><span class="tab-short">Offers</span><span class="n" id="n-offers"></span></button>
         </div>
         <div id="offers-bar" class="row" style="margin-bottom:10px" hidden>
           <button class="btn small amber" type="button" id="add-offer-charm">Add a store charm</button>
@@ -149,7 +152,7 @@
       <h2 class="prop-title" id="atm-title">Your numbers</h2>
       <div class="led-panel" aria-live="polite">
         <div class="led-row"><span class="led-label">Deadline <span id="led-deadline">1</span> debt</span><span class="led-value" id="led-debt">75</span></div>
-        <div class="led-row"><span class="led-label">Expected this deadline</span><span class="led-value green small" id="led-expected">–</span></div>
+        <div class="led-row" title="Coins you should win this deadline after paying for your spins"><span class="led-label">Net this deadline</span><span class="led-value green small" id="led-expected">–</span></div>
         <div class="led-row"><span class="led-label">Coins per spin</span><span class="led-value gold small" id="led-ev">–</span></div>
       </div>
       <p class="status-line"><span class="lamp" id="lamp"></span><span id="status-text">Add your build to see if you're on track.</span></p>
