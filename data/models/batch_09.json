@@ -1020,5 +1020,492 @@
    "Assumed the refund only covers 666 losses from before the Jackpot in the same Round.",
    "Assumed 999 odds double in Sacred Mode as well."
   ]
+ },
+ {
+  "id": "life_lessons",
+  "kind": "memory",
+  "summary": "When a Deadline ends, a random table charm gets the Devious Trait (+0.6% 666 chance), then a random drawer charm gets a random Trait.",
+  "tip": "Devious can overwrite a good Trait on the charm it lands on, and the 666 chance creeps up each Deadline. The Collector counts every Trait it adds; Holy Bible guards the extra 666s.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 4
+  },
+  "archetypes": [
+   "traits",
+   "devil"
+  ],
+  "provides": [
+   "traits",
+   "666"
+  ],
+  "cares": [
+   "drawers",
+   "traits"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "devious",
+    "target": "randomEquipped",
+    "when": {
+     "on": "deadlineEnd"
+    }
+   },
+   {
+    "type": "special",
+    "text": "Also at every Deadline's end, a random charm inside a drawer gets a random Trait."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "Every charm that gains a Trait adds +1 Patterns Multiplier."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Blocks the 666s the Devious Traits add."
+   },
+   {
+    "id": "baphomet",
+    "why": "The added 666 chance doubles Above/Below more often."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "this_time_im_betting_on_yellow",
+    "why": "Devious can overwrite the Avid Trait that call gave."
+   },
+   {
+    "id": "this_time_im_betting_on_orange",
+    "why": "Devious can overwrite the Ambitious Trait that call gave."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a charm holds one Trait, so a new Trait replaces the old one.",
+   "Assumed Devious raises 999 odds instead in Sacred Mode."
+  ]
+ },
+ {
+  "id": "a_new_investment",
+  "kind": "memory",
+  "summary": "Run-long: Interest rises +2% at the end of every Deadline (max 16%), but Interest coins are paid only when a Deadline ends.",
+  "tip": "Plain deposit Interest now pays once per Deadline, so it is weak early. It suits charms that pay your current Interest: Lucky Cat, Chonky Cat and Token modifiers.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 4,
+   "economy": 4,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "interest"
+  ],
+  "provides": [
+   "interest"
+  ],
+  "cares": [
+   "interest",
+   "token"
+  ],
+  "effects": [
+   {
+    "type": "interest",
+    "add": 2,
+    "when": {
+     "on": "deadlineEnd"
+    },
+    "stack": true,
+    "cap": 16
+   },
+   {
+    "type": "special",
+    "text": "Interest coins are paid only when a Deadline ends instead of at the end of every Round."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lucky_cat",
+    "why": "Pays your current Interest on 3+ Pattern spins, and that Interest keeps rising."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "Pays double your rising Interest on 7+ Pattern spins."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "Token modifiers pay half your current Interest per scored Symbol."
+   },
+   {
+    "id": "stonks",
+    "why": "+5% more Interest for the Cats and Tokens to pay out."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "grandmas_purse",
+    "why": "Its +15% fades 3% per Round, mostly gone before the Deadline-end payout."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Read 'Max 16%' as a cap on this card's bonus (+2% for 8 Deadlines); it may instead cap total Interest at 16%.",
+   "Assumed Cat and Token payouts are not limited to Deadline end."
+  ]
+ },
+ {
+  "id": "sacrifices",
+  "kind": "memory",
+  "summary": "Run-long: only 6 charm slots instead of 7, but every charm in the store costs 1 ticket less.",
+  "tip": "A strong ticket economy for builds that buy a lot. Fidelity Card stacks for -2 per charm. Avoid slot-eaters like Nuclear Button or Hourglass; Property Certificate pays the slot back.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 6,
+   "utility": 0,
+   "risk": 4
+  },
+  "archetypes": [
+   "tickets",
+   "discard"
+  ],
+  "provides": [
+   "discount"
+  ],
+  "cares": [
+   "purchase",
+   "charmSpace"
+  ],
+  "effects": [
+   {
+    "type": "charmSpace",
+    "add": -1
+   },
+   {
+    "type": "storeDiscount",
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fidelity_card",
+    "why": "Stacks: every charm costs 2 tickets less."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Cheaper charms to buy and discard for its growth."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "More purchases raise its Ticket modifier chance faster."
+   },
+   {
+    "id": "property_certificate",
+    "why": "+2 slots more than repays the lost one."
+   },
+   {
+    "id": "cardboard_house",
+    "why": "Wins back the lost slot, and costs 1 ticket less."
+   },
+   {
+    "id": "clover_voucher",
+    "why": "Costs 1 ticket, so each Voucher nets +3."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "nuclear_button",
+    "why": "Its -1 charm space leaves you only 5 slots."
+   },
+   {
+    "id": "hourglass",
+    "why": "Its -1 charm space leaves you only 5 slots."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "lets_go_gambling",
+  "kind": "memory",
+  "summary": "When a Deadline ends: 50% chance to discard every charm in your drawers, otherwise each of them gets a random Trait.",
+  "tip": "Only gamble drawer charms you can afford to lose. Skull and D20 fill drawers with free charms, and Dung Beetle grows on every discard. Don't park Megaphone or Ankh there.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 5
+  },
+  "archetypes": [
+   "traits",
+   "discard"
+  ],
+  "provides": [
+   "traits",
+   "discard"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "At every Deadline's end, 50%: all charms in all drawers are discarded; otherwise every drawer charm gets a random Trait."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "dung_beetle",
+    "why": "Each discarded drawer charm raises all Symbols by their base value."
+   },
+   {
+    "id": "the_collector",
+    "why": "Traited drawer charms add +1 Patterns Multiplier each once equipped."
+   },
+   {
+    "id": "skull",
+    "why": "Spawns free charms in drawers every Deadline to gamble with."
+   },
+   {
+    "id": "d20",
+    "why": "Refills drawers with random charms every Round, so a wipe costs nothing."
+   },
+   {
+    "id": "gluttony",
+    "why": "Pays coins for every charm an effect discards."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "megaphone",
+    "why": "Usually parked in a drawer between calls, where it can be wiped."
+   },
+   {
+    "id": "ankh",
+    "why": "The drawer trick that saves Ankh for later risks losing it."
+   },
+   {
+    "id": "barathrum",
+    "why": "A drawer-stored Barathrum and the call it holds can be lost."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a new Trait replaces any Trait the drawer charm already had."
+  ]
+ },
+ {
+  "id": "class_dunce",
+  "kind": "memory",
+  "summary": "At the start of the run, 2 random Symbols get their chance to appear halved.",
+  "tip": "Roughly neutral: about -5% to +12% coins depending on the pair (fewer types on the grid form a few more Patterns). Check which two were halved and build around the rest.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [],
+  "provides": [
+   "symbolChance"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": "random",
+    "count": 2,
+    "mulBase": 0.5,
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the base chance is halved, so later '+1 manifest' boosts still add their full amount.",
+   "The -5% to +12% range comes from simulating all 21 possible pairs on a starting board."
+  ]
+ },
+ {
+  "id": "heartbreak",
+  "kind": "memory",
+  "summary": "From Deadline 3 on, the last Round of every Deadline is guaranteed to show at least one 666.",
+  "tip": "Deposit before the last Round so the 666 takes little. Devil builds love a sure 666 (Baphomet, Gabihbb'h), Holy Bible can cancel it, and it turns the next phone call Red.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 6
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "666"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "From Deadline 3, at least one 666 is guaranteed during the last Round of every Deadline, with the usual 666 coin loss."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "baphomet",
+    "why": "A sure 666 every Deadline doubles Above/Below each time."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "Doubles the Symbols Multiplier for the rest of that last Round."
+   },
+   {
+    "id": "crystal_skull",
+    "why": "Triples gem values for the rest of that last Round."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Cancels the forced 666, which still counts for 666 charms."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "+3 spins after the forced 666 to win coins back."
+   },
+   {
+    "id": "ritual_bell",
+    "why": "3 free Restocks every Deadline from the forced 666."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the forced 666 counts for 666-triggered charms like a natural one.",
+   "A 666 in a Deadline's last Round makes the next call Red (Telephone wiki); in Sacred Mode it may become a 999 instead."
+  ]
+ },
+ {
+  "id": "repressed_emotions",
+  "kind": "memory",
+  "summary": "Bans single-Symbol charms for the run: Symbol Pictures and Photo Book, Monopoly Pieces, Catan Tiles and the Golden Symbol charms.",
+  "tip": "The store then shows more general charms (multipliers, Luck, retriggers). For Golden, Ticket and Token modifiers, turn to Greedy King, Raging Capitalist and Naughty Dealer.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 1,
+   "utility": 3,
+   "risk": 2
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "store"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Banned for the whole run (listed in the terminal): the 7 Symbol Pictures and Photo Book, the 7 Monopoly Pieces (Ticket modifier charms), the 7 Catan Tiles (Token modifier charms) and the 7 Golden Symbol charms."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "greedy_king",
+    "why": "With the Golden Symbol charms banned, it is the main Golden modifier source."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Replaces the banned Monopoly Pieces as a Ticket modifier source."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "Replaces the banned Catan Tiles as a Token modifier source."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Banned list taken from the wiki notes; the in-game terminal is the authority."
+  ]
+ },
+ {
+  "id": "expensive_love",
+  "kind": "memory",
+  "summary": "Run-long: every charm in the store comes with a random Trait (when it can have one). The run starts with 4 tickets.",
+  "tip": "Traits make most charms pricier (about +1.4 tickets on average), but every buy brings a bonus. The Collector becomes huge: +1 Patterns Multiplier per traited charm.",
+  "tier": "A",
+  "ratings": {
+   "power": 4,
+   "scaling": 7,
+   "economy": 3,
+   "utility": 1,
+   "risk": 2
+  },
+  "archetypes": [
+   "traits"
+  ],
+  "provides": [
+   "traits",
+   "tickets"
+  ],
+  "cares": [
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "random",
+    "target": "store"
+   },
+   {
+    "type": "tickets",
+    "add": 4,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "Nearly every charm you equip has a Trait: +1 Patterns Multiplier each."
+   },
+   {
+    "id": "graded_card",
+    "why": "Avid and Ambitious Traits turn into x2 multipliers."
+   },
+   {
+    "id": "fidelity_card",
+    "why": "Offsets the Trait price increases."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Cancels the 666s that Devious Traits add."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Trait odds follow the wiki's forced-Trait table (Florid and Gambler most common, Devious about 14%)."
+  ]
  }
 ]

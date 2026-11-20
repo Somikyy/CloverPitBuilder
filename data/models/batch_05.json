@@ -68,7 +68,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -146,7 +146,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -219,7 +219,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -292,7 +292,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -370,7 +370,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -448,7 +448,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -526,7 +526,7 @@
    },
    {
     "id": "living_on_the_edge",
-    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays low during the Deadline."
    }
   ],
   "confidence": "high",
@@ -1633,7 +1633,7 @@
   "id": "angels_hand",
   "kind": "charm",
   "summary": "Red Button (6 charges): adds a random 2-symbol Pattern (HOR-S, VER-S or DIAG-S, worth x0.5) for the rest of the Round.",
-  "tip": "Pairs line up constantly, so a press adds many small hits and big Pattern counts: good with Pentacle, Mushrooms and Lucky Cat. It ruins lone-Pattern charms like Halo or Pain Killers.",
+  "tip": "Pairs line up constantly, so each press adds many small hits and big Pattern counts (Pentacle, Mushrooms, Lucky Cat). 6 charges is slow without charge help. Ruins lone-Pattern charms like Halo.",
   "tier": "C",
   "ratings": {
    "power": 3,

@@ -386,11 +386,7 @@
    },
    {
     "type": "debt",
-    "addPct": 300,
-    "when": {
-     "redButton": true
-    },
-    "duration": "permanent"
+    "addPct": 300
    }
   ],
   "synergies": [
@@ -420,8 +416,8 @@
   "confidence": "medium",
   "assumptions": [
    "The rise is random between +100% and +500% (x2 to x6); encoded as its +300% average.",
-   "Assumed the higher debt carries into every later Deadline.",
-   "Assumed a Red Button press fires every charged button charm, so Limbo fires on any press while charged."
+   "The debt effect has no Red Button condition on purpose: the engine cannot apply debt on a press, and a charged Limbo on the table fires with any press, so owning it is treated as paying one rise (each further press compounds it).",
+   "Assumed the higher debt carries into every later Deadline."
   ]
  },
  {
@@ -533,5 +529,524 @@
   ],
   "confidence": "high",
   "assumptions": []
+ },
+ {
+  "id": "gluttony",
+  "kind": "charm",
+  "summary": "Evil: whenever a charm is discarded by an effect (it breaks, decays or a rule removes it), you gain coins equal to everything 666 has taken from you this run.",
+  "tip": "Pays nothing until a 666 has cost you coins; after that every self-breaking charm is a full refund of your losses. Fraud in a drawer, Corpse pieces left in drawers, Peppers and Personal Trainer all count.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 5,
+   "economy": 7,
+   "utility": 4,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil",
+   "discard"
+  ],
+  "provides": [
+   "coins"
+  ],
+  "cares": [
+   "666",
+   "discard"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Whenever a charm is discarded by an effect (breaking, decaying to 0, a drawer rule; not selling it from its menu), gain coins equal to the total coins lost to 666 so far this run.",
+    "when": {
+     "on": "discard"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fraud",
+    "why": "Moving Fraud into a drawer discards it by its own rule: a payout whenever you want it."
+   },
+   {
+    "id": "personal_trainer",
+    "why": "Decays to 0% and breaks after 5 Rounds, paying out."
+   },
+   {
+    "id": "one_trick_pony",
+    "why": "Breaks right after its free Jackpot: a Jackpot plus a payout."
+   },
+   {
+    "id": "holy_bible",
+    "why": "After blocking a 666 it may break, which pays back all your earlier losses."
+   },
+   {
+    "id": "vorago",
+    "why": "Brings a broken charm back so it can break, and pay, again."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed breaking, decaying to 0% and drawer-discard rules (Fraud, Corpse pieces) all count as discards by an effect; selling does not.",
+   "Each payout is the full run total of 666 losses, not only the new ones."
+  ]
+ },
+ {
+  "id": "avarice",
+  "kind": "charm",
+  "summary": "Evil: every Symbol gets a 20% chance of Investor (+1% Interest until the Round ends per scored one), but +2% chance of 666.",
+  "tip": "Turns busy spins into a climbing Interest rate each Round, so Cats, Tokens and the end-of-Round payout all grow. Deposit early so Interest has coins to work on.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 6,
+   "utility": 0,
+   "risk": 4
+  },
+  "archetypes": [
+   "interest",
+   "devil"
+  ],
+  "provides": [
+   "investor",
+   "interest",
+   "coins",
+   "666"
+  ],
+  "cares": [
+   "patternCount",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "investor",
+    "symbols": "all",
+    "add": 0.2
+   },
+   {
+    "type": "chance666",
+    "add": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lucky_cat",
+    "why": "Pays your current Interest on 3+ Pattern spins, and Investor keeps raising it during the Round."
+   },
+   {
+    "id": "cosmic_cat",
+    "why": "More Investor symbols, and it pays your climbing Interest on every 3+ Pattern spin."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "Pays double your climbing Interest on 7+ Pattern spins."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "Each Token pays half your current Interest, which Investor pushes up."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Covers the extra 666 risk."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so a higher Interest rate has almost nothing to pay on."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed retriggered Patterns score their Investor symbols again."
+  ]
+ },
+ {
+  "id": "rage",
+  "kind": "charm",
+  "summary": "Evil: when the third 666 of a Deadline shows up, you get one extra Round in that Deadline.",
+  "tip": "Three 666s in one Deadline are rare unless your 666 chance is near 10%. Lust (two forced 666s every Deadline), Possessed Cell Phone or Heartbreak make it fire reliably.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 4,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "rounds"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "+1 Round in the current Deadline when the third 666 of that Deadline appears (once per Deadline).",
+    "when": {
+     "on": "666",
+     "n": 3
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lust",
+    "why": "Two guaranteed 666s every Deadline: one more and you get the extra Round."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "Order the 666s you need, from Deadline 3 on."
+   },
+   {
+    "id": "heartbreak",
+    "why": "A guaranteed 666 in the last Round of every Deadline."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "+1.5% 666 chance, and bonus spins after each 666 give more chances at the next one."
+   },
+   {
+    "id": "lover_2",
+    "why": "+3% 666 chance."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed only the third 666 counts, so at most one extra Round per Deadline.",
+   "Kept as text: the engine would value any conditional extra Round as a guaranteed one every Deadline."
+  ]
+ },
+ {
+  "id": "heresy",
+  "kind": "charm",
+  "summary": "Evil: +3% chance of 666, and every Symbol gets a Revenge chance equal to double your total 666 chance (9% with no other 666 boosts).",
+  "tip": "The engine of a Revenge build: every other 666 boost also raises its Revenge chance. Add Violence for double payouts, and from Deadline 7 deposit often, since a 666 takes all coins you hold.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 4,
+   "economy": 4,
+   "utility": 0,
+   "risk": 6
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "revenge",
+   "666",
+   "coins"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "chance666",
+    "add": 3
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "revenge",
+    "symbols": "all",
+    "add": 0.09
+   },
+   {
+    "type": "special",
+    "text": "The Revenge chance is always double your current total 666 chance, so it grows with every other 666 boost. Revenge: each scored Revenge symbol pays 5% of all coins lost to 666 so far this run, so it pays nothing until a 666 has taken coins."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "violence",
+    "why": "Revenge pays double: 10% of your 666 losses per scored symbol."
+   },
+   {
+    "id": "necronomicon",
+    "why": "+3% 666 chance adds +6% Revenge, plus Patterns Multiplier +2."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubling the 666 chance also doubles the Revenge chance."
+   },
+   {
+    "id": "lover_2",
+    "why": "+3% 666 chance adds +6% Revenge."
+   },
+   {
+    "id": "gluttony",
+    "why": "Another way to cash in the coins your 666s take."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "The 0.09 Revenge chance is double the base 1.5% plus Heresy's own 3%; it rises with every other 666 boost."
+  ]
+ },
+ {
+  "id": "violence",
+  "kind": "charm",
+  "summary": "Evil: every Symbol gets +5% chance of Revenge, and all Revenge modifiers pay double: 10% of your 666 losses this run per scored symbol.",
+  "tip": "The payoff piece for Revenge charms (Sloth, Heresy, Lover 1, Treachery, Lust). Weak alone; with two or more Revenge sources it turns every past 666 into steady income.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 4,
+   "economy": 5,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "revenge",
+   "coins"
+  ],
+  "cares": [
+   "666",
+   "revenge"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "revenge",
+    "symbols": "all",
+    "add": 0.05
+   },
+   {
+    "type": "special",
+    "text": "All Revenge modifiers, from any source, pay double: 10% of all coins lost to 666 so far this run per scored Revenge symbol."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "heresy",
+    "why": "The biggest Revenge source, and every symbol it marks pays double."
+   },
+   {
+    "id": "sloth",
+    "why": "20% Revenge on your most common Symbol, paid double."
+   },
+   {
+    "id": "lust",
+    "why": "30% Revenge on every Symbol in each Deadline's last Round, paid double."
+   },
+   {
+    "id": "treachery",
+    "why": "Turns every modifier into Revenge on 40% of spins, all paid double."
+   },
+   {
+    "id": "lover_1",
+    "why": "More Revenge chance on every Symbol."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "fraud",
+  "kind": "charm",
+  "summary": "Evil: charms in the store cost double, but restocking the store costs half. Moving it into a drawer discards it.",
+  "tip": "Mostly a tax on buying. Keep it only for a heavy restock phase (Bell Pepper, Electricity Meter), then put it in a drawer to get rid of it; that discard also pays Gluttony.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 2,
+   "utility": 1,
+   "risk": 5
+  },
+  "archetypes": [
+   "devil",
+   "restock"
+  ],
+  "provides": [
+   "restock",
+   "discard"
+  ],
+  "cares": [
+   "restock"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Charm prices in the store are doubled while it is equipped."
+   },
+   {
+    "type": "special",
+    "text": "Store restocks cost half as many coins while it is equipped."
+   },
+   {
+    "type": "special",
+    "text": "If you move it into a drawer it is discarded at once (a discard by its own rule)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "gluttony",
+    "why": "Putting Fraud in a drawer discards it by an effect, paying Gluttony on demand."
+   },
+   {
+    "id": "bell_pepper",
+    "why": "Half-price restocks grow its Luck bonus for fewer coins."
+   },
+   {
+    "id": "electricity_meter",
+    "why": "Every half-price restock still recharges a Red Button charm."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its drawer discard counts as a discard for the Beetle."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "clover_voucher",
+    "why": "Costs 4 tickets instead of 2, so its 4-ticket refund no longer makes a profit."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Every purchase costs twice the tickets, so it grows half as fast per ticket."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the doubling applies after discounts and that free charms stay free.",
+   "Assumed the drawer discard counts as a discard by an effect for Gluttony and Dung Beetle."
+  ]
+ },
+ {
+  "id": "treachery",
+  "kind": "charm",
+  "summary": "Evil, triggers randomly (40%): every modifier on the grid turns into Revenge for that spin, replacing Golden, Chain, Repetition and the rest.",
+  "tip": "Only for pure Revenge builds: with Violence it turns other modifiers into double Revenge payouts. In Golden, Chain or Repetition builds it destroys value on 40% of spins.",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 3,
+   "utility": 0,
+   "risk": 5
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "revenge",
+   "triggersRandomly"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "40% of spins: every Symbol modifier on the grid becomes Revenge (5% of all coins lost to 666 this run per scored Revenge symbol).",
+    "when": {
+     "chance": 0.4
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "violence",
+    "why": "Doubles every Revenge payout it creates."
+   },
+   {
+    "id": "avarice",
+    "why": "Its 20% Investor symbols become extra Revenge targets on Treachery spins."
+   },
+   {
+    "id": "horseshoe",
+    "why": "Fires on 80% of spins instead of 40%."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "fortune_teller",
+    "why": "Chain modifiers get converted before they can grow Pattern values."
+   },
+   {
+    "id": "personal_trainer",
+    "why": "Repetition modifiers get converted, losing their retriggers."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Golden modifiers get converted, so symbol values grow far slower."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the conversion affects that spin only and only symbols that already carry a modifier."
+  ]
+ },
+ {
+  "id": "corpse_left_arm",
+  "kind": "charm",
+  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Cross into Sacrifice before the Deadline ends.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 1,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "debt"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "debt",
+    "addPct": 5
+   },
+   {
+    "type": "special",
+    "text": "Goes on the slot machine (no charm slot) and can never be discarded once equipped. If it is still in a drawer when a Deadline ends it is discarded. Each equipped Corpse piece makes Skull spawn one free charm per Deadline."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "Equipped, it makes Skull spawn one free charm in a drawer every Deadline."
+   },
+   {
+    "id": "cross",
+    "why": "Surgery: Corpse (Left Arm) + Cross fuse into Sacrifice (DLC)."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "If it is discarded from a drawer at the Deadline's end, the Beetle gains a stack."
+   },
+   {
+    "id": "gluttony",
+    "why": "Left in a drawer, its end-of-Deadline discard pays Gluttony."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Per the wiki, Cadaver pieces sit on the slot machine and use no charm slot.",
+   "Assumed the +5% Debt of several pieces stacks."
+  ]
  }
 ]

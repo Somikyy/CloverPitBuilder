@@ -1234,7 +1234,7 @@
    },
    {
     "id": "nuclear_button",
-    "why": "Every restored charge is worth two activations."
+    "why": "Every press the restock charges pay for triggers twice."
    },
    {
     "id": "crowbar",
@@ -1675,7 +1675,7 @@
    },
    {
     "id": "consolation_prize",
-    "why": "Also turns empty spins into permanent symbol value."
+    "why": "An empty spin is also a miss toward the 3-miss streak, so the same bad spins feed both symbol-value boosts."
    }
   ],
   "antiSynergies": [
@@ -1735,7 +1735,7 @@
    },
    {
     "id": "nose",
-    "why": "Nose's forced Above/Below patterns cash in the grown pattern values."
+    "why": "Each trigger adds +7 to Above and Below (their base value); Nose forces one of them every few spins."
    }
   ],
   "antiSynergies": [
