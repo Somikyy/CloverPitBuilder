@@ -1,0 +1,610 @@
+[
+ {
+  "id": "bricks",
+  "kind": "charm",
+  "summary": "Lemons get a 20% chance to carry Token: each scored Token Lemon pays you half your current Interest in coins.",
+  "tip": "A 1-ticket interest earner: Lemons are the most common symbol, so Tokens show up often. Raise Interest with Stonks and add Lemon chance or fruit retriggers.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 2,
+   "economy": 4,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "lemon",
+   "fruit"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "lemon",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "lemon"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "life_gave_me_lemons",
+    "why": "+1 Lemon chance for good means more Token Lemons scored."
+   },
+   {
+    "id": "lemon_picture",
+    "why": "+2 Lemon chance for the Deadline means more Token Lemons scored."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Retriggered Lemon Patterns pay their Tokens again."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "Its Token chance on every symbol stacks with the 20% on Lemons."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Lemons, so fewer Tokens."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "wood",
+  "kind": "charm",
+  "summary": "Cherries get a 20% chance to carry Token: each scored Token Cherry pays you half your current Interest in coins.",
+  "tip": "A 1-ticket interest earner: Cherries are as common as Lemons, so Tokens show up often. Raise Interest with Stonks and add Cherry chance or fruit retriggers.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 2,
+   "economy": 4,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "cherry",
+   "fruit"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "cherry",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "cherry"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "i_used_to_eat_healthy",
+    "why": "+1 Cherry chance for good means more Token Cherries scored."
+   },
+   {
+    "id": "cherry_picture",
+    "why": "+2 Cherry chance for the Deadline means more Token Cherries scored."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Retriggered Cherry Patterns pay their Tokens again."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers re-pays every Token Cherry."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Cherries, so fewer Tokens."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "sheep",
+  "kind": "charm",
+  "summary": "Clovers get a 15% chance to carry Token: each scored Token Clover pays you half your current Interest in coins.",
+  "tip": "Only worth a slot in a Clover build that also boosts Interest (Stonks, Speculative trait). More Clover chance and Number 2 retriggers multiply the payouts.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 3,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "clover"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "clover",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "clover"
+    ],
+    "add": 0.15
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "todays_my_lucky_day",
+    "why": "+1 Clover chance for good means more Token Clovers scored."
+   },
+   {
+    "id": "clover_picture",
+    "why": "+2 Clover chance for the Deadline means more Token Clovers scored."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers re-pays every Token Clover."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Clovers, so fewer Tokens."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "wheat",
+  "kind": "charm",
+  "summary": "Bells get a 15% chance to carry Token: each scored Token Bell pays you half your current Interest in coins.",
+  "tip": "Only worth a slot in a Bell build that also boosts Interest (Stonks, Speculative trait). More Bell chance and Number 1 retriggers multiply the payouts.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 3,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "bell"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "bell",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "bell"
+    ],
+    "add": 0.15
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "i_need_to_be_there",
+    "why": "+1 Bell chance for good means more Token Bells scored."
+   },
+   {
+    "id": "bell_picture",
+    "why": "+2 Bell chance for the Deadline means more Token Bells scored."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers re-pays every Token Bell."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Bells, so fewer Tokens."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "stone",
+  "kind": "charm",
+  "summary": "Diamonds get a 10% chance to carry Token: each scored Token Diamond pays you half your current Interest in coins.",
+  "tip": "Weak: Diamonds rarely form Patterns and only 1 in 10 gets a Token. Consider it only in a heavy Diamond build with high Interest; Necklace and Number 2 re-pay Tokens.",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 1,
+   "economy": 2,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "diamond",
+   "gems"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "diamond",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "diamond"
+    ],
+    "add": 0.1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "please_ill_give_you_anything",
+    "why": "+1 Diamond chance for good means more Token Diamonds scored."
+   },
+   {
+    "id": "diamond_picture",
+    "why": "+2 Diamond chance for the Deadline means more Token Diamonds scored."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Diamond Pattern triggers 3 times, paying its Tokens 3 times."
+   },
+   {
+    "id": "number_2",
+    "why": "A Round of non-yellow retriggers re-pays every Token Diamond."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, so fewer Tokens."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "harbor",
+  "kind": "charm",
+  "summary": "Treasures get a 10% chance to carry Token: each scored Token Treasure pays you half your current Interest in coins.",
+  "tip": "Weak: Treasures rarely form Patterns and only 1 in 10 gets a Token. Consider it only in a heavy Treasure build with high Interest; Necklace and Number 1 re-pay Tokens.",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 1,
+   "economy": 2,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "treasure",
+   "gems"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "treasure",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "treasure"
+    ],
+    "add": 0.1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "i_need_money",
+    "why": "+1 Treasure chance for good means more Token Treasures scored."
+   },
+   {
+    "id": "treasure_picture",
+    "why": "+2 Treasure chance for the Deadline means more Token Treasures scored."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Treasure Pattern triggers 3 times, paying its Tokens 3 times."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers re-pays every Token Treasure."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Treasures, so fewer Tokens."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "thief",
+  "kind": "charm",
+  "summary": "Sevens get a 10% chance to carry Token: each scored Token Seven pays you half your current Interest in coins.",
+  "tip": "The weakest Token charm, since Sevens are the rarest symbol. Skip it unless Sevens fill your grid (Seven Picture, I didn't hurt anybody) and your Interest is high.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 2,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest",
+   "seven",
+   "gems"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "seven",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": [
+     "seven"
+    ],
+    "add": 0.1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest: at base Interest each Token pays about 70% more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every Token pays double."
+   },
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "+1 Seven chance for good means more Token Sevens scored."
+   },
+   {
+    "id": "seven_picture",
+    "why": "+2 Seven chance for the Deadline means more Token Sevens scored."
+   },
+   {
+    "id": "number_1",
+    "why": "A Round of yellow retriggers re-pays every Token Seven."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Sevens, so fewer Tokens."
+   },
+   {
+    "id": "expired_meds",
+    "why": "Sevens are usually your most valuable symbol, so it keeps them from appearing."
+   },
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest, and every Token payout, stays tiny during the Deadline."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "A Token pays half of the Interest payout (your Interest % of the deposit), the same amount basis Lucky Cat pays in full.",
+   "Retriggered Patterns pay their Tokens again (the wiki's strategy notes for these charms say so)."
+  ]
+ },
+ {
+  "id": "wheelbarrow",
+  "kind": "charm",
+  "summary": "Lemons get a 20% chance to carry Ticket: each scored Ticket Lemon gives you 1 Clover Ticket.",
+  "tip": "Pricey at 4 tickets, but Lemons are the most common symbol, so it pays back fast. Lemon chance and fruit retriggers print more; hold the tickets for CloverPet or Lost Wallet.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 7,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets",
+   "lemon",
+   "fruit"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "lemon"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": [
+     "lemon"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lemon_picture",
+    "why": "+2 Lemon chance for the Deadline means more Ticket Lemons scored."
+   },
+   {
+    "id": "life_gave_me_lemons",
+    "why": "+1 Lemon chance for good means more Ticket Lemons scored."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Retriggered Lemon Patterns pay their Tickets again."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   },
+   {
+    "id": "cold_affection",
+    "why": "Rounds pay no tickets with that memory card, so Ticket modifiers become your income."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Lemons, so fewer Tickets."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Each Ticket Lemon in a scored Pattern gives 1 ticket, and retriggers pay it again (wiki Clover Tickets and Monopoly Pieces pages)."
+  ]
+ }
+]

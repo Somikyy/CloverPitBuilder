@@ -1,0 +1,643 @@
+[
+ {
+  "id": "please_dont_throw_my_stuff_away",
+  "kind": "phone",
+  "summary": "+1 charm space for the rest of the run. It can be picked only once per run.",
+  "tip": "Take it almost every time it shows up. Equip Megaphone first (+2) or bank it in Barathrum for a second trigger; with both it gives +4 slots.",
+  "tier": "A",
+  "ratings": {
+   "power": 0,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 9,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "charmSpace"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "charmSpace",
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "megaphone",
+    "why": "Equipped when you pick it, the call triggers twice: +2 charm space, which also covers its own -1."
+   },
+   {
+    "id": "barathrum",
+    "why": "Bank this once-per-run call and discard Barathrum later for a second +1 slot (+4 total with Megaphone)."
+   },
+   {
+    "id": "first_love",
+    "why": "Phone abilities trigger twice for the whole run, so this gives +2 slots."
+   },
+   {
+    "id": "my_head_hurts",
+    "why": "Released from Barathrum during the call that offers this, it fires this too, on top of picking it."
+   },
+   {
+    "id": "hourglass",
+    "why": "The extra slot pays for its -1 charm space."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "i_cant_quit_now",
+  "kind": "phone",
+  "summary": "Doubles the Jackpot Pattern's current value (10 at base). It only pays on spins that land a full-grid Jackpot.",
+  "tip": "Only for Luck/Jackpot builds (One Trick Pony, Ophanim Wheels, big Luck stacks). It doubles the current value, so raise the Jackpot first with I found a winning strategy!",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "patternValue",
+   "jackpot"
+  ],
+  "cares": [
+   "jackpot",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": [
+     "JACKPOT"
+    ],
+    "mul": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "one_trick_pony",
+    "why": "Its guaranteed Jackpot pays double."
+   },
+   {
+    "id": "ophanim_wheels",
+    "why": "Every 999 forces a Jackpot on the next spin, each one worth double."
+   },
+   {
+    "id": "i_found_a_winning_strategy",
+    "why": "Adds +10 to the Jackpot first, so the doubling gains twice as much."
+   },
+   {
+    "id": "rotten_pepper",
+    "why": "Its Luck bonus grows past 15, which guarantees a Jackpot when it fires."
+   },
+   {
+    "id": "fortune_teller",
+    "why": "Chain symbols scored in a Jackpot raise its value permanently, and this doubles the raised value."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "A full-grid Jackpot scores about 12 Patterns worth ~46x base in total, so the Jackpot Pattern itself (10x) is roughly a fifth of a Jackpot spin."
+  ]
+ },
+ {
+  "id": "can_i_borrow_some_green",
+  "kind": "phone",
+  "summary": "Gives 5 Clover Tickets right away.",
+  "tip": "Good early when a key charm is just out of reach; later, permanent stat calls usually beat a one-time 5 tickets. Megaphone makes it +10.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 5,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "tickets"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "tickets",
+    "add": 5,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cloverpet",
+    "why": "+5 held tickets is +1 Symbols Multiplier."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "A third of the way to its next +1 Patterns Multiplier step."
+   },
+   {
+    "id": "cloverpot",
+    "why": "A bigger pile at Deadline end means a bigger payout."
+   },
+   {
+    "id": "voicemail",
+    "why": "Pays for phone rerolls, each worth +1 Symbols Multiplier."
+   },
+   {
+    "id": "cold_affection",
+    "why": "With no tickets from Rounds, 5 free tickets are worth much more."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "can_i_eat_something",
+  "kind": "phone",
+  "summary": "Every charm in the store right now costs 2 tickets less, until the store is next restocked.",
+  "tip": "Pause the call and restock until the store shows charms you want, then take it: up to 8 tickets saved on 4 charms. Stacks with Fidelity Card, making cheap charms free.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 5,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "discount",
+   "store"
+  ],
+  "cares": [
+   "restock"
+  ],
+  "effects": [
+   {
+    "type": "storeDiscount",
+    "add": 2,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fidelity_card",
+    "why": "The discounts stack to 3 tickets off each charm, so 1-3 ticket charms are free."
+   },
+   {
+    "id": "clover_voucher",
+    "why": "It becomes free: a clean +4 tickets."
+   },
+   {
+    "id": "sacrifices",
+    "why": "That memory card's permanent 1-ticket discount stacks with this one."
+   },
+   {
+    "id": "megaphone",
+    "why": "A second trigger should take another 2 tickets off each charm."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "More purchases for the same tickets, each raising its Ticket chance by 1%."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the discount covers only the charms in the store when you take the call and ends at the next restock, including ones caused by charms like Cigarettes.",
+   "Assumed a Megaphone retrigger stacks a second 2-ticket discount."
+  ]
+ },
+ {
+  "id": "can_i_get_some_energy_drinks",
+  "kind": "phone",
+  "summary": "Instantly refills every Red Button charm to full charge.",
+  "tip": "Worth it only when costly button charms are empty (Weird Clock, Number 1/2, Midas Touch). Barathrum can bank it for a second refill later; a lifeline with Overdose.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "charges"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "charges",
+    "restore": "all",
+    "targets": "all",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "weird_clock",
+    "why": "Refills all 12 charges: one more extra Round this Deadline."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Another Round of permanent Symbol value gains."
+   },
+   {
+    "id": "number_1",
+    "why": "Another Round of yellow retriggers."
+   },
+   {
+    "id": "overdose",
+    "why": "Button charms never recharge at Round end with this memory card, so a full refill is precious."
+   },
+   {
+    "id": "barathrum",
+    "why": "Bank it and discard Barathrum later for a second full refill."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "exotic_matter",
+    "why": "Button charms already refill before every spin, so this does nothing."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed only equipped Red Button charms are refilled, as with Car Battery."
+  ]
+ },
+ {
+  "id": "this_time_im_betting_on_green",
+  "kind": "phone",
+  "summary": "Gives a random equipped charm the Florid Trait: +3 Clover Tickets every time a Deadline ends, as long as that charm stays equipped.",
+  "tip": "Pause the call and move charms you may sell into drawers so Florid lands on a keeper. It can overwrite a better Trait. Each traited charm also feeds The Collector.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 6,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "tickets",
+   "traits"
+  ],
+  "provides": [
+   "traits",
+   "tickets"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "florid",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "A newly traited charm adds +1 Patterns Multiplier."
+   },
+   {
+    "id": "cloverpet",
+    "why": "+3 tickets every Deadline keeps its Symbols Multiplier climbing."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Steady ticket income toward its 15-ticket steps."
+   },
+   {
+    "id": "megaphone",
+    "why": "Triggers twice, so up to two charms get Florid."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
+  ]
+ },
+ {
+  "id": "this_time_im_betting_on_yellow",
+  "kind": "phone",
+  "summary": "Gives a random equipped charm the Avid Trait: Symbols Multiplier +2 as long as that charm stays equipped.",
+  "tip": "Huge early, when the Symbols Multiplier is small. Pause and drawer charms you may sell so Avid lands on a keeper; it can overwrite an existing Trait.",
+  "tier": "A",
+  "ratings": {
+   "power": 6,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "multiplier",
+   "traits"
+  ],
+  "provides": [
+   "symbolsMult",
+   "traits"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "avid",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "The traited charm also adds +1 Patterns Multiplier."
+   },
+   {
+    "id": "graded_card",
+    "why": "Turns Avid's +2 into a x2 Symbols Multiplier."
+   },
+   {
+    "id": "megaphone",
+    "why": "Triggers twice, so up to two charms get Avid."
+   },
+   {
+    "id": "barathrum",
+    "why": "Bank it and discard Barathrum later for another Avid charm."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
+  ]
+ },
+ {
+  "id": "this_time_im_betting_on_orange",
+  "kind": "phone",
+  "summary": "Gives a random equipped charm the Ambitious Trait: Patterns Multiplier +1 as long as that charm stays equipped.",
+  "tip": "The Patterns Multiplier starts at 1, so early this can double your coins. Drawer charms you may sell before taking it; it can overwrite an existing Trait.",
+  "tier": "A",
+  "ratings": {
+   "power": 7,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "multiplier",
+   "traits"
+  ],
+  "provides": [
+   "patternsMult",
+   "traits"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "ambitious",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "Ambitious gives +1 Patterns Multiplier, and +1 more through The Collector."
+   },
+   {
+    "id": "graded_card",
+    "why": "Turns Ambitious's +1 into a x2 Patterns Multiplier."
+   },
+   {
+    "id": "megaphone",
+    "why": "Triggers twice, so up to two charms get Ambitious."
+   },
+   {
+    "id": "barathrum",
+    "why": "Bank it and discard Barathrum later for another Ambitious charm."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
+  ]
+ },
+ {
+  "id": "if_i_keep_trying_the_patterns_will_align",
+  "kind": "phone",
+  "summary": "Gives a random equipped charm the Obsessive Trait: the last Pattern of every spin triggers one more time while that charm stays equipped.",
+  "tip": "A spin with one Pattern pays double, and the extra trigger counts toward 3+/5+ Pattern charms (Pentacle, Rotten Pepper, Lucky Cat). Drawer charms you may sell first.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "retrigger",
+   "traits"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount",
+   "traits"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "obsessive",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "pentacle",
+    "why": "The extra trigger helps spins reach 5+ Patterns, growing its multiplier."
+   },
+   {
+    "id": "rotten_pepper",
+    "why": "The extra trigger turns 2-Pattern spins into 3+ spins that grow its Luck."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "Turns 2-Pattern spins into 3+ Pattern spins that pay your Interest."
+   },
+   {
+    "id": "pain_killers",
+    "why": "A lone Pattern turned into your best symbol then scores twice."
+   },
+   {
+    "id": "the_collector",
+    "why": "A newly traited charm adds +1 Patterns Multiplier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Read \"every last Pattern\" as the final Pattern scored in each spin, so a one-Pattern spin pays double.",
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait)."
+  ]
+ },
+ {
+  "id": "its_kinda_fun",
+  "kind": "phone",
+  "summary": "Gives a random equipped charm the Gambler Trait: +1 free store restock every Deadline while that charm stays equipped.",
+  "tip": "Weak on its own. Pick it for Shopping Cart (each held free restock is +2 Symbols Multiplier) or restock payoffs like Bell Pepper and Electricity Meter.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 3,
+   "utility": 1,
+   "risk": 1
+  },
+  "archetypes": [
+   "restock",
+   "traits"
+  ],
+  "provides": [
+   "restock",
+   "traits"
+  ],
+  "cares": [
+   "restock",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "gambler",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "shopping_cart",
+    "why": "A free restock every Deadline that you can hold for +2 Symbols Multiplier."
+   },
+   {
+    "id": "bell_pepper",
+    "why": "Each restock spent adds +2 to its Luck bonus."
+   },
+   {
+    "id": "electricity_meter",
+    "why": "Each restock recharges a Red Button charm."
+   },
+   {
+    "id": "the_collector",
+    "why": "A newly traited charm adds +1 Patterns Multiplier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
+  ]
+ },
+ {
+  "id": "im_sure_the_value_will_rise",
+  "kind": "phone",
+  "summary": "Gives a random equipped charm the Speculative Trait: +3% Interest while that charm stays equipped.",
+  "tip": "Small unless Interest pays during spins: Lucky/Chonky Cat and Token modifiers turn each +1% into real coins. Otherwise +3% on your deposit is minor.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 2,
+   "economy": 4,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "interest",
+   "traits"
+  ],
+  "provides": [
+   "interest",
+   "traits"
+  ],
+  "cares": [
+   "interest",
+   "token"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "speculative",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lucky_cat",
+    "why": "Every 3+ Pattern spin pays your Interest, now 3% higher."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "Its double-Interest payouts grow too."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "Token symbols pay half your Interest each."
+   },
+   {
+    "id": "stonks",
+    "why": "Stacks to 15% Interest (7 + 5 + 3)."
+   },
+   {
+    "id": "the_collector",
+    "why": "A newly traited charm adds +1 Patterns Multiplier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
+  ]
+ }
+]
