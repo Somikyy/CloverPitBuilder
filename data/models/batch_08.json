@@ -1348,5 +1348,749 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": []
+ },
+ {
+  "id": "i_love_shiny_stuff",
+  "kind": "phone",
+  "summary": "Every charm in the store gets a random Trait (its price changes to match), then a random equipped charm gets Devious (+0.6% 666 chance).",
+  "tip": "Pause and restock until the store has charms worth buying: Avid (+2 Symbols Mult) and Ambitious (+1 Patterns Mult) are the prizes. Drawer key charms first so Devious hits a spare.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 3
+  },
+  "archetypes": [
+   "traits"
+  ],
+  "provides": [
+   "traits",
+   "store",
+   "666"
+  ],
+  "cares": [
+   "tickets",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "random",
+    "target": "store"
+   },
+   {
+    "type": "trait",
+    "apply": "devious",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "Traits the whole store; even the Devious it adds to you counts."
+   },
+   {
+    "id": "graded_card",
+    "why": "Avid or Ambitious charms bought from the traited store give x2 multipliers instead."
+   },
+   {
+    "id": "fidelity_card",
+    "why": "Takes 1 ticket off each traited charm, softening the Trait surcharge."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Random Traits from calls pick each of the 7 Traits with equal chance (wiki), so about 2 in 7 store charms get Avid or Ambitious.",
+   "Store Traits change prices: Ambitious/Obsessive +3, Avid/Speculative +2, Florid/Gambler +1, Devious -1 ticket.",
+   "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait)."
+  ]
+ },
+ {
+  "id": "i_like_cryptic_values",
+  "kind": "phone",
+  "summary": "Doubles the Clover Tickets you hold, but sets your coins in hand to 0.",
+  "tip": "Pause the call and deposit your coins into the ATM first so you lose little. Best when holding a big ticket pile that feeds Lost Wallet, CloverPet or CloverPot.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 7,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "tickets"
+  ],
+  "cares": [
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "tickets",
+    "mul": 2,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "coins",
+    "set": 0,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lost_wallet",
+    "why": "Doubling the pile can add several Patterns Multiplier steps at once."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Doubling your tickets doubles the Symbols Multiplier it gives."
+   },
+   {
+    "id": "cloverpot",
+    "why": "A doubled pile also pays more at the next Deadline end."
+   },
+   {
+    "id": "voicemail",
+    "why": "Funds many phone rerolls, each worth +1 Symbols Multiplier."
+   },
+   {
+    "id": "can_i_borrow_some_green",
+    "why": "Tickets borrowed earlier get doubled too."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed only coins in hand are affected; coins already deposited in the ATM are safe.",
+   "The call can be paused until the Deadline ends, so you can deposit before taking it."
+  ]
+ },
+ {
+  "id": "i_dont_care_about_the_price",
+  "kind": "phone",
+  "summary": "Two random charms in the store become free, but your Clover Tickets drop to 0.",
+  "tip": "Pause the call and spend your tickets first, then take it when the store holds pricey charms you want (Evil Deal, Megaphone, Barathrum). Bad news for ticket-hoarding builds.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 5,
+   "utility": 2,
+   "risk": 3
+  },
+  "archetypes": [],
+  "provides": [
+   "discount",
+   "store"
+  ],
+  "cares": [
+   "restock"
+  ],
+  "effects": [
+   {
+    "type": "storeDiscount",
+    "freeCharms": 2,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "tickets",
+    "set": 0,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "evil_deal",
+    "why": "Its 50-ticket price makes it the best possible charm to get for free."
+   },
+   {
+    "id": "megaphone",
+    "why": "A 7-ticket charm worth freeing; equipped, it also doubles this call."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "lost_wallet",
+    "why": "Sets your tickets to 0, wiping its Patterns Multiplier."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Sets your tickets to 0, erasing its Symbols Multiplier."
+   },
+   {
+    "id": "cloverpot",
+    "why": "Sets your tickets to 0, wiping the pile it pays on."
+   },
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "The 2 free charms are picked at random among the charms in the store.",
+   "Assumed a Megaphone retrigger frees two more charms (your tickets are already 0)."
+  ]
+ },
+ {
+  "id": "my_head_hurts",
+  "kind": "phone",
+  "summary": "Triggers every other ability offered in the same call, then gives a random equipped charm Devious (+0.6% 666 chance).",
+  "tip": "In a Red call it fires the other Red options, drawbacks included, so check them first. Banked in Barathrum and released in a normal call, it fires all of that call instead.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 2,
+   "utility": 2,
+   "risk": 5
+  },
+  "archetypes": [
+   "phone"
+  ],
+  "provides": [
+   "phone",
+   "traits",
+   "666"
+  ],
+  "cares": [
+   "phone",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Activates all the other abilities offered in the same call (2 normally, 3 with Dear Diary). In a Red call those are the other Red options, drawbacks included; released from Barathrum during a later call, it fires that call's options."
+   },
+   {
+    "type": "trait",
+    "apply": "devious",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "barathrum",
+    "why": "Bank it, then discard Barathrum during a normal call to fire every option on offer."
+   },
+   {
+    "id": "dear_diary",
+    "why": "A fourth option means one more ability fired."
+   },
+   {
+    "id": "please_dont_throw_my_stuff_away",
+    "why": "Released from Barathrum when that call is offered, it adds a slot on top of picking it."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Read 'all other current phone abilities' as the other options in the current call, per the wiki's Barathrum combo note.",
+   "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait)."
+  ]
+ },
+ {
+  "id": "give_me_back_my_money",
+  "kind": "phone",
+  "summary": "Doubles the coins you hold, but sets your Clover Tickets to 0.",
+  "tip": "Pause it, spend your tickets, then hold your coins (no deposits) and take it just before paying the debt to double that Deadline. From Deadline 7 a 666 wipes held coins.",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 1,
+   "economy": 3,
+   "utility": 2,
+   "risk": 4
+  },
+  "archetypes": [],
+  "provides": [
+   "coins"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "coins",
+    "mul": 2,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "tickets",
+    "set": 0,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "holy_bible",
+    "why": "Blocks a 666 while you sit on coins waiting to double them."
+   },
+   {
+    "id": "lost_briefcase",
+    "why": "Its payout of 30% of the debt lands in hand, so it gets doubled too."
+   },
+   {
+    "id": "rosary",
+    "why": "A 35% shield against 666 while you hold your coins."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "lost_wallet",
+    "why": "Sets your tickets to 0, wiping its Patterns Multiplier."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Sets your tickets to 0, erasing its Symbols Multiplier."
+   },
+   {
+    "id": "cloverpot",
+    "why": "Sets your tickets to 0, wiping the pile it pays on."
+   },
+   {
+    "id": "voicemail",
+    "why": "No tickets left for the rerolls it feeds on."
+   },
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed only coins in hand are doubled; coins already deposited in the ATM are not doubled.",
+   "The call can be paused until the Deadline ends, so the doubling can be timed after a full Deadline of play."
+  ]
+ },
+ {
+  "id": "theres_nothing_to_eat_but_mould",
+  "kind": "phone",
+  "summary": "Halves the base chance of Lemons and Cherries for good, so other symbols appear more; then a random equipped charm gets Devious (+0.6% 666).",
+  "tip": "A focus tool for non-fruit builds: losing the two commonest, cheapest symbols makes Clovers, Bells and gems show up more. Drawer key charms first so Devious hits a spare.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 4
+  },
+  "archetypes": [],
+  "provides": [
+   "symbolChance",
+   "666",
+   "traits"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": "fruit",
+    "mulBase": 0.5
+   },
+   {
+    "type": "trait",
+    "apply": "devious",
+    "target": "randomEquipped"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "eye_jar",
+    "why": "Fewer fruits means more spins scoring Diamonds, Treasures or Sevens for its streak."
+   },
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halving Clovers and Bells too leaves mostly gems on the grid."
+   },
+   {
+    "id": "the_collector",
+    "why": "Devious still counts as a Trait if it lands on an untraited charm."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "golden_lemon",
+    "why": "Halves the Lemon base chance, so fewer Golden Lemons."
+   },
+   {
+    "id": "golden_cherry",
+    "why": "Halves the Cherry base chance, so fewer Golden Cherries."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Halves Lemon and Cherry chances, so fewer fruit Patterns."
+   },
+   {
+    "id": "clicker",
+    "why": "Halves the base chance of the fruits it gives Repetition to."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Doubled fruit values matter less once fruits are rare."
+   },
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Halves the base chance only, so +chance bonuses already on Lemons or Cherries stay.",
+   "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait)."
+  ]
+ },
+ {
+  "id": "wait_what_day_is_it",
+  "kind": "phone",
+  "summary": "Halves the base chance of Clovers and Bells for good, so the other symbols appear more often.",
+  "tip": "Take it only when Clovers and Bells are not part of your plan: it concentrates the grid on fruits and gems. Painful for Clover/Bell builds and CloverBell.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [],
+  "provides": [
+   "symbolChance"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "clover",
+     "bell"
+    ],
+    "mulBase": 0.5
+   }
+  ],
+  "synergies": [
+   {
+    "id": "eye_jar",
+    "why": "More gem spins keep its streak going."
+   },
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halving fruits too leaves mostly gems on the grid."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Diamonds and Treasures show up more, so doubling them pays more."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "cloverbell",
+    "why": "Fewer spins that score both Clovers and Bells."
+   },
+   {
+    "id": "golden_clover",
+    "why": "Halves the Clover base chance, so fewer Golden Clovers."
+   },
+   {
+    "id": "golden_bell",
+    "why": "Halves the Bell base chance, so fewer Golden Bells."
+   },
+   {
+    "id": "aa_batteries",
+    "why": "Halves the base chance of the symbols it gives Battery to."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Doubled Clover and Bell values matter less once they are rare."
+   },
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Halves the base chance only, so +chance bonuses already on Clovers or Bells stay."
+  ]
+ },
+ {
+  "id": "ive_already_bet_it_all",
+  "kind": "phone",
+  "summary": "Halves the base chance of Diamonds, Treasures and Sevens for good: fewer high-value symbols, but fruits, Clovers and Bells line up more often.",
+  "tip": "Only for fruit or Clover/Bell builds, where it means more Patterns per spin. Ruinous for gem, Seven and Eye Jar builds.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 4
+  },
+  "archetypes": [],
+  "provides": [
+   "symbolChance",
+   "patternCount"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": "gems",
+    "mulBase": 0.5
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fruit_basket",
+    "why": "More fruit Patterns for it to retrigger."
+   },
+   {
+    "id": "cloverbell",
+    "why": "More spins that score both Clovers and Bells."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "A more concentrated grid means more 3+ Pattern spins."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Clovers and Bells take a bigger share of the grid."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "eye_jar",
+    "why": "Halves Diamond, Treasure and Seven chances, breaking its streaks."
+   },
+   {
+    "id": "golden_diamond",
+    "why": "Halves the Diamond base chance, so fewer Golden Diamonds."
+   },
+   {
+    "id": "golden_seven",
+    "why": "Halves the Seven base chance, so fewer Golden Sevens."
+   },
+   {
+    "id": "crystal_sphere",
+    "why": "Halves the base chance of the gems it gives Chain to."
+   },
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Tripled Sevens matter less once they are rare."
+   },
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Halves the base chance only, so +chance bonuses already on gems stay."
+  ]
+ },
+ {
+  "id": "alexithymia",
+  "kind": "phone",
+  "summary": "Unholy Fusion DLC: spawns a random Evil charm on your table, then sets your coins in hand to 0.",
+  "tip": "Deposit your coins before taking it. Evil charms mostly pay off in 666 or Revenge builds, and Lover #1 + #2 fuse into Lust; some hurt (Lover #2, Fraud, Limbo).",
+  "tier": "D",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 5
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "evil"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "spawnCharm",
+    "pool": "evil",
+    "where": "table",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "coins",
+    "set": 0,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "lover_1",
+    "why": "Spawning both Lovers lets you fuse them into Lust."
+   },
+   {
+    "id": "lover_2",
+    "why": "Spawning both Lovers lets you fuse them into Lust."
+   },
+   {
+    "id": "possessed_cell_phone",
+    "why": "On-demand 666s power the Revenge and 666 effects most Evil charms rely on."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "chastity_belt",
+    "why": "It only grows when you refuse a Red call; taking this one gives up a +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed only coins in hand are affected; coins already deposited in the ATM are safe.",
+   "The Evil charm is random among 11 (Sloth, Limbo, Lover #1, Lover #2, Gluttony, Avarice, Rage, Heresy, Violence, Fraud, Treachery).",
+   "Assumed the Evil charm uses a slot and can be sold if unwanted."
+  ]
+ },
+ {
+  "id": "im_re_organizing_my_mind",
+  "kind": "phone",
+  "summary": "Sacred call: Symbols Multiplier +3 for the rest of the run, with no drawback.",
+  "tip": "Take it early in a Sacred run: +3 is huge while the multiplier is small, and every copy stacks. Megaphone or First Love makes it +6.",
+  "tier": "A",
+  "ratings": {
+   "power": 7,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult",
+   "sacred"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "add": 3
+   }
+  ],
+  "synergies": [
+   {
+    "id": "chastity_belt",
+    "why": "The refused Red calls that unlock Sacred Mode also power its Patterns Multiplier."
+   },
+   {
+    "id": "megaphone",
+    "why": "Triggers twice: Symbols Multiplier +6."
+   },
+   {
+    "id": "first_love",
+    "why": "Phone abilities trigger twice all run: +6 per pick."
+   },
+   {
+    "id": "barathrum",
+    "why": "Bank it and discard Barathrum later for another +3."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "i_see_the_patterns_in_my_behaviour",
+  "kind": "phone",
+  "summary": "Sacred call: Patterns Multiplier +1 for the rest of the run, with no drawback.",
+  "tip": "The Patterns Multiplier starts at 1, so the first copy can double your coins, and copies stack. Megaphone or First Love makes it +2.",
+  "tier": "A",
+  "ratings": {
+   "power": 7,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "multiplier"
+  ],
+  "provides": [
+   "patternsMult",
+   "sacred"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "patternsMult",
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "chastity_belt",
+    "why": "A Sacred call that adds another Patterns Multiplier +1 on top of its bonus."
+   },
+   {
+    "id": "megaphone",
+    "why": "Triggers twice: Patterns Multiplier +2."
+   },
+   {
+    "id": "first_love",
+    "why": "Phone abilities trigger twice all run: +2 per pick."
+   },
+   {
+    "id": "barathrum",
+    "why": "Bank it and discard Barathrum later for another +1."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
  }
 ]
