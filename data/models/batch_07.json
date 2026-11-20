@@ -30,11 +30,11 @@
      "on": "dying",
      "chance": 0.4
     },
-    "discardAfter": {
-     "count": 3,
-     "of": "activations"
-    },
-    "note": "Rolled only when you are about to die (after the death countdown), not every spin; up to 3 successful saves."
+    "note": "Rolled only when you are about to die (after the death countdown), not every spin."
+   },
+   {
+    "type": "special",
+    "text": "The charm is discarded after its third successful save."
    }
   ],
   "synergies": [
@@ -56,6 +56,7 @@
   "assumptions": [
    "Each would-be death rolls the 40% once; the charm breaks after its third successful save.",
    "Assumed a save pays the remaining debt for you, so the coins in hand are kept.",
+   "The break after 3 saves is written as text: the engine's discardAfter estimate assumes per-spin activations and would call it a one-Round charm.",
    "Both Ankh and Ra's Book act at the Dying step (wiki Charm Activation page), so like Ankh it can probably wait in a drawer and be equipped during the death countdown.",
    "Wiki: while a Surgery charm is equipped, its ingredients (Holy Bible, Ankh) are banned from the store."
   ]
@@ -199,6 +200,10 @@
    {
     "id": "black_hole",
     "why": "Discard it after the fusion to get Hamsa and Rotated Hamsa back; their first- and last-spin bonuses stack on top."
+   },
+   {
+    "id": "screen_addiction",
+    "why": "With one Round per Deadline, that Round should be both first and last: every spin gets the retrigger and Luck +4."
    }
   ],
   "antiSynergies": [],
@@ -295,8 +300,7 @@
    "surgery"
   ],
   "cares": [
-   "patternCount",
-   "retrigger"
+   "666"
   ],
   "effects": [
    {
@@ -633,6 +637,515 @@
    "cap is the extra growth on top of the 10% base (50% total).",
    "Assumed a 666 resets the chance to the base 10%, and a 666 cancelled by Holy Bible or Rosary does not count as scored.",
    "Only the base 10% is simulated; the growth is carried by the ratings."
+  ]
+ },
+ {
+  "id": "poker_deck",
+  "kind": "charm",
+  "summary": "Surgery (all four Aces): if you score all 7 Symbols at least once in the same Round, every Symbol's value doubles for good.",
+  "tip": "Very hard to trigger: spins rarely score more than 1-2 Symbols, so all 7 in one Round almost never happens. Extra spins and Angel's Hand's 2-symbol Patterns help; the four Aces are worth more.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols",
+   "surgery"
+  ],
+  "cares": [
+   "spins",
+   "patternCount",
+   "smallPatterns"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "When Lemon, Cherry, Clover, Bell, Diamond, Treasure and Seven have each been scored at least once during the same Round, the value of every Symbol is doubled permanently."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "angels_hand",
+    "why": "Its 2-symbol Patterns let rare Symbols score with just a pair: about 4% of Rounds hit all 7 with Cat Food and Rotated Hamsa."
+   },
+   {
+    "id": "cat_food",
+    "why": "+2 spins per Round, more chances to score every Symbol."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get the four Aces back and keep their steady growth."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "Your most valuable Symbol never appears, so all 7 can never be scored."
+   },
+   {
+    "id": "magic_potion",
+    "why": "One Symbol fills about 45% of the grid, so the others form far fewer Patterns."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Simulator: rounds that score all 7 Symbols are about 0% in plain builds, 0.5% with Cat Food, Hamsas and Platinum Record, and about 4% with Angel's Hand's small Patterns added.",
+   "The engine has no per-Round 'scored every Symbol' trigger (its scoredAll check is per spin), so the doubling is kept as text and the ratings carry it."
+  ]
+ },
+ {
+  "id": "exotic_matter",
+  "kind": "charm",
+  "summary": "Surgery (all four battery charms): Red Button charms refill completely before every spin, but every Red Button press doubles your Debt for good.",
+  "tip": "A trap for most builds: each press doubles the debt for the rest of the run. Only worth a few early presses of permanent-growth charms like Midas Touch; Nuclear Button gets more out of each press.",
+  "tier": "D",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 2,
+   "risk": 10
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "charges",
+   "redButton",
+   "debt",
+   "surgery"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "charges",
+    "restore": "all",
+    "targets": "all",
+    "when": {
+     "spin": "every",
+     "n": 1
+    },
+    "note": "Every Red Button charm is full before each spin. Left unsimulated on purpose: the engine would press every button charm on every spin without paying the debt doubling."
+   },
+   {
+    "type": "debt",
+    "mul": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "permanent",
+    "note": "Each press of the Red Button doubles the Debt for the rest of the run."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "midas_touch",
+    "why": "Full every spin, it can be pressed every Round; early on each press can grow values faster than the debt doubles."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Every press triggers button charms twice while the debt still doubles only once per press."
+   },
+   {
+    "id": "ras_book",
+    "why": "A lucky save pays the debt in full, however many times it was doubled."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "can_i_get_some_energy_drinks",
+    "why": "Button charms already refill before every spin, so the call is wasted."
+   },
+   {
+    "id": "limbo",
+    "why": "Each press also raises Limbo's debt, compounding with the doubling."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the doubling counts each press of the Red Button, not each charm it triggers.",
+   "Neither effect is simulated: refills every spin would make the engine press every charm each spin, and a debt rise per press cannot be modelled. The ratings carry its value."
+  ]
+ },
+ {
+  "id": "vip_card",
+  "kind": "charm",
+  "summary": "Surgery (Dear Diary + Fidelity Card), triggers randomly (40%): when you buy a Charm, the store slot you bought it from refills with a new one.",
+  "tip": "More offers per visit without paying for restocks, so it only helps when you have tickets to spend. It gives no discount, and Fidelity Card stays out of the store while it is equipped.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 4,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "restock",
+   "tickets"
+  ],
+  "provides": [
+   "restock",
+   "store",
+   "triggersRandomly",
+   "surgery"
+  ],
+  "cares": [
+   "tickets",
+   "purchase",
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "40% chance on each Charm purchase: the emptied store slot is restocked with a new Charm. Does not apply to Charms that restock the whole store when bought (Cigarettes).",
+    "when": {
+     "on": "purchase",
+     "chance": 0.4
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles the refill chance to 80%."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "More Charms to buy means more purchases, each raising its Ticket chance by 1%."
+   },
+   {
+    "id": "clover_voucher",
+    "why": "A profitable buy (+2 net tickets) that can refill its own slot."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Fidelity Card back, so refilled slots are also cheaper."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the refill is free and is not a real store restock, so restock-triggered charms (Bell Pepper, Electricity Meter) do not fire on it.",
+   "Wiki: its ingredients (Dear Diary, Fidelity Card) are banned from the store while it is equipped."
+  ]
+ },
+ {
+  "id": "glorious_trumpet",
+  "kind": "charm",
+  "summary": "Surgery (Horseshoe + Nuclear Button + Sacred Heart): Red Button charms trigger one extra time per press, with a 30% chance of yet another.",
+  "tip": "Nuclear Button without the lost charm slot, plus a bonus roll. Best with strong button charms such as Midas Touch, Number 1 or Cross. Needs Sacred Mode, since Sacred Heart is a Sacred charm.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "redButton",
+   "triggersRandomly",
+   "surgery"
+  ],
+  "cares": [
+   "redButton",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "redButton",
+    "extraTriggers": 1
+   },
+   {
+    "type": "special",
+    "text": "Triggers randomly (30%): charms triggered by the Red Button trigger one more time on top of the guaranteed extra trigger.",
+    "when": {
+     "chance": 0.3
+    },
+    "note": "Kept as text: the engine treats any extra trigger as guaranteed, which would overvalue a 30% roll."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "midas_touch",
+    "why": "Each press makes every symbol scored that Round grow two or three times."
+   },
+   {
+    "id": "cross",
+    "why": "Each press flips it down and back up: +1 Patterns Multiplier per press with no 666 window."
+   },
+   {
+    "id": "number_1",
+    "why": "Yellow Patterns retrigger two or three extra times for the whole Round."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Can force the 30% roll; the wiki reports a glitch where the two loop up to 99,999 triggers."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Nuclear Button, Sacred Heart and Horseshoe back on top."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the 30% roll is per press, giving 2.3 extra triggers on average (2.6 with Horseshoe).",
+   "Sacred Heart only comes from Sacred Mode's 'Help!!' call, so this fusion needs a Sacred run.",
+   "Wiki: its ingredients are banned from the store while it is equipped."
+  ]
+ },
+ {
+  "id": "magic_potion",
+  "kind": "charm",
+  "summary": "Surgery (Scratch and Hope + Expired Meds): one random Symbol appears far more often (+4); the Symbol re-rolls at the end of every Deadline.",
+  "tip": "A huge Pattern boost whatever the Symbol: it fills about 40-50% of the grid. Lean on Pattern-count and big-Pattern charms, since the boosted Symbol changes every Deadline.",
+  "tier": "A",
+  "ratings": {
+   "power": 8,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 2
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "symbolChance",
+   "patternCount",
+   "largePatterns",
+   "surgery"
+  ],
+  "cares": [
+   "patternCount",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "treasure"
+    ],
+    "add": 4,
+    "note": "The boosted Symbol is random (rolled when obtained, per the wiki) and changes every Deadline; Treasure, the one shown in the description, stands in for it."
+   },
+   {
+    "type": "special",
+    "text": "At the end of every Deadline the boosted Symbol changes to a random one."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "pentacle",
+    "why": "Spins with 5+ Patterns become common, growing its multiplier fast."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "7+ Pattern spins become realistic, each paying double your Interest."
+   },
+   {
+    "id": "stain",
+    "why": "Big Patterns show up most spins, stacking Pattern value for the Round."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Luck +7 usually picks the boosted Symbol, which then floods the grid toward a Jackpot."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "poker_deck",
+    "why": "One Symbol crowds out the others, so scoring all 7 in a Round gets even rarer."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "The engine cannot follow a random Symbol, so Treasure is used as a stand-in; when yours is a cheap Symbol the real gain is lower, on a Seven higher.",
+   "Wiki: the listed Symbol is randomized when the charm is acquired."
+  ]
+ },
+ {
+  "id": "rwd_cart",
+  "kind": "charm",
+  "summary": "Surgery (Shopping Cart + Fake Coin), takes no slot: doubles the free restocks you hold (10% chance to lose them all instead); with none, gives 2.",
+  "tip": "Save up free restocks first (Crowbar, CloverBell, Gambler Traits), then fuse. A new Shopping Cart bought afterwards turns the doubled pile into Symbols Multiplier.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 4,
+   "utility": 1,
+   "risk": 3
+  },
+  "archetypes": [
+   "restock"
+  ],
+  "provides": [
+   "restock",
+   "instant",
+   "surgery"
+  ],
+  "cares": [
+   "restock"
+  ],
+  "effects": [
+   {
+    "type": "freeRestocks",
+    "add": 2,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    },
+    "note": "Only when you hold no free restocks."
+   },
+   {
+    "type": "special",
+    "text": "Instant: doubles the free restocks you hold, but with a 10% chance they are reset to 0 instead."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "shopping_cart",
+    "why": "A new Cart bought after the fusion gives +2 Symbols Multiplier for each of the doubled restocks."
+   },
+   {
+    "id": "crowbar",
+    "why": "Its +3 free restocks become +6 after the fusion."
+   },
+   {
+    "id": "desperate_search",
+    "why": "Every Deadline starts with 2 free restocks to double."
+   },
+   {
+    "id": "cloverbell",
+    "why": "+3 free restocks per Clover and Bell spin build a big pile to double."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Read as: double the pile, 10% chance to reset it to 0, and +2 only when you hold none; it may also give 2 right after a reset.",
+   "Assumed Shopping Cart can show up in the store again, since a no-space charm is used up and is not equipped."
+  ]
+ },
+ {
+  "id": "beach_hotel",
+  "kind": "charm",
+  "summary": "Surgery (Property Certificate + Sardines): +3 charm space while equipped. It uses one slot itself, so you net two extra charm slots.",
+  "tip": "An easy upgrade if you own Property Certificate, since Sardines is otherwise dead weight: the fusion turns +1 net slot into +2. Black Hole can return the Certificate for +5 space in all.",
+  "tier": "A",
+  "ratings": {
+   "power": 0,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 10,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "charmSpace",
+   "surgery"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "charmSpace",
+    "add": 3
+   }
+  ],
+  "synergies": [
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Property Certificate back: +5 charm space from two slots."
+   },
+   {
+    "id": "mad_emperor",
+    "why": "Room for more Surgery charms, and Beach Hotel counts as one itself (+10%)."
+   },
+   {
+    "id": "hourglass",
+    "why": "Its extra space easily absorbs Hourglass's -1."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Wiki: Property Certificate is banned from the store while Beach Hotel is equipped, so stacking both needs Black Hole."
+  ]
+ },
+ {
+  "id": "graded_card",
+  "kind": "charm",
+  "summary": "Surgery (The Collector + Dark Lotus): Avid Traits give Symbols Multiplier x2 instead of +2, and Ambitious Traits give Patterns Multiplier x2 instead of +1.",
+  "tip": "Every Avid or Ambitious charm becomes a doubling, and several stack (x4, x8...). Feed it with the 'betting on Yellow/Orange' calls or Expensive Love; useless without those Traits.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "traits",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult",
+   "patternsMult",
+   "surgery"
+  ],
+  "cares": [
+   "traits"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Each equipped charm with the Avid Trait gives Symbols Multiplier x2 instead of +2, and each one with the Ambitious Trait gives Patterns Multiplier x2 instead of +1; several of them multiply together."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "this_time_im_betting_on_yellow",
+    "why": "Each Avid Trait it adds becomes a x2 Symbols Multiplier."
+   },
+   {
+    "id": "this_time_im_betting_on_orange",
+    "why": "Each Ambitious Trait it adds becomes a x2 Patterns Multiplier."
+   },
+   {
+    "id": "expensive_love",
+    "why": "Every store charm comes with a Trait, so Avid and Ambitious charms show up often."
+   },
+   {
+    "id": "i_love_shiny_stuff",
+    "why": "Puts Traits on every store charm: grab the Avid and Ambitious ones."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get The Collector back, which adds +1 Patterns Multiplier per traited charm."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Read as each Trait doubling its own multiplier (Avid: Symbols, Ambitious: Patterns), not both.",
+   "The engine applies Traits as +2 / +1 and cannot rewrite them, so the doubling is kept as text and the ratings carry it."
   ]
  }
 ]

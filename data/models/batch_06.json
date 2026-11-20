@@ -1702,7 +1702,7 @@
      "chance": 0.07
     },
     "duration": "round",
-    "note": "The engine applies the +3 only to the spin that triggers; the real bonus lasts the rest of the Round (see the special), so its true value is about 4x the simulated one."
+    "note": "The engine applies the +3 only to the spin that triggers; the real bonus lasts the rest of the Round and stacks (see the special), about 4x the Luck the engine simulates."
    },
    {
     "type": "special",
