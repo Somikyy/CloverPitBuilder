@@ -41,8 +41,8 @@
     "why": "Needs 3 charges instead of 4: a Round of permanent Symbol gains every 3 Rounds instead of 4."
    },
    {
-    "id": "number_1",
-    "why": "Needs 4 charges instead of 5 (3 after a second pick), so its yellow retrigger Rounds come sooner."
+    "id": "overdose",
+    "why": "No Round-end recharges there, so every battery or refill charge goes further when presses cost 1 less."
    },
    {
     "id": "cross",
@@ -67,7 +67,7 @@
   "id": "i_need_to_heal_myself",
   "kind": "phone",
   "summary": "Sacred call: gives every charm in the store a random Trait, then makes one of them free.",
-  "tip": "Repeatable ticket saver: a free charm that also carries a Trait. Buy the cheap charms you want first so the free pick is likelier to land on a pricey one. Traits raise most other prices.",
+  "tip": "Pause the call and restock until the store shows charms you want, then answer: each gets a Trait and one turns free. Traits raise most other prices (Devious lowers them).",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -121,7 +121,7 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "'Modify' read as applying a random Trait (the wording later DLC cards use for Traits).",
+   "'Modify' = apply a random Trait; the Traits wiki notes this call can even trait instant-use charms.",
    "Assumed the free charm is chosen at random among the charms in the store.",
    "Phone-applied random Traits are equally likely (wiki), so about 1 in 7 is Devious."
   ]
@@ -261,7 +261,7 @@
   "tip": "Best while small Patterns still pay most of your coins. It doubles current values, so take value adders first (I'm thinking of some strategies, Diesel Locomotive), then double.",
   "tier": "B",
   "ratings": {
-   "power": 5,
+   "power": 6,
    "scaling": 4,
    "economy": 0,
    "utility": 0,
@@ -296,6 +296,10 @@
    {
     "id": "diesel_locomotive",
     "why": "Grows every Pattern by its base value; doubling a grown value gains more."
+   },
+   {
+    "id": "necklace",
+    "why": "The lone Diamond/Treasure Pattern it triggers 3 times is usually a 3-symbol one, doubled here."
    }
   ],
   "antiSynergies": [],
@@ -309,7 +313,7 @@
   "tip": "Best in Luck and Jackpot builds, where big Patterns earn most of your coins. It doubles current values, so add first (I found a winning strategy) and stack it with I can't quit now.",
   "tier": "B",
   "ratings": {
-   "power": 4,
+   "power": 5,
    "scaling": 5,
    "economy": 0,
    "utility": 0,
@@ -455,8 +459,8 @@
  {
   "id": "fixation",
   "kind": "memory",
-  "summary": "Run-long: 7 Rounds per Deadline but only 1 spin per Round; ending a Deadline early pays 2 tickets per skipped Round instead of 4.",
-  "tip": "Each spin is both first and last of its Round: Hamsa and Rotated Hamsa fire every spin and Red Button charms recharge 7 times a Deadline. Cat Food makes it 3 spins per Round.",
+  "summary": "Run-long: 7 Rounds of only 1 spin per Deadline (7 spins instead of 21); ending a Deadline early pays 2 tickets per skipped Round, not 4.",
+  "tip": "Each spin is a whole Round: Hamsa and Rotated Hamsa fire every spin, Red Button charms recharge 7 times a Deadline and a 666 only wipes that spin. Cat Food gives 21 spins back.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -553,14 +557,14 @@
   "id": "screen_addiction",
   "kind": "memory",
   "summary": "Run-long: each Deadline is one Round of up to 21 spins that pays extra tickets. The run starts with 27 coins and 5 tickets.",
-  "tip": "Round-long buffs now last the whole Deadline (Vine's Soup, Number 1, Midas Touch) and each extra Round is 21 spins. Interest and Red Button recharges come once a Deadline.",
+  "tip": "Round-long buffs (Vine's Soup, Mushrooms, Gabihbb'h) last all Deadline, but a 666 wipes the whole Round's coins: guard with Holy Bible. Interest and recharges come once a Deadline.",
   "tier": "C",
   "ratings": {
    "power": 3,
    "scaling": 4,
    "economy": 3,
    "utility": 1,
-   "risk": 4
+   "risk": 5
   },
   "archetypes": [
    "multiplier",
@@ -611,16 +615,16 @@
     "why": "An extra Round is 21 more spins."
    },
    {
-    "id": "weird_clock",
-    "why": "Every extra Round it grants is a full 21-spin Round."
+    "id": "mushrooms",
+    "why": "Its per-spin Symbol bonus keeps building for 21 spins before the Round-end reset."
    },
    {
     "id": "vines_soup",
     "why": "A doubling lasts the rest of the 21-spin Deadline."
    },
    {
-    "id": "number_1",
-    "why": "One press retriggers yellow Patterns for the whole Deadline."
+    "id": "holy_bible",
+    "why": "A 666 wipes everything earned so far in the single 21-spin Round; it cancels that 666."
    },
    {
     "id": "personal_trainer",
@@ -642,15 +646,15 @@
    },
    {
     "id": "golden_pepper",
-    "why": "With 1 Round per Deadline there is nothing to skip."
+    "why": "Only 1 Round per Deadline, so there is almost never a Round to skip."
    },
    {
     "id": "calendar",
-    "why": "No Rounds to skip, so it gains only +1 per Deadline."
+    "why": "Almost never a Round to skip, so it gains only its +1 per Deadline."
    },
    {
     "id": "greedy_king",
-    "why": "No Rounds to skip, so its Golden chance never grows."
+    "why": "Almost never a Round to skip, so its Golden chance barely grows."
    },
    {
     "id": "stonks",
@@ -660,7 +664,8 @@
   "confidence": "medium",
   "assumptions": [
    "The extra tickets per Round are not stated; likely sized to make up for the 2 missing Rounds.",
-   "Assumed effects lasting 'until the end of the Round' now last the whole Deadline."
+   "Assumed effects lasting 'until the end of the Round' now last the whole Deadline.",
+   "Red Button charms regain 1 charge per Round, i.e. once per Deadline here; one press lasts the whole Deadline, so they come out about even."
   ]
  },
  {
@@ -1009,8 +1014,8 @@
     "why": "More 666s mean more Rounds with a doubled Symbols Multiplier."
    },
    {
-    "id": "one_trick_pony",
-    "why": "Its guaranteed Jackpot Round can refund a 666 hit earlier in that Round."
+    "id": "demons_horn",
+    "why": "Luck +10 on the next spin of the same Round; with 5 more Luck it forces the Jackpot that refunds the 666."
    },
    {
     "id": "rotated_hamsa",
@@ -1147,10 +1152,6 @@
    {
     "id": "naughty_dealer",
     "why": "Token modifiers pay half your current Interest per scored Symbol."
-   },
-   {
-    "id": "stonks",
-    "why": "+5% more Interest for the Cats and Tokens to pay out."
    }
   ],
   "antiSynergies": [
@@ -1169,7 +1170,7 @@
   "id": "sacrifices",
   "kind": "memory",
   "summary": "Run-long: only 6 charm slots instead of 7, but every charm in the store costs 1 ticket less.",
-  "tip": "A strong ticket economy for builds that buy a lot. Fidelity Card stacks for -2 per charm. Avoid slot-eaters like Nuclear Button or Hourglass; Property Certificate pays the slot back.",
+  "tip": "Buy often: Fidelity Card stacks for -2 per charm and the first Cigarettes each Deadline is free. Avoid slot-eaters like Nuclear Button or Hourglass; Property Certificate repays the slot.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1209,8 +1210,8 @@
     "why": "Cheaper charms to buy and discard for its growth."
    },
    {
-    "id": "raging_capitalist",
-    "why": "More purchases raise its Ticket modifier chance faster."
+    "id": "cigarettes",
+    "why": "Costs 1, so its first buy each Deadline is free: +base value on every Symbol plus a restock."
    },
    {
     "id": "property_certificate",
@@ -1242,7 +1243,7 @@
   "id": "lets_go_gambling",
   "kind": "memory",
   "summary": "When a Deadline ends: 50% chance to discard every charm in your drawers, otherwise each of them gets a random Trait.",
-  "tip": "Only gamble drawer charms you can afford to lose. Skull and D20 fill drawers with free charms, and Dung Beetle grows on every discard. Don't park Megaphone or Ankh there.",
+  "tip": "Only leave charms you can afford to lose in drawers when a Deadline ends. Skull spawns free drawer charms to bet and Dung Beetle grows on each discard. Don't park Megaphone or Ankh there.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1280,10 +1281,6 @@
    {
     "id": "skull",
     "why": "Spawns free drawer charms each Deadline (one per Corpse piece) to gamble with."
-   },
-   {
-    "id": "d20",
-    "why": "Refills drawers with random charms every Round, so a wipe costs nothing."
    },
    {
     "id": "gluttony",
@@ -1350,7 +1347,7 @@
   "id": "heartbreak",
   "kind": "memory",
   "summary": "From Deadline 3 on, the last Round of every Deadline is guaranteed to show at least one 666.",
-  "tip": "The 666 wipes that Round's earnings (all held coins from Deadline 7), so deposit early. Devil builds love a sure 666 (Baphomet, Gabihbb'h); Holy Bible can cancel it.",
+  "tip": "Pay the debt before the last Round to skip it. Played, its 666 wipes that Round's coins (all held coins from Deadline 7) and turns the next call Red. Baphomet loves a sure 666.",
   "tier": "C",
   "ratings": {
    "power": 1,
@@ -1553,7 +1550,7 @@
    },
    {
     "id": "potato_battery",
-    "why": "Recharges all Red Button charms after 2 spins without reward."
+    "why": "+1 charge to every Red Button charm whenever 2 spins in a row pay nothing."
    },
    {
     "id": "aa_batteries",
@@ -1585,7 +1582,7 @@
   "id": "living_on_the_edge",
   "kind": "memory",
   "summary": "Run-long: coins can only be deposited after the last Round of each Deadline, so everything you earn stays in hand until then.",
-  "tip": "Interest and the Cats pay little with nothing deposited and you can't skip Rounds. From Deadline 7 a 666 takes your whole stash, so guard with Holy Bible or Rosary.",
+  "tip": "Interest, the Cats and Token modifiers pay nothing with no coins deposited, and you can't skip Rounds. From Deadline 7 a 666 takes your whole stash: guard with Holy Bible or Rosary.",
   "tier": "D",
   "ratings": {
    "power": 0,
@@ -1600,7 +1597,7 @@
   "effects": [
    {
     "type": "special",
-    "text": "Deposits are only allowed after the last Round of a Deadline: Interest (paid on deposited coins) has little to work with, the debt can't be paid early to skip Rounds, and held coins stay exposed to 666s."
+    "text": "Deposits are only allowed after the last Round of a Deadline: Interest (paid on deposited coins) has nothing to work with, the debt can't be paid early to skip Rounds, and held coins stay exposed to 666s."
    }
   ],
   "synergies": [
@@ -1694,10 +1691,6 @@
     "why": "Sardines' doubled resell value feeds its Symbols Multiplier."
    },
    {
-    "id": "horseshoe",
-    "why": "The starting Red Pepper fires twice as often."
-   },
-   {
     "id": "dung_beetle",
     "why": "The Red Pepper breaking counts as a discard."
    }
@@ -1752,10 +1745,6 @@
    {
     "id": "garbage",
     "why": "Any 2 charms into +base value on every Symbol, now for free."
-   },
-   {
-    "id": "d20",
-    "why": "Refills drawers with random charms every Round: free fusion material."
    },
    {
     "id": "skull",
@@ -1972,7 +1961,7 @@
   "id": "vicious_cycle",
   "kind": "memory",
   "summary": "Run-long: phone calls can only be Red or normal (Yellow), never Sacred, so Sacred Mode is closed for the run.",
-  "tip": "No Sacred calls, Sacred charms or 999s this run. Refusing Red Calls no longer turns the phone Sacred, so Chastity Belt can keep growing past +3.",
+  "tip": "No Sacred calls, Sacred charms, 999s or Good Ending this run. Refusing Red Calls no longer turns the phone Sacred, so Chastity Belt can keep growing past +3.",
   "tier": "D",
   "ratings": {
    "power": 0,
