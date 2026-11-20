@@ -627,6 +627,14 @@ export function evaluateItem(it, ctx, extra = {}) {
   const dInterest = d2.interest - ctx.d.interest;
   const life = lifetimeRounds(model, it, stats);
   const instant = ec.coinsInstant / evRound0 + ec.roundsInstant * m;
+  // Phone multipliers (Megaphone, Dear Diary): one call per deadline; a doubled pick adds about
+  // what a typical good pick is worth, once per deadline.
+  for (const mm of d2.meta) {
+    if (mm.src !== it.id || mm.kind !== 'phone') continue;
+    const gain = ctx.phonePickGain ?? 0.2;
+    if (mm.e.extraTriggers) A += (gain * mm.e.extraTriggers) / R;
+    if (mm.e.extraOptions) A += (0.15 * gain * mm.e.extraOptions) / R;
+  }
   const cand = { m, A, G, C: C1 };
   const V = horizonValue(cand, ctx.baseline, ctx.H, life, instant);
   const Vnow = horizonValue(cand, ctx.baseline, 1, life, instant);
@@ -767,7 +775,7 @@ function unitsOf(unit, ctx) {
   switch (unit.of) {
     case 'tickets': return ctx.tickets;
     case 'freeRestocks': return freeRestocksPerDeadline(ctx) * 0.5 + 1;
-    case 'phoneRerolls': return Math.max(0, ctx.env.deadline - 1) * 0.6;
+    case 'phoneRerolls': return Math.max(0, ctx.env.deadline - 1) * 0.3;
     case 'redCallsRefused': return ctx.env.sacred ? Math.max(3, Math.floor((ctx.env.deadline - 1) / 2)) : Math.max(0, Math.floor((ctx.env.deadline - 1) / 3));
     case 'traitsEquipped': return (ctx.state.charms || []).filter((c) => c.trait).length;
     case 'resellTotal': return [...ctx.ownedIds].reduce((a, id) => { const x = ctx.db.byId.get(id); return a + Math.max(1, Math.floor(((x && x.cost) || 2) / 2)); }, 0);
@@ -780,7 +788,7 @@ function unitGrowthPerRound(unit, ctx) {
   const R = ctx.roundsPerDeadline;
   switch (unit.of) {
     case 'tickets': return 1.2;
-    case 'phoneRerolls': return 0.6 / R;
+    case 'phoneRerolls': return 0.3 / R;
     case 'redCallsRefused': return 0.33 / R;
     case 'skippedRounds': return 0.4 / R;
     default: return 0;
@@ -844,9 +852,14 @@ export function analyze(state, db, opt = {}) {
 
   const pool = opt.pool || candidatePool(ctx);
   const evals = [];
-  for (const it of pool) {
+  const evalSafe = (it) => {
     try { evals.push(evaluateItem(it, ctx)); } catch (err) { evals.push({ id: it.id, kind: it.kind, name: it.name, score: -999, error: String(err), reasons: [], parts: {} }); }
-  }
+  };
+  // phone calls first: what a typical upcoming phone pick is worth feeds Megaphone-like charms
+  for (const it of pool) if (it.kind === 'phone') evalSafe(it);
+  const phoneGains = evals.filter((x) => x.kind === 'phone' && x.value).map((x) => Math.max(0, x.value.horizon - 1)).sort((a, b) => b - a);
+  ctx.phonePickGain = phoneGains.length ? Math.min(1, phoneGains.slice(0, 3).reduce((a, b) => a + b, 0) / Math.min(3, phoneGains.length)) : 0.2;
+  for (const it of pool) if (it.kind !== 'phone') evalSafe(it);
   evals.sort((a, b) => b.score - a.score);
   const charms = evals.filter((x) => x.kind === 'charm');
   const phone = evals.filter((x) => x.kind === 'phone');

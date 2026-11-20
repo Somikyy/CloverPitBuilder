@@ -1325,7 +1325,7 @@
   "kind": "charm",
   "summary": "10% chance each spin to grant 1 extra spin with Luck +4.",
   "tip": "Small but permanent. Horseshoe doubles it to 20%; an extra spin gained on a Round's last spin gives Rotated Hamsa another Luck +7 spin.",
-  "tier": "C",
+  "tier": "B",
   "ratings": {
    "power": 3,
    "scaling": 1,
@@ -1386,7 +1386,8 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "In the game the extra spin and its Luck +4 come from one 10% roll; the engine cannot put Luck on the extra spin, so the Luck is encoded as its own 10% roll on a normal spin (similar average value)."
+   "In the game the extra spin and its Luck +4 come from one 10% roll; the engine cannot put Luck on the extra spin, so the Luck is encoded as its own 10% roll on a normal spin (similar average value).",
+   "Calibration: tier raised to B; at 1 ticket its extra spins and Luck rank in the top quarter of picks across typical builds."
   ]
  },
  {

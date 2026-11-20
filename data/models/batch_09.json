@@ -259,7 +259,7 @@
   "kind": "phone",
   "summary": "Sacred call: doubles the current value of every small Pattern (3 or fewer Symbols: HOR, VER, DIAG and the 2-symbol ones).",
   "tip": "Best while small Patterns still pay most of your coins. It doubles current values, so take value adders first (I'm thinking of some strategies, Diesel Locomotive), then double.",
-  "tier": "B",
+  "tier": "A",
   "ratings": {
    "power": 6,
    "scaling": 4,
@@ -304,7 +304,9 @@
   ],
   "antiSynergies": [],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Calibration: tier raised to A; doubling every small Pattern value ranks with the other top Sacred calls."
+  ]
  },
  {
   "id": "ill_take_back_control_of_my_life",
