@@ -548,7 +548,7 @@
   "id": "gluttony",
   "kind": "charm",
   "summary": "Evil: whenever a charm is discarded by an effect (it breaks, decays or a rule removes it), you gain coins equal to everything 666 has taken from you this run.",
-  "tip": "Pays nothing until a 666 has cost you coins; then every self-breaking charm refunds all of your losses. Fraud or Corpse pieces in drawers, Peppers and Personal Trainer all count.",
+  "tip": "Pays nothing until a 666 has cost you coins; then every charm that breaks or is removed by a rule pays your whole 666 loss total. Corpse pieces or Fraud in drawers, Peppers and Personal Trainer count.",
   "tier": "B",
   "ratings": {
    "power": 2,
@@ -581,7 +581,7 @@
   "synergies": [
    {
     "id": "fraud",
-    "why": "Moving Fraud into a drawer discards it by its own rule: a payout whenever you want it."
+    "why": "Moving Fraud into a drawer discards it by its own rule: a one-time payout exactly when you choose."
    },
    {
     "id": "personal_trainer",
@@ -593,7 +593,7 @@
    },
    {
     "id": "holy_bible",
-    "why": "After blocking a 666 it may break, which pays back all your earlier losses."
+    "why": "After blocking a 666 it may break (50%), which pays your whole 666 loss total."
    },
    {
     "id": "vorago",
@@ -684,7 +684,7 @@
   "id": "rage",
   "kind": "charm",
   "summary": "Evil: when the third 666 of a Deadline shows up, you get one extra Round in that Deadline.",
-  "tip": "Three 666s in one Deadline are rare unless your 666 chance is near 10%. Lust (two forced 666s every Deadline) or Possessed Cell Phone make it reliable; Heartbreak's forced 666 helps.",
+  "tip": "Three 666s in one Deadline need a 666 chance near 10%, Lust (two forced 666s per Deadline), Heartbreak or Possessed Cell Phone. Each 666 still costs coins, so it pays only when 666s already pay you.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -1820,7 +1820,7 @@
   "id": "black_hole",
   "kind": "charm",
   "summary": "Surgery (Abyssu + Barathrum + Vorago): when you discard it, every charm used in your last surgery respawns in your drawers, if there is room.",
-  "tip": "Do your key surgery first, then discard Black Hole to get the ingredients back: keep Cosmic Cat and all three Cats, or re-fuse the fodder for another Dumpster.",
+  "tip": "Fuse it before your key surgery (making it is a surgery too), then discard it to get that surgery's ingredients back: keep Cosmic Cat and all three Cats, or re-fuse fodder for another Dumpster.",
   "tier": "C",
   "ratings": {
    "power": 0,
