@@ -3,7 +3,7 @@
   "id": "please_dont_throw_my_stuff_away",
   "kind": "phone",
   "summary": "+1 charm space for the rest of the run. It can be picked only once per run.",
-  "tip": "Take it almost every time it shows up. Equip Megaphone first (+2) or bank it in Barathrum for a second trigger; with both it gives +4 slots.",
+  "tip": "A strong pick in almost any run. It works once per run, so equip Megaphone (+2) and/or Barathrum (re-fires it when discarded) first if you own them: both together give +4 slots.",
   "tier": "A",
   "ratings": {
    "power": 0,
@@ -98,6 +98,10 @@
    {
     "id": "ill_take_back_control_of_my_life",
     "why": "Its Sacred x2 on big Patterns also doubles the Jackpot: 4x its value together."
+   },
+   {
+    "id": "megaphone",
+    "why": "Equipped when you pick it, the call fires twice: Jackpot value x4."
    }
   ],
   "antiSynergies": [],
@@ -291,12 +295,12 @@
   "id": "this_time_im_betting_on_green",
   "kind": "phone",
   "summary": "Gives a random equipped charm the Florid Trait: +3 Clover Tickets every time a Deadline ends, as long as that charm stays equipped.",
-  "tip": "Pause the call and move charms you may sell into drawers so Florid lands on a keeper. It can overwrite a better Trait. Each traited charm also feeds The Collector.",
-  "tier": "C",
+  "tip": "Pause the call and drawer charms you may sell or that will break, so Florid lands on a keeper; it may replace an existing Trait. Taken early it adds 20+ tickets over a full run.",
+  "tier": "B",
   "ratings": {
    "power": 0,
-   "scaling": 2,
-   "economy": 6,
+   "scaling": 3,
+   "economy": 7,
    "utility": 0,
    "risk": 1
   },
@@ -347,7 +351,7 @@
   "id": "this_time_im_betting_on_yellow",
   "kind": "phone",
   "summary": "Gives a random equipped charm the Avid Trait: Symbols Multiplier +2 as long as that charm stays equipped.",
-  "tip": "Huge early, when the Symbols Multiplier is small. Pause and drawer charms you may sell so Avid lands on a keeper; it can overwrite an existing Trait.",
+  "tip": "Huge early, when the Symbols Multiplier is small. Pause and drawer charms you may sell or that will break, so Avid lands on a keeper; it may replace an existing Trait.",
   "tier": "A",
   "ratings": {
    "power": 6,
@@ -377,7 +381,7 @@
   "synergies": [
    {
     "id": "the_collector",
-    "why": "The traited charm also adds +1 Patterns Multiplier."
+    "why": "If Avid lands on a charm with no Trait yet, The Collector also gains +1 Patterns Multiplier."
    },
    {
     "id": "graded_card",
@@ -389,7 +393,7 @@
    },
    {
     "id": "barathrum",
-    "why": "Discarding Barathrum later rolls Avid onto another random equipped charm."
+    "why": "Discarding Barathrum later puts Avid on a random equipped charm again."
    }
   ],
   "antiSynergies": [],
@@ -403,7 +407,7 @@
   "id": "this_time_im_betting_on_orange",
   "kind": "phone",
   "summary": "Gives a random equipped charm the Ambitious Trait: Patterns Multiplier +1 as long as that charm stays equipped.",
-  "tip": "The Patterns Multiplier starts at 1, so early this can double your coins. Drawer charms you may sell before taking it; it can overwrite an existing Trait.",
+  "tip": "The Patterns Multiplier starts at 1, so early this can double your coins. Drawer charms you may sell or that will break before taking it; it may replace an existing Trait.",
   "tier": "A",
   "ratings": {
    "power": 7,
@@ -445,7 +449,7 @@
    },
    {
     "id": "barathrum",
-    "why": "Discarding Barathrum later rolls Ambitious onto another random equipped charm."
+    "why": "Discarding Barathrum later puts Ambitious on a random equipped charm again."
    }
   ],
   "antiSynergies": [],
@@ -459,7 +463,7 @@
   "id": "if_i_keep_trying_the_patterns_will_align",
   "kind": "phone",
   "summary": "Gives a random equipped charm the Obsessive Trait: the last Pattern of every spin triggers one more time while that charm stays equipped.",
-  "tip": "A spin with one Pattern pays double, and the extra trigger counts toward 3+/5+ Pattern charms (Pentacle, Rotten Pepper, Lucky Cat). Drawer charms you may sell first.",
+  "tip": "A spin with one Pattern pays double, and the extra trigger counts toward 3+/5+ Pattern charms (Pentacle, Rotten Pepper, Lucky Cat). Drawer charms you may sell or that will break first.",
   "tier": "A",
   "ratings": {
    "power": 5,
@@ -513,7 +517,8 @@
   "confidence": "medium",
   "assumptions": [
    "Read \"every last Pattern\" as the final Pattern scored in each spin, so a one-Pattern spin pays double.",
-   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait)."
+   "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
   ]
  },
  {
@@ -577,7 +582,7 @@
   "id": "im_sure_the_value_will_rise",
   "kind": "phone",
   "summary": "Gives a random equipped charm the Speculative Trait: +3% Interest while that charm stays equipped.",
-  "tip": "Small unless Interest pays during spins: Lucky/Chonky Cat and Token modifiers turn each +1% into real coins. Otherwise +3% on your deposit is minor.",
+  "tip": "Best when Interest also pays during spins: Lucky/Chonky Cat and Token modifiers pay out of your Interest. Otherwise it just adds 3% of your ATM deposit each Round.",
   "tier": "C",
   "ratings": {
    "power": 1,
@@ -608,7 +613,7 @@
   "synergies": [
    {
     "id": "lucky_cat",
-    "why": "Every 3+ Pattern spin pays your Interest, now 3% higher."
+    "why": "Each 3+ Pattern spin pays your current Interest, which grows by 3% of your deposit."
    },
    {
     "id": "chonky_cat",
@@ -616,7 +621,7 @@
    },
    {
     "id": "naughty_dealer",
-    "why": "Token symbols pay half your Interest each."
+    "why": "Every scored Token pays half your Interest, so each payout grows."
    },
    {
     "id": "the_collector",
@@ -688,11 +693,13 @@
   "antiSynergies": [
    {
     "id": "theres_nothing_to_eat_but_mould",
-    "why": "Halves the Cherry base chance, undoing much of this."
+    "why": "Halves the Cherry base chance: Cherries fall from about 30% to 26% of symbols."
    }
   ],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5, which give the wiki's base odds) and that '+1' adds 1 to the weight."
+  ]
  },
  {
   "id": "todays_my_lucky_day",
@@ -755,11 +762,13 @@
   "antiSynergies": [
    {
     "id": "wait_what_day_is_it",
-    "why": "Halves the Clover and Bell base chances, undoing much of this."
+    "why": "Halves the Clover base chance: Clovers fall from about 26% to 22% of symbols."
    }
   ],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5, which give the wiki's base odds) and that '+1' adds 1 to the weight."
+  ]
  },
  {
   "id": "i_need_to_be_there",
@@ -822,11 +831,13 @@
   "antiSynergies": [
    {
     "id": "wait_what_day_is_it",
-    "why": "Halves the Clover and Bell base chances, undoing much of this."
+    "why": "Halves the Bell base chance: Bells fall from about 26% to 22% of symbols."
    }
   ],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5, which give the wiki's base odds) and that '+1' adds 1 to the weight."
+  ]
  },
  {
   "id": "please_ill_give_you_anything",
@@ -890,11 +901,13 @@
   "antiSynergies": [
    {
     "id": "ive_already_bet_it_all",
-    "why": "Halves the Diamond, Treasure and Seven base chances."
+    "why": "Halves the Diamond base chance too: Diamonds fall from about 23% to 21% of symbols."
    }
   ],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5, which give the wiki's base odds) and that '+1' adds 1 to the weight."
+  ]
  },
  {
   "id": "i_need_money",
@@ -958,11 +971,13 @@
   "antiSynergies": [
    {
     "id": "ive_already_bet_it_all",
-    "why": "Halves the Diamond, Treasure and Seven base chances."
+    "why": "Halves the Treasure base chance too: Treasures fall from about 23% to 21% of symbols."
    }
   ],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5, which give the wiki's base odds) and that '+1' adds 1 to the weight."
+  ]
  },
  {
   "id": "i_didnt_hurt_anybody",
@@ -1016,21 +1031,19 @@
    },
    {
     "id": "eye_jar",
-    "why": "Sevens count for its 3-spin gem streak, which now holds far more often."
+    "why": "Sevens count for its 3-spin gem streak; gems rise from 31% to 40% of symbols."
    }
   ],
   "antiSynergies": [
-   {
-    "id": "ive_already_bet_it_all",
-    "why": "Halves the Diamond, Treasure and Seven base chances."
-   },
    {
     "id": "expired_meds",
     "why": "Sevens are usually your most valuable symbol, so they get banned."
    }
   ],
   "confidence": "high",
-  "assumptions": []
+  "assumptions": [
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5, which give the wiki's base odds) and that '+1' adds 1 to the weight."
+  ]
  },
  {
   "id": "im_feeling_lucky",
@@ -1088,12 +1101,16 @@
    {
     "id": "i_need_to_be_there",
     "why": "More Bells on the grid make the doubling pay more."
+   },
+   {
+    "id": "megaphone",
+    "why": "Equipped when you pick it, the call fires twice: Clover and Bell values x4."
    }
   ],
   "antiSynergies": [
    {
     "id": "wait_what_day_is_it",
-    "why": "Halves the Clover and Bell base chances, undoing much of this."
+    "why": "Halves the Clover and Bell base chances (about 15% to 9% each), so the doubled values pay much less."
    }
   ],
   "confidence": "high",
@@ -1156,6 +1173,10 @@
    {
     "id": "please_ill_give_you_anything",
     "why": "More Diamonds on the grid make the doubling pay more."
+   },
+   {
+    "id": "megaphone",
+    "why": "Equipped when you pick it, the call fires twice: Diamond and Treasure values x4."
    }
   ],
   "antiSynergies": [
@@ -1171,7 +1192,7 @@
   "id": "im_gonna_go_all_in",
   "kind": "phone",
   "summary": "Triples the current value of Sevens, permanently.",
-  "tip": "Little use while Sevens are rare (7.5% of symbols at base); huge after I didn't hurt anybody..., Seven Picture or Golden Seven. Raise first, triple after.",
+  "tip": "Weak while Sevens are rare (7.5% of symbols at base). Best once Sevens are common (I didn't hurt anybody..., Seven Picture) and after value raises like Golden Seven: it triples the current value.",
   "tier": "B",
   "ratings": {
    "power": 4,
@@ -1209,8 +1230,8 @@
     "why": "Triples the Seven value you have grown; take it after gilding."
    },
    {
-    "id": "7_sins_stone",
-    "why": "Tripling Seven value after gilding multiplies the gains."
+    "id": "megaphone",
+    "why": "Equipped when you pick it, the call fires twice: Seven value x9."
    },
    {
     "id": "pain_killers",
@@ -1219,6 +1240,10 @@
    {
     "id": "ace_of_spades",
     "why": "Its permanent +7 Seven raises get tripled if you take this afterwards."
+   },
+   {
+    "id": "seven_picture",
+    "why": "Red Button: Sevens +2 chance for the rest of the Deadline, so tripled Sevens land far more often."
    }
   ],
   "antiSynergies": [
@@ -1345,11 +1370,11 @@
   "id": "i_love_shiny_stuff",
   "kind": "phone",
   "summary": "Every charm in the store gets a random Trait (its price changes to match), then a random equipped charm gets Devious (+0.6% 666 chance).",
-  "tip": "Pause and restock until the store has charms worth buying: Avid and Ambitious are the prizes. Drawer key charms first so Devious hits a spare. Locks you out of Sacred Mode.",
-  "tier": "C",
+  "tip": "Pause and restock until the store has charms you want: Avid, Ambitious and Obsessive are the prizes. Drawer keepers so Devious lands on a charm you can sell. Locks you out of Sacred Mode.",
+  "tier": "B",
   "ratings": {
-   "power": 2,
-   "scaling": 3,
+   "power": 3,
+   "scaling": 5,
    "economy": 0,
    "utility": 1,
    "risk": 3
@@ -1440,7 +1465,8 @@
     "per": "instant",
     "when": {
      "event": "instant"
-    }
+    },
+    "note": "Avoidable: deposit your coins (up to the debt) before taking the call."
    }
   ],
   "synergies": [
@@ -1701,7 +1727,7 @@
   "id": "theres_nothing_to_eat_but_mould",
   "kind": "phone",
   "summary": "Lemons and Cherries drop for good from 19.4% to about 12% each (base odds), so others show up more; a random equipped charm gets Devious (+0.6% 666).",
-  "tip": "A focus tool for non-fruit builds: Clovers, Bells and gems show up more. Drawer key charms first so Devious hits a spare. Locks you out of Sacred Mode.",
+  "tip": "For Clover/Bell or gem builds: those symbols show up more, though slightly fewer Patterns form overall. Drawer keepers so Devious lands on a charm you can sell. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -1776,7 +1802,8 @@
   "confidence": "medium",
   "assumptions": [
    "Halves the base chance only, so +chance bonuses already on Lemons or Cherries stay.",
-   "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait)."
+   "Assumed Devious replaces any Trait the chosen charm already had (a charm holds one Trait).",
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5), which give the wiki's base odds."
   ]
  },
  {
@@ -1793,7 +1820,8 @@
    "risk": 3
   },
   "archetypes": [
-   "fruit"
+   "fruit",
+   "gems"
   ],
   "provides": [
    "symbolChance",
@@ -1864,7 +1892,8 @@
   ],
   "confidence": "high",
   "assumptions": [
-   "Halves the base chance only, so +chance bonuses already on Clovers or Bells stay."
+   "Halves the base chance only, so +chance bonuses already on Clovers or Bells stay.",
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5), which give the wiki's base odds."
   ]
  },
  {
@@ -1922,7 +1951,7 @@
   "antiSynergies": [
    {
     "id": "eye_jar",
-    "why": "Halves Diamond, Treasure and Seven chances, breaking its streaks."
+    "why": "Gems fall from 31% to about 19% of symbols, so its 3-spin gem streaks become much rarer."
    },
    {
     "id": "golden_diamond",
@@ -1947,7 +1976,8 @@
   ],
   "confidence": "high",
   "assumptions": [
-   "Halves the base chance only, so +chance bonuses already on gems stay."
+   "Halves the base chance only, so +chance bonuses already on gems stay.",
+   "Percentages assume chances work as weights (Lemon/Cherry 1.3, Clover/Bell 1.0, Diamond/Treasure 0.8, Seven 0.5), which give the wiki's base odds."
   ]
  },
  {
@@ -1955,9 +1985,9 @@
   "kind": "phone",
   "summary": "Unholy Fusion DLC: spawns a random Evil charm on your table, then sets your coins in hand to 0.",
   "tip": "Deposit your coins before taking it. Evil charms mostly pay off in 666 or Revenge builds, and Lover #1 + #2 fuse into Lust; some hurt (Lover #2, Fraud, Limbo). Locks you out of Sacred Mode.",
-  "tier": "D",
+  "tier": "C",
   "ratings": {
-   "power": 2,
+   "power": 3,
    "scaling": 3,
    "economy": 0,
    "utility": 1,
@@ -1987,7 +2017,8 @@
     "per": "instant",
     "when": {
      "event": "instant"
-    }
+    },
+    "note": "Avoidable: deposit your coins (up to the debt) before taking the call."
    }
   ],
   "synergies": [
@@ -2014,14 +2045,14 @@
   "assumptions": [
    "Assumed only coins in hand are affected; coins already deposited in the ATM are safe.",
    "The Evil charm is random among 11 (Sloth, Limbo, Lover #1, Lover #2, Gluttony, Avarice, Rage, Heresy, Violence, Fraud, Treachery).",
-   "Assumed the Evil charm uses a slot and can be sold if unwanted."
+   "Assumed the Evil charm lands on the table even when it is full (as Help!'s Sacred charm can overstock you) and can be sold if unwanted."
   ]
  },
  {
   "id": "im_re_organizing_my_mind",
   "kind": "phone",
   "summary": "Sacred call: Symbols Multiplier +3 for the rest of the run, with no drawback.",
-  "tip": "Sacred calls only come after you refuse three Red calls, so this lands mid-run: still strong unless your Symbols Multiplier is already big. Megaphone or First Love make it +6.",
+  "tip": "Sacred calls only come after you refuse three Red calls, so this arrives mid-to-late run: still good unless your Symbols Multiplier is already large. Megaphone or First Love make it +6.",
   "tier": "A",
   "ratings": {
    "power": 6,
@@ -2067,7 +2098,7 @@
   "id": "i_see_the_patterns_in_my_behaviour",
   "kind": "phone",
   "summary": "Sacred call: Patterns Multiplier +1 for the rest of the run, with no drawback.",
-  "tip": "Patterns Multiplier sources are scarce, so +1 is a big relative gain even mid-run, when Sacred calls arrive. Copies stack; Megaphone or First Love make it +2.",
+  "tip": "Patterns Multiplier sources are scarce, so +1 is a big relative gain even late in a run, when Sacred calls arrive. Copies stack; Megaphone or First Love make it +2.",
   "tier": "A",
   "ratings": {
    "power": 6,
