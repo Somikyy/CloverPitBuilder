@@ -14,7 +14,7 @@
 
 import { simulate } from './sim.js';
 import {
-  newDerived, cloneDerived, applyModel, applyTrait, compileSim, totalSM, totalPM, chance666, postCond,
+  newDerived, cloneDerived, applyModel, applyTrait, compileSim, totalSM, totalPM, chance666, postCond, protect666Of, symCtx,
 } from './effects.js';
 import {
   SYMBOLS, SYMBOL_NAMES, PATTERNS, PATTERN_NAMES, BASE_VALUE, BASE_WEIGHT, PATTERN_BASE, PATTERN_SIZE,
@@ -64,31 +64,85 @@ export function defaultState() {
 }
 
 export function deriveBuild(state, db) {
+  const first = deriveOnce(state, db, null);
+  const st = state.stats || {};
+  if (!hasNumbers(st.values) && !hasNumbers(st.chances)) return first;
+  // "most valuable / most probable symbol" targets (Expired Meds, Sloth) follow the in-game numbers typed in
+  return deriveOnce(state, db, symCtx(first.d));
+}
+
+const hasNumbers = (o) => !!o && typeof o === 'object' && Object.values(o).some((v) => num(v) !== null);
+
+function deriveOnce(state, db, forcedSym) {
   const d = newDerived();
+  const dl = Number(state.deadline);
   const env = {
-    deadline: clamp(Math.round(state.deadline || 1), 1, 30),
+    deadline: clamp(Number.isFinite(dl) ? Math.round(dl) : 1, 1, 30),
     sacred: !!(state.mode && state.mode.sacred),
     hard: !!(state.mode && state.mode.hard),
     dlc: !(state.mode && state.mode.dlc === false),
   };
+  const opt = (item, times = 1) => ({ item, times, symCtx: forcedSym });
   const coverage = [];
   const mem = state.mode && state.mode.memory && db.byId.get(state.mode.memory);
-  if (mem && mem.model) coverage.push([mem.id, applyModel(d, mem.model, { item: mem })]);
-  for (const [id, times] of Object.entries(state.phone || {})) {
+  if (mem && mem.model) coverage.push([mem.id, applyModel(d, mem.model, opt(mem))]);
+  // First Love: every phone ability of the run triggers once more. Megaphone (a charm) is not counted
+  // here, because calls taken before it was bought were not doubled; "Took it" adds its extra instead.
+  d.memPhoneExtra = d.phoneExtra;
+  const charms = Array.isArray(state.charms) ? state.charms : [];
+  const equipped = charms.filter((c) => c && !c.drawer && db.byId.has(c.id));
+  // traits the player already marked on charms by hand, so a trait call isn't counted twice
+  const handTraits = {};
+  for (const c of equipped) if (c.trait) handTraits[c.trait] = (handTraits[c.trait] || 0) + 1;
+  for (const [id, count] of Object.entries(state.phone || {})) {
     const it = db.byId.get(id);
-    if (it && it.model && times > 0) coverage.push([id, applyModel(d, it.model, { item: it, times })]);
+    const n = Math.min(99, Math.floor(Number(count)));
+    if (!it || !it.model || !Number.isFinite(n) || n <= 0) continue;
+    const times = n * (1 + d.memPhoneExtra);
+    const before = d.meta.length;
+    coverage.push([id, applyModel(d, it.model, opt(it, times))]);
+    applyCallTraits(d, d.meta.slice(before), times, equipped.length, handTraits);
   }
-  for (const c of state.charms || []) {
-    if (c.drawer) continue;
+  for (const c of charms) {
+    if (!c || c.drawer) continue;
     const it = db.byId.get(c.id);
     if (!it) continue;
-    if (it.model) coverage.push([c.id, applyModel(d, it.model, { item: it })]);
+    if (it.model) coverage.push([c.id, applyModel(d, it.model, opt(it))]);
     if (c.trait) applyTrait(d, c.trait, c.id);
     if (c.id === 'depression') d.flags.depression = true;
+  }
+  // per-unit multipliers of owned charms (Lost Wallet, CloverPet, Chastity Belt...)
+  const uctx = { state, db, env, d, tickets: Math.max(0, num(state.tickets) ?? 0), ownedIds: new Set(equipped.map((c) => c.id)) };
+  for (const g of d.growth) {
+    if (g.kind === 'smPerUnit') d.smAdd += perUnitBonus(g, uctx);
+    else if (g.kind === 'pmPerUnit') d.pmAdd += perUnitBonus(g, uctx);
   }
   if (env.hard) d.debtMul *= 1 + 0.25 * (env.deadline - 1);
   applyOverrides(d, state.stats || {});
   return { d, env, coverage };
+}
+
+// Phone calls that put a trait on a random equipped charm (Avid, Devious...). `metas` are the call's
+// own meta entries. With `handTraits`, traits the player already marked on a charm are skipped.
+function applyCallTraits(d, metas, times, equipped, handTraits = null) {
+  if (!equipped) return;
+  for (const m of metas) {
+    if (m.kind !== 'trait' || m.target === 'store') continue;
+    const tr = m.apply === 'random' ? null : m.apply;
+    // "all equipped charms" gives each charm one trait (a charm holds one trait at a time)
+    const reps = m.target === 'allEquipped' ? equipped : times;
+    for (let k = 0; k < reps; k++) {
+      if (tr && handTraits && handTraits[tr] > 0) { handTraits[tr]--; continue; }
+      if (tr) applyTrait(d, tr, m.src);
+      else { d.smAdd += 2 / 7; d.pmAdd += 1 / 7; d.interest += 3 / 7; d.chance666Add += 0.6 / 7; } // average of the 7 traits
+    }
+  }
+}
+
+function perUnitBonus(g, ctx) {
+  const per = g.unit.per === 'deadline' ? ctx.env.deadline : Math.max(1, g.unit.per || 1);
+  const b = Math.floor(unitsOf(g.unit, ctx) / per) * g.amount;
+  return Math.max(0, Math.min(g.cap ?? Infinity, b));
 }
 
 function num(x) { return x !== null && x !== undefined && x !== '' && Number.isFinite(+x) ? +x : null; }
@@ -97,11 +151,17 @@ function applyOverrides(d, st) {
   if (st.values) SYMBOLS.forEach((s, i) => { const v = num(st.values[s]); if (v !== null) d.values[i] = Math.max(0, v); });
   if (st.patterns) PATTERNS.forEach((p, i) => { const v = num(st.patterns[p]); if (v !== null) d.patVals[i] = Math.max(0, v); });
   if (st.chances) {
-    const given = SYMBOLS.map((s) => num(st.chances[s]));
-    if (given.every((x) => x !== null)) {
-      const sumGiven = given.reduce((a, b) => a + b, 0);
-      const tot = d.weights.reduce((a, b) => a + b, 0);
-      if (sumGiven > 0) d.weights = given.map((g) => (g / sumGiven) * tot);
+    // Typed chances are used as they are; the symbols left empty share what's left of 100%
+    // in proportion to their calculated chances.
+    const given = SYMBOLS.map((s) => { const v = num(st.chances[s]); return v === null ? null : Math.max(0, v); });
+    if (given.some((x) => x !== null)) {
+      const tot = d.weights.reduce((a, b) => a + b, 0) || 1;
+      const sumGiven = given.reduce((a, g) => a + (g ?? 0), 0);
+      const restW = d.weights.reduce((a, w, i) => a + (given[i] === null ? w : 0), 0);
+      const remain = Math.max(0, 100 - sumGiven);
+      const pct = given.map((g, i) => (g !== null ? g : restW > 0 ? (remain * d.weights[i]) / restW : 0));
+      const sumPct = pct.reduce((a, b) => a + b, 0);
+      if (sumPct > 0) d.weights = pct.map((x) => (x / sumPct) * tot);
     }
   }
   const sm = num(st.sm); if (sm !== null) { d.smAdd = Math.max(0, sm); d.smMul = 1; }
@@ -118,9 +178,12 @@ function linEV(values, patVals, SM, PM, N) {
 }
 
 function structKey(cfg) {
+  // Pain Killers turns lone patterns into the most valuable symbol, so which symbol that is matters
+  let best = -1;
+  if (cfg.transforms.painKillers) { best = 0; for (let s = 1; s < 7; s++) if (cfg.values[s] > cfg.values[best]) best = s; }
   return JSON.stringify([cfg.weights.map((w) => w.toFixed(4)), cfg.enabled, cfg.mods.slice(21, 35), cfg.mods.slice(56, 63), cfg.luck, cfg.retrig,
-    cfg.force, cfg.extraSpins, cfg.temps.map((t) => [t.kind, t.trigger, t.value, t.mask, t.pats]), cfg.rb.map((r) => [r.cost, r.effects, r.extraTriggers, r.noConsume]),
-    cfg.transforms, cfg.randomMul, cfg.dynamo, cfg.spinsPerRound, cfg.roundsPerDeadline, cfg.p666.toFixed(5), cfg.protect666.toFixed(4), cfg.sacred, cfg.spontaneous,
+    cfg.force, cfg.extraSpins, cfg.temps.map((t) => [t.kind, t.trigger, t.value, t.mask, t.pats]), cfg.rb.map((r) => [r.src, r.cost, r.effects, r.extraTriggers, r.noConsume, r.roundScoped]),
+    cfg.transforms, best, cfg.randomMul, cfg.spinsPerRound, cfg.roundsPerDeadline, cfg.p666.toFixed(5), cfg.protect666.toFixed(4), cfg.sacred, cfg.spontaneous,
     cfg.charges, cfg.roundEndCharges, cfg.trigLuck, cfg.superCap]);
 }
 
@@ -160,7 +223,7 @@ function buildCtx(state, db, built, opt) {
   return {
     state, db, d, env, cfg, base, cmp, seed, opt, SM, PM, N, dEVdV, dEVdPV, lin, ev, evRound, spinsPerRound,
     roundsPerDeadline, debt, depositEst, interestCoins, g, H, symShare, patShare, ownedIds, drawerIds, phoneIds, p666,
-    tickets: num(state.tickets) ?? 0, coins: num(state.coins), key: structKey(cfg), cache: new Map(),
+    tickets: Math.max(0, num(state.tickets) ?? 0), coins: num(state.coins), key: structKey(cfg), cache: new Map(),
     ticketIncome: estimateTicketIncome(d, roundsPerDeadline),
   };
 }
@@ -246,10 +309,15 @@ function growthOf(entries, ctx, d2, stats) {
     if (gr.rate) {
       if (gr.rate.post) perRound = postRate(gr.rate.post, stats, d2.randomMul) * spr;
       else if (gr.rate.event) perRound = eventsPerRound(gr.rate.event, ctx, gr.rate.n, stats);
-      else if (gr.rate.rb) perRound = Math.min(1, (1 + d2.rbExtra) / Math.max(1, gr.rate.rb - d2.rbCostReduce));
-      else if (gr.rate.rbRound) perRound = Math.min(1, 1 / Math.max(1, gr.rate.rbRound - d2.rbCostReduce)) * (1 + d2.rbExtra);
-      // Overdose: Red Button charms stop recharging at round end, so permanent RB growth mostly stops
-      if ((gr.rate.rb || gr.rate.rbRound) && d2.rbNoRecharge) perRound *= 0.15;
+      else if (gr.rate.rb || gr.rate.rbRound) {
+        // presses x extra triggers per Round, measured by the simulator (batteries, Dynamo, Overdose...)
+        const apps = stats.rbAppsPerRound && stats.rbAppsPerRound[gr.src];
+        if (apps !== undefined) perRound = gr.rate.rbRound ? Math.min(1 + d2.rbExtra, apps) : apps;
+        else {
+          perRound = Math.min(1, 1 / Math.max(1, (gr.rate.rb || gr.rate.rbRound) - d2.rbCostReduce)) * (1 + d2.rbExtra);
+          if (d2.rbNoRecharge) perRound *= 0.15; // Overdose: no recharge when a Round ends
+        }
+      }
     }
     if (!perRound) continue;
     let dA = 0, dG = 0;
@@ -564,21 +632,11 @@ export function evaluateItem(it, ctx, extra = {}) {
   const reasons = [];
   const d2 = cloneDerived(ctx.d);
   const times = it.kind === 'phone' ? 1 + ctx.d.phoneExtra : 1;
+  const metaBefore = ctx.d.meta.length;
   const cov = model ? applyModel(d2, model, { item: it, times }) : { handled: 0, total: 0, unhandled: [] };
   if (extra.trait) applyTrait(d2, extra.trait, it.id);
   // phone abilities that apply a trait to a random equipped charm
-  for (const m of d2.meta.filter((x) => x.src === it.id && x.kind === 'trait')) {
-    const equipped = (ctx.state.charms || []).filter((c) => !c.drawer).length;
-    if (!equipped && m.target !== 'store') continue;
-    if (m.target === 'store') continue;
-    const tr = m.apply === 'random' ? null : m.apply;
-    for (let k = 0; k < times; k++) {
-      if (tr) applyTrait(d2, tr, it.id);
-      else { // random trait: average of the seven
-        d2.smAdd += 2 / 7; d2.pmAdd += 1 / 7; d2.interest += 3 / 7; d2.chance666Add += 0.6 / 7;
-      }
-    }
-  }
+  applyCallTraits(d2, d2.meta.slice(metaBefore), times, ctx.ownedIds.size);
 
   // ---- coins from the reels, now
   const { stats, same } = simFor(d2, ctx);
@@ -588,11 +646,12 @@ export function evaluateItem(it, ctx, extra = {}) {
   if (same) m = linEV(d2.values, d2.patVals, SM2, PM2, ctx.cmp.N) / Math.max(linEV(ctx.d.values, ctx.d.patVals, ctx.SM, ctx.PM, ctx.cmp.N), 1e-9);
   else m = (stats.evNet * stats.spinsPerRound) / Math.max(ctx.cmp.evNet * ctx.cmp.spinsPerRound, 1e-9);
   if (!Number.isFinite(m) || m <= 0) m = 1e-6;
+  const prot1 = protect666Of(ctx.d), prot2 = protect666Of(d2);
   if (same) { // 666 / protection changes the linear path cannot see
     const p1 = chance666(ctx.d, ctx.env.deadline), p2 = chance666(d2, ctx.env.deadline);
-    if (p1 !== p2 || ctx.d.protect666 !== d2.protect666) {
+    if (p1 !== p2 || prot1 !== prot2) {
       const loss = (p, pr) => 1 - Math.min(0.9, 3.5 * p * (1 - pr));
-      m *= loss(p2, d2.protect666) / loss(p1, ctx.d.protect666);
+      m *= loss(p2, prot2) / loss(p1, prot1);
     }
   }
   if (d2.roundsPerDeadline !== ctx.d.roundsPerDeadline) m *= d2.roundsPerDeadline / ctx.d.roundsPerDeadline;
@@ -608,12 +667,11 @@ export function evaluateItem(it, ctx, extra = {}) {
   const newGrowth = d2.growth.slice(ctx.d.growth.length);
   for (const g of newGrowth) { // per-unit multipliers (Lost Wallet, CloverPet, Shopping Cart, Dark Lotus...)
     if (g.kind !== 'smPerUnit' && g.kind !== 'pmPerUnit') continue;
-    const units = unitsOf(g.unit, ctx);
-    const per = g.unit.per || 1;
-    const bonus = Math.floor(units / per) * g.amount;
+    const per = g.unit.per === 'deadline' ? ctx.env.deadline : Math.max(1, g.unit.per || 1);
+    const bonus = perUnitBonus(g, ctx);
     const cur = g.kind === 'smPerUnit' ? SM2 : PM2;
     m *= (cur + bonus) / Math.max(cur, 1e-9);
-    A += ((unitGrowthPerRound(g.unit, ctx) / per) * g.amount) / Math.max(cur + bonus, 1e-9);
+    if (bonus < (g.cap ?? Infinity)) A += ((unitGrowthPerRound(g.unit, ctx) / per) * g.amount) / Math.max(cur + bonus, 1e-9);
   }
 
   // ---- economy & side income (Interest, cats, tokens, coin effects) for the whole build
@@ -648,7 +706,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   let utility = 0;
   if (spaceNet) utility += 35 * spaceNet;
   if (ec.deathSave) utility += ctx.check && ctx.check.ratio < 1 ? 75 : 30; // worth most when you're short of the debt
-  if (d2.protect666 > ctx.d.protect666 && ctx.env.deadline >= 2) utility += 60 * (d2.protect666 - ctx.d.protect666) * Math.min(1, ctx.p666 * 25 + 0.2);
+  if (prot2 > prot1 && ctx.env.deadline >= 2) utility += 60 * (prot2 - prot1) * Math.min(1, ctx.p666 * 25 + 0.2);
   const r = (model && model.ratings) || { power: 3, scaling: 3, economy: 2, utility: 2, risk: 1 };
   const prior = 10 * (r.power * (1 - ctx.g) + r.scaling * ctx.g);
   const quant = cov.total ? cov.handled / cov.total : 0;
@@ -722,7 +780,8 @@ export function evaluateItem(it, ctx, extra = {}) {
   topSymbolReason(it, model, ctx, reasons);
   for (const s of synReasons.slice(0, 3)) {
     const o = ctx.db.byId.get(s.id);
-    reasons.push({ kind: s.type === 'syn' ? 'good' : 'bad', text: `${s.type === 'syn' ? 'Combos with' : 'Clashes with'} ${o ? o.name : s.id}: ${s.why}` });
+    const nm = (o ? o.name : s.id).replace(/[.!?…]+$/, ''); // call names end in . ! or ?
+    reasons.push({ kind: s.type === 'syn' ? 'good' : 'bad', text: `${s.type === 'syn' ? 'Combos with' : 'Clashes with'} ${nm}: ${s.why}` });
   }
   if (archHits.length) reasons.push({ kind: 'good', text: `Fits your ${archHits.slice(0, 2).join(' + ')} build` });
   if (cares.length && careFactor < 0.45 && quant < 0.5) reasons.push({ kind: 'bad', text: `Needs ${cares.map(tagLabel).slice(0, 2).join(' / ')} support you don't have yet` });
@@ -734,7 +793,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   if (charmSpaceDelta) reasons.push({ kind: charmSpaceDelta > 0 ? 'good' : 'bad', text: `${charmSpaceDelta > 0 ? '+' : ''}${charmSpaceDelta} charm space` });
   const p1 = chance666(ctx.d, ctx.env.deadline), p2 = chance666(d2, ctx.env.deadline);
   if (p2 > p1 + 1e-6) reasons.push({ kind: devilBuild ? 'good' : 'bad', text: `666 chance ${(p1 * 100).toFixed(1)}% → ${(p2 * 100).toFixed(1)}%` });
-  if (d2.protect666 > ctx.d.protect666 + 1e-6) reasons.push({ kind: 'good', text: 'Protects you from 666' });
+  if (prot2 > prot1 + 1e-6) reasons.push({ kind: 'good', text: prot1 > 0 ? `666 blocked ${Math.round(prot1 * 100)}% → ${Math.round(prot2 * 100)}%` : 'Protects you from 666' });
   if (ec.deathSave && ctx.check && ctx.check.ratio < 1) reasons.push({ kind: 'good', text: "Saves the run if you can't pay this deadline" });
   if (Number.isFinite(life) && life < ctx.H) reasons.push({ kind: 'neutral', text: `Temporary: lasts about ${Math.max(1, Math.round(life))} round${life >= 1.5 ? 's' : ''}` });
   if (waitDeadlines >= 1.5) reasons.push({ kind: 'bad', text: `Costs ${price} tickets: about ${Math.round(waitDeadlines)} deadlines of saving` });
@@ -809,7 +868,7 @@ function ownedContributions(ctx) {
     ctx2.arch = ctx.arch;
     setBaseline(ctx2);
     ctx2.cache.set(ctx.key, ctx.cmp);
-    const e = evaluateItem(it, ctx2, { trait: c.trait || null });
+    const e = evaluateItem(it, ctx2, { trait: c.trait || null, price: 0 }); // already paid for
     out.push({
       id: c.id, name: it.name, trait: c.trait || null, score: e.score,
       now: e.value.now, horizon: e.value.horizon, growth: e.value.growthPerRound,
@@ -898,7 +957,10 @@ export function analyze(state, db, opt = {}) {
       chances: ctx.d.weights.map((w) => w / ctx.d.weights.reduce((a, b) => a + b, 0)),
       symShare: ctx.symShare, patShare: ctx.patShare,
       pNone: st.pNone, pAtLeast3: st.pAtLeast[3], pAtLeast5: st.pAtLeast[5], pAtLeast7: st.pAtLeast[7], pJackpot: st.pJackpot,
-      avgPatterns: st.avgPatterns, luckAvg: st.luckAvg, p666: ctx.p666, protect666: ctx.d.protect666,
+      avgPatterns: st.avgPatterns, luckAvg: st.luckAvg, p666: ctx.p666, protect666: protect666Of(ctx.d),
+      // a call you take now triggers this many times (First Love and Megaphone add one each)
+      callTriggers: 1 + ctx.d.phoneExtra, callAddsPerTake: 1 + ctx.d.phoneExtra - (ctx.d.memPhoneExtra || 0),
+      memPhoneExtra: ctx.d.memPhoneExtra || 0,
       archetypes: ctx.arch, horizonRounds: ctx.H, debt: ctx.debt,
     },
     check, owned, weakest: full ? weakest : null,

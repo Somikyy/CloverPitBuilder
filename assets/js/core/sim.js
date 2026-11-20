@@ -73,6 +73,12 @@ const NEIGHBOURS = Array.from({ length: 15 }, (_, i) => {
 });
 
 // ---------------------------------------------------------------- helpers
+function mix32(x) {
+  x = Math.imul(x ^ (x >>> 16), 0x85ebca6b);
+  x = Math.imul(x ^ (x >>> 13), 0xc2b2ae35);
+  return (x ^ (x >>> 16)) >>> 0;
+}
+
 function pickWeighted(weights, total, u) {
   let x = u * total;
   for (let i = 0; i < 7; i++) {
@@ -126,12 +132,25 @@ function postCondOk(c, o, rng, randomMul) {
  */
 export function simulate(cfg, opt = {}) {
   const seed = opt.seed ?? 1234567;
-  const rng = makeRng(seed);                 // misc: conditions, sixes, spontaneous luck
-  const rg = makeRng((seed * 2654435761) >>> 0 ^ 0x5bd1e995); // grid cells + luck placement
-  const rmod = makeRng((seed + 0x9e3779b9) >>> 0);           // symbol modifiers
-  const rl = makeRng((seed ^ 0x85ebca6b) >>> 0);             // the machine's own (spontaneous) luck
-  const rs = makeRng((seed * 31 + 0xc2b2ae35) >>> 0);        // 6 / 66 / 666 rolls and placement
+  const rng = makeRng(seed);                                  // misc: Red Button picks, charge targets, D4
   const rc = makeRng((seed * 7 + 0x27d4eb2f) >>> 0);         // charm trigger chances
+  const rl = makeRng((seed ^ 0x85ebca6b) >>> 0);             // start offsets of the machine's own luck
+  // Per-spin streams. Every (deadline, round, spin) seeds its own grid, luck placement, modifiers,
+  // sixes, spontaneous luck and forced-symbol rolls, so two builds see the same spin even when one
+  // of them has more luck, extra spins or more 666s. Differences then come from the build itself.
+  const SS = new Uint32Array(6);
+  const G = 0, LP = 1, MO = 2, SX = 3, LK = 4, FO = 5;
+  const u = (k) => {
+    const a = (SS[k] = (SS[k] + 0x6d2b79f5) >>> 0);
+    let t = Math.imul(a ^ (a >>> 15), a | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const seedH = mix32((seed ^ 0x9e3779b9) >>> 0);
+  const reseed = (dd, rr, si) => {
+    const h = mix32((mix32((mix32((seedH ^ dd) >>> 0) + Math.imul(rr + 1, 0x85ebca6b)) >>> 0) + Math.imul(si + 1, 0xc2b2ae35)) >>> 0);
+    for (let k = 0; k < 6; k++) SS[k] = mix32((h + Math.imul(k + 1, 0x9e3779b9)) >>> 0);
+  };
   const nDeadlines = opt.deadlines ?? 400;
   const D = cfg.deadline;
   const roundsPerDeadline = cfg.roundsPerDeadline;
@@ -156,7 +175,7 @@ export function simulate(cfg, opt = {}) {
   const forceSrc = cfg.force || [];
   const extraSrc = cfg.extraSpins || [];
   const temps = cfg.temps || [];
-  const rbItems = (cfg.rb || []).map((x) => ({ ...x, charges: x.max ?? x.cost, activeDeadline: false }));
+  const rbItems = (cfg.rb || []).map((x) => ({ ...x, charges: x.max ?? x.cost, activeDeadline: false, apps: 0 }));
   const chargeSrc = cfg.charges || [];        // [{ trigger (post-spin cond), amount, all }]
   const roundEndCharges = cfg.roundEndCharges || []; // [{ chance, amount, all }]
   const trigLuck = cfg.trigLuck || [];        // [{ n, add }]  Luck when N charm triggers happen in a Round
@@ -225,14 +244,18 @@ export function simulate(cfg, opt = {}) {
         }
       };
       // Red Button: press every charm that has enough charges. Deadline-long effects once per Deadline;
-      // Round effects can be pressed again whenever they recharge (overcharging).
-      const fireReady = () => {
+      // Round effects can be pressed again whenever they recharge (overcharging). After the Round's last
+      // spin a player waits for the next Round, except for permanent upgrades (Cross, Ring Bell), which
+      // are pressed at once so the Round-end recharge isn't wasted on a full charm.
+      const fireReady = (lastSpin = false) => {
         for (const rb of rbItems) {
           if (rb.charges < rb.cost) continue;
           if (rb.duration === 'deadline' && rb.activeDeadline) continue;
+          if (lastSpin && (rb.effects.length || rb.roundScoped)) continue;
           const times = 1 + (rb.extraTriggers || 0);
           rb.charges -= rb.noConsume && rng() < rb.noConsume ? 0 : rb.cost;
           rb.activeDeadline = true;
+          rb.apps += times;
           rbActivations++;
           countTrig(times);
           for (let t = 0; t < times; t++) {
@@ -260,12 +283,14 @@ export function simulate(cfg, opt = {}) {
 
       for (let si = 0; si < spinsThisRound; si++) {
         spins++; globalSpin++; spinInDeadline++;
+        reseed(d, r, si);
         const ctx = {
           spinIdx: si, spinsThisRound, roundIdx: r, roundsThisDeadline, globalSpin,
           noRewardStreak, prevPatterns, after666, gemStreak, no5Streak, randomMul,
         };
         // ---- luck
         let charmLuck = luckNext; luckNext = 0;
+        const l1 = u(LK), l2 = u(LK), l3 = u(LK), l4 = u(LK), l5 = u(LK);
         for (const L of luckSrc) if (preCondOk(L.cond, ctx, rc)) { charmLuck += L.add; if (L.cond.kind !== 'always') countTrig(); }
         let luck = charmLuck;
         if (si >= baseSpins && pendingExtra.length) luck += pendingExtra.shift().luck;
@@ -273,34 +298,34 @@ export function simulate(cfg, opt = {}) {
           if (D <= 1) {
             const sn = spinInDeadline;
             if (sn > 1 && (sn + ilsOffset + 1) % (4 + Math.floor(sn / 6)) === 0) {
-              const roll = Math.floor(rl() * 6); // 4,5,6,6,7,8
+              const roll = Math.floor(l1 * 6); // 4,5,6,6,7,8
               luck += [4, 5, 6, 6, 7, 8][roll];
             }
           } else if (globalSpin >= nextOLS) {
-            let add = globalSpin % 3 === 0 ? 5 + Math.floor(rl() * 3) : 3 + Math.floor(rl() * 3);
-            if (globalSpin % 7 === 0) add += 7 + Math.floor(rl() * 3);
+            let add = globalSpin % 3 === 0 ? 5 + Math.floor(l1 * 3) : 3 + Math.floor(l1 * 3);
+            if (globalSpin % 7 === 0) add += 7 + Math.floor(l2 * 3);
             luck += add;
-            nextOLS = globalSpin + 4 + (D - 1) + (rl() < 0.5 ? 1 : 0);
+            nextOLS = globalSpin + 4 + (D - 1) + (l3 < 0.5 ? 1 : 0);
           }
           if (noRewardStreak >= 4) luck += 5 + (noRewardStreak - 4);
-          if (charmLuck >= 1 && charmLuck <= 4) { { const a = rl(), b = rl(); if (a < 0.5) luck += 1 + Math.floor(b * 2); } }
-          else if (charmLuck >= 5 && charmLuck <= 6) { if (rl() < 0.25) luck += 1; }
-          else if (charmLuck === 7) { if (rl() < 1 / 6) luck += 1; }
+          if (charmLuck >= 1 && charmLuck <= 4) { if (l4 < 0.5) luck += 1 + Math.floor(l5 * 2); }
+          else if (charmLuck >= 5 && charmLuck <= 6) { if (l4 < 0.25) luck += 1; }
+          else if (charmLuck === 7) { if (l4 < 1 / 6) luck += 1; }
         }
         luckSum += luck;
 
         // ---- grid
         let wTotal = 0;
         for (let s = 0; s < 7; s++) wTotal += weights[s];
-        for (let c = 0; c < 15; c++) grid[c] = pickWeighted(weights, wTotal, rg());
-        const luckU = rg();
+        for (let c = 0; c < 15; c++) grid[c] = pickWeighted(weights, wTotal, u(G));
+        const luckU = u(LP);
         if (luck > 0) {
           const ls = pickWeighted(weights, wTotal, luckU);
           if (luck >= 15) grid.fill(ls);
           else {
             for (let i = 0; i < 15; i++) idx15[i] = i;
             for (let i = 0; i < luck; i++) {
-              const j = i + Math.floor(rg() * (15 - i));
+              const j = i + Math.floor(u(LP) * (15 - i));
               const t = idx15[i]; idx15[i] = idx15[j]; idx15[j] = t;
               grid[idx15[i]] = ls;
             }
@@ -316,7 +341,7 @@ export function simulate(cfg, opt = {}) {
           countTrig();
         }
         if (force) {
-          const fs = pickWeighted(weights, wTotal, rng()); // one symbol for the whole forced set
+          const fs = pickWeighted(weights, wTotal, u(FO)); // one symbol for the whole forced set
           for (const p of force) {
             const inst = INSTANCES.find((x) => x.p === p && (p !== 4 || x.cells[0] === 5)) || INSTANCES.find((x) => x.p === p);
             for (const c of inst.cells) grid[c] = fs;
@@ -325,14 +350,14 @@ export function simulate(cfg, opt = {}) {
         // ---- sixes
         let is666 = false;
         if (cfg.sixes) {
-          const u1 = rs(), u2 = rs(), u3 = rs();
+          const u1 = u(SX), u2 = u(SX), u3 = u(SX);
           let n6 = 0;
           if (u1 < cfg.p666) { n6 = 3; is666 = true; }
           else if (u2 < cfg.p66) n6 = 2;
           else if (u3 < cfg.p6) n6 = 1;
           for (let i = 0; i < 15; i++) idx15[i] = i;
           for (let i = 0; i < n6; i++) {
-            const j = i + Math.floor(rs() * (15 - i));
+            const j = i + Math.floor(u(SX) * (15 - i));
             const t = idx15[i]; idx15[i] = idx15[j]; idx15[j] = t;
             grid[idx15[i]] = SIX;
           }
@@ -340,12 +365,12 @@ export function simulate(cfg, opt = {}) {
         // ---- modifiers
         for (let c = 0; c < 15; c++) {
           cellMod[c] = -1;
+          const um = u(MO); // drawn for every cell so a 6 doesn't shift the other cells' rolls
           const s = grid[c];
           if (s === SIX) continue;
           const t = modTable[s];
-          const u = rmod();
           let acc = 0;
-          for (let k = 0; k < t.length; k++) { acc += t[k][1]; if (u < acc) { cellMod[c] = t[k][0]; break; } }
+          for (let k = 0; k < t.length; k++) { acc += t[k][1]; if (um < acc) { cellMod[c] = t[k][0]; break; } }
         }
 
         // ---- detection (with optional transforms)
@@ -458,7 +483,7 @@ export function simulate(cfg, opt = {}) {
           if (cfg.sacred) { cnt999++; roundCoins += roundCoins; }
           else {
             cnt666++;
-            if (cfg.protect666 && rs() < cfg.protect666) cntBlocked666++; // blocked: coins kept, 666 charms still fire
+            if (cfg.protect666 && u(SX) < cfg.protect666) cntBlocked666++; // blocked: coins kept, 666 charms still fire
             else if (D >= 3) roundCoins = 0;
           }
         }
@@ -540,14 +565,14 @@ export function simulate(cfg, opt = {}) {
             const full = rbItems.filter((x) => x.charges >= (x.max ?? x.cost)).length;
             if (full) addCharges(full, false);
           }
-          fireReady();
+          fireReady(si === spinsThisRound - 1);
         }
       }
       coinsNet += roundCoins;
       if (roundScoredMask === 127) cntAllSymbolsRound++;
       // round end: recharge red button charms
       for (const rb of rbItems) {
-        rb.charges = Math.min((rb.max ?? rb.cost), rb.charges + (rb.noRecharge ? 0 : 1) + (cfg.dynamo && rng() < cfg.dynamo ? 1 : 0));
+        rb.charges = Math.min((rb.max ?? rb.cost), rb.charges + (rb.noRecharge ? 0 : 1));
       }
       for (const C of roundEndCharges) if (rng() < Math.min(1, C.chance)) addCharges(C.amount || 1, C.all);
       trigPerRoundSum += roundTrig;
@@ -581,6 +606,8 @@ export function simulate(cfg, opt = {}) {
     luckAvg: luckSum / spins,
     extraSpinsPerRound: extraSpinsTotal / rounds,
     rbActivationsPerRound: rbActivations / rounds,
+    // Red Button effect applications per Round for each charm (presses x extra triggers)
+    rbAppsPerRound: rbItems.reduce((o, x) => { o[x.src] = (o[x.src] || 0) + x.apps / rounds; return o; }, {}),
     chargesFromBatteryPerRound: chargesFromBattery / rounds,
     tempTriggerRates: Array.from(tempTriggerCounts).map(per),
     charmTriggersPerRound: trigPerRoundSum / rounds,

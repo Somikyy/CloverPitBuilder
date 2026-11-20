@@ -24,8 +24,9 @@ export function newDerived() {
     roundsPerDeadline: RULES.roundsPerDeadline,
     chance666Add: 0, chance666Mul: 1,
     protect666: 0,
+    protectRandom: [], // 666 protection that "triggers randomly" (Rosary): Horseshoe doubles it
     randomMul: 1,
-    rbExtra: 0, rbNoConsume: 0, rbCostReduce: 0, rbNoRecharge: false, dynamo: 0,
+    rbExtra: 0, rbNoConsume: 0, rbCostReduce: 0, rbNoRecharge: false,
     phoneExtra: 0, phoneOptions: 0,
     debtMul: 1,
     mods: new Array(70).fill(0),
@@ -47,12 +48,12 @@ export function cloneDerived(d) {
     mods: d.mods.slice(),
     luck: d.luck.slice(), retrig: d.retrig.slice(), force: d.force.slice(), extraSpins: d.extraSpins.slice(),
     temps: d.temps.slice(), rb: d.rb.slice(), transforms: { ...d.transforms },
-    charges: d.charges.slice(), roundEndCharges: d.roundEndCharges.slice(), trigLuck: d.trigLuck.slice(),
+    charges: d.charges.slice(), roundEndCharges: d.roundEndCharges.slice(), trigLuck: d.trigLuck.slice(), protectRandom: d.protectRandom.slice(),
     growth: d.growth.slice(), econ: d.econ.slice(), risk: d.risk.slice(), meta: d.meta.slice(), flags: { ...d.flags },
   };
 }
 
-function symCtx(d) {
+export function symCtx(d) {
   let mp = 0, mv = 0;
   for (let s = 1; s < 7; s++) {
     if (d.weights[s] > d.weights[mp] + 1e-9) mp = s;
@@ -127,6 +128,7 @@ function isPermanent(e) {
 export function applyModel(d, model, opt = {}) {
   const times = opt.times ?? 1;
   const item = opt.item || {};
+  const forceSym = opt.symCtx || null; // in-game numbers typed by the player decide "most valuable" targets
   const res = { handled: 0, total: 0, unhandled: [] };
   if (!model || !Array.isArray(model.effects)) return res;
   const src = model.id;
@@ -142,13 +144,15 @@ export function applyModel(d, model, opt = {}) {
 
   for (const e of model.effects) {
     res.total++;
-    const ok = applyEffect(d, e, { src, times, model, item, rbEntry });
+    const ok = applyEffect(d, e, { src, times, model, item, rbEntry, forceSym });
     if (ok) res.handled++;
     else res.unhandled.push(e.type === 'special' ? e.text : e.type);
   }
   // charms whose behaviour is simulated through a flag count as fully simulated
   if (src === 'depression' || src === 'super_capacitor') res.handled = res.total;
-  if (rbEntry && rbEntry.effects.length) {
+  // every Red Button charm goes to the simulator, even when all it does is grow (Cross, Ring Bell):
+  // its measured presses per round price that growth, so charge sources (batteries, Dynamo) count
+  if (rbEntry) {
     rbEntry.extraTriggers = d.rbExtra;
     rbEntry.noConsume = d.rbNoConsume;
     rbEntry.noRecharge = d.rbNoRecharge;
@@ -160,7 +164,7 @@ export function applyModel(d, model, opt = {}) {
 function applyEffect(d, e, c) {
   const { src, times, rbEntry, item } = c;
   const w = e.when || null;
-  const ctx = symCtx(d);
+  const ctx = c.forceSym || symCtx(d);
   const n = times;
 
   // ---------- Red Button activated effects
@@ -184,6 +188,7 @@ function applyEffect(d, e, c) {
     }
     if (e.type === 'symbolValue' && e.addBase) {
       d.growth.push({ kind: 'symAddBaseScored', amount: e.addBase * n, mask: symbolsFromSpec(e.symbols || 'all', ctx), rate: { rbRound: rbEntry.cost }, src });
+      rbEntry.roundScoped = true; // Midas Touch works for the rest of the Round: press it at a Round's start
       return true;
     }
     if (e.type === 'rounds') { d.econ.push({ kind: 'rounds', amount: (e.add || 1) * n, per: 'rb', cost: rbEntry.cost, src }); return true; }
@@ -278,7 +283,7 @@ function applyEffect(d, e, c) {
     case 'patternsMult': {
       const isSM = e.type === 'symbolsMult';
       if (e.perUnit) {
-        d.growth.push({ kind: isSM ? 'smPerUnit' : 'pmPerUnit', amount: (e.add || 0) * n, unit: e.perUnit, src });
+        d.growth.push({ kind: isSM ? 'smPerUnit' : 'pmPerUnit', amount: (e.add || 0) * n, unit: e.perUnit, cap: e.cap, src });
         return true;
       }
       if (!w || w.event === 'instant') {
@@ -327,7 +332,7 @@ function applyEffect(d, e, c) {
         d.retrig.push({ add: 0, mask: 0, necklace: true, cond: { kind: 'always' }, src });
         return true;
       }
-      const mask = scopeMask(e.scope, symCtx(d));
+      const mask = scopeMask(e.scope, c.forceSym || symCtx(d));
       if (!w) { d.retrig.push({ add, mask, cond: { kind: 'always' }, src }); return true; }
       const pre = preCond(w);
       if (pre && pre.kind !== 'after666') { d.retrig.push({ add, mask, cond: pre, src }); return true; }
@@ -425,8 +430,10 @@ function applyEffect(d, e, c) {
       else d.chance666Add += (e.add || 0) * n;
       return true;
     case 'protect666': {
+      const keep = e.discardChance ? 1 - e.discardChance * 0.5 : 1;
+      if (w && w.chance && item.triggersRandomly) { d.protectRandom.push({ p: Math.min(1, (e.chance ?? 1) * w.chance), keep, src }); return true; }
       const p = Math.min(1, (e.chance ?? 1) * (w && w.chance ? w.chance : 1));
-      d.protect666 = 1 - (1 - d.protect666) * (1 - p * (e.discardChance ? 1 - e.discardChance * 0.5 : 1));
+      d.protect666 = 1 - (1 - d.protect666) * (1 - p * keep);
       return true;
     }
     case 'debt':
@@ -438,8 +445,7 @@ function applyEffect(d, e, c) {
       d.econ.push({ kind: 'charges', restore: e.restore, targets: e.targets, when: w, src });
       const amount = typeof e.restore === 'number' ? e.restore : e.restore === 'all' ? 9 : 1;
       const all = e.targets === 'all' || e.restore === 'all';
-      if (!w && src === 'dynamo') { d.dynamo = 0.4; return true; }
-      if (w && w.on === 'roundEnd') { d.roundEndCharges.push({ chance: w.chance ?? 1, amount, all, src }); return true; }
+      if (w && w.on === 'roundEnd') { d.roundEndCharges.push({ chance: w.chance ?? 1, amount, all, random: !!(w.chance && item.triggersRandomly), src }); return true; }
       if (w && w.on === 'restock') { d.roundEndCharges.push({ chance: 0.8 / Math.max(1, w.n || 1), amount, all, src }); return true; }
       if (w && w.on === 'roundStart') { d.roundEndCharges.push({ chance: 1, amount, all, src }); return true; }
       const pc = w && postCond(w);
@@ -467,7 +473,7 @@ function applyEffect(d, e, c) {
       d.econ.push({ kind: 'resell', amount: e.add || 0, mul: e.mul, per: e.per, src });
       return true;
     case 'trait':
-      d.meta.push({ kind: 'trait', apply: e.apply, target: e.target, src });
+      d.meta.push({ kind: 'trait', apply: e.apply, target: e.target, when: w, src });
       return e.target === 'randomEquipped' || e.target === 'allEquipped';
     case 'deathSave':
       d.econ.push({ kind: 'deathSave', rounds: e.rounds, payDebt: e.payDebt, src });
@@ -496,6 +502,13 @@ export function applyTrait(d, trait, src) {
 }
 
 export function totalSM(d) { return d.smAdd * d.smMul; }
+
+/** Chance that a 666 is blocked, with random-trigger protection (Rosary) scaled by Horseshoe-like effects. */
+export function protect666Of(d) {
+  let miss = 1 - d.protect666;
+  for (const x of d.protectRandom || []) miss *= 1 - Math.min(1, x.p * d.randomMul) * x.keep;
+  return 1 - miss;
+}
 export function totalPM(d) { return d.pmAdd * d.pmMul; }
 
 export function chance666(d, deadline, sacred) {
@@ -526,7 +539,7 @@ export function compileSim(d, env) {
     p66: sixes ? RULES.chance66 / 100 : 0,
     p6: sixes ? RULES.chance6 / 100 : 0,
     sacred: !!env.sacred,
-    protect666: d.protect666,
+    protect666: protect666Of(d),
     mods: d.mods.slice(),
     luck: d.luck.map((x) => ({ add: x.add, cond: x.cond })),
     retrig: d.retrig.map((x) => ({ add: x.add, mask: x.mask, last: !!x.last, necklace: !!x.necklace, cond: x.cond })),
@@ -536,9 +549,8 @@ export function compileSim(d, env) {
     rb: d.rb.map((x) => ({ ...x, cost: Math.max(1, x.cost - d.rbCostReduce), max: Math.max(1, x.max - d.rbCostReduce), extraTriggers: d.rbExtra, noConsume: d.rbNoConsume, noRecharge: d.rbNoRecharge })),
     transforms: { ...d.transforms },
     randomMul: d.randomMul,
-    dynamo: d.dynamo * d.randomMul,
     charges: d.charges.map((x) => ({ trigger: x.trigger, amount: x.amount, all: x.all })),
-    roundEndCharges: d.roundEndCharges.map((x) => ({ chance: x.chance, amount: x.amount, all: x.all })),
+    roundEndCharges: d.roundEndCharges.map((x) => ({ chance: x.random ? Math.min(1, x.chance * d.randomMul) : x.chance, amount: x.amount, all: x.all })),
     trigLuck: d.trigLuck.map((x) => ({ n: x.n, add: x.add })),
     superCap: !!d.flags.superCap,
   };

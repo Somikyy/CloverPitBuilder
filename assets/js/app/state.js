@@ -5,18 +5,55 @@ import { store } from './common.js';
 const KEY = 'cp.build.v1';
 const SAVED = 'cp.saved.v1';
 
+// Cleans a build from storage or a share link: numbers become finite numbers in range, nested
+// objects are fresh copies (so editing the build never changes a saved copy), unknown junk is dropped.
+const finite = (x) => (x !== null && x !== undefined && x !== '' && Number.isFinite(+x) ? +x : null);
+const clampInt = (x, lo, hi, dflt) => { const v = finite(x); return v === null ? dflt : Math.max(lo, Math.min(hi, Math.round(v))); };
+const isObj = (x) => !!x && typeof x === 'object' && !Array.isArray(x);
+const TRAIT_IDS = ['ambitious', 'avid', 'devious', 'florid', 'gambler', 'obsessive', 'speculative'];
+
+function cleanNumbers(o, keys) {
+  const out = {};
+  if (!isObj(o)) return out;
+  for (const k of keys ? keys.filter((x) => Object.hasOwn(o, x)) : Object.keys(o)) {
+    const v = finite(o[k]);
+    if (v !== null) out[k] = Math.max(0, v);
+  }
+  return out;
+}
+
 export function normalize(s) {
   const d = defaultState();
-  if (!s || typeof s !== 'object') return d;
+  if (!isObj(s)) return d;
+  const mode = isObj(s.mode) ? s.mode : {};
+  const st = isObj(s.stats) ? s.stats : {};
+  const stats = {};
+  for (const g of ['values', 'chances', 'patterns']) { const o = cleanNumbers(st[g]); if (Object.keys(o).length) stats[g] = o; }
+  Object.assign(stats, cleanNumbers(st, ['sm', 'pm', 'interest', 'charmSpace']));
+  if (stats.charmSpace !== undefined) stats.charmSpace = Math.round(stats.charmSpace);
+  const phone = {};
+  if (isObj(s.phone)) for (const [id, n] of Object.entries(s.phone)) { const v = clampInt(n, 0, 99, 0); if (v > 0) phone[id] = v; }
+  const coins = finite(s.coins), deposited = finite(s.deposited);
+  const horizon = finite(isObj(s.prefs) ? s.prefs.horizon : null);
+  const seen = new Set();
   return {
-    ...d,
-    ...s,
-    mode: { ...d.mode, ...(s.mode || {}) },
-    charms: Array.isArray(s.charms) ? s.charms.filter((c) => c && typeof c.id === 'string') : [],
-    phone: s.phone && typeof s.phone === 'object' ? s.phone : {},
-    stats: s.stats && typeof s.stats === 'object' ? s.stats : {},
-    offers: Array.isArray(s.offers) ? s.offers.filter((o) => o && typeof o.id === 'string') : [],
-    prefs: { ...d.prefs, ...(s.prefs || {}) },
+    v: 1,
+    mode: {
+      memory: typeof mode.memory === 'string' && mode.memory ? mode.memory : d.mode.memory,
+      hard: !!mode.hard, sacred: !!mode.sacred, dlc: mode.dlc !== false,
+    },
+    deadline: clampInt(s.deadline, 1, 30, 1),
+    tickets: clampInt(s.tickets, 0, 99999, 0),
+    coins: coins === null ? null : Math.max(0, coins),
+    deposited: deposited === null ? null : Math.max(0, deposited),
+    charms: (Array.isArray(s.charms) ? s.charms : [])
+      .filter((c) => c && typeof c.id === 'string' && !seen.has(c.id) && seen.add(c.id))
+      .map((c) => ({ id: c.id, trait: TRAIT_IDS.includes(c.trait) ? c.trait : null, drawer: !!c.drawer })),
+    phone,
+    stats,
+    offers: (Array.isArray(s.offers) ? s.offers : []).filter((o) => o && typeof o.id === 'string')
+      .map((o) => { const pr = finite(o.price); return { id: o.id, price: pr === null ? null : Math.max(0, Math.round(pr)) }; }),
+    prefs: { horizon: horizon === null ? d.prefs.horizon : Math.max(0, Math.min(1, horizon)) },
   };
 }
 
@@ -57,10 +94,10 @@ function expand(o) {
   return normalize({
     mode: { memory: o.m?.[0] || 'erased_memory_card', hard: !!o.m?.[1], sacred: !!o.m?.[2], dlc: o.m?.[3] !== 0 },
     deadline: o.d ?? 1, tickets: o.t ?? 0, coins: o.co ?? null, deposited: o.de ?? null,
-    charms: (o.c || []).map(([id, trait, drawer]) => ({ id, trait: trait || null, drawer: !!drawer })),
-    phone: Object.fromEntries(o.p || []),
+    charms: (Array.isArray(o.c) ? o.c : []).filter(Array.isArray).map(([id, trait, drawer]) => ({ id, trait: trait || null, drawer: !!drawer })),
+    phone: Object.fromEntries(Array.isArray(o.p) ? o.p.filter((x) => Array.isArray(x) && typeof x[0] === 'string') : []),
     stats: o.s || {},
-    offers: (o.o || []).map(([id, price]) => ({ id, price })),
+    offers: (Array.isArray(o.o) ? o.o : []).filter(Array.isArray).map(([id, price]) => ({ id, price })),
     prefs: { horizon: o.h ?? 0.7 },
   });
 }
@@ -87,9 +124,11 @@ export async function decodeShare(code) {
   if (!code) return null;
   try {
     const kind = code[0], body = code.slice(1);
+    if (kind !== 'z' && kind !== 'j') return null;
     let bytes = b64url.dec(body);
     if (kind === 'z') bytes = await pipe(bytes, new DecompressionStream('deflate-raw'));
-    return expand(JSON.parse(new TextDecoder().decode(bytes)));
+    const o = JSON.parse(new TextDecoder().decode(bytes));
+    return o && typeof o === 'object' && !Array.isArray(o) ? expand(o) : null;
   } catch { return null; }
 }
 
@@ -106,10 +145,10 @@ export function readHashCode() {
 }
 
 // ---------- saved builds
-export function listSaved() { return store.get(SAVED, []); }
+export function listSaved() { const l = store.get(SAVED, []); return Array.isArray(l) ? l.filter((x) => x && typeof x.name === 'string') : []; }
 export function saveBuild(name, state) {
   const list = listSaved().filter((x) => x.name !== name);
-  list.unshift({ name, state, ts: Date.now() });
+  list.unshift({ name, state: normalize(state), ts: Date.now() });
   store.set(SAVED, list.slice(0, 30));
 }
 export function deleteSaved(name) { store.set(SAVED, listSaved().filter((x) => x.name !== name)); }
