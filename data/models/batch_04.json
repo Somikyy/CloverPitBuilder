@@ -3,7 +3,7 @@
   "id": "gabihbbh",
   "kind": "charm",
   "summary": "Every 666 you see doubles your Symbols Multiplier for the rest of that Round.",
-  "tip": "Force a 666 early in a Round with Possessed Cell Phone, then play the rest doubled. Holy Bible or Rosary cancel the coin loss and it still triggers; 999s count in Sacred Mode.",
+  "tip": "Force a 666 early in a Round with Possessed Cell Phone, then play the rest doubled. Holy Bible cancels the coin loss and it still triggers; 999s count in Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 4,
@@ -289,7 +289,7 @@
   "id": "crystal_skull",
   "kind": "charm",
   "summary": "After a 666, Diamonds, Treasures and Sevens are worth triple for the rest of that Round.",
-  "tip": "A gem build's 666 payoff: force the 666 early in a Round with Possessed Cell Phone. Holy Bible or Rosary cancel the coin loss and it still triggers; raise gem chances first.",
+  "tip": "A gem build's 666 payoff: force the 666 early in a Round with Possessed Cell Phone. Holy Bible cancels the coin loss and it still triggers; raise gem chances first.",
   "tier": "C",
   "ratings": {
    "power": 4,
