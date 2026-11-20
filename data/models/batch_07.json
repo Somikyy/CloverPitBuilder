@@ -3,14 +3,14 @@
   "id": "ras_book",
   "kind": "charm",
   "summary": "Surgery (Holy Bible + Ankh): each time you would die, 40% chance it pays your whole Debt and sends you to the next Deadline. Breaks after 3 saves.",
-  "tip": "A coin-flip death save that ignores how big the debt is, so it shines late. Horseshoe raises it to 80%. Holy Bible and Ankh stay out of the store while it is equipped.",
+  "tip": "A 40% death save that ignores how big the debt is, so it shines late. Horseshoe raises it to 80%. Holy Bible and Ankh stay out of the store while it is equipped.",
   "tier": "C",
   "ratings": {
    "power": 0,
    "scaling": 0,
    "economy": 2,
    "utility": 8,
-   "risk": 2
+   "risk": 1
   },
   "archetypes": [],
   "provides": [
@@ -30,11 +30,11 @@
      "on": "dying",
      "chance": 0.4
     },
-    "note": "Rolled only when you are about to die (after the death countdown), not every spin."
-   },
-   {
-    "type": "special",
-    "text": "The charm is discarded after its third successful save."
+    "discardAfter": {
+     "count": 3,
+     "of": "activations"
+    },
+    "note": "Rolled only when you are about to die (after the death countdown), not every spin; the charm breaks after its third successful save."
    }
   ],
   "synergies": [
@@ -55,8 +55,8 @@
   "confidence": "medium",
   "assumptions": [
    "Each would-be death rolls the 40% once; the charm breaks after its third successful save.",
-   "Assumed a save pays the remaining debt for you, so the coins in hand are kept.",
-   "The break after 3 saves is written as text: the engine's discardAfter estimate assumes per-spin activations and would call it a one-Round charm.",
+   "Assumed a save pays the remaining debt for you, so the coins in hand are kept (the wiki Coin page suggests it pays by handing you coins).",
+   "The break after 3 saves is written as discardAfter on the death-save effect; the engine does not shorten the life of death-save or event-triggered effects, so it is not misread as a one-Round charm.",
    "Both Ankh and Ra's Book act at the Dying step (wiki Charm Activation page), so like Ankh it can probably wait in a drawer and be equipped during the death countdown.",
    "Wiki: while a Surgery charm is equipped, its ingredients (Holy Bible, Ankh) are banned from the store."
   ]
@@ -100,7 +100,7 @@
      "noRewardStreak": 3
     },
     "duration": "spin",
-    "note": "In the game both extra spins get Luck +8; the engine cannot put Luck on extra spins, so the Luck goes on the spin right after the streak instead."
+    "note": "In the game both extra spins get Luck +8; the engine cannot put Luck on extra spins, so the Luck goes on the spin right after the streak instead. That counts one lucky spin instead of two, so the engine shows roughly half the real gain."
    }
   ],
   "synergies": [
@@ -134,14 +134,15 @@
   "confidence": "medium",
   "assumptions": [
    "Assumed it can fire again if the miss streak continues (every 3 misses in a row).",
-   "Simulator: base builds miss about 55% of spins, giving roughly 0.5-0.8 triggers per 7-spin Round; luck-heavy builds trigger it less."
+   "Simulator: plain builds miss about 50-55% of spins, giving roughly 0.4-0.6 triggers per 7-spin Round; builds with symbol-chance boosts or Luck charms (20-35% misses) trigger it only 0.05-0.2 times per Round.",
+   "Simulated with Luck +8 on both extra spins it is worth about +95-115% coins in plain Deadline 2-4 builds, +25-55% in mid builds and under +10% in focused Luck builds; the engine encoding shows about half of that."
   ]
  },
  {
   "id": "10_fingers_hamsa",
   "kind": "charm",
   "summary": "Surgery (Hamsa + Rotated Hamsa): every Pattern triggers twice during the whole first Round of each Deadline, and the whole last Round has Luck +4.",
-  "tip": "One slot covering 7 retriggered and 7 lucky spins per Deadline, versus 3 and 3 for the two Hamsas. Cat Food adds 2 more of each; Rounds added by Music Tape or Weird Clock get nothing.",
+  "tip": "One slot covering a whole retriggered Round and a whole Luck+4 Round each Deadline, versus 3 spins each (Luck+7 on the lucky ones) from the two Hamsas. Cat Food adds 2 spins to both Rounds.",
   "tier": "A",
   "ratings": {
    "power": 7,
@@ -190,8 +191,8 @@
     "why": "Doubled Patterns all first Round push many spins to 5+, growing its multiplier."
    },
    {
-    "id": "greedy_king",
-    "why": "Golden symbols scored in the retriggered Round gain value twice."
+    "id": "midas_touch",
+    "why": "Press it in the retriggered first Round: every scored symbol is scored twice, so it grows twice."
    },
    {
     "id": "vines_soup",
@@ -209,7 +210,8 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "With only one Round in a Deadline, that Round should count as both first and last and get both bonuses (not verified)."
+   "With only one Round in a Deadline, that Round should count as both first and last and get both bonuses (not verified).",
+   "Extra Rounds (Music Tape, Weird Clock, Rage) presumably shift which Round is last rather than adding bonus Rounds."
   ]
  },
  {
@@ -262,8 +264,8 @@
     "why": "A whole Round of retriggers scores every symbol twice, doubling the growth on triggering spins."
    },
    {
-    "id": "fruit_basket",
-    "why": "Retriggered Lemon and Cherry Patterns grow those symbols twice."
+    "id": "black_hole",
+    "why": "Discard it after the fusion to get Midas Touch and Consolation Prize back: two more ways to grow every Symbol."
    },
    {
     "id": "rotated_hamsa",
@@ -274,14 +276,14 @@
   "confidence": "medium",
   "assumptions": [
    "Read like Midas Touch (same wording): each scored symbol, retriggers included, adds its base value to that Symbol, so growth scales with how many symbols you score.",
-   "The engine has no per-scored-symbol growth outside the Golden modifier, so the effect is written as a 40% Golden chance; Horseshoe's doubling is not seen by the engine."
+   "The engine has no per-scored-symbol growth outside the Golden modifier, so the effect is written as a 40% Golden chance; Horseshoe's doubling is not seen by the engine, and in the simulator it shares a cell's single modifier slot with real modifier chances."
   ]
  },
  {
   "id": "lust",
   "kind": "charm",
   "summary": "Surgery (Lover 1 + Lover 2): forces a 666 on the last spin of Rounds 1 and 2 every Deadline; in the last Round every Symbol gets +30% Revenge chance.",
-  "tip": "Only for 666 builds: two sure 666s per Deadline feed Baphomet, Book of Shadows and Rage, and Revenge pays back part of the losses. Without payoffs it wipes two Rounds of coins every Deadline.",
+  "tip": "Only for 666 builds: two sure 666s a Deadline feed Baphomet, Book of Shadows and Rage, and Revenge repays part of the losses. Otherwise it wipes two Rounds of coins every Deadline from Deadline 3.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -325,7 +327,7 @@
    },
    {
     "id": "book_of_shadows",
-    "why": "Each forced 666 grants extra spins after the wipe, so those coins are kept."
+    "why": "Each forced 666 adds spins after the wipe, so the Round can earn again (and roll more 666s for your devil charms)."
    },
    {
     "id": "violence",
@@ -338,6 +340,10 @@
    {
     "id": "rosary",
     "why": "Each forced 666 has a 35% chance to be cancelled, saving that Round's coins while 666 charms still fire."
+   },
+   {
+    "id": "sacrifice",
+    "why": "Its sure 666s drop Corpse pieces into your drawers: the rare part of Sacrifice, Sin, Resurrection and Eternal Rest."
    }
   ],
   "antiSynergies": [
@@ -352,9 +358,11 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Assumed the forced 666 costs coins like a natural one; unclear whether it also happens in Deadlines 1-2.",
+   "Assumed the forced 666 costs coins like a natural one (from Deadline 3, per the coin rules); unclear whether it also happens in Deadlines 1-2.",
+   "Unknown whether the new last spin after Book of Shadows' extra spins is forced to 666 again.",
    "The engine cannot force 666s or value Revenge, so its effects are not simulated; ratings carry it, and the build's coin estimate will be too high while it is equipped.",
-   "Wiki: a 666 drops a Cadaver piece only while pieces are missing, replacing a stored charm if all drawers are full."
+   "Wiki: a 666 drops a Cadaver piece only while pieces are missing, replacing a stored charm if all drawers are full; a piece left in a drawer at Deadline end is discarded.",
+   "Wiki (Golden Horseshoe strategy): a 666 cancelled by Rosary still counts as seen for 666 charms, with no coin loss."
   ]
  },
  {
@@ -454,7 +462,7 @@
   "synergies": [
    {
     "id": "amalgama",
-    "why": "Copy turns into the nearest modifier, multiplying the mix, and Amalgama counts as another Surgery charm (+10%)."
+    "why": "Its Copy modifiers turn into the nearest other modifier, adding more of the mix, and it counts as another Surgery charm (+10%)."
    },
    {
     "id": "beach_hotel",
@@ -546,8 +554,9 @@
   ],
   "confidence": "medium",
   "assumptions": [
-   "Simulator: 7-spin Rounds almost never end empty; 3-spin Rounds do about 15% of the time (25% with Depression).",
+   "Simulator: 7-spin Rounds almost never end empty; 3-spin Rounds do about 15-18% of the time in plain builds (about 24% with Depression).",
    "Unclear whether Interest or other coins paid at Round end count as earning coins.",
+   "Unverified: if a 666 that wipes the Round's coins counts as earning nothing, Lust's forced 666s would trigger it; not listed as a synergy.",
    "The engine has no 'empty Round' trigger, so the doubling is kept as text and the ratings carry its value."
   ]
  },
@@ -558,7 +567,7 @@
   "tip": "Each scored Rising symbol adds +1 Symbols Multiplier until the Deadline ends, so it explodes in retrigger and Luck builds. Unlike Necronomicon it adds no 666 risk; Holy Bible guards the growth.",
   "tier": "S",
   "ratings": {
-   "power": 5,
+   "power": 7,
    "scaling": 9,
    "economy": 0,
    "utility": 0,
@@ -595,7 +604,6 @@
      "patternsAtLeast": 5
     },
     "stack": true,
-    "reset": "never",
     "cap": 0.4,
     "note": "The extra chance falls back to the base 10% whenever you score a 666."
    }
@@ -615,7 +623,7 @@
    },
    {
     "id": "black_hole",
-    "why": "Discard it after the fusion to get Necronomicon and Pentacle back on top."
+    "why": "Discard it after the fusion to get Pentacle and Necronomicon back; Necronomicon's 666 chance will reset the growth, though."
    },
    {
     "id": "mad_emperor",
@@ -636,14 +644,15 @@
   "assumptions": [
    "cap is the extra growth on top of the 10% base (50% total).",
    "Assumed a 666 resets the chance to the base 10%, and a 666 cancelled by Holy Bible or Rosary does not count as scored.",
-   "Only the base 10% is simulated; the growth is carried by the ratings."
+   "The engine counts the growth as a flat +2% Rising chance; in builds with frequent 5+ Pattern spins the real growth is far larger, which the ratings carry.",
+   "Rising lasts until the Deadline ends, so most of its value shows within the Deadline (power), not as permanent growth."
   ]
  },
  {
   "id": "poker_deck",
   "kind": "charm",
   "summary": "Surgery (all four Aces): if you score all 7 Symbols at least once in the same Round, every Symbol's value doubles for good.",
-  "tip": "Very hard to trigger: spins rarely score more than 1-2 Symbols, so all 7 in one Round almost never happens. Extra spins and Angel's Hand's 2-symbol Patterns help; the four Aces are worth more.",
+  "tip": "Very hard to trigger: a normal Round almost never scores all 7 Symbols. A Round with an extra 2-symbol Pattern from Angel's Hand does about 10-20% of the time; otherwise the four Aces are worth more.",
   "tier": "D",
   "ratings": {
    "power": 0,
@@ -661,18 +670,25 @@
    "surgery"
   ],
   "cares": [
-   "spins"
+   "spins",
+   "smallPatterns"
   ],
   "effects": [
    {
-    "type": "special",
-    "text": "When Lemon, Cherry, Clover, Bell, Diamond, Treasure and Seven have each been scored at least once during the same Round, the value of every Symbol is doubled permanently."
+    "type": "symbolValue",
+    "symbols": "all",
+    "mul": 2,
+    "when": {
+     "scoredAll": "all"
+    },
+    "duration": "permanent",
+    "note": "scoredAll with all 7 Symbols is read per Round by the engine (share of Rounds that score every Symbol at least once)."
    }
   ],
   "synergies": [
    {
     "id": "angels_hand",
-    "why": "Its 2-symbol Patterns let rare Symbols score with just a pair: about 4% of Rounds hit all 7 with Cat Food and Rotated Hamsa."
+    "why": "Each press adds a 2-symbol Pattern for the Round, so rare Symbols score with just a pair: that Round hits all 7 about 10-20% of the time."
    },
    {
     "id": "cat_food",
@@ -680,7 +696,7 @@
    },
    {
     "id": "black_hole",
-    "why": "Discard it after the fusion to get the four Aces back and keep their steady growth."
+    "why": "Discard it after the fusion to get the four Aces back and keep their steady growth (needs all four drawers free)."
    }
   ],
   "antiSynergies": [
@@ -695,8 +711,8 @@
   ],
   "confidence": "high",
   "assumptions": [
-   "Simulator: rounds that score all 7 Symbols are about 0% in plain builds, 0.5% with Cat Food, Hamsas and Platinum Record, and about 4% with Angel's Hand's small Patterns added.",
-   "The engine has no per-Round 'scored every Symbol' trigger (its scoredAll check is per spin), so the doubling is kept as text and the ratings carry it."
+   "Simulator: Rounds that score all 7 Symbols are about 0% in plain builds and 0.5% with Cat Food, Hamsas and Platinum Record; a Round with one extra 2-symbol Pattern does it 7-17% of the time (15-30% with Cat Food and Rotated Hamsa).",
+   "The engine reads scoredAll over all 7 Symbols as a per-Round rate, so the doubling is valued as permanent growth at that rate."
   ]
  },
  {
@@ -748,7 +764,7 @@
   "synergies": [
    {
     "id": "midas_touch",
-    "why": "Full every spin, it can be pressed every Round; early on each press can grow values faster than the debt doubles."
+    "why": "Refilled before every spin, it can be pressed every Round instead of every 4th; each press still doubles the Debt, so only a few early ones pay off."
    },
    {
     "id": "nuclear_button",
@@ -766,13 +782,14 @@
    },
    {
     "id": "limbo",
-    "why": "Each press also raises Limbo's debt, compounding with the doubling."
+    "why": "Refilled every spin, it invites more presses, and each one adds Limbo's own 100-500% Debt on top of the doubling."
    }
   ],
   "confidence": "medium",
   "assumptions": [
    "Assumed the doubling counts each press of the Red Button, not each charm it triggers.",
-   "Neither effect is simulated: refills every spin would make the engine press every charm each spin, and a debt rise per press cannot be modelled. The ratings carry its value."
+   "Neither effect is simulated: refills every spin would make the engine press every charm each spin, and a debt rise per press cannot be modelled. The ratings carry its value.",
+   "The wiki Red Button page says it restores 1 charge to every button charm at the end of each spin; the item text (full recharge before each spin) is used here."
   ]
  },
  {
@@ -884,7 +901,7 @@
    },
    {
     "id": "cross",
-    "why": "Each press flips it down and back up: +1 Patterns Multiplier per press with no 666 window."
+    "why": "Each press flips it down and back up: +1 Patterns Multiplier per press; the 30% bonus flip can leave it face down (+3% 666) until your next press."
    },
    {
     "id": "number_1",
@@ -902,7 +919,8 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed the 30% roll is per press, giving 2.3 extra triggers on average (2.6 with Horseshoe).",
+   "Assumed the 30% roll is per press, giving 2.3 triggers per press on average (2.6 if Horseshoe doubles the roll).",
+   "Horseshoe is one of its ingredients, so it is banned from the store while the Trumpet is equipped; only Black Hole brings it back.",
    "Sacred Heart only comes from Sacred Mode's 'Help!!' call, so this fusion needs a Sacred run.",
    "Wiki: its ingredients are banned from the store while it is equipped."
   ]
@@ -1094,7 +1112,7 @@
   "id": "graded_card",
   "kind": "charm",
   "summary": "Surgery (The Collector + Dark Lotus): Avid Traits give Symbols Multiplier x2 instead of +2, and Ambitious Traits give Patterns Multiplier x2 instead of +1.",
-  "tip": "Every Avid or Ambitious charm becomes a doubling, and several stack (x4, x8...). Feed it with the 'betting on Yellow/Orange' calls or Expensive Love; useless without those Traits.",
+  "tip": "Each Avid or Ambitious charm becomes a doubling, and several stack (x4, x8...). Avid beats its +2 once the rest of your Symbols Multiplier is above 2. Feed it with the Yellow/Orange betting calls.",
   "tier": "B",
   "ratings": {
    "power": 3,
@@ -1146,7 +1164,7 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Read as each Trait doubling its own multiplier (Avid: Symbols, Ambitious: Patterns), not both.",
+   "Read as each Trait doubling its own multiplier (Avid: Symbols, Ambitious: Patterns). The text could also mean each such Trait gives both x2; that reading would make it much stronger.",
    "The engine applies Traits as +2 / +1 and cannot rewrite them, so the doubling is kept as text and the ratings carry it."
   ]
  },
@@ -1165,7 +1183,6 @@
   },
   "archetypes": [],
   "provides": [
-   "drawers",
    "instant",
    "surgery"
   ],
@@ -1190,6 +1207,10 @@
    {
     "id": "dangerous_experiments",
     "why": "Surgeries cost no coins, so the gamble only costs its two ingredients."
+   },
+   {
+    "id": "black_hole",
+    "why": "Fuse it after Black Hole is made: discarding Black Hole then returns Jimbo and D20, so you keep the random Surgery charm too."
    }
   ],
   "antiSynergies": [],
@@ -1222,7 +1243,8 @@
    "surgery"
   ],
   "cares": [
-   "spins"
+   "spins",
+   "rounds"
   ],
   "effects": [
    {
@@ -1267,19 +1289,28 @@
    },
    {
     "id": "apocalypse",
-    "why": "One of the four ingredients of Apocalypse."
+    "why": "With Resurrection, Sin and Eternal Rest it fuses into Apocalypse, which restarts the run keeping your table."
+   },
+   {
+    "id": "music_tape",
+    "why": "Its extra Round can be sacrificed for +7 Patterns Multiplier without giving up one of your normal Rounds."
    }
   ],
   "antiSynergies": [
    {
     "id": "fixation",
     "why": "Only 1 spin per Round, so each sacrifice gives just +1 Patterns Multiplier."
+   },
+   {
+    "id": "midas_touch",
+    "why": "A Red Button press also fires a charged Midas Touch, wasting it on a Round with no spins; park it in a drawer first."
    }
   ],
   "confidence": "medium",
   "assumptions": [
    "Assumed the Patterns Multiplier change is permanent, like the Cross it is made from; the wiki notes it is the only source of a negative multiplier.",
    "Value is modelled as one sacrificed Round per Deadline (-1 Round of income, +7 Patterns Multiplier); players with spare Rounds can sacrifice more.",
+   "Assumed a press fires every charged Red Button charm at once, as the button normally does.",
    "Wiki: the Corpse piece only drops from a 666 and is discarded if it is still in a drawer when the Deadline ends, so the fusion must happen in that Deadline."
   ]
  },
@@ -1287,7 +1318,7 @@
   "id": "resurrection",
   "kind": "charm",
   "summary": "Surgery (Corpse Right Arm + Ankh): Charms discarded during a Round, such as ones that break, come back in the next store restocks to buy again.",
-  "tip": "Makes one-shot Charms repeatable: buy back Holy Bible, One Trick Pony or the Peppers after they break. You still pay full price, and Weird Clock is excluded.",
+  "tip": "Makes one-shot Charms repeatable: buy back Holy Bible, One Trick Pony or the Peppers after they break. They return as normal store offers, so you pay again; Weird Clock is excluded.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1333,7 +1364,7 @@
    },
    {
     "id": "apocalypse",
-    "why": "One of the four ingredients of Apocalypse."
+    "why": "With Sacrifice, Sin and Eternal Rest it fuses into Apocalypse, which restarts the run keeping your table."
    }
   ],
   "antiSynergies": [],
@@ -1403,8 +1434,8 @@
     "why": "Blocks the 666 that would take your whole held pile from Deadline 7."
    },
    {
-    "id": "greedy_king",
-    "why": "Doubled coins pay the debt early, and each Round you skip raises its Golden chance by 2%."
+    "id": "lost_wallet",
+    "why": "Tickets double every Round, so its +1 Patterns Multiplier per 15 tickets climbs during the Deadline; spend them before it ends."
    },
    {
     "id": "cloverpet",
@@ -1416,7 +1447,7 @@
    },
    {
     "id": "apocalypse",
-    "why": "One of the four ingredients of Apocalypse."
+    "why": "With Sacrifice, Resurrection and Eternal Rest it fuses into Apocalypse, which restarts the run keeping your table."
    }
   ],
   "antiSynergies": [
@@ -1427,13 +1458,18 @@
    {
     "id": "cloverpot",
     "why": "It pays on tickets held when the Deadline ends, but Sin wipes them."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "Interest is paid on deposited coins, but Sin wants them held until the end, so Interest and each Cat payout stay small."
    }
   ],
   "confidence": "medium",
   "assumptions": [
    "Doubles coins in hand, not coins deposited; deposits are capped at the debt (wiki), so surplus coins are lost when the Deadline ends instead of carrying over.",
    "Unknown whether the Deadline Bonus and end-of-Deadline tickets arrive before or after the reset.",
-   "Engine: the doubling is valued as one extra Round of income per Round and the reset as one lost Round per Deadline; it cannot see the compounding when coins are held for several Rounds, and tickets get no value."
+   "Interest is a share of the deposit, so holding coins to double them gives up most Interest income.",
+   "Engine: with your coins in hand unknown it assumes a small purse (a quarter of a Round's income), so the doubling shows only about +15%; held as Sin intends, early-Round coins grow x4-x8 (about x2.3-x4.7 more coins toward the debt per Deadline). Entering your coins in hand lets it see this. Tickets get no value."
   ]
  },
  {
@@ -1471,7 +1507,7 @@
    },
    {
     "id": "apocalypse",
-    "why": "One of the four ingredients of Apocalypse, and it makes the other parts (Cross, Ankh, Evil Deal) show up more often."
+    "why": "With Sacrifice, Resurrection and Sin it fuses into Apocalypse, and it makes those parts' other ingredients (Cross, Ankh, Evil Deal) show up more often."
    }
   ],
   "antiSynergies": [],
@@ -1486,7 +1522,7 @@
   "kind": "charm",
   "summary": "Surgery (Sacrifice + Resurrection + Sin + Eternal Rest): you die at once, then start a new run with the same memory card and all your table Charms.",
   "tip": "Not a power pick: it ends the current run (a secret ending, counted as a death). Make it to carry a full late-game table into a fresh run; extra slots from the phone call do not carry over.",
-  "tier": "C",
+  "tier": "D",
   "ratings": {
    "power": 0,
    "scaling": 0,
@@ -1510,19 +1546,19 @@
   "synergies": [
    {
     "id": "sacrifice",
-    "why": "One of its four ingredients."
+    "why": "One of its four ingredients, all fused from a Corpse piece."
    },
    {
     "id": "resurrection",
-    "why": "One of its four ingredients."
+    "why": "One of its four ingredients, all fused from a Corpse piece."
    },
    {
     "id": "sin",
-    "why": "One of its four ingredients."
+    "why": "One of its four ingredients, all fused from a Corpse piece."
    },
    {
     "id": "eternal_rest",
-    "why": "One of its four ingredients."
+    "why": "One of its four ingredients, all fused from a Corpse piece."
    }
   ],
   "antiSynergies": [
