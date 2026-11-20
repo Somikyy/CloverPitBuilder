@@ -1507,5 +1507,493 @@
   "assumptions": [
    "Trait odds follow the wiki's forced-Trait table (Florid and Gambler most common, Devious about 14%)."
   ]
+ },
+ {
+  "id": "overdose",
+  "kind": "memory",
+  "summary": "Run-long: Red Button charms trigger one extra time per press, but they no longer regain a charge at the end of each Round.",
+  "tip": "Build around charge sources: Electricity Meter (each restock), Potato Battery, AA Batteries, Car Battery or Energy Drinks calls. Vorago can return a charm fully charged.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 0,
+   "risk": 5
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "redButton"
+  ],
+  "cares": [
+   "charges",
+   "battery",
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "redButton",
+    "extraTriggers": 1,
+    "noRecharge": true
+   }
+  ],
+  "synergies": [
+   {
+    "id": "electricity_meter",
+    "why": "Every restock refills a charge, the main way to keep pressing."
+   },
+   {
+    "id": "potato_battery",
+    "why": "Recharges all Red Button charms after 2 spins without reward."
+   },
+   {
+    "id": "aa_batteries",
+    "why": "Battery modifiers refill charges as you score."
+   },
+   {
+    "id": "car_battery",
+    "why": "A full refill of every Red Button charm."
+   },
+   {
+    "id": "can_i_get_some_energy_drinks",
+    "why": "Restores all charges, worth far more without Round recharges."
+   },
+   {
+    "id": "vorago",
+    "why": "A charm it brings back returns fully charged (wiki strategy)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "weird_clock",
+    "why": "Needs 12 charges and never refills by itself: about one use per run."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "living_on_the_edge",
+  "kind": "memory",
+  "summary": "Run-long: coins can only be deposited after the last Round of each Deadline, so everything you earn stays in hand until then.",
+  "tip": "Interest and the Cats pay little with nothing deposited, you can't skip Rounds, and a 666 hits your whole stash. Guard with Holy Bible or Rosary; Sin (DLC) doubles held coins each Round.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 0,
+   "risk": 7
+  },
+  "archetypes": [],
+  "provides": [],
+  "cares": [],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Deposits are only allowed after the last Round of a Deadline: Interest (paid on deposited coins) has little to work with, the debt can't be paid early to skip Rounds, and held coins stay exposed to 666s."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "sin",
+    "why": "Doubles your coins every Round, and here all of them are in hand."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Protects the stash you can't deposit from a 666."
+   },
+   {
+    "id": "rosary",
+    "why": "35% chance to cancel each 666 that threatens your stash."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "lucky_cat",
+    "why": "Pays your Interest in coins, which is near zero with nothing deposited."
+   },
+   {
+    "id": "stonks",
+    "why": "Extra Interest needs deposited coins to pay anything."
+   },
+   {
+    "id": "calendar",
+    "why": "You can't pay early, so no skipped Rounds for its multiplier."
+   },
+   {
+    "id": "greedy_king",
+    "why": "You can't pay early, so its Golden chance never grows from skips."
+   },
+   {
+    "id": "golden_pepper",
+    "why": "You can't pay early, so there are no skipped Rounds to fuel it."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Interest is paid on deposited coins (Interest wiki), so it earns little during the Deadline.",
+   "Assumed you can't end a Deadline early, since the debt can only be paid after the last Round."
+  ]
+ },
+ {
+  "id": "stuck_in_a_routine",
+  "kind": "memory",
+  "summary": "Start with the Skull and Red Pepper equipped. The store offers at most one box of Sardines, and it always comes with a random Trait.",
+  "tip": "A free early Luck charm, while the Skull (+5% Debt, can't be removed) opens the corpse-piece path. Traited Sardines are cheap Trait carriers for The Collector and Dark Lotus builds.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 2,
+   "economy": 2,
+   "utility": 1,
+   "risk": 2
+  },
+  "archetypes": [
+   "traits"
+  ],
+  "provides": [
+   "traits",
+   "luck",
+   "resell"
+  ],
+  "cares": [
+   "resell",
+   "traits"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "The run starts with the Skull (can't be discarded, +5% Debt, spawns a free drawer charm per Corpse piece each Deadline) and the Red Pepper already equipped."
+   },
+   {
+    "type": "special",
+    "text": "The store can offer at most one box of Sardines, and those Sardines always come with a random Trait."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "sardines",
+    "why": "Always shows up in the store with a Trait."
+   },
+   {
+    "id": "the_collector",
+    "why": "A traited Sardines is a cheap +1 Patterns Multiplier."
+   },
+   {
+    "id": "dark_lotus",
+    "why": "Sardines' doubled resell value feeds its Symbols Multiplier."
+   },
+   {
+    "id": "horseshoe",
+    "why": "The starting Red Pepper fires twice as often."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "The Red Pepper breaking counts as a discard."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Read 'only 1 box of Sardines' as at most one Sardines offer (wiki Store page).",
+   "'Modified' read as having a random Trait.",
+   "Skull and Red Pepper are not encoded as effects, so add them to your equipped charms."
+  ]
+ },
+ {
+  "id": "dangerous_experiments",
+  "kind": "memory",
+  "summary": "Run-long: the coins you pay for a Surgery are refunded right after, so fusing charms is effectively free.",
+  "tip": "Needs the Surgery Machine (all four drawers unlocked). Fuse spare charms freely: Garbage (any 2), Trash Can (any 3) and Dumpster (any 4) become free permanent boosts.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 6,
+   "economy": 5,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "discard"
+  ],
+  "provides": [
+   "surgery",
+   "coins"
+  ],
+  "cares": [
+   "surgery",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Coins paid for a Surgery are given back right after, so Surgeries cost nothing (you still need the coins on hand to start one)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "dumpster",
+    "why": "Any 4 charms into +1 Patterns Multiplier, now for free."
+   },
+   {
+    "id": "trash_can",
+    "why": "Any 3 charms into +1 Symbols Multiplier, now for free."
+   },
+   {
+    "id": "garbage",
+    "why": "Any 2 charms into +base value on every Symbol, now for free."
+   },
+   {
+    "id": "d20",
+    "why": "Refills drawers with random charms every Round: free fusion material."
+   },
+   {
+    "id": "skull",
+    "why": "Spawns free drawer charms every Deadline to feed Surgeries."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Surgery requires the Surgery Machine, unlocked after all four drawers (wiki).",
+   "Garbage, Trash Can and Dumpster recipes accept any charms (items.json)."
+  ]
+ },
+ {
+  "id": "bright_outside_dark_inside",
+  "kind": "memory",
+  "summary": "Run-long: charms from the store or drawers never have a Trait, while charms spawned any other way always get a random one.",
+  "tip": "Traits now come from spawns like Help! (Sacred charms), Alexithymia (Evil charms) or Vorago. Store Traits disappear, which hurts The Collector.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 1
+  },
+  "archetypes": [
+   "traits"
+  ],
+  "provides": [
+   "traits"
+  ],
+  "cares": [
+   "sacred",
+   "evil",
+   "surgery"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Charms spawned in the store or in drawers can't have a Trait; charms spawned any other way (phone calls, Vorago, Surgery...) always get a random Trait."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "help",
+    "why": "Each Sacred charm it spawns arrives with a random Trait."
+   },
+   {
+    "id": "alexithymia",
+    "why": "Its Evil charm arrives with a random Trait."
+   },
+   {
+    "id": "vorago",
+    "why": "The charm it respawns comes back with a random Trait."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "the_collector",
+    "why": "Store charms can no longer come with Traits."
+   }
+  ],
+  "confidence": "low",
+  "assumptions": [
+   "'Modified' read as having a Trait.",
+   "Which spawns count as 'other' (phone spawns, Vorago, Surgery results) is inferred, not stated."
+  ]
+ },
+ {
+  "id": "consequences",
+  "kind": "memory",
+  "summary": "Run-long: every charm costs one flat price, starting at 1 ticket; each purchase has a 50% chance to raise that price by 1.",
+  "tip": "Spend the cheap early buys on normally pricey charms (Evil Deal, Megaphone, Barathrum, Cat Food). Every buy can raise all prices, so skip filler and Clover Vouchers.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 3,
+   "utility": 1,
+   "risk": 5
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "discount"
+  ],
+  "cares": [
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "All charms cost the same flat price, starting at 1 ticket; every purchase has a 50% chance to raise it by 1 for the rest of the run (about +1 per 2 purchases)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "evil_deal",
+    "why": "Normally 50 tickets; here it costs the same flat price as anything."
+   },
+   {
+    "id": "megaphone",
+    "why": "Normally 7 tickets; cheap while the flat price is low."
+   },
+   {
+    "id": "barathrum",
+    "why": "Normally 6 tickets; cheap while the flat price is low."
+   },
+   {
+    "id": "cat_food",
+    "why": "Normally 4 tickets; cheap while the flat price is low."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "Normally 5 tickets; cheap while the flat price is low."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "clover_voucher",
+    "why": "Each Voucher you buy can raise every price."
+   },
+   {
+    "id": "cigarettes",
+    "why": "Its repeat purchases keep pushing the flat price up."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Wants many buy-and-discard cycles, which inflate prices."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the price rise is global (all charms), not per charm.",
+   "Unclear how discounts and Trait price changes combine with the flat price."
+  ]
+ },
+ {
+  "id": "herd_mentality",
+  "kind": "memory",
+  "summary": "Run-long: every Symbol has a 5% chance to carry the Copy modifier, and store charms never come with a Trait.",
+  "tip": "Copy turns into the nearest modifier already on the machine, so it pays only with modifier sources: Fortune Teller (Chain), Personal Trainer (Repetition), Greedy King (Golden).",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 4,
+   "economy": 1,
+   "utility": 0,
+   "risk": 1
+  },
+  "archetypes": [
+   "golden",
+   "chain"
+  ],
+  "provides": [
+   "copy"
+  ],
+  "cares": [
+   "golden",
+   "chain",
+   "repetition",
+   "ticketMod",
+   "token"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "copy",
+    "symbols": "all",
+    "add": 0.05
+   },
+   {
+    "type": "special",
+    "text": "Store charms can't spawn with a Trait for the whole run."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fortune_teller",
+    "why": "25% Chain on the grid gives Copy a Chain to become."
+   },
+   {
+    "id": "personal_trainer",
+    "why": "25% Repetition on the grid gives Copy a Repetition to become."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Golden modifiers on any Symbol give Copy a Golden to become."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Ticket modifiers on any Symbol give Copy a Ticket to become."
+   },
+   {
+    "id": "the_body",
+    "why": "Token, Ticket and Golden modifiers across all Symbols for Copy to mimic."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "the_collector",
+    "why": "Store charms no longer come with Traits."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "'Modified' read as having a Trait.",
+   "Copy adds nothing when no other modifier is on the machine."
+  ]
+ },
+ {
+  "id": "vicious_cycle",
+  "kind": "memory",
+  "summary": "Run-long: phone calls can only be Red or normal (Yellow), never Sacred, so Sacred Mode is closed for the run.",
+  "tip": "No Sacred calls, Sacred charms or 999s this run. Refusing Red Calls no longer turns the phone Sacred, so Chastity Belt can keep growing past +3.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [],
+  "provides": [],
+  "cares": [],
+  "effects": [
+   {
+    "type": "special",
+    "text": "The phone only offers Red or normal (Yellow) calls: it never turns Sacred, so Sacred calls, Sacred charms and 999s are out of reach."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "chastity_belt",
+    "why": "Refused Red Calls never turn the phone Sacred, so its bonus can pass +3."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "low",
+  "assumptions": [
+   "Read 'Red or Yellow' as Red calls or normal calls, i.e. no Sacred calls.",
+   "Assumed Red Calls keep coming after 3 refusals."
+  ]
  }
 ]
