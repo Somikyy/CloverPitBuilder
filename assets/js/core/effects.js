@@ -174,7 +174,7 @@ function applyEffect(d, e, c) {
     }
     if (e.type === 'retrigger') { rbEntry.effects.push({ kind: 'retrigRound', mask: scopeMask(e.scope, ctx), value: e.add || 1 }); return true; }
     if (e.type === 'luck') { rbEntry.effects.push({ kind: 'luckFirst', value: e.add || 0 }); return true; }
-    if (e.type === 'spins') { rbEntry.effects.push({ kind: 'extraSpin', luck: 0 }); return true; }
+    if (e.type === 'spins') { rbEntry.effects.push({ kind: 'extraSpin', luck: e.luck || 0 }); return true; }
     if (e.type === 'addPatterns') { rbEntry.effects.push({ kind: 'addPattern', pats: patternsFromSpec(e.patterns) }); return true; }
     if (e.type === 'forcePattern') { rbEntry.effects.push({ kind: 'force', pats: patternsFromSpec(Array.isArray(e.pattern) ? e.pattern : [e.pattern]) }); return true; }
     // permanent things bought with charges -> growth per activation
@@ -378,10 +378,10 @@ function applyEffect(d, e, c) {
       if (e.set !== undefined && !w) { d.spinsPerRound = e.set; return true; }
       if (!w) { d.spinsPerRound = Math.max(1, d.spinsPerRound + (e.add || 0) * n); return true; }
       const pre = preCond(w);
-      if (pre && pre.kind === 'chance') { d.extraSpins.push({ n: (e.add || 1) * n, luck: 0, cond: pre, src }); return true; }
+      if (pre && pre.kind === 'chance') { d.extraSpins.push({ n: (e.add || 1) * n, luck: e.luck || 0, cond: pre, src }); return true; }
       const pc = postCond(w);
       if (pc || (w.on === '666')) {
-        d.temps.push({ trigger: pc || { kind: 'on666' }, kind: 'extraSpins', value: (e.add || 1) * n, decreasing: c.model && c.model.id === 'book_of_shadows', luck: 0, src });
+        d.temps.push({ trigger: pc || { kind: 'on666' }, kind: 'extraSpins', value: (e.add || 1) * n, decreasing: c.model && c.model.id === 'book_of_shadows', luck: e.luck || 0, src });
         return true;
       }
       return false;

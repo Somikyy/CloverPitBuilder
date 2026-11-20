@@ -102,7 +102,7 @@ JACKPOT HOR_S VER_S DIAG_S`) or `"small"` (3 or fewer symbols), `"large"` (4+), 
 | `freeRestocks` | `add`, `per` | |
 | `storeDiscount` | `add` (tickets off each charm) or `freeCharms` (count) | |
 | `charmSpace` | `add` | negative for Megaphone etc. |
-| `spins` | `add` (per round) or `set` | with `when` for one-off extra spins |
+| `spins` | `add` (per round) or `set`; optional `luck` for the extra spins | with `when` for one-off extra spins (Cat Toy: `{"add":2,"luck":8,"when":{"noRewardStreak":3}}`) |
 | `rounds` | `add` / `set`, `per` | |
 | `chance666` | `add` (pct points) or `mul` | Necronomicon = `{"type":"chance666","add":3}` |
 | `protect666` | `chance` (0-1), `discardChance` (0-1) | Holy Bible = `{"chance":1,"discardChance":0.5}` |

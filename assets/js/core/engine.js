@@ -247,7 +247,7 @@ function growthOf(entries, ctx, d2, stats) {
       if (gr.rate.post) perRound = postRate(gr.rate.post, stats, d2.randomMul) * spr;
       else if (gr.rate.event) perRound = eventsPerRound(gr.rate.event, ctx, gr.rate.n, stats);
       else if (gr.rate.rb) perRound = Math.min(1, (1 + d2.rbExtra) / Math.max(1, gr.rate.rb - d2.rbCostReduce));
-      else if (gr.rate.rbRound) perRound = Math.min(1, 1 / Math.max(1, gr.rate.rbRound - d2.rbCostReduce));
+      else if (gr.rate.rbRound) perRound = Math.min(1, 1 / Math.max(1, gr.rate.rbRound - d2.rbCostReduce)) * (1 + d2.rbExtra);
       // Overdose: Red Button charms stop recharging at round end, so permanent RB growth mostly stops
       if ((gr.rate.rb || gr.rate.rbRound) && d2.rbNoRecharge) perRound *= 0.15;
     }

@@ -1350,15 +1350,8 @@
     "add": 1,
     "when": {
      "chance": 0.1
-    }
-   },
-   {
-    "type": "luck",
-    "add": 4,
-    "when": {
-     "chance": 0.1
     },
-    "duration": "spin"
+    "luck": 4
    }
   ],
   "synergies": [
@@ -1387,7 +1380,8 @@
   "confidence": "medium",
   "assumptions": [
    "In the game the extra spin and its Luck +4 come from one 10% roll; the engine cannot put Luck on the extra spin, so the Luck is encoded as its own 10% roll on a normal spin (similar average value).",
-   "Calibration: tier raised to B; at 1 ticket its extra spins and Luck rank in the top quarter of picks across typical builds."
+   "Calibration: tier raised to B; at 1 ticket its extra spins and Luck rank in the top quarter of picks across typical builds.",
+   "Engine: Luck +4 applies to the extra spin itself (spins.luck)."
   ]
  },
  {
@@ -1422,15 +1416,8 @@
     "add": 1,
     "when": {
      "redButton": true
-    }
-   },
-   {
-    "type": "luck",
-    "add": 7,
-    "when": {
-     "redButton": true
     },
-    "duration": "spin"
+    "luck": 7
    },
    {
     "type": "special",
@@ -1463,7 +1450,8 @@
   "confidence": "medium",
   "assumptions": [
    "Discard rule read as: once used 3 times, each activation has a 15% chance (at most once per Round) to discard it.",
-   "The engine gives the Luck +7 to the next spin rather than to the extra spin; total value is about the same."
+   "The engine gives the Luck +7 to the next spin rather than to the extra spin; total value is about the same.",
+   "Engine: Luck +7 applies to the extra spin itself (spins.luck)."
   ]
  },
  {

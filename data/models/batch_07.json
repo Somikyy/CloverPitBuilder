@@ -91,16 +91,8 @@
     "add": 2,
     "when": {
      "noRewardStreak": 3
-    }
-   },
-   {
-    "type": "luck",
-    "add": 8,
-    "when": {
-     "noRewardStreak": 3
     },
-    "duration": "spin",
-    "note": "In the game both extra spins get Luck +8; the engine cannot put Luck on extra spins, so the Luck goes on the spin right after the streak instead. That counts one lucky spin instead of two, so the engine shows roughly half the real gain."
+    "luck": 8
    }
   ],
   "synergies": [
@@ -135,7 +127,8 @@
   "assumptions": [
    "Assumed it can fire again if the miss streak continues (every 3 misses in a row).",
    "Simulator: plain builds miss about 50-55% of spins, giving roughly 0.4-0.6 triggers per 7-spin Round; builds with symbol-chance boosts or Luck charms (20-35% misses) trigger it only 0.05-0.2 times per Round.",
-   "Simulated with Luck +8 on both extra spins it is worth about +95-115% coins in plain Deadline 2-4 builds, +25-55% in mid builds and under +10% in focused Luck builds; the engine encoding shows about half of that."
+   "Simulated with Luck +8 on both extra spins it is worth about +95-115% coins in plain Deadline 2-4 builds, +25-55% in mid builds and under +10% in focused Luck builds; the engine encoding shows about half of that.",
+   "Engine: the Luck +8 now rides on the two extra spins themselves (spins.luck)."
   ]
  },
  {
