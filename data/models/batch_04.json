@@ -1,0 +1,2028 @@
+[
+ {
+  "id": "gabihbbh",
+  "kind": "charm",
+  "summary": "Every 666 you see doubles your Symbols Multiplier for the rest of that Round.",
+  "tip": "Needs a 666 engine: force one early in a Round with Possessed Cell Phone (deposit first from Deadline 7), then play the rest doubled. 999s count too in Sacred Mode.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil",
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "mul": 2,
+    "when": {
+     "on": "666"
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "Forces the 666 on demand, ideally on the first spin of a Round."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "Each 666 also grants bonus spins, all played at the doubled multiplier."
+   },
+   {
+    "id": "demons_horn",
+    "why": "Its +10 Luck spin after a 666 lands while the multiplier is doubled."
+   },
+   {
+    "id": "crystal_skull",
+    "why": "Fires off the same 666: tripled gems on top of a doubled multiplier."
+   },
+   {
+    "id": "necronomicon",
+    "why": "More natural 666s plus Patterns Multiplier +2."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles the 666 chance and your Symbols Multiplier on top of this."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Turns the 666 into normal symbols, so this never triggers."
+   },
+   {
+    "id": "rosary",
+    "why": "Cancels 35% of 666s before they can trigger this."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a second 666 in the same Round doubles again (x4)."
+  ]
+ },
+ {
+  "id": "possessed_cell_phone",
+  "kind": "charm",
+  "summary": "Red Button (3 charges): guarantees a 666 on your next spin, from Deadline 3 on. Turns 666-payoff charms into on-demand power.",
+  "tip": "Press it on the first spin of a Round so the 666 wipes almost nothing (deposit first from Deadline 7). Core of 666 builds with Baphomet, Gabihbb'h or Book of Shadows.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 4,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil",
+   "redButton"
+  ],
+  "provides": [
+   "666",
+   "redButton"
+  ],
+  "cares": [
+   "666",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Red Button: your next spin shows a guaranteed 666 (only from Deadline 3 onwards). Presses stack, so several 666s can be queued.",
+    "when": {
+     "redButton": true
+    },
+    "duration": "spin"
+   },
+   {
+    "type": "special",
+    "text": "The forced 666 acts like a normal one: it wipes the coins earned this Round (Deadlines 3-6) or all coins in hand (Deadline 7+), drops a Cadaver Piece in a drawer, and in the last Round of a Deadline makes the next phone call Red.",
+    "when": {
+     "redButton": true
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "baphomet",
+    "why": "Every forced 666 permanently doubles the Above and Below Patterns."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "Doubles your Symbols Multiplier for the rest of the Round."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "Each 666 hands out bonus spins (+3, then +2, then +1 per Round)."
+   },
+   {
+    "id": "crystal_skull",
+    "why": "Triples Diamond, Treasure and Seven values for the rest of the Round."
+   },
+   {
+    "id": "demons_horn",
+    "why": "Luck +10 on the spin right after each forced 666."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice, queuing two 666s."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Converts the forced 666 into normal symbols, wasting the charge, and may break."
+   },
+   {
+    "id": "rosary",
+    "why": "Can randomly cancel the forced 666."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed Holy Bible and Rosary can cancel the forced 666.",
+   "Unclear whether stacked presses put several 666s on one spin or one 666 on each following spin."
+  ]
+ },
+ {
+  "id": "magical_tomato",
+  "kind": "charm",
+  "summary": "After a 666, Lemon and Cherry Patterns trigger one extra time for the rest of that Round.",
+  "tip": "A fruit build's 666 payoff. Force the 666 early in a Round with Possessed Cell Phone; Fruit Basket and Clicker stack more fruit retriggers on top.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil",
+   "fruit",
+   "retrigger"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount"
+  ],
+  "cares": [
+   "666",
+   "fruit"
+  ],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "fruit",
+    "when": {
+     "on": "666"
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "Forces the 666 on demand, early in the Round."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "The bonus spins after each 666 all get the fruit retrigger."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Fruit Patterns already trigger again; this adds one more."
+   },
+   {
+    "id": "clicker",
+    "why": "Repetition fruit and the Tomato retrigger stack."
+   },
+   {
+    "id": "lemon_picture",
+    "why": "More Lemon Patterns to retrigger."
+   },
+   {
+    "id": "cherry_picture",
+    "why": "More Cherry Patterns to retrigger."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Turns the 666 into normal symbols, so this never triggers."
+   },
+   {
+    "id": "rosary",
+    "why": "Cancels 35% of 666s before they can trigger this."
+   },
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Lemons and Cherries."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed each further 666 in the same Round adds another retrigger."
+  ]
+ },
+ {
+  "id": "ritual_bell",
+  "kind": "charm",
+  "summary": "Every 666 you see gives 3 free store restocks.",
+  "tip": "Cheap economy for 666 builds: hold the restocks for Shopping Cart or spend them with Bell Pepper or Electricity Meter. Weak without a reliable 666 source.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 4,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil",
+   "restock"
+  ],
+  "provides": [
+   "restock"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "freeRestocks",
+    "add": 3,
+    "when": {
+     "on": "666"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "Each press is worth 3 free restocks."
+   },
+   {
+    "id": "shopping_cart",
+    "why": "+2 Symbols Multiplier for every free restock you keep."
+   },
+   {
+    "id": "bell_pepper",
+    "why": "Each restock adds +2 to its Luck for the Deadline."
+   },
+   {
+    "id": "electricity_meter",
+    "why": "Each restock recharges a Red Button charge."
+   },
+   {
+    "id": "rwd_cart",
+    "why": "Doubles the free restocks you hold (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Turns the 666 into normal symbols, so this never triggers."
+   },
+   {
+    "id": "rosary",
+    "why": "Cancels 35% of 666s before they can trigger this."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "crystal_skull",
+  "kind": "charm",
+  "summary": "After a 666, Diamonds, Treasures and Sevens are worth triple for the rest of that Round.",
+  "tip": "A gem build's 666 payoff. Force the 666 early in a Round with Possessed Cell Phone and raise gem chances with Pictures first.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "devil",
+   "gems"
+  ],
+  "provides": [
+   "symbolValue",
+   "diamond",
+   "treasure",
+   "seven"
+  ],
+  "cares": [
+   "666",
+   "diamond",
+   "treasure",
+   "seven"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "gems",
+    "mul": 3,
+    "when": {
+     "on": "666"
+    },
+    "duration": "round",
+    "stack": true,
+    "reset": "round"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "Forces the 666 on demand, early in the Round."
+   },
+   {
+    "id": "book_of_shadows",
+    "why": "The bonus spins after each 666 score gems at triple value."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "The same 666 also doubles your Symbols Multiplier."
+   },
+   {
+    "id": "seven_picture",
+    "why": "More Sevens on the grid to triple."
+   },
+   {
+    "id": "diamond_picture",
+    "why": "More Diamonds on the grid to triple."
+   },
+   {
+    "id": "treasure_picture",
+    "why": "More Treasures on the grid to triple."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "holy_bible",
+    "why": "Turns the 666 into normal symbols, so this never triggers."
+   },
+   {
+    "id": "rosary",
+    "why": "Cancels 35% of 666s before they can trigger this."
+   },
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, Treasures and Sevens."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed a second 666 in the same Round triples gem values again."
+  ]
+ },
+ {
+  "id": "evil_deal",
+  "kind": "charm",
+  "summary": "Doubles Symbols and Patterns Multipliers, Interest and end-of-Round/Deadline tickets, plus 2 free restocks per Deadline, but doubles 666 chance.",
+  "tip": "A 50-ticket luxury that roughly quadruples scoring. Save up with a ticket engine, and cover the extra 666s with Holy Bible or Rosary unless you run 666 payoffs.",
+  "tier": "A",
+  "ratings": {
+   "power": 9,
+   "scaling": 6,
+   "economy": 6,
+   "utility": 1,
+   "risk": 4
+  },
+  "archetypes": [
+   "multiplier",
+   "devil",
+   "interest"
+  ],
+  "provides": [
+   "symbolsMult",
+   "patternsMult",
+   "interest",
+   "tickets",
+   "restock",
+   "666"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "mul": 2
+   },
+   {
+    "type": "patternsMult",
+    "mul": 2
+   },
+   {
+    "type": "chance666",
+    "mul": 2
+   },
+   {
+    "type": "special",
+    "text": "Doubles your Interest rate while equipped (7% becomes 14%), which also doubles Cat and Token payouts."
+   },
+   {
+    "type": "ticketIncome",
+    "mul": 2
+   },
+   {
+    "type": "freeRestocks",
+    "add": 2,
+    "per": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "holy_bible",
+    "why": "Cheap insurance against the doubled 666 chance."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "More 666s to trigger it, and its x2 stacks with Evil Deal's."
+   },
+   {
+    "id": "lucky_cat",
+    "why": "Doubled Interest doubles every Cat payout."
+   },
+   {
+    "id": "shopping_cart",
+    "why": "Two extra free restocks per Deadline to hold for +4 Symbols Multiplier."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "A ticket engine is the realistic way to afford 50 tickets."
+   },
+   {
+    "id": "corpse_right_leg",
+    "why": "Fuses with Evil Deal into Sin (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "necronomicon",
+    "why": "Its +3% 666 chance gets doubled too: 9% per spin with the base 1.5%."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed the doubling applies to your total 666 chance after other bonuses (still capped at 30%)."
+  ]
+ },
+ {
+  "id": "chastity_belt",
+  "kind": "charm",
+  "summary": "Patterns Multiplier +1 for each Red Call you turn down at the phone; tops out at +3 once Sacred Mode kicks in.",
+  "tip": "Made for Sacred Mode runs: refuse the guaranteed Red Calls on Deadlines 3 and 7. A 666 in the last Round of a Deadline forces another Red Call to refuse.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "sacred",
+   "multiplier"
+  ],
+  "provides": [
+   "patternsMult"
+  ],
+  "cares": [
+   "phone"
+  ],
+  "effects": [
+   {
+    "type": "patternsMult",
+    "add": 1,
+    "perUnit": {
+     "of": "redCallsRefused",
+     "per": 1
+    },
+    "cap": 3
+   },
+   {
+    "type": "special",
+    "text": "After 3 refused Red Calls the phone turns Sacred and Red Calls stop, so the bonus tops out at +3."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "possessed_cell_phone",
+    "why": "A forced 666 in the last Round of a Deadline makes the next call Red: one more to refuse."
+   },
+   {
+    "id": "im_re_organizing_my_mind",
+    "why": "The refusals open Sacred calls like this Symbols Multiplier +3."
+   },
+   {
+    "id": "im_being_constant",
+    "why": "Sacred-only permanent retrigger, reached through the same refusals."
+   },
+   {
+    "id": "i_see_the_patterns_in_my_behaviour",
+    "why": "A Sacred call that adds another Patterns Multiplier +1."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed Red Calls refused before you bought it also count (run-wide total)."
+  ]
+ },
+ {
+  "id": "photo_book",
+  "kind": "charm",
+  "summary": "Takes no space: instantly refills the store with Symbol Pictures, using normal charms for any boxes left over.",
+  "tip": "A 1-ticket targeted reroll for Seven, Diamond or Treasure Pictures. Best once your build has a clear symbol to push.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 2,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "instant",
+   "store"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Restocks the store with Symbol Picture charms; boxes it cannot fill get normal charms.",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "seven_picture",
+    "why": "The best Picture to dig for."
+   },
+   {
+    "id": "diamond_picture",
+    "why": "A strong early Picture it can find."
+   },
+   {
+    "id": "treasure_picture",
+    "why": "A strong early Picture it can find."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Doubled presses make every Picture you find worth more."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "cherry_picture",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): Cherries appear more often (+2) for the rest of the Deadline.",
+  "tip": "Only worth it when Cherries carry your build (Golden Cherry, Number 2, Clicker). Press it early in a Deadline to get the most Rounds out of it.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "cherry",
+   "redButton"
+  ],
+  "provides": [
+   "symbolChance",
+   "cherry",
+   "redButton"
+  ],
+  "cares": [
+   "cherry",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "cherry"
+    ],
+    "add": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_cherry",
+    "why": "More Cherries on the grid means more Golden Cherries scored."
+   },
+   {
+    "id": "number_2",
+    "why": "Retriggers every Cherry Pattern for the Round."
+   },
+   {
+    "id": "clicker",
+    "why": "More fruit to carry its Repetition modifier."
+   },
+   {
+    "id": "shoe",
+    "why": "More Cherries carrying Ticket modifiers."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice: +4 instead of +2."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Cherries."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "clover_picture",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): Clovers appear more often (+2) for the rest of the Deadline.",
+  "tip": "Good for Clover builds and Clover-based overcharging: more Clovers means more Battery and Ticket modifiers scored with AA Batteries or Thimble.",
+  "tier": "C",
+  "ratings": {
+   "power": 5,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "clover",
+   "redButton"
+  ],
+  "provides": [
+   "symbolChance",
+   "clover",
+   "redButton"
+  ],
+  "cares": [
+   "clover",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "clover"
+    ],
+    "add": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "aa_batteries",
+    "why": "More Battery Clovers refill your Red Button charms, this one included."
+   },
+   {
+    "id": "number_2",
+    "why": "Retriggers every Clover Pattern for the Round."
+   },
+   {
+    "id": "golden_clover",
+    "why": "More Clovers on the grid means more Golden Clovers scored."
+   },
+   {
+    "id": "thimble",
+    "why": "More Clovers carrying Ticket modifiers."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice: +4 instead of +2."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Clovers."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "bell_picture",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): Bells appear more often (+2) for the rest of the Deadline.",
+  "tip": "Good for Bell builds and Bell-based overcharging with Number 1 and AA Batteries; more Bells also means more Ticket modifiers with Iron.",
+  "tier": "C",
+  "ratings": {
+   "power": 5,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "bell",
+   "redButton"
+  ],
+  "provides": [
+   "symbolChance",
+   "bell",
+   "redButton"
+  ],
+  "cares": [
+   "bell",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "bell"
+    ],
+    "add": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "aa_batteries",
+    "why": "More Battery Bells refill your Red Button charms, this one included."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggers every Bell Pattern for the Round."
+   },
+   {
+    "id": "golden_bell",
+    "why": "More Bells on the grid means more Golden Bells scored."
+   },
+   {
+    "id": "iron",
+    "why": "More Bells carrying Ticket modifiers."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice: +4 instead of +2."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Bells."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "diamond_picture",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): Diamonds appear more often (+2) for the rest of the Deadline.",
+  "tip": "A strong early buy: +2 on a rare 5-coin symbol makes Diamonds line up far more often. Pairs with Golden Diamond, Number 2 and Crystal Sphere.",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "diamond",
+   "gems",
+   "redButton"
+  ],
+  "provides": [
+   "symbolChance",
+   "diamond",
+   "redButton"
+  ],
+  "cares": [
+   "diamond",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "diamond"
+    ],
+    "add": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_diamond",
+    "why": "More Diamonds on the grid means more Golden Diamonds scored."
+   },
+   {
+    "id": "number_2",
+    "why": "Retriggers every Diamond Pattern for the Round."
+   },
+   {
+    "id": "crystal_sphere",
+    "why": "More Diamonds scored means more Chain triggers."
+   },
+   {
+    "id": "necklace",
+    "why": "Lone Diamond Patterns trigger two extra times."
+   },
+   {
+    "id": "car",
+    "why": "More Diamonds carrying Ticket modifiers."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice: +4 instead of +2."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "treasure_picture",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): Treasures appear more often (+2) for the rest of the Deadline.",
+  "tip": "A strong early buy: +2 on a rare 5-coin symbol makes Treasures line up far more often. Pairs with Golden Treasure, Number 1 and Crystal Sphere.",
+  "tier": "B",
+  "ratings": {
+   "power": 6,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "treasure",
+   "gems",
+   "redButton"
+  ],
+  "provides": [
+   "symbolChance",
+   "treasure",
+   "redButton"
+  ],
+  "cares": [
+   "treasure",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "treasure"
+    ],
+    "add": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_treasure",
+    "why": "More Treasures on the grid means more Golden Treasures scored."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggers every Treasure Pattern for the Round."
+   },
+   {
+    "id": "crystal_sphere",
+    "why": "More Treasures scored means more Chain triggers."
+   },
+   {
+    "id": "necklace",
+    "why": "Lone Treasure Patterns trigger two extra times."
+   },
+   {
+    "id": "ship",
+    "why": "More Treasures carrying Ticket modifiers."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice: +4 instead of +2."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Treasures."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "seven_picture",
+  "kind": "charm",
+  "summary": "Red Button (4 charges): Sevens appear more often (+2) for the rest of the Deadline.",
+  "tip": "The strongest Picture: Sevens are worth the most and +2 makes them line up far more often. Golden Seven and Number 1 turn it into lasting scaling.",
+  "tier": "B",
+  "ratings": {
+   "power": 7,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven",
+   "gems",
+   "redButton"
+  ],
+  "provides": [
+   "symbolChance",
+   "seven",
+   "redButton"
+  ],
+  "cares": [
+   "seven",
+   "charges"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "seven"
+    ],
+    "add": 2,
+    "when": {
+     "redButton": true
+    },
+    "duration": "deadline"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_seven",
+    "why": "More Sevens on the grid means more Golden Sevens scored."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggers every Seven Pattern for the Round."
+   },
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Triples the value of a symbol that now shows up far more."
+   },
+   {
+    "id": "7_sins_stone",
+    "why": "Seven Sevens in one spin becomes realistic, gilding them all."
+   },
+   {
+    "id": "crystal_sphere",
+    "why": "More Sevens scored means more Chain triggers."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Each press triggers twice: +4 instead of +2."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "Sevens are usually the most valuable symbol, so it keeps their chance at 0%."
+   },
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Sevens."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "clicker",
+  "kind": "charm",
+  "summary": "Lemons and Cherries get a 15% chance to carry Repetition, which retriggers every Pattern they are part of.",
+  "tip": "Great value in fruit builds because fruit is the most common symbol. Stacks with Fruit Basket, Golden Lemon/Cherry and the fruit Pictures.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "fruit",
+   "lemon",
+   "cherry",
+   "retrigger"
+  ],
+  "provides": [
+   "repetition",
+   "retrigger",
+   "patternCount"
+  ],
+  "cares": [
+   "fruit"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "repetition",
+    "symbols": "fruit",
+    "add": 0.15
+   }
+  ],
+  "synergies": [
+   {
+    "id": "fruit_basket",
+    "why": "Fruit Patterns already trigger again; Repetition adds even more."
+   },
+   {
+    "id": "golden_lemon",
+    "why": "Retriggered Patterns score Golden Lemons again for extra growth."
+   },
+   {
+    "id": "golden_cherry",
+    "why": "Retriggered Patterns score Golden Cherries again for extra growth."
+   },
+   {
+    "id": "lemon_picture",
+    "why": "More Lemons on the grid to carry Repetition."
+   },
+   {
+    "id": "cherry_picture",
+    "why": "More Cherries on the grid to carry Repetition."
+   },
+   {
+    "id": "ace_of_hearts",
+    "why": "Retriggers help reach the 3+ Patterns that raise fruit values."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Lemons and Cherries."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "aa_batteries",
+  "kind": "charm",
+  "summary": "Clovers and Bells get a 6% chance to carry Battery: scoring one recharges a random Red Button charm by 1.",
+  "tip": "The heart of overcharging: with Number 1 or 2 and Nuclear Button you can refire Red Button charms several times a Round. Useless without Red Button charms.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 4,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton",
+   "clover",
+   "bell"
+  ],
+  "provides": [
+   "battery",
+   "charges"
+  ],
+  "cares": [
+   "redButton",
+   "clover",
+   "bell"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "battery",
+    "symbols": [
+     "clover",
+     "bell"
+    ],
+    "add": 0.06
+   }
+  ],
+  "synergies": [
+   {
+    "id": "number_1",
+    "why": "Retriggered Bell Patterns score their Batteries again, refilling Number 1 itself."
+   },
+   {
+    "id": "number_2",
+    "why": "The same loop with Clovers on non-yellow Patterns."
+   },
+   {
+    "id": "nuclear_button",
+    "why": "Every recharged press triggers twice."
+   },
+   {
+    "id": "bell_picture",
+    "why": "More Bells on the grid means more Battery Bells."
+   },
+   {
+    "id": "clover_picture",
+    "why": "More Clovers on the grid means more Battery Clovers."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Extra presses in one Round mean more permanent symbol growth."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Clovers and Bells."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "crystal_sphere",
+  "kind": "charm",
+  "summary": "Diamonds, Treasures and Sevens get a 12% chance to carry Chain: each one scored permanently raises its Pattern's value.",
+  "tip": "Slow but permanent Pattern growth for gem builds; the more gems you score per spin, the faster it grows. Pictures and Necklace speed it up.",
+  "tier": "B",
+  "ratings": {
+   "power": 1,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "gems",
+   "chain",
+   "diamond",
+   "treasure",
+   "seven"
+  ],
+  "provides": [
+   "chain",
+   "patternValue"
+  ],
+  "cares": [
+   "diamond",
+   "treasure",
+   "seven"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "chain",
+    "symbols": "gems",
+    "add": 0.12
+   }
+  ],
+  "synergies": [
+   {
+    "id": "diamond_picture",
+    "why": "More Diamonds scored means more Chain triggers."
+   },
+   {
+    "id": "treasure_picture",
+    "why": "More Treasures scored means more Chain triggers."
+   },
+   {
+    "id": "seven_picture",
+    "why": "More Sevens scored means more Chain triggers."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Diamond or Treasure Pattern triggers 3 times, scoring its Chains 3 times."
+   },
+   {
+    "id": "eye_jar",
+    "why": "Gem streaks force the EYE Pattern, where each Chain adds +8 to its value."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, Treasures and Sevens."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "naughty_dealer",
+  "kind": "charm",
+  "summary": "Any Symbol has a 5% chance to carry Token (pays half your Interest when scored); +1% per spin with 7+ Patterns, up to 15%.",
+  "tip": "Token payouts grow with your deposit and Interest, so they keep pace with debts. Add Stonks or Evil Deal; Luck and retriggers help reach 7+ Patterns.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 4,
+   "economy": 3,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest"
+  ],
+  "provides": [
+   "token",
+   "coins"
+  ],
+  "cares": [
+   "interest",
+   "patternCount"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": "all",
+    "add": 0.05
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "token",
+    "symbols": "all",
+    "add": 0.01,
+    "when": {
+     "patternsAtLeast": 7
+    },
+    "stack": true,
+    "reset": "never",
+    "cap": 0.1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest makes every Token pay more."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubled Interest doubles Token payouts."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "Pays double Interest on the same 7+ Pattern spins that grow the Dealer."
+   },
+   {
+    "id": "greedy_king",
+    "why": "With Greedy King and Raging Capitalist, fuses into Mad Emperor (DLC)."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "With Raging Capitalist and Greedy King, fuses into Mad Emperor (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "cap is the extra growth on top of the 5% base (15% total)."
+  ]
+ },
+ {
+  "id": "greedy_king",
+  "kind": "charm",
+  "summary": "Any Symbol has a 3% chance to be Golden; +2% for every Round you skip by paying a Deadline early, up to 25%.",
+  "tip": "Pay Deadlines off early to skip Rounds (each skip also pays 4 tickets). Grows into strong all-symbol scaling and shares the skip plan with Calendar and Golden Pepper.",
+  "tier": "A",
+  "ratings": {
+   "power": 1,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "allSymbols"
+  ],
+  "cares": [
+   "roundSkip"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": "all",
+    "add": 0.03
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": "all",
+    "add": 0.02,
+    "when": {
+     "on": "roundSkipped"
+    },
+    "stack": true,
+    "reset": "never",
+    "cap": 0.22
+   }
+  ],
+  "synergies": [
+   {
+    "id": "calendar",
+    "why": "Also grows from skipped Rounds, so one plan feeds both."
+   },
+   {
+    "id": "golden_pepper",
+    "why": "Gets +4 Luck per Round skipped in the previous Deadline."
+   },
+   {
+    "id": "lost_briefcase",
+    "why": "Pays 30% of the debt at once, making early finishes easier."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "With Naughty Dealer and Raging Capitalist, fuses into Mad Emperor (DLC)."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "With Raging Capitalist and Naughty Dealer, fuses into Mad Emperor (DLC)."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "screen_addiction",
+    "why": "Deadlines have only one Round, so there is nothing to skip."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "cap is the extra growth on top of the 3% base (25% total)."
+  ]
+ },
+ {
+  "id": "raging_capitalist",
+  "kind": "charm",
+  "summary": "Any Symbol has a 5% chance to carry Ticket (+1 ticket when scored); +1% for every charm you buy, up to 25%.",
+  "tip": "Buy it early: every later purchase grows it, and tickets buy everything else. Cheap buys like Clover Voucher grow it fast; CloverPet and Lost Wallet turn tickets into multipliers.",
+  "tier": "A",
+  "ratings": {
+   "power": 0,
+   "scaling": 5,
+   "economy": 8,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "ticketMod",
+   "tickets"
+  ],
+  "cares": [
+   "purchase"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": "all",
+    "add": 0.05
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "ticket",
+    "symbols": "all",
+    "add": 0.01,
+    "when": {
+     "on": "purchase"
+    },
+    "stack": true,
+    "reset": "never",
+    "cap": 0.2
+   },
+   {
+    "type": "special",
+    "text": "Only charms bought while it is equipped count; the growth is kept if it is discarded and carries over to a new Raging Capitalist."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "clover_voucher",
+    "why": "Costs 2, refunds 4 tickets and still counts as a purchase."
+   },
+   {
+    "id": "fidelity_card",
+    "why": "Cheaper charms mean more purchases per ticket."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Symbols Multiplier +1 for every 5 tickets you hold."
+   },
+   {
+    "id": "lost_wallet",
+    "why": "Patterns Multiplier +1 for every 15 tickets you hold."
+   },
+   {
+    "id": "greedy_king",
+    "why": "With Greedy King and Naughty Dealer, fuses into Mad Emperor (DLC)."
+   },
+   {
+    "id": "naughty_dealer",
+    "why": "With Naughty Dealer and Greedy King, fuses into Mad Emperor (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "cap is the extra growth on top of the 5% base (25% total)."
+  ]
+ },
+ {
+  "id": "electrician",
+  "kind": "charm",
+  "summary": "Any Symbol has a 5% chance to carry Battery (recharges a Red Button charm); drops 1% each Round and breaks at 0%.",
+  "tip": "A 5-Round charge boost for button builds that don't run Clovers or Bells. Its break feeds Dung Beetle, and Vorago can bring it back fresh.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 3,
+   "risk": 2
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "battery",
+   "charges",
+   "temporary"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "battery",
+    "symbols": "all",
+    "add": 0.05,
+    "decay": {
+     "add": -0.01,
+     "per": "round"
+    },
+    "discardAfter": {
+     "count": 5,
+     "of": "rounds"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nuclear_button",
+    "why": "Every recharged press triggers twice."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggered Patterns score Battery symbols again, refilling charges faster."
+   },
+   {
+    "id": "vorago",
+    "why": "Brings it back at a full 5% after it breaks."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its self-discard counts as a discard for the Beetle."
+   },
+   {
+    "id": "personal_trainer",
+    "why": "With Fortune Teller, fuses into Amalgama (DLC)."
+   },
+   {
+    "id": "fortune_teller",
+    "why": "With Personal Trainer, fuses into Amalgama (DLC)."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "fortune_teller",
+  "kind": "charm",
+  "summary": "Any Symbol has a 25% chance to carry Chain (permanently raises its Pattern's value); drops 5% each Round and breaks at 0%.",
+  "tip": "Five Rounds of heavy, permanent Pattern growth that outlives the charm. Buy it before busy Rounds; retriggers score extra Chains.",
+  "tier": "A",
+  "ratings": {
+   "power": 3,
+   "scaling": 8,
+   "economy": 0,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "chain"
+  ],
+  "provides": [
+   "chain",
+   "patternValue",
+   "temporary"
+  ],
+  "cares": [
+   "patternCount"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "chain",
+    "symbols": "all",
+    "add": 0.25,
+    "decay": {
+     "add": -0.05,
+     "per": "round"
+    },
+    "discardAfter": {
+     "count": 5,
+     "of": "rounds"
+    }
+   },
+   {
+    "type": "special",
+    "text": "Pattern value gained through Chain is permanent and stays after this charm breaks."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "personal_trainer",
+    "why": "Same 5-Round decay; its Repetition retriggers score extra Chains. With Electrician, fuses into Amalgama (DLC)."
+   },
+   {
+    "id": "electrician",
+    "why": "With Personal Trainer, fuses into Amalgama (DLC)."
+   },
+   {
+    "id": "vorago",
+    "why": "Respawns it at a fresh 25% after it breaks."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Its self-discard counts as a discard for the Beetle."
+   },
+   {
+    "id": "broken_calculator",
+    "why": "Retriggered Patterns score their Chains again."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Assumed retriggered Patterns apply Chain again, like Ticket modifiers do."
+  ]
+ },
+ {
+  "id": "golden_cherry",
+  "kind": "charm",
+  "summary": "20% of Cherries become Golden; each scored Golden Cherry permanently adds +2 to Cherry value.",
+  "tip": "Take it once Cherries carry your build; Cherry Picture, Number 2 and Clicker multiply how many Golden Cherries you score.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "cherry",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "cherry"
+  ],
+  "cares": [
+   "cherry",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "cherry"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cherry_picture",
+    "why": "+2 Cherry chance for the Deadline feeds the gilding."
+   },
+   {
+    "id": "i_used_to_eat_healthy",
+    "why": "Permanent +1 Cherry chance means more Golden Cherries."
+   },
+   {
+    "id": "number_2",
+    "why": "Retriggered Cherry Patterns score Golden Cherries again."
+   },
+   {
+    "id": "clicker",
+    "why": "Repetition retriggers score Golden Cherries again."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Doubles the Cherry value you have grown; take it after gilding."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the base chance of Lemons and Cherries."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "golden_clover",
+  "kind": "charm",
+  "summary": "20% of Clovers become Golden; each scored Golden Clover permanently adds +3 to Clover value.",
+  "tip": "Take it once Clovers carry your build; Clover Picture, Today's my lucky day and Number 2 multiply how many Golden Clovers you score.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "clover",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "clover"
+  ],
+  "cares": [
+   "clover",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "clover"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "clover_picture",
+    "why": "+2 Clover chance for the Deadline feeds the gilding."
+   },
+   {
+    "id": "todays_my_lucky_day",
+    "why": "Permanent +1 Clover chance means more Golden Clovers."
+   },
+   {
+    "id": "number_2",
+    "why": "Retriggered Clover Patterns score Golden Clovers again."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Doubles the Clover value you have grown; take it after gilding."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Clovers and Bells."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "golden_bell",
+  "kind": "charm",
+  "summary": "20% of Bells become Golden; each scored Golden Bell permanently adds +3 to Bell value.",
+  "tip": "Take it once Bells carry your build; Bell Picture, I need to be there and Number 1 multiply how many Golden Bells you score.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "bell",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "bell"
+  ],
+  "cares": [
+   "bell",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "bell"
+    ],
+    "add": 0.2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "bell_picture",
+    "why": "+2 Bell chance for the Deadline feeds the gilding."
+   },
+   {
+    "id": "i_need_to_be_there",
+    "why": "Permanent +1 Bell chance means more Golden Bells."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggered Bell Patterns score Golden Bells again."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Doubles the Bell value you have grown; take it after gilding."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the base chance of Clovers and Bells."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "golden_diamond",
+  "kind": "charm",
+  "summary": "25% of Diamonds become Golden; each scored Golden Diamond permanently adds +5 to Diamond value.",
+  "tip": "Cheap scaling once Diamonds show up often; Diamond Picture, Please, I'll give you anything and Necklace multiply the gilding.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "diamond",
+   "gems",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "diamond"
+  ],
+  "cares": [
+   "diamond",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "diamond"
+    ],
+    "add": 0.25
+   }
+  ],
+  "synergies": [
+   {
+    "id": "diamond_picture",
+    "why": "+2 Diamond chance for the Deadline feeds the gilding."
+   },
+   {
+    "id": "please_ill_give_you_anything",
+    "why": "Permanent +1 Diamond chance means more Golden Diamonds."
+   },
+   {
+    "id": "number_2",
+    "why": "Retriggered Diamond Patterns score Golden Diamonds again."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Diamond Pattern triggers 3 times, gilding 3 times."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Doubles the Diamond value you have grown; take it after gilding."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, Treasures and Sevens."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "golden_treasure",
+  "kind": "charm",
+  "summary": "25% of Treasures become Golden; each scored Golden Treasure permanently adds +5 to Treasure value.",
+  "tip": "Cheap scaling once Treasures show up often; Treasure Picture, I need money and Necklace multiply the gilding.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "treasure",
+   "gems",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "treasure"
+  ],
+  "cares": [
+   "treasure",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "treasure"
+    ],
+    "add": 0.25
+   }
+  ],
+  "synergies": [
+   {
+    "id": "treasure_picture",
+    "why": "+2 Treasure chance for the Deadline feeds the gilding."
+   },
+   {
+    "id": "i_need_money",
+    "why": "Permanent +1 Treasure chance means more Golden Treasures."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggered Treasure Patterns score Golden Treasures again."
+   },
+   {
+    "id": "necklace",
+    "why": "A lone Treasure Pattern triggers 3 times, gilding 3 times."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Doubles the Treasure value you have grown; take it after gilding."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, Treasures and Sevens."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "golden_seven",
+  "kind": "charm",
+  "summary": "30% of Sevens become Golden; each scored Golden Seven permanently adds +7 to Seven value.",
+  "tip": "A 1-ticket scaler for Seven builds; weak until Seven Picture or I didn't hurt anybody makes Sevens common, then each Golden Seven adds a lot.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven",
+   "gems",
+   "golden"
+  ],
+  "provides": [
+   "golden",
+   "symbolValue",
+   "seven"
+  ],
+  "cares": [
+   "seven",
+   "symbolChance"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "golden",
+    "symbols": [
+     "seven"
+    ],
+    "add": 0.3
+   }
+  ],
+  "synergies": [
+   {
+    "id": "seven_picture",
+    "why": "+2 Seven chance for the Deadline feeds the gilding."
+   },
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "Permanent +1 Seven chance means more Golden Sevens."
+   },
+   {
+    "id": "number_1",
+    "why": "Retriggered Seven Patterns score Golden Sevens again."
+   },
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Triples the Seven value you have grown; take it after gilding."
+   },
+   {
+    "id": "7_sins_stone",
+    "why": "Seven Sevens in one spin all turn Golden at once."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "expired_meds",
+    "why": "Sevens are usually the most valuable symbol, so it keeps their chance at 0%."
+   },
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the base chance of Diamonds, Treasures and Sevens."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ }
+]
