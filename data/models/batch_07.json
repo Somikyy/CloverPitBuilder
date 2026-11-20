@@ -661,9 +661,7 @@
    "surgery"
   ],
   "cares": [
-   "spins",
-   "patternCount",
-   "smallPatterns"
+   "spins"
   ],
   "effects": [
    {
@@ -1146,6 +1144,389 @@
   "assumptions": [
    "Read as each Trait doubling its own multiplier (Avid: Symbols, Ambitious: Patterns), not both.",
    "The engine applies Traits as +2 / +1 and cannot rewrite them, so the doubling is kept as text and the ratings carry it."
+  ]
+ },
+ {
+  "id": "booster_pack",
+  "kind": "charm",
+  "summary": "Surgery (Jimbo + D20), takes no slot: drops a random Surgery charm into a free drawer, no recipe needed.",
+  "tip": "A lottery ticket for a Legendary fusion: it can roll Beach Hotel or First Place Prize, or a dud like Poker Deck. Jimbo alone is often worth about as much as the gamble.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 4,
+   "risk": 2
+  },
+  "archetypes": [],
+  "provides": [
+   "drawers",
+   "instant",
+   "surgery"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "spawnCharm",
+    "pool": "surgery",
+    "where": "drawer",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "mad_emperor",
+    "why": "The Surgery charm it drops adds another +10% once you equip it."
+   },
+   {
+    "id": "dangerous_experiments",
+    "why": "Surgeries cost no coins, so the gamble only costs its two ingredients."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed any Surgery charm can be rolled, with equal odds; whether Apocalypse can appear is unknown.",
+   "The engine cannot value a random charm, so the ratings describe an average roll."
+  ]
+ },
+ {
+  "id": "sacrifice",
+  "kind": "charm",
+  "summary": "Surgery (Corpse Left Arm + Cross), Red Button: ends the Round at once; Patterns Multiplier +1 for good per spin given up, -1 per spin already played.",
+  "tip": "Press it before your first spin: a full Round becomes +7 Patterns Multiplier (+9 with Cat Food) for the rest of the run. Sacrifice the Rounds you can spare while still paying the debt.",
+  "tier": "S",
+  "ratings": {
+   "power": 2,
+   "scaling": 10,
+   "economy": 0,
+   "utility": 1,
+   "risk": 4
+  },
+  "archetypes": [
+   "redButton",
+   "multiplier"
+  ],
+  "provides": [
+   "patternsMult",
+   "redButton",
+   "surgery"
+  ],
+  "cares": [
+   "spins"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Red Button (1 charge): lose all spins left this Round and end it now. Patterns Multiplier +1 for each spin given up and -1 for each spin already played this Round, permanently (+7 if pressed before the first spin of a 7-spin Round).",
+    "when": {
+     "redButton": true
+    }
+   },
+   {
+    "type": "patternsMult",
+    "add": 7,
+    "when": {
+     "on": "deadlineStart"
+    },
+    "stack": true,
+    "reset": "never",
+    "note": "Usage model: one full 7-spin Round sacrificed per Deadline. Written as a Red Button effect, the engine would assume a sacrifice every Round with no lost income."
+   },
+   {
+    "type": "rounds",
+    "add": -1,
+    "per": "deadline",
+    "when": {
+     "on": "deadlineStart"
+    },
+    "note": "Usage model: the sacrificed Round earns no coins."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cat_food",
+    "why": "+2 spins per Round: each sacrifice gives +9 Patterns Multiplier instead of +7."
+   },
+   {
+    "id": "bullet_train",
+    "why": "A sacrificed Round ends with no coins earned, which should also double both multipliers."
+   },
+   {
+    "id": "sin",
+    "why": "The sacrificed Round still ends normally, so Sin doubles your held coins without spending a spin."
+   },
+   {
+    "id": "apocalypse",
+    "why": "One of the four ingredients of Apocalypse."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "fixation",
+    "why": "Only 1 spin per Round, so each sacrifice gives just +1 Patterns Multiplier."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the Patterns Multiplier change is permanent, like the Cross it is made from; the wiki notes it is the only source of a negative multiplier.",
+   "Value is modelled as one sacrificed Round per Deadline (-1 Round of income, +7 Patterns Multiplier); players with spare Rounds can sacrifice more.",
+   "Wiki: the Corpse piece only drops from a 666 and is discarded if it is still in a drawer when the Deadline ends, so the fusion must happen in that Deadline."
+  ]
+ },
+ {
+  "id": "resurrection",
+  "kind": "charm",
+  "summary": "Surgery (Corpse Right Arm + Ankh): Charms discarded during a Round, such as ones that break, come back in the next store restocks to buy again.",
+  "tip": "Makes one-shot Charms repeatable: buy back Holy Bible, One Trick Pony, Fruit Basket or Peppers after they break. You still pay full price, and Weird Clock is excluded.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 1,
+   "utility": 5,
+   "risk": 0
+  },
+  "archetypes": [
+   "discard"
+  ],
+  "provides": [
+   "store",
+   "surgery"
+  ],
+  "cares": [
+   "temporary",
+   "discard",
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Charms discarded during a Round (for example ones that break) appear again in the next store restock(s). Weird Clock is excluded, and only Charms that can appear in the store come back."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "holy_bible",
+    "why": "When it breaks after blocking a 666, it is back in the next restock for 1 ticket."
+   },
+   {
+    "id": "one_trick_pony",
+    "why": "Buy it back after it breaks for another guaranteed Jackpot."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Comes back after its 10 Rounds for 10 more Rounds of fruit retriggers."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Every break adds a Beetle stack, and the broken Charm can be bought and broken again."
+   },
+   {
+    "id": "apocalypse",
+    "why": "One of the four ingredients of Apocalypse."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed 'discarded during a Round' covers Charms that break or discard themselves mid-Round, and that they come back at their normal price.",
+   "Store charms and Rounds cannot both be open at once, so selling a charm presumably does not count."
+  ]
+ },
+ {
+  "id": "sin",
+  "kind": "charm",
+  "summary": "Surgery (Corpse Right Leg + Evil Deal): your coins and tickets double at the end of every Round, but both are set to 0 when the Deadline ends.",
+  "tip": "Hold coins so they double each Round, then pay the debt (deposits stop at the debt) and spend your tickets before the Deadline ends. From Deadline 7 a 666 takes all coins in hand, so bring protection.",
+  "tier": "A",
+  "ratings": {
+   "power": 8,
+   "scaling": 3,
+   "economy": 9,
+   "utility": 0,
+   "risk": 6
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "coins",
+   "tickets",
+   "surgery"
+  ],
+  "cares": [
+   "tickets"
+  ],
+  "effects": [
+   {
+    "type": "coins",
+    "mul": 2,
+    "per": "round",
+    "note": "Coins in hand double at the end of every Round."
+   },
+   {
+    "type": "tickets",
+    "mul": 2,
+    "per": "round",
+    "note": "Tickets double at the end of every Round."
+   },
+   {
+    "type": "coins",
+    "set": 0,
+    "per": "deadline",
+    "note": "Coins still in hand when the Deadline ends are lost."
+   },
+   {
+    "type": "tickets",
+    "set": 0,
+    "per": "deadline",
+    "note": "Tickets still held when the Deadline ends are lost."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "living_on_the_edge",
+    "why": "You cannot deposit before the last Round anyway, so the doubling applies to everything you earn."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Blocks the 666 that would take your whole held pile from Deadline 7."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Doubled coins pay the debt early, and each Round you skip raises its Golden chance by 2%."
+   },
+   {
+    "id": "cloverpet",
+    "why": "Tickets double every Round, so its multiplier climbs during the Deadline; spend them before it ends."
+   },
+   {
+    "id": "sacrifice",
+    "why": "A sacrificed Round still ends, doubling your held coins without spending a spin."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "lust",
+    "why": "Its forced 666s take all the coins you are holding from Deadline 7."
+   },
+   {
+    "id": "cloverpot",
+    "why": "It pays on tickets held when the Deadline ends, but Sin wipes them."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Doubles coins in hand, not coins deposited; deposits are capped at the debt (wiki), so surplus coins are lost when the Deadline ends instead of carrying over.",
+   "Unknown whether the Deadline Bonus and end-of-Deadline tickets arrive before or after the reset.",
+   "Engine: the doubling is valued as one extra Round of income per Round and the reset as one lost Round per Deadline; it cannot see the compounding when coins are held for several Rounds, and tickets get no value."
+  ]
+ },
+ {
+  "id": "eternal_rest",
+  "kind": "charm",
+  "summary": "Surgery (Corpse Left Leg + Weird Clock): every Charm that is not an ingredient of some Surgery recipe is banned from the store.",
+  "tip": "Shrinks the store to about 50 recipe ingredients, so the parts for your next fusion show up far more often. It also bans strong non-recipe Charms, so keep it in a drawer when you are not hunting parts.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 2,
+   "economy": 2,
+   "utility": 5,
+   "risk": 3
+  },
+  "archetypes": [],
+  "provides": [
+   "store",
+   "surgery"
+  ],
+  "cares": [
+   "drawers",
+   "surgery"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "Only Charms listed in a Surgery recipe can appear in the store (54 of the 145 store Charms, minus banned ingredients such as Weird Clock)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "mad_emperor",
+    "why": "Parts for more fusions show up, and Eternal Rest counts as a Surgery charm itself (+10%)."
+   },
+   {
+    "id": "apocalypse",
+    "why": "One of the four ingredients of Apocalypse."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed 'Any Charm' recipes (Garbage, Trash Can, Dumpster) do not count as listing every Charm.",
+   "Assumed it only works while on the table, like other charms, so a drawer switches it off."
+  ]
+ },
+ {
+  "id": "apocalypse",
+  "kind": "charm",
+  "summary": "Surgery (Sacrifice + Resurrection + Sin + Eternal Rest): you die at once, then start a new run with the same memory card and all your table Charms.",
+  "tip": "Not a power pick: it ends the current run (a secret ending) and counts as a death. Make it to carry a full late-game table into a fresh run. Extra slots from 'Please don't throw my stuff away!' do not carry over.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 3,
+   "risk": 10
+  },
+  "archetypes": [],
+  "provides": [
+   "surgery"
+  ],
+  "cares": [
+   "charmCount"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "When created, the run ends immediately (counted as a death, with a secret ending). The next run starts with the same memory card and every charm that was on the table except Apocalypse; everything else resets."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "sacrifice",
+    "why": "One of its four ingredients."
+   },
+   {
+    "id": "resurrection",
+    "why": "One of its four ingredients."
+   },
+   {
+    "id": "sin",
+    "why": "One of its four ingredients."
+   },
+   {
+    "id": "eternal_rest",
+    "why": "One of its four ingredients."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "please_dont_throw_my_stuff_away",
+    "why": "Its extra slots are not carried over, so the most recently placed charms beyond them are removed in the next run."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Wiki notes: charms beyond the normal space from 'Please don't throw my stuff away!' are removed in the next run, most recently placed first.",
+   "Its value lies in the next run, which the Build Helper does not model, so it is rated as a run-ender."
   ]
  }
 ]
