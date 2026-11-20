@@ -1,6 +1,6 @@
 // Build Helper page.
 import {
-  loadDb, h, itemIcon, itemChips, initChrome, sfx, openItem, toast, TRAITS, reducedMotion, fmtNum, matches, CATEGORY_LABEL,
+  loadDb, h, itemIcon, itemChips, initChrome, sfx, openItem, toast, TRAITS, reducedMotion, fmtNum, matches, relevance, CATEGORY_LABEL,
 } from './common.js';
 import { loadLocal, saveLocal, shareUrl, readHashCode, decodeShare, listSaved, saveBuild, deleteSaved, normalize } from './state.js';
 import { analyze, defaultState } from '../core/engine.js';
@@ -284,7 +284,7 @@ function openPicker(mode) {
       } else if (group !== 'all' && it.type !== group) return false;
       if (state.mode.dlc === false && it.dlc) return false;
       return matches(it, q);
-    });
+    }).map((it, i) => [relevance(it, q), i, it]).sort((x, y) => x[0] - y[0] || x[1] - y[1]).map((x) => x[2]);
     if (!list.length) grid.append(h('p', { class: 'empty-state' }, 'Nothing matches. Try a shorter word.'));
     for (const it of list) {
       grid.append(h('button', { class: `tile ${it.kind} rarity-${it.rarity || ''}${owned.has(it.id) && mode === 'charm' ? ' owned' : ''}`, type: 'button', onclick: () => pick(it) },

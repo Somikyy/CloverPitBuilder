@@ -257,6 +257,17 @@ export function searchText(it) {
   return it._search;
 }
 
+// Lower is better: exact name, name prefix, name contains, all words in the name, then anything else.
+export function relevance(it, q) {
+  if (!q) return 0;
+  const n = it.name.toLowerCase(), t = q.toLowerCase().trim();
+  if (n === t) return 0;
+  if (n.startsWith(t)) return 1;
+  if (n.includes(t)) return 2;
+  if (t.split(/\s+/).every((w) => n.includes(w))) return 3;
+  return 4;
+}
+
 export function matches(it, q) {
   if (!q) return true;
   const s = searchText(it);

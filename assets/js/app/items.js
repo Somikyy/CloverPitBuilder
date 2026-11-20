@@ -1,5 +1,5 @@
 // Items page: search every charm, phone call and memory card.
-import { loadDb, h, itemIcon, itemChips, initChrome, openItem, matches, toast, sfx } from './common.js';
+import { loadDb, h, itemIcon, itemChips, initChrome, openItem, matches, relevance, toast, sfx } from './common.js';
 import { ARCH_LABELS } from '../core/engine.js';
 import { loadLocal, saveLocal } from './state.js';
 
@@ -60,7 +60,8 @@ function draw() {
     cost: (a, b) => (a.cost ?? 99) - (b.cost ?? 99) || a.name.localeCompare(b.name),
     rarity: (a, b) => (RARITY_ORDER[a.rarity] ?? 9) - (RARITY_ORDER[b.rarity] ?? 9) || a.name.localeCompare(b.name),
   };
-  list = list.sort(sorters[f.sort] || sorters.name);
+  const sorter = sorters[f.sort] || sorters.name;
+  list = list.sort((a, b) => (f.q ? relevance(a, f.q) - relevance(b, f.q) : 0) || sorter(a, b));
   const grid = $('grid');
   grid.replaceChildren();
   $('count').textContent = `${list.length} ${f.kind === 'charm' ? 'charms' : f.kind === 'phone' ? 'phone calls' : 'memory cards'}`;
