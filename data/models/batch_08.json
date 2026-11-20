@@ -107,7 +107,7 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "A full-grid Jackpot scores about 12 Patterns worth ~46x base in total, so the Jackpot Pattern itself (10x) is roughly a fifth of a Jackpot spin."
+   "A full-grid Jackpot scores 10 Patterns worth about 40x base in total (Jackpot, Above, Below, Eye, middle HOR-XL, 3 VER, 2 DIAG), so the Jackpot itself is about a quarter of such a spin."
   ]
  },
  {
@@ -466,7 +466,7 @@
   "kind": "phone",
   "summary": "Gives a random equipped charm the Obsessive Trait: the last Pattern of every spin triggers one more time while that charm stays equipped.",
   "tip": "A spin with one Pattern pays double, and the extra trigger counts toward 3+/5+ Pattern charms (Pentacle, Rotten Pepper, Lucky Cat). Drawer charms you may sell first.",
-  "tier": "B",
+  "tier": "A",
   "ratings": {
    "power": 5,
    "scaling": 4,
@@ -527,7 +527,7 @@
   "kind": "phone",
   "summary": "Gives a random equipped charm the Gambler Trait: +1 free store restock every Deadline while that charm stays equipped.",
   "tip": "Weak on its own. Pick it for Shopping Cart (each held free restock is +2 Symbols Multiplier) or restock payoffs like Bell Pepper and Electricity Meter.",
-  "tier": "C",
+  "tier": "D",
   "ratings": {
    "power": 0,
    "scaling": 2,
@@ -834,7 +834,7 @@
   "id": "please_ill_give_you_anything",
   "kind": "phone",
   "summary": "Diamonds appear more often (+1 chance), permanently: more than twice their base rate.",
-  "tip": "Strong for Diamond and gem builds (Golden Diamond, Crystal Sphere, Eye Jar). Take value doublers like Gold and Diamonds... after it, since the gain grows with frequency.",
+  "tip": "Strong for Diamond and gem builds (Golden Diamond, Crystal Sphere, Eye Jar) and hard to undo. Diamonds are worth 5, so the extra chance pays even before any gilding.",
   "tier": "B",
   "ratings": {
    "power": 4,
@@ -889,10 +889,6 @@
    {
     "id": "ive_already_bet_it_all",
     "why": "Halves the Diamond, Treasure and Seven base chances."
-   },
-   {
-    "id": "expired_meds",
-    "why": "Raised Diamonds can become your most valuable symbol and get banned."
    }
   ],
   "confidence": "high",
@@ -902,7 +898,7 @@
   "id": "i_need_money",
   "kind": "phone",
   "summary": "Treasures appear more often (+1 chance), permanently: more than twice their base rate.",
-  "tip": "Strong for Treasure and gem builds (Golden Treasure, Ship, Eye Jar). Treasures are yellow, so Number 1 retriggers them too.",
+  "tip": "Strong for Treasure and gem builds (Golden Treasure, Ship, Eye Jar) and hard to undo. Treasures are yellow, so Number 1 retriggers them too.",
   "tier": "B",
   "ratings": {
    "power": 4,
@@ -957,10 +953,6 @@
    {
     "id": "ive_already_bet_it_all",
     "why": "Halves the Diamond, Treasure and Seven base chances."
-   },
-   {
-    "id": "expired_meds",
-    "why": "Raised Treasures can become your most valuable symbol and get banned."
    }
   ],
   "confidence": "high",
@@ -969,7 +961,7 @@
  {
   "id": "i_didnt_hurt_anybody",
   "kind": "phone",
-  "summary": "Sevens appear more often (+1 chance), permanently: three times their base rate, ahead of every other symbol.",
+  "summary": "Sevens appear more often (+1 chance), permanently: three times their base rate, enough to top the base odds of every other symbol.",
   "tip": "The core of a Seven build: follow with I'm gonna go \"All In\"! (x3 value), Golden Seven or 7 Sins Stone. Sevens then lead the odds, so Scratch and Hope boosts them too.",
   "tier": "B",
   "ratings": {
@@ -1099,9 +1091,7 @@
    }
   ],
   "confidence": "high",
-  "assumptions": [
-   "Doubles the current value, not the base value (per the wiki)."
-  ]
+  "assumptions": []
  },
  {
   "id": "gold_and_diamonds_are_a_good_investment",
@@ -1169,15 +1159,13 @@
    }
   ],
   "confidence": "high",
-  "assumptions": [
-   "Doubles the current value, not the base value (per the wiki)."
-  ]
+  "assumptions": []
  },
  {
   "id": "im_gonna_go_all_in",
   "kind": "phone",
   "summary": "Triples the current value of Sevens, permanently.",
-  "tip": "Little use while Sevens are rare (about 7% of symbols); huge after I didn't hurt anybody..., Seven Picture or Golden Seven. Raise first, triple after.",
+  "tip": "Little use while Sevens are rare (7.5% of symbols at base); huge after I didn't hurt anybody..., Seven Picture or Golden Seven. Raise first, triple after.",
   "tier": "B",
   "ratings": {
    "power": 4,
@@ -1238,9 +1226,7 @@
    }
   ],
   "confidence": "high",
-  "assumptions": [
-   "Triples the current value, not the base value (per the wiki)."
-  ]
+  "assumptions": []
  },
  {
   "id": "im_thinking_of_some_strategies",
@@ -1249,7 +1235,7 @@
   "tip": "Strong early, when most coins come from 3-symbol lines. Each repeat adds only +1x base; the Sacred call I want to address some stuff doubles them instead.",
   "tier": "B",
   "ratings": {
-   "power": 5,
+   "power": 6,
    "scaling": 2,
    "economy": 0,
    "utility": 0,
@@ -1295,7 +1281,7 @@
   "tip": "Best with Luck or forced big Patterns (Nose, Little Star, Disc C, Eye Jar). Take it before I can't quit now! or the Sacred x2 on big Patterns, which double the raised value.",
   "tier": "B",
   "ratings": {
-   "power": 4,
+   "power": 5,
    "scaling": 3,
    "economy": 0,
    "utility": 0,
@@ -1533,7 +1519,7 @@
    },
    {
     "id": "megaphone",
-    "why": "A 7-ticket charm worth freeing; equipped, it also doubles this call."
+    "why": "Equipped when you take it, the call fires twice: up to 4 free charms."
    }
   ],
   "antiSynergies": [
@@ -1793,7 +1779,8 @@
   },
   "archetypes": [],
   "provides": [
-   "symbolChance"
+   "symbolChance",
+   "patternCount"
   ],
   "cares": [],
   "effects": [

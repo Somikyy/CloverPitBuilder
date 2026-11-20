@@ -1,0 +1,456 @@
+[
+ {
+  "id": "im_feeling_more_energetic_recently",
+  "kind": "phone",
+  "summary": "Sacred call (max 2 uses): every Red Button charm you have equipped needs 1 fewer charge to be ready again, permanently (never below 1).",
+  "tip": "Pick it once your Red Button charms are on the table; charms bought later keep full cost. Ring Bell (3 to 2) and Midas Touch (4 to 3) then fire noticeably more often.",
+  "tier": "B",
+  "ratings": {
+   "power": 2,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 2,
+   "risk": 0
+  },
+  "archetypes": [
+   "redButton"
+  ],
+  "provides": [
+   "charges"
+  ],
+  "cares": [
+   "redButton"
+  ],
+  "effects": [
+   {
+    "type": "redButton",
+    "costReduce": 1
+   },
+   {
+    "type": "special",
+    "text": "Only Red Button charms equipped when you pick it get cheaper (minimum 1 charge); charms bought afterwards keep their normal charge cost."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "ring_bell",
+    "why": "Needs 2 charges instead of 3: +1 Symbols Multiplier every 2 Rounds instead of every 3."
+   },
+   {
+    "id": "midas_touch",
+    "why": "Needs 3 charges instead of 4, so its permanent value Rounds come every 3 Rounds instead of 4."
+   },
+   {
+    "id": "number_1",
+    "why": "Needs 4 charges instead of 5 (3 after a second pick), so its yellow retrigger Rounds come sooner."
+   },
+   {
+    "id": "cross",
+    "why": "At 1 charge it can flip every Round, gaining its Patterns Multiplier twice as fast."
+   },
+   {
+    "id": "megaphone",
+    "why": "The pick fires twice: 2 fewer charges on every equipped Red Button charm."
+   },
+   {
+    "id": "barathrum",
+    "why": "Discarding it later fires the call again for the Red Button charms you own by then."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the cheaper cost stays with each charm even if it is moved to a drawer and back.",
+   "The engine applies the reduction to all Red Button charms, including ones bought later."
+  ]
+ },
+ {
+  "id": "i_need_to_heal_myself",
+  "kind": "phone",
+  "summary": "Sacred call: gives every charm in the store a random Trait, then makes one of them free.",
+  "tip": "Repeatable ticket saver: a free charm that also carries a Trait. Buy the cheap charms you want first so the free pick is likelier to land on a pricey one. Traits raise most other prices.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 3,
+   "economy": 6,
+   "utility": 3,
+   "risk": 1
+  },
+  "archetypes": [
+   "traits"
+  ],
+  "provides": [
+   "traits",
+   "discount",
+   "store"
+  ],
+  "cares": [
+   "traits"
+  ],
+  "effects": [
+   {
+    "type": "trait",
+    "apply": "random",
+    "target": "store",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "storeDiscount",
+    "freeCharms": 1,
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_collector",
+    "why": "Every traited charm you equip adds +1 Patterns Multiplier."
+   },
+   {
+    "id": "graded_card",
+    "why": "Avid and Ambitious Traits rolled here become x2 multipliers."
+   },
+   {
+    "id": "fidelity_card",
+    "why": "Takes 1 ticket off the other charms, which the Traits made pricier."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "'Modify' read as applying a random Trait (the wording later DLC cards use for Traits).",
+   "Assumed the free charm is chosen at random among the charms in the store.",
+   "Phone-applied random Traits are equally likely (wiki), so about 1 in 7 is Devious."
+  ]
+ },
+ {
+  "id": "im_being_constant",
+  "kind": "phone",
+  "summary": "Sacred call (once per run): every Pattern triggers one extra time for the rest of the run, doubling Pattern payouts.",
+  "tip": "Take it on sight. Megaphone or Barathrum turn the single use into more permanent triggers, and the extra triggers also count for Pentacle, the Cats and other Pattern-count charms.",
+  "tier": "S",
+  "ratings": {
+   "power": 9,
+   "scaling": 7,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "retrigger"
+  ],
+  "provides": [
+   "retrigger",
+   "patternCount"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "all"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "megaphone",
+    "why": "The one allowed pick fires twice: Patterns trigger 2 extra times for good."
+   },
+   {
+    "id": "barathrum",
+    "why": "Discarding it later adds a second permanent extra trigger."
+   },
+   {
+    "id": "first_love",
+    "why": "Phone abilities trigger once more, so the pick gives +2 triggers."
+   },
+   {
+    "id": "pentacle",
+    "why": "Doubled Pattern counts make its 5+ Pattern growth spins far more common."
+   },
+   {
+    "id": "chonky_cat",
+    "why": "7+ Pattern spins become common, each paying double your Interest."
+   },
+   {
+    "id": "very_big_mushroom",
+    "why": "A doubled Jackpot spin is about 20 Patterns, past its 15+ trigger."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "help",
+  "kind": "phone",
+  "summary": "Sacred call: spawns a random Sacred charm on your table (even past your slot limit), then halves the coins you are holding.",
+  "tip": "Deposit or spend coins before answering to shrink the loss. Most Sacred charms trigger on 999s, so extra 666/999 odds (Devious Traits, Necronomicon) make them stronger.",
+  "tier": "A",
+  "ratings": {
+   "power": 5,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 5,
+   "risk": 3
+  },
+  "archetypes": [
+   "sacred"
+  ],
+  "provides": [
+   "sacred",
+   "charmCount"
+  ],
+  "cares": [
+   "999"
+  ],
+  "effects": [
+   {
+    "type": "spawnCharm",
+    "pool": "sacred",
+    "where": "table",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "coins",
+    "mul": 0.5,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "megaphone",
+    "why": "Fires twice: two Sacred charms, though your coins are halved twice."
+   },
+   {
+    "id": "barathrum",
+    "why": "Discarding it later spawns another Sacred charm."
+   },
+   {
+    "id": "first_love",
+    "why": "Phone abilities trigger once more: two Sacred charms per call."
+   },
+   {
+    "id": "necronomicon",
+    "why": "In Sacred Mode its +3% 666 chance means more 999s for the Sacred charms."
+   },
+   {
+    "id": "bright_outside_dark_inside",
+    "why": "The spawned Sacred charm arrives with a random Trait."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Only coins in hand are halved, not deposited coins (per the wiki's strategy note).",
+   "Assumed effects that raise 666 odds raise 999 odds in Sacred Mode."
+  ]
+ },
+ {
+  "id": "i_want_to_address_some_stuff",
+  "kind": "phone",
+  "summary": "Sacred call: doubles the current value of every small Pattern (3 or fewer Symbols: HOR, VER, DIAG and the 2-symbol ones).",
+  "tip": "Best while small Patterns still pay most of your coins. It doubles current values, so take value adders first (I'm thinking of some strategies, Diesel Locomotive), then double.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "patternValue",
+   "smallPatterns"
+  ],
+  "cares": [
+   "smallPatterns"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "small",
+    "mul": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "im_thinking_of_some_strategies",
+    "why": "Adds base value to the same small Patterns; take it first so the doubling includes it."
+   },
+   {
+    "id": "angels_hand",
+    "why": "The 2-symbol Patterns it adds are small Patterns, so they are doubled too."
+   },
+   {
+    "id": "diesel_locomotive",
+    "why": "Grows every Pattern by its base value; doubling a grown value gains more."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "ill_take_back_control_of_my_life",
+  "kind": "phone",
+  "summary": "Sacred call: doubles the current value of every large Pattern (4+ Symbols: HOR-L, HOR-XL, ZIG, ZAG, ABOVE, BELOW, EYE, JACKPOT).",
+  "tip": "Best in Luck and Jackpot builds, where big Patterns earn most of your coins. It doubles current values, so add first (I found a winning strategy) and stack it with I can't quit now.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 5,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot",
+   "multiplier"
+  ],
+  "provides": [
+   "patternValue",
+   "largePatterns"
+  ],
+  "cares": [
+   "largePatterns",
+   "luck",
+   "jackpot"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "large",
+    "mul": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "i_found_a_winning_strategy",
+    "why": "Adds base value to the same large Patterns; take it first so the doubling includes it."
+   },
+   {
+    "id": "i_cant_quit_now",
+    "why": "Doubles the Jackpot again: the two multiply."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Luck +7 on the last spin forms the big Patterns this doubles."
+   },
+   {
+    "id": "nose",
+    "why": "Forces Above or Below, both doubled by this call."
+   },
+   {
+    "id": "disc_c",
+    "why": "Forces Zig and Zag every 7 spins, both doubled by this call."
+   },
+   {
+    "id": "baphomet",
+    "why": "Its Above/Below doublings multiply with this one."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "erased_memory_card",
+  "kind": "memory",
+  "summary": "The default Memory Card: no effects, a normal run.",
+  "tip": "The neutral baseline. Use it to learn the game or when no other card fits your plan; every other card bends the rules for better or worse.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [],
+  "cares": [],
+  "effects": [],
+  "synergies": [],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "desperate_search",
+  "kind": "memory",
+  "summary": "Run-long: the store shows only 3 charms instead of 4, but every Deadline starts with 2 free Restocks.",
+  "tip": "Free Restocks carry over: bank them for Shopping Cart (+2 Symbols Multiplier each) or spend them to grow Bell Pepper. Fewer store slots make Cigarettes rerolls worse.",
+  "tier": "B",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 5,
+   "utility": 2,
+   "risk": 2
+  },
+  "archetypes": [
+   "restock"
+  ],
+  "provides": [
+   "restock"
+  ],
+  "cares": [
+   "restock"
+  ],
+  "effects": [
+   {
+    "type": "freeRestocks",
+    "add": 2,
+    "per": "deadline",
+    "when": {
+     "on": "deadlineStart"
+    }
+   },
+   {
+    "type": "special",
+    "text": "For the whole run the store has 3 charm slots instead of 4."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "shopping_cart",
+    "why": "Each held free Restock is +2 Symbols Multiplier, and 2 more arrive every Deadline."
+   },
+   {
+    "id": "bell_pepper",
+    "why": "Each Restock spent this Deadline adds +2 to its Luck bonus."
+   },
+   {
+    "id": "electricity_meter",
+    "why": "Every Restock recharges a Red Button charm."
+   },
+   {
+    "id": "rwd_cart",
+    "why": "Doubles the free Restocks you are holding."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "cigarettes",
+    "why": "With 3 slots its restock-and-reappear trick shows fewer new charms per buy."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Free Restocks can be stockpiled between Deadlines (wiki strategy note)."
+  ]
+ }
+]
