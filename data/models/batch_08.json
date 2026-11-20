@@ -639,5 +639,714 @@
    "Assumed a new Trait replaces any Trait the chosen charm already had (a charm holds one Trait).",
    "Charms that cannot take Traits (instant charms, most charms spawned by calls) are assumed to be skipped."
   ]
+ },
+ {
+  "id": "i_used_to_eat_healthy",
+  "kind": "phone",
+  "summary": "Cherries appear more often (+1 chance), permanently, making them the most common symbol.",
+  "tip": "Commit only if Cherries carry your build (Golden Cherry, Wood, Shoe, Clicker); hard to undo. More Cherry lines also mean more Patterns per spin.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "cherry",
+   "fruit"
+  ],
+  "provides": [
+   "symbolChance",
+   "cherry"
+  ],
+  "cares": [
+   "cherry"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "cherry"
+    ],
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_cherry",
+    "why": "More Cherries on the grid means more Golden Cherries scored."
+   },
+   {
+    "id": "i_need_supplements",
+    "why": "Doubling Cherry value pays off more once Cherries dominate the grid."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "More Cherry Patterns for it to retrigger."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "Cherries become the single most likely symbol, so they get +1 more."
+   },
+   {
+    "id": "number_2",
+    "why": "Cherries are non-yellow, so its retriggers hit more Patterns."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "theres_nothing_to_eat_but_mould",
+    "why": "Halves the Cherry base chance, undoing much of this."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "todays_my_lucky_day",
+  "kind": "phone",
+  "summary": "Clovers appear more often (+1 chance), permanently: about twice their base rate.",
+  "tip": "Commit only if Clovers carry your build (Golden Clover, Thimble, Sheep, AA Batteries); hard to undo. Pairs with I'm feeling lucky! to double Clover value.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "clover"
+  ],
+  "provides": [
+   "symbolChance",
+   "clover"
+  ],
+  "cares": [
+   "clover"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "clover"
+    ],
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_clover",
+    "why": "More Clovers on the grid means more Golden Clovers scored."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Doubling Clover value pays off more on a common symbol."
+   },
+   {
+    "id": "cloverbell",
+    "why": "More spins that score both Clovers and Bells, each worth 3 free restocks."
+   },
+   {
+    "id": "thimble",
+    "why": "More Clovers carrying the Ticket modifier."
+   },
+   {
+    "id": "number_2",
+    "why": "Clovers are non-yellow, so its retriggers hit more Patterns."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the Clover and Bell base chances, undoing much of this."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "i_need_to_be_there",
+  "kind": "phone",
+  "summary": "Bells appear more often (+1 chance), permanently: about twice their base rate.",
+  "tip": "Commit only if Bells carry your build (Golden Bell, Iron, Wheat, AA Batteries); hard to undo. Pairs with I'm feeling lucky! to double Bell value.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "bell"
+  ],
+  "provides": [
+   "symbolChance",
+   "bell"
+  ],
+  "cares": [
+   "bell"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "bell"
+    ],
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_bell",
+    "why": "More Bells on the grid means more Golden Bells scored."
+   },
+   {
+    "id": "im_feeling_lucky",
+    "why": "Doubling Bell value pays off more on a common symbol."
+   },
+   {
+    "id": "cloverbell",
+    "why": "More spins that score both Clovers and Bells, each worth 3 free restocks."
+   },
+   {
+    "id": "iron",
+    "why": "More Bells carrying the Ticket modifier."
+   },
+   {
+    "id": "number_1",
+    "why": "Bells are yellow, so its retriggers hit more Patterns."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the Clover and Bell base chances, undoing much of this."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "please_ill_give_you_anything",
+  "kind": "phone",
+  "summary": "Diamonds appear more often (+1 chance), permanently: more than twice their base rate.",
+  "tip": "Strong for Diamond and gem builds (Golden Diamond, Crystal Sphere, Eye Jar). Take value doublers like Gold and Diamonds... after it, since the gain grows with frequency.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "diamond",
+   "gems"
+  ],
+  "provides": [
+   "symbolChance",
+   "diamond"
+  ],
+  "cares": [
+   "diamond"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "diamond"
+    ],
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_diamond",
+    "why": "More Diamonds on the grid means more Golden Diamonds scored."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Doubled Diamond value on a symbol you now see far more often."
+   },
+   {
+    "id": "eye_jar",
+    "why": "+1 Diamond chance makes its 3-spin gem streak much more common."
+   },
+   {
+    "id": "crystal_sphere",
+    "why": "More Diamonds carrying the Chain modifier."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "More Diamond lines help form 4+ Patterns, and each raise hits a symbol you see often."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Diamond, Treasure and Seven base chances."
+   },
+   {
+    "id": "expired_meds",
+    "why": "Raised Diamonds can become your most valuable symbol and get banned."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "i_need_money",
+  "kind": "phone",
+  "summary": "Treasures appear more often (+1 chance), permanently: more than twice their base rate.",
+  "tip": "Strong for Treasure and gem builds (Golden Treasure, Ship, Eye Jar). Treasures are yellow, so Number 1 retriggers them too.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "treasure",
+   "gems"
+  ],
+  "provides": [
+   "symbolChance",
+   "treasure"
+  ],
+  "cares": [
+   "treasure"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "treasure"
+    ],
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_treasure",
+    "why": "More Treasures on the grid means more Golden Treasures scored."
+   },
+   {
+    "id": "gold_and_diamonds_are_a_good_investment",
+    "why": "Doubled Treasure value on a symbol you now see far more often."
+   },
+   {
+    "id": "eye_jar",
+    "why": "+1 Treasure chance helps keep its gem streak going."
+   },
+   {
+    "id": "ship",
+    "why": "More Treasures carrying the Ticket modifier."
+   },
+   {
+    "id": "number_1",
+    "why": "Treasures are yellow, so its retriggers hit more Patterns."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Diamond, Treasure and Seven base chances."
+   },
+   {
+    "id": "expired_meds",
+    "why": "Raised Treasures can become your most valuable symbol and get banned."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "i_didnt_hurt_anybody",
+  "kind": "phone",
+  "summary": "Sevens appear more often (+1 chance), permanently: three times their base rate, ahead of every other symbol.",
+  "tip": "The core of a Seven build: follow with I'm gonna go \"All In\"! (x3 value), Golden Seven or 7 Sins Stone. Sevens then lead the odds, so Scratch and Hope boosts them too.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 4,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven",
+   "gems"
+  ],
+  "provides": [
+   "symbolChance",
+   "seven"
+  ],
+  "cares": [
+   "seven"
+  ],
+  "effects": [
+   {
+    "type": "symbolChance",
+    "symbols": [
+     "seven"
+    ],
+    "add": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "im_gonna_go_all_in",
+    "why": "Tripled Seven value on a symbol you now see three times as often."
+   },
+   {
+    "id": "golden_seven",
+    "why": "More Sevens on the grid means more Golden Sevens scored."
+   },
+   {
+    "id": "7_sins_stone",
+    "why": "Permanent +1 Seven chance toward 7-Seven spins."
+   },
+   {
+    "id": "scratch_and_hope",
+    "why": "One +1 Seven call makes Sevens the most likely symbol for good, so it adds +1 more."
+   },
+   {
+    "id": "seven_picture",
+    "why": "Its +2 Seven chance for a Deadline stacks on top."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Diamond, Treasure and Seven base chances."
+   },
+   {
+    "id": "expired_meds",
+    "why": "Sevens are usually your most valuable symbol, so they get banned."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "im_feeling_lucky",
+  "kind": "phone",
+  "summary": "Doubles the current value of Clovers and Bells, permanently.",
+  "tip": "It doubles the current value, so take it after gilding or other raises (Golden Clover/Bell, Ace of Clubs). Best when Clovers and Bells score a big share of your coins.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "clover",
+   "bell"
+  ],
+  "provides": [
+   "symbolValue",
+   "clover",
+   "bell"
+  ],
+  "cares": [
+   "clover",
+   "bell"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": [
+     "clover",
+     "bell"
+    ],
+    "mul": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_clover",
+    "why": "Doubles the Clover value you have grown; take it after gilding."
+   },
+   {
+    "id": "golden_bell",
+    "why": "Doubles the Bell value you have grown; take it after gilding."
+   },
+   {
+    "id": "ace_of_clubs",
+    "why": "Its permanent Clover and Bell raises get doubled."
+   },
+   {
+    "id": "todays_my_lucky_day",
+    "why": "More Clovers on the grid make the doubling pay more."
+   },
+   {
+    "id": "i_need_to_be_there",
+    "why": "More Bells on the grid make the doubling pay more."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "wait_what_day_is_it",
+    "why": "Halves the Clover and Bell base chances, undoing much of this."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Doubles the current value, not the base value (per the wiki)."
+  ]
+ },
+ {
+  "id": "gold_and_diamonds_are_a_good_investment",
+  "kind": "phone",
+  "summary": "Doubles the current value of Diamonds and Treasures, permanently.",
+  "tip": "It doubles the current value, so take it after gilding or other raises (Golden Diamond/Treasure, Ace of Diamonds). Best in gem builds.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "diamond",
+   "treasure",
+   "gems"
+  ],
+  "provides": [
+   "symbolValue",
+   "diamond",
+   "treasure"
+  ],
+  "cares": [
+   "diamond",
+   "treasure"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": [
+     "diamond",
+     "treasure"
+    ],
+    "mul": 2
+   }
+  ],
+  "synergies": [
+   {
+    "id": "golden_diamond",
+    "why": "Doubles the Diamond value you have grown; take it after gilding."
+   },
+   {
+    "id": "golden_treasure",
+    "why": "Doubles the Treasure value you have grown; take it after gilding."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "Its permanent Diamond and Treasure raises get doubled."
+   },
+   {
+    "id": "necklace",
+    "why": "Doubled Diamond and Treasure values, paid 4x on lone gem Patterns."
+   },
+   {
+    "id": "please_ill_give_you_anything",
+    "why": "More Diamonds on the grid make the doubling pay more."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Diamond, Treasure and Seven base chances."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Doubles the current value, not the base value (per the wiki)."
+  ]
+ },
+ {
+  "id": "im_gonna_go_all_in",
+  "kind": "phone",
+  "summary": "Triples the current value of Sevens, permanently.",
+  "tip": "Little use while Sevens are rare (about 7% of symbols); huge after I didn't hurt anybody..., Seven Picture or Golden Seven. Raise first, triple after.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "seven"
+  ],
+  "provides": [
+   "symbolValue",
+   "seven"
+  ],
+  "cares": [
+   "seven"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": [
+     "seven"
+    ],
+    "mul": 3
+   }
+  ],
+  "synergies": [
+   {
+    "id": "i_didnt_hurt_anybody",
+    "why": "Sevens become the most common symbol, so tripling them pays off."
+   },
+   {
+    "id": "golden_seven",
+    "why": "Triples the Seven value you have grown; take it after gilding."
+   },
+   {
+    "id": "7_sins_stone",
+    "why": "Tripling Seven value after gilding multiplies the gains."
+   },
+   {
+    "id": "pain_killers",
+    "why": "Lone Patterns turn into Sevens, now worth triple."
+   },
+   {
+    "id": "ace_of_spades",
+    "why": "Its permanent +7 Seven raises get tripled if you take this afterwards."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "ive_already_bet_it_all",
+    "why": "Halves the Diamond, Treasure and Seven base chances."
+   },
+   {
+    "id": "expired_meds",
+    "why": "Tripled Sevens are surely your most valuable symbol, so they get banned."
+   }
+  ],
+  "confidence": "high",
+  "assumptions": [
+   "Triples the current value, not the base value (per the wiki)."
+  ]
+ },
+ {
+  "id": "im_thinking_of_some_strategies",
+  "kind": "phone",
+  "summary": "Adds base value to every Pattern of 3 or fewer Symbols (HOR, VER, DIAG and the 2-symbol ones). The first pick doubles them.",
+  "tip": "Strong early, when most coins come from 3-symbol lines. Each repeat adds only +1x base; the Sacred call I want to address some stuff doubles them instead.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [],
+  "provides": [
+   "patternValue",
+   "smallPatterns"
+  ],
+  "cares": [
+   "smallPatterns"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "small",
+    "addBase": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "i_want_to_address_some_stuff",
+    "why": "Add first, then double: the Sacred x2 on small Patterns multiplies the raised value."
+   },
+   {
+    "id": "angels_hand",
+    "why": "Its 2-symbol Patterns get +0.5 each too."
+   },
+   {
+    "id": "pain_killers",
+    "why": "A lone Pattern is usually a 3-symbol line, now worth more and turned into your best symbol."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
+ },
+ {
+  "id": "i_found_a_winning_strategy",
+  "kind": "phone",
+  "summary": "Adds base value to every Pattern of 4+ Symbols (HOR-L, HOR-XL, Zig, Zag, Above, Below, Eye, Jackpot). The first pick doubles them.",
+  "tip": "Best with Luck or forced big Patterns (Nose, Little Star, Disc C, Eye Jar). Take it before I can't quit now! or the Sacred x2 on big Patterns, which double the raised value.",
+  "tier": "B",
+  "ratings": {
+   "power": 4,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "patternValue",
+   "largePatterns"
+  ],
+  "cares": [
+   "largePatterns",
+   "luck"
+  ],
+  "effects": [
+   {
+    "type": "patternValue",
+    "patterns": "large",
+    "addBase": 1
+   }
+  ],
+  "synergies": [
+   {
+    "id": "nose",
+    "why": "Forces Above/Below, whose value rises by 7 each."
+   },
+   {
+    "id": "little_star",
+    "why": "Its forced HOR-XL is worth +3 more."
+   },
+   {
+    "id": "disc_c",
+    "why": "Its forced Zig and Zag are worth +4 more each."
+   },
+   {
+    "id": "eye_jar",
+    "why": "Raises the Eye it forces by 8."
+   },
+   {
+    "id": "ill_take_back_control_of_my_life",
+    "why": "Add first, then double: the Sacred x2 on big Patterns multiplies the raised value."
+   },
+   {
+    "id": "i_cant_quit_now",
+    "why": "Raise the Jackpot by 10 first, then double it."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": []
  }
 ]

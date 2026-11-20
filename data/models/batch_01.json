@@ -47,6 +47,14 @@
    {
     "id": "dung_beetle",
     "why": "Its self-discard counts as a discard for Dung Beetle."
+   },
+   {
+    "id": "corpse_right_arm",
+    "why": "Fuses with Ankh into Resurrection (DLC), which brings charms discarded during a Round back to the store."
+   },
+   {
+    "id": "screen_addiction",
+    "why": "Each bonus Round can take up to 21 spins, so the save is worth more than a whole normal Deadline."
    }
   ],
   "antiSynergies": [
@@ -120,7 +128,7 @@
  {
   "id": "golden_horseshoe",
   "kind": "charm",
-  "summary": "Red Button: every 'Triggers randomly' charm is guaranteed to fire on the next spin. Small break chance if used 5+ times in a Round.",
+  "summary": "Red Button (2 charges): every 'Triggers randomly' charm is guaranteed to fire on the next spin. Small break chance if used 5+ times in a Round.",
   "tip": "Spend charges on key spins: guarantee Rosary before a risky spin, Fake Coin for a free spin, or Broken Calculator on a high-Luck spin.",
   "tier": "C",
   "ratings": {
@@ -159,7 +167,7 @@
   "synergies": [
    {
     "id": "fake_coin",
-    "why": "Each charge guarantees a bonus spin with Luck+4, so you can stay spin-neutral."
+    "why": "Each activation guarantees its bonus spin with Luck+4; overcharged, you stay spin-neutral."
    },
    {
     "id": "rosary",
@@ -406,7 +414,7 @@
    },
    {
     "id": "number_1",
-    "why": "Extra triggers on yellow Patterns are the main way to reach 15+."
+    "why": "Its Round of extra yellow triggers can lift a Jackpot or big Luck spin past 15 Patterns."
    },
    {
     "id": "nuclear_button",
@@ -455,7 +463,7 @@
     "type": "forcePattern",
     "pattern": "JACKPOT",
     "when": {
-     "on": "roundStart"
+     "spin": "first"
     },
     "discardAfter": {
      "count": 1,
@@ -466,7 +474,7 @@
   "synergies": [
    {
     "id": "i_cant_quit_now",
-    "why": "Doubles Jackpot value, so the free Jackpot pays double."
+    "why": "Doubles the Jackpot pattern's own value, adding about a quarter to the free Jackpot spin (the other ~9 Patterns are unchanged)."
    },
    {
     "id": "vines_soup",
@@ -488,7 +496,7 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Assumed the Jackpot lands on the first spin of the next Round (encoded as a one-time roundStart event)."
+   "Assumed the Jackpot lands on the first spin of the next Round; encoded as a first-spin Jackpot that breaks after one activation."
   ]
  },
  {
@@ -537,6 +545,10 @@
    {
     "id": "nuclear_button",
     "why": "Each press gives Luck+8 instead of Luck+4."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Pressed before the last spin, its Luck+4 stacks with Luck+7 for Luck+11."
    }
   ],
   "antiSynergies": [],
@@ -547,14 +559,14 @@
   "id": "tarot_deck",
   "kind": "charm",
   "summary": "Symbols Multiplier that grows by 1 each spin a charm triggers and drops back to 0 after any spin where no charm triggers.",
-  "tip": "Only good with charms that fire almost every spin (D4, Broken Calculator, Lucky Cat), ideally doubled by Horseshoe.",
+  "tip": "Needs charms that fire on most spins (Lucky Cat, Horseshoe-boosted D4 or Broken Calculator); one spin with no charm trigger wipes the bonus.",
   "tier": "C",
   "ratings": {
    "power": 3,
    "scaling": 3,
    "economy": 0,
    "utility": 0,
-   "risk": 2
+   "risk": 0
   },
   "archetypes": [
    "multiplier"
@@ -613,10 +625,10 @@
   "kind": "charm",
   "summary": "Each other charm you discard (sell) or that breaks adds +1x base value to all Symbols, as long as the Beetle stays on the table.",
   "tip": "Buy cheap charms and sell them to grow it. Fidelity Card, the Sacrifices card and charms that break on their own speed it up.",
-  "tier": "A",
+  "tier": "B",
   "ratings": {
    "power": 2,
-   "scaling": 8,
+   "scaling": 7,
    "economy": 0,
    "utility": 0,
    "risk": 1
@@ -934,7 +946,7 @@
    },
    {
     "type": "special",
-    "text": "Repeats once per fully charged Red Button charm equipped each spin; each charge goes to a different random equipped charm."
+    "text": "Repeats once per fully charged equipped Red Button charm after each spin; each charge goes to another random equipped charm."
    }
   ],
   "synergies": [
@@ -1161,7 +1173,7 @@
    },
    {
     "id": "number_1",
-    "why": "An instant extra Round of yellow retriggers."
+    "why": "Refills its 5 charges for another Round of yellow retriggers."
    },
    {
     "id": "weird_clock",
@@ -1170,6 +1182,10 @@
    {
     "id": "abyssu",
     "why": "Bank it in Abyssu and fire it when your best button charm is empty."
+   },
+   {
+    "id": "overdose",
+    "why": "Overdose stops the round-end recharge, so a full refill is worth far more."
    }
   ],
   "antiSynergies": [],
@@ -1205,10 +1221,6 @@
    {
     "id": "scratch_and_hope",
     "why": "Fuses with Scratch and Hope into Magic Potion (DLC)."
-   },
-   {
-    "id": "ace_of_diamonds",
-    "why": "Raising Diamonds and Treasures together makes them tie as most valuable, banning both."
    }
   ],
   "antiSynergies": [
@@ -1223,6 +1235,10 @@
    {
     "id": "seven_picture",
     "why": "Extra Seven chance is wasted while Sevens are banned."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "Its gains push Diamonds and Treasures past Sevens as most valuable, so both get banned."
    }
   ],
   "confidence": "high",
@@ -1631,14 +1647,10 @@
     "type": "symbolsMult",
     "add": 1,
     "when": {
-     "on": "deadlineEnd"
+     "on": "roundSkipped"
     },
     "stack": true,
-    "reset": "never",
-    "perUnit": {
-     "of": "skippedRounds",
-     "per": 1
-    }
+    "reset": "never"
    },
    {
     "type": "symbolsMult",
@@ -1657,11 +1669,15 @@
    },
    {
     "id": "golden_pepper",
-    "why": "Gets +4 Luck per Round skipped in the previous Deadline."
+    "why": "Also rewards skipping: +4 Luck per Round skipped in the previous Deadline."
    },
    {
     "id": "lost_briefcase",
     "why": "30% of the debt up front makes skipping Rounds easier."
+   },
+   {
+    "id": "fixation",
+    "why": "7 one-spin Rounds per Deadline: once the debt is paid, every Round left can be skipped for +1."
    }
   ],
   "antiSynergies": [
@@ -1672,15 +1688,15 @@
   ],
   "confidence": "low",
   "assumptions": [
-   "The '+1' at the end of the description is read as a flat +1 every Deadline; the wiki page omits it, so it may only be +1 per skipped Round.",
-   "skippedRounds here means Rounds skipped in the Deadline that just ended."
+   "The '+1' at the end of the official text is read as a flat +1 every Deadline; the item's own wiki page omits it, so it may only be +1 per skipped Round.",
+   "Only Rounds skipped while you own it count; the game adds the bonus when the Deadline ends (encoded as growth per skipped Round)."
   ]
  },
  {
   "id": "little_star",
   "kind": "charm",
   "summary": "After a spin with no Patterns, the next spin is guaranteed a HOR-XL across the middle row.",
-  "tip": "A big early-game floor since most early spins are blank. Pairs with Pain Killers and Abstract Painting; it breaks the no-reward streaks trains need.",
+  "tip": "A big early-game floor since about half of early spins are blank. Pairs with Pain Killers and Abstract Painting; it breaks the no-reward streaks trains need.",
   "tier": "B",
   "ratings": {
    "power": 6,
