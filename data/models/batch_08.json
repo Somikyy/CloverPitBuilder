@@ -643,7 +643,7 @@
  {
   "id": "i_used_to_eat_healthy",
   "kind": "phone",
-  "summary": "Cherries appear more often (+1 chance), permanently, making them the most common symbol.",
+  "summary": "Cherries appear more often (+1 chance), permanently: from 19.4% to about 30% of symbols at base odds, the most common one.",
   "tip": "Commit only if Cherries carry your build (Golden Cherry, Wood, Shoe, Clicker); hard to undo. More Cherry lines also mean more Patterns per spin.",
   "tier": "C",
   "ratings": {
@@ -707,7 +707,7 @@
  {
   "id": "todays_my_lucky_day",
   "kind": "phone",
-  "summary": "Clovers appear more often (+1 chance), permanently: about twice their base rate.",
+  "summary": "Clovers appear more often (+1 chance), permanently: from 14.9% to about 26% of symbols at base odds.",
   "tip": "Commit only if Clovers carry your build (Golden Clover, Thimble, Sheep, AA Batteries); hard to undo. Pairs with I'm feeling lucky! to double Clover value.",
   "tier": "C",
   "ratings": {
@@ -770,7 +770,7 @@
  {
   "id": "i_need_to_be_there",
   "kind": "phone",
-  "summary": "Bells appear more often (+1 chance), permanently: about twice their base rate.",
+  "summary": "Bells appear more often (+1 chance), permanently: from 14.9% to about 26% of symbols at base odds.",
   "tip": "Commit only if Bells carry your build (Golden Bell, Iron, Wheat, AA Batteries); hard to undo. Pairs with I'm feeling lucky! to double Bell value.",
   "tier": "C",
   "ratings": {
@@ -833,7 +833,7 @@
  {
   "id": "please_ill_give_you_anything",
   "kind": "phone",
-  "summary": "Diamonds appear more often (+1 chance), permanently: more than twice their base rate.",
+  "summary": "Diamonds appear more often (+1 chance), permanently: from 11.9% to about 23% of symbols at base odds.",
   "tip": "Strong for Diamond and gem builds (Golden Diamond, Crystal Sphere, Eye Jar) and hard to undo. Diamonds are worth 5, so the extra chance pays even before any gilding.",
   "tier": "B",
   "ratings": {
@@ -897,7 +897,7 @@
  {
   "id": "i_need_money",
   "kind": "phone",
-  "summary": "Treasures appear more often (+1 chance), permanently: more than twice their base rate.",
+  "summary": "Treasures appear more often (+1 chance), permanently: from 11.9% to about 23% of symbols at base odds.",
   "tip": "Strong for Treasure and gem builds (Golden Treasure, Ship, Eye Jar) and hard to undo. Treasures are yellow, so Number 1 retriggers them too.",
   "tier": "B",
   "ratings": {
@@ -961,7 +961,7 @@
  {
   "id": "i_didnt_hurt_anybody",
   "kind": "phone",
-  "summary": "Sevens appear more often (+1 chance), permanently: three times their base rate, enough to top the base odds of every other symbol.",
+  "summary": "Sevens appear more often (+1 chance), permanently: from 7.5% to about 19.5% of symbols at base odds, the most common one.",
   "tip": "The core of a Seven build: follow with I'm gonna go \"All In\"! (x3 value), Golden Seven or 7 Sins Stone. Sevens then lead the odds, so Scratch and Hope boosts them too.",
   "tier": "B",
   "ratings": {
@@ -1232,7 +1232,7 @@
   "id": "im_thinking_of_some_strategies",
   "kind": "phone",
   "summary": "Adds base value to every Pattern of 3 or fewer Symbols (HOR, VER, DIAG and the 2-symbol ones). The first pick doubles them.",
-  "tip": "Strong early, when most coins come from 3-symbol lines. Each repeat adds only +1x base; the Sacred call I want to address some stuff doubles them instead.",
+  "tip": "Strong early, while 3-symbol lines earn a big share of your coins. Each repeat adds only +1x base; the Sacred call I want to address some stuff doubles them instead.",
   "tier": "B",
   "ratings": {
    "power": 6,
@@ -1339,7 +1339,7 @@
   "id": "i_love_shiny_stuff",
   "kind": "phone",
   "summary": "Every charm in the store gets a random Trait (its price changes to match), then a random equipped charm gets Devious (+0.6% 666 chance).",
-  "tip": "Pause and restock until the store has charms worth buying: Avid (+2 Symbols Mult) and Ambitious (+1 Patterns Mult) are the prizes. Drawer key charms first so Devious hits a spare.",
+  "tip": "Pause and restock until the store has charms worth buying: Avid and Ambitious are the prizes. Drawer key charms first so Devious hits a spare. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -1403,7 +1403,7 @@
   "id": "i_like_cryptic_values",
   "kind": "phone",
   "summary": "Doubles the Clover Tickets you hold, but sets your coins in hand to 0.",
-  "tip": "Pause the call and deposit your coins into the ATM first so you lose little. Best when holding a big ticket pile that feeds Lost Wallet, CloverPet or CloverPot.",
+  "tip": "Pause the call and deposit your coins into the ATM first so you lose little. Best when holding a big ticket pile that feeds Lost Wallet, CloverPet or CloverPot. Locks you out of Sacred Mode.",
   "tier": "B",
   "ratings": {
    "power": 1,
@@ -1477,7 +1477,7 @@
   "id": "i_dont_care_about_the_price",
   "kind": "phone",
   "summary": "Two random charms in the store become free, but your Clover Tickets drop to 0.",
-  "tip": "Pause the call and spend your tickets first, then take it when the store holds pricey charms you want (Evil Deal, Megaphone, Barathrum). Bad news for ticket-hoarding builds.",
+  "tip": "Pause the call and spend your tickets first, then take it when the store holds pricey charms you want (Evil Deal, Megaphone, Barathrum). Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 0,
@@ -1550,7 +1550,7 @@
   "id": "my_head_hurts",
   "kind": "phone",
   "summary": "Triggers every other ability offered in the same call, then gives a random equipped charm Devious (+0.6% 666 chance).",
-  "tip": "In a Red call it fires the other Red options, drawbacks included, so check them first. Banked in Barathrum and released in a normal call, it fires all of that call instead.",
+  "tip": "In a Red call it also fires the other Red options, drawbacks included. Banked in Barathrum and released during a normal call, it fires that whole call. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -1612,7 +1612,7 @@
   "id": "give_me_back_my_money",
   "kind": "phone",
   "summary": "Doubles the coins you hold, but sets your Clover Tickets to 0.",
-  "tip": "Pause it, spend your tickets, then hold your coins (no deposits) and take it just before paying the debt to double that Deadline. From Deadline 7 a 666 wipes held coins.",
+  "tip": "Pause it, spend your tickets, hold your coins (no deposits) and take it just before paying the debt to double that Deadline. From Deadline 7 a 666 wipes held coins. Locks you out of Sacred Mode.",
   "tier": "B",
   "ratings": {
    "power": 6,
@@ -1689,8 +1689,8 @@
  {
   "id": "theres_nothing_to_eat_but_mould",
   "kind": "phone",
-  "summary": "Halves the base chance of Lemons and Cherries for good, so other symbols appear more; then a random equipped charm gets Devious (+0.6% 666).",
-  "tip": "A focus tool for non-fruit builds: losing the two commonest, cheapest symbols makes Clovers, Bells and gems show up more. Drawer key charms first so Devious hits a spare.",
+  "summary": "Lemons and Cherries drop for good from 19.4% to about 12% each (base odds), so others show up more; a random equipped charm gets Devious (+0.6% 666).",
+  "tip": "A focus tool for non-fruit builds: Clovers, Bells and gems show up more. Drawer key charms first so Devious hits a spare. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -1767,8 +1767,8 @@
  {
   "id": "wait_what_day_is_it",
   "kind": "phone",
-  "summary": "Halves the base chance of Clovers and Bells for good, so the other symbols appear more often.",
-  "tip": "Take it only when Clovers and Bells are not part of your plan: it concentrates the grid on fruits and gems. Painful for Clover/Bell builds and CloverBell.",
+  "summary": "Halves the base chance of Clovers and Bells for good: from 14.9% to about 9% each at base odds, so the other symbols appear more often.",
+  "tip": "Take it only when Clovers and Bells are not part of your plan: it concentrates the grid on fruits and gems. Painful for Clover/Bell builds and CloverBell. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -1841,8 +1841,8 @@
  {
   "id": "ive_already_bet_it_all",
   "kind": "phone",
-  "summary": "Halves the base chance of Diamonds, Treasures and Sevens for good: fewer high-value symbols, but fruits, Clovers and Bells line up more often.",
-  "tip": "Only for fruit or Clover/Bell builds, where it means more Patterns per spin. Ruinous for gem, Seven and Eye Jar builds.",
+  "summary": "Halves the base chance of Diamonds, Treasures and Sevens for good (to about 7%, 7% and 4.4%): fewer high-value symbols, but more lines of the rest.",
+  "tip": "Only for fruit or Clover/Bell builds, where it means more Patterns per spin. Ruinous for gem, Seven and Eye Jar builds. Locks you out of Sacred Mode.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -1917,7 +1917,7 @@
   "id": "alexithymia",
   "kind": "phone",
   "summary": "Unholy Fusion DLC: spawns a random Evil charm on your table, then sets your coins in hand to 0.",
-  "tip": "Deposit your coins before taking it. Evil charms mostly pay off in 666 or Revenge builds, and Lover #1 + #2 fuse into Lust; some hurt (Lover #2, Fraud, Limbo).",
+  "tip": "Deposit your coins before taking it. Evil charms mostly pay off in 666 or Revenge builds, and Lover #1 + #2 fuse into Lust; some hurt (Lover #2, Fraud, Limbo). Locks you out of Sacred Mode.",
   "tier": "D",
   "ratings": {
    "power": 2,

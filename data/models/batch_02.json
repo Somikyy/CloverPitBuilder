@@ -44,11 +44,11 @@
    },
    {
     "id": "sacrifices",
-    "why": "That memory card's -1 store discount stacks with this one."
+    "why": "Its permanent -1 store discount stacks with this one, so cheap charms can become free."
    },
    {
     "id": "dear_diary",
-    "why": "Surgery: fuses with Fidelity Card into VIP Card (DLC)."
+    "why": "Surgery (DLC): Fidelity Card + Dear Diary fuse into VIP Card."
    }
   ],
   "antiSynergies": [],
@@ -97,7 +97,7 @@
    },
    {
     "id": "property_certificate",
-    "why": "Surgery: fuses with Sardines into Beach Hotel, +3 charm space (DLC)."
+    "why": "Surgery (DLC): Sardines + Property Certificate fuse into Beach Hotel (+3 charm space)."
    },
    {
     "id": "stuck_in_a_routine",
@@ -225,11 +225,11 @@
    },
    {
     "id": "life_lessons",
-    "why": "Adds a Trait to a charm every Deadline."
+    "why": "Adds a Devious Trait to a random table charm every Deadline: another Trait for The Collector to count, at the cost of more 666 risk."
    },
    {
     "id": "dark_lotus",
-    "why": "Surgery: fuses with The Collector into Graded Card (DLC)."
+    "why": "Surgery (DLC): The Collector + Dark Lotus fuse into Graded Card (Avid/Ambitious bonuses become x2)."
    }
   ],
   "antiSynergies": [
@@ -291,10 +291,6 @@
     "why": "One press fires every random-trigger charm at once."
    },
    {
-    "id": "tarot_deck",
-    "why": "Also feeds on charm activations; both reward a busy board."
-   },
-   {
     "id": "broken_calculator",
     "why": "35% per-spin activation that also retriggers Patterns."
    },
@@ -323,16 +319,13 @@
    "utility": 2,
    "risk": 0
   },
-  "archetypes": [
-   "jackpot"
-  ],
+  "archetypes": [],
   "provides": [
    "aboveBelow",
    "largePatterns"
   ],
   "cares": [
    "aboveBelow",
-   "largePatterns",
    "patternValue"
   ],
   "effects": [
@@ -371,7 +364,7 @@
    },
    {
     "id": "diesel_locomotive",
-    "why": "Missed spins grow every Pattern's value; the forced Above/Below cashes it in."
+    "why": "Each Diesel trigger adds +7 to Above and Below (their base value); Nose cashes one in every few spins."
    }
   ],
   "antiSynergies": [],
@@ -385,10 +378,10 @@
   "id": "eye_jar",
   "kind": "charm",
   "summary": "After scoring Diamonds, Treasures or Sevens 3 spins in a row, the next spin shows the Eye pattern.",
-  "tip": "Only for builds that score gems nearly every spin. Combine with Pareidolia or Eye of God for the payoff.",
+  "tip": "Only for builds that score gems nearly every spin: stack Diamond, Treasure or Seven chance first. Pareidolia or Eye of God turn the Eyes into big payoffs.",
   "tier": "C",
   "ratings": {
-   "power": 3,
+   "power": 2,
    "scaling": 2,
    "economy": 0,
    "utility": 0,
@@ -466,7 +459,7 @@
   "id": "voicemail",
   "kind": "charm",
   "summary": "Symbols Multiplier +1 for every phone reroll made this run. Rerolls cost tickets.",
-  "tip": "Turns spare tickets into multiplier and better calls. Reroll costs climb each Deadline, so it's best with a strong ticket income.",
+  "tip": "A reroll costs Deadline-1 tickets, +1 per extra reroll that Deadline, and each adds +1 Symbols Multiplier for good: cheapest early, best with strong ticket income.",
   "tier": "C",
   "ratings": {
    "power": 2,
@@ -502,10 +495,6 @@
     "why": "Doubles your tickets to fund many rerolls."
    },
    {
-    "id": "cloverpot",
-    "why": "Deadline ticket income pays for extra rerolls."
-   },
-   {
     "id": "raging_capitalist",
     "why": "Ticket-modifier income pays for rerolls."
    }
@@ -529,7 +518,7 @@
   "id": "ring_bell",
   "kind": "charm",
   "summary": "Red Button (3 charges): each press gives Symbols Multiplier +1 permanently.",
-  "tip": "Press it whenever it is full. Charge sources such as Potato Battery or Nuclear Button turn it into steady scaling.",
+  "tip": "Press it whenever it is full. Charge sources (Potato Battery, Electricity Meter) and Nuclear Button's double trigger turn it into steady scaling.",
   "tier": "B",
   "ratings": {
    "power": 3,
@@ -612,8 +601,7 @@
   "provides": [
    "symbolValue",
    "allSymbols",
-   "triggersRandomly",
-   "noReward"
+   "triggersRandomly"
   ],
   "cares": [
    "noReward",
@@ -640,7 +628,7 @@
    },
    {
     "id": "midas_touch",
-    "why": "Surgery: fuses into First Place Prize, 40% per spin to raise scored symbols (DLC)."
+    "why": "Surgery (DLC): Consolation Prize + Midas Touch fuse into First Place Prize (40% per spin: scored symbols +base value)."
    },
    {
     "id": "depression",
@@ -648,7 +636,7 @@
    },
    {
     "id": "steam_locomotive",
-    "why": "Both turn empty spins into permanent symbol value."
+    "why": "An empty spin is also a miss toward Steam's 3-miss streak, so the same bad spins feed both symbol-value boosts."
    }
   ],
   "antiSynergies": [],
@@ -665,7 +653,7 @@
   "tier": "A",
   "ratings": {
    "power": 7,
-   "scaling": 6,
+   "scaling": 4,
    "economy": 0,
    "utility": 0,
    "risk": 0
@@ -710,7 +698,7 @@
    },
    {
     "id": "the_collector",
-    "why": "Surgery: fuses with Dark Lotus into Graded Card (DLC)."
+    "why": "Surgery (DLC): Dark Lotus + The Collector fuse into Graded Card."
    }
   ],
   "antiSynergies": [],
@@ -724,7 +712,7 @@
   "id": "weird_clock",
   "kind": "charm",
   "summary": "Red Button (12 charges): +1 Round this Deadline. Using it 5+ times in one Deadline discards it.",
-  "tip": "Needs strong recharging (Car Battery, Potato Battery, Nuclear Button). Stop at 4 uses per Deadline if you want to keep it.",
+  "tip": "Needs heavy recharging (Car Battery, Potato Battery, Electricity Meter). The 5th use in one Deadline still gives a Round but discards it, so stop at 4 to keep it.",
   "tier": "C",
   "ratings": {
    "power": 4,
@@ -760,7 +748,7 @@
   "synergies": [
    {
     "id": "nuclear_button",
-    "why": "Each press triggers twice: +2 Rounds (both count toward the 5-use limit)."
+    "why": "Each press triggers it twice: +2 Rounds, but both uses count toward the 5-per-Deadline limit."
    },
    {
     "id": "car_battery",
@@ -768,7 +756,7 @@
    },
    {
     "id": "vorago",
-    "why": "Discarding and retrieving it through Vorago resets its per-Deadline limit."
+    "why": "Discard it, then discard Vorago: it comes back fully charged with its per-Deadline use count reset."
    },
    {
     "id": "potato_battery",
@@ -780,7 +768,7 @@
    },
    {
     "id": "corpse_left_leg",
-    "why": "Surgery: fuses with Weird Clock into Eternal Rest (DLC)."
+    "why": "Surgery (DLC): Weird Clock + Corpse (Left Leg) fuse into Eternal Rest."
    }
   ],
   "antiSynergies": [],
@@ -824,7 +812,7 @@
   "synergies": [
    {
     "id": "abyssu",
-    "why": "Bank it with Abyssu and cash it in later as an emergency Round."
+    "why": "Abyssu banks a second activation: discard Abyssu later for another emergency Round."
    },
    {
     "id": "calendar",
@@ -836,7 +824,7 @@
    },
    {
     "id": "golden_pepper",
-    "why": "An extra skippable Round adds +4 Luck next Deadline."
+    "why": "Each extra Round you skip adds +4 to Golden Pepper's Luck roll next Deadline."
    }
   ],
   "antiSynergies": [],
@@ -905,7 +893,7 @@
    },
    {
     "id": "fake_coin",
-    "why": "Surgery: fuses with Shopping Cart into RWD Cart, which doubles free restocks (DLC)."
+    "why": "Surgery (DLC): Shopping Cart + Fake Coin fuse into RWD Cart, a one-time doubling of the free restocks you hold (10% risk of losing them)."
    }
   ],
   "antiSynergies": [
@@ -971,7 +959,7 @@
    },
    {
     "id": "abyssu",
-    "why": "Bank it in Abyssu and take the restocks when you need them."
+    "why": "Abyssu banks a second activation: discard Abyssu later for 3 more free restocks."
    }
   ],
   "antiSynergies": [],
@@ -1028,17 +1016,17 @@
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "Assumed to count spins across Rounds; with 7-spin Rounds it lands on each Round's last spin."
+   "Assumed to count spins continuously across Rounds (not restarting each Round); which spin of the Round it lands on is unverified."
   ]
  },
  {
   "id": "disc_b",
   "kind": "charm",
   "summary": "Every 7th spin gets Luck +7.",
-  "tip": "A cheap guaranteed lucky spin every 7 spins. Best early, or as part of the Platinum Record fusion (DLC).",
-  "tier": "C",
+  "tip": "A 1-ticket guaranteed Luck +7 spin every 7 spins, about what Rotated Hamsa gives on 7-spin Rounds. Also part of the Platinum Record fusion (DLC).",
+  "tier": "B",
   "ratings": {
-   "power": 3,
+   "power": 4,
    "scaling": 1,
    "economy": 0,
    "utility": 0,
@@ -1073,20 +1061,20 @@
    },
    {
     "id": "depression",
-    "why": "Charm Luck still works under Depression, giving a planned scoring spin."
+    "why": "Its Luck comes from the charm, so it survives Depression and gives a no-Luck build a reliable scoring spin."
    }
   ],
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
-   "Assumed to count spins across Rounds."
+   "Assumed to count spins continuously across Rounds (not restarting each Round)."
   ]
  },
  {
   "id": "disc_c",
   "kind": "charm",
   "summary": "Every 7th spin is forced to show both the ZIG and ZAG patterns.",
-  "tip": "Two 4x patterns every 7 spins for 1 ticket is strong early and still fine later. Grows with large-pattern value boosts.",
+  "tip": "ZIG + ZAG (pattern value 4 each) every 7 spins for 1 ticket: strong early and still fine later. Grows with large-pattern value boosts.",
   "tier": "B",
   "ratings": {
    "power": 5,
@@ -1095,15 +1083,12 @@
    "utility": 0,
    "risk": 0
   },
-  "archetypes": [
-   "jackpot"
-  ],
+  "archetypes": [],
   "provides": [
    "zigZag",
    "largePatterns"
   ],
   "cares": [
-   "largePatterns",
    "patternValue"
   ],
   "effects": [
@@ -1136,19 +1121,23 @@
    {
     "id": "ill_take_back_control_of_my_life",
     "why": "Doubles all 4+ symbol patterns, including ZIG and ZAG."
+   },
+   {
+    "id": "ace_of_diamonds",
+    "why": "The forced ZIG and ZAG are 4+ symbol patterns, so every 7th spin permanently raises Diamonds and Treasures."
    }
   ],
   "antiSynergies": [],
   "confidence": "high",
   "assumptions": [
    "ZIG and ZAG share two middle cells, so both come out in the same symbol (8 cells).",
-   "Assumed to count spins across Rounds."
+   "Assumed to count spins continuously across Rounds (not restarting each Round)."
   ]
  },
  {
   "id": "cardboard_house",
   "kind": "charm",
-  "summary": "Takes no space: permanently gives +1 charm slot. It appears only once per run.",
+  "summary": "Takes no space: permanently gives +1 charm slot. Once used, it never shows up in the store again.",
   "tip": "Buy it whenever you see it. A permanent slot outlasts almost any other 2-ticket purchase.",
   "tier": "A",
   "ratings": {
@@ -1233,7 +1222,7 @@
   "synergies": [
    {
     "id": "midas_touch",
-    "why": "More presses per Round means more permanent symbol growth."
+    "why": "Restock charges refill its 4-charge cost, so it can be switched on in more Rounds."
    },
    {
     "id": "ring_bell",
@@ -1283,8 +1272,7 @@
    "noReward"
   ],
   "provides": [
-   "charges",
-   "noReward"
+   "charges"
   ],
   "cares": [
    "redButton",
@@ -1336,7 +1324,7 @@
   "id": "fake_coin",
   "kind": "charm",
   "summary": "10% chance each spin to grant 1 extra spin with Luck +4.",
-  "tip": "Small but permanent. Horseshoe makes it 20%, and the extra spins help Lucky Cat and Rotated Hamsa.",
+  "tip": "Small but permanent. Horseshoe doubles it to 20%; an extra spin gained on a Round's last spin gives Rotated Hamsa another Luck +7 spin.",
   "tier": "C",
   "ratings": {
    "power": 3,
@@ -1384,7 +1372,7 @@
    },
    {
     "id": "rotated_hamsa",
-    "why": "An extra spin after the last one gives Rotated Hamsa another Luck +7 spin."
+    "why": "An extra spin gained on the last spin becomes a new last spin, so Rotated Hamsa gives Luck +7 again."
    },
    {
     "id": "lucky_cat",
@@ -1392,20 +1380,20 @@
    },
    {
     "id": "shopping_cart",
-    "why": "Surgery: fuses with Fake Coin into RWD Cart (DLC)."
+    "why": "Surgery (DLC): Fake Coin + Shopping Cart fuse into RWD Cart."
    }
   ],
   "antiSynergies": [],
-  "confidence": "high",
+  "confidence": "medium",
   "assumptions": [
-   "The extra spin and its Luck +4 come from the same 10% roll."
+   "In the game the extra spin and its Luck +4 come from one 10% roll; the engine cannot put Luck on the extra spin, so the Luck is encoded as its own 10% roll on a normal spin (similar average value)."
   ]
  },
  {
   "id": "ancient_coin",
   "kind": "charm",
   "summary": "Red Button (1 charge): after the next spin you get an extra spin with Luck +7. It may break after its 3rd use.",
-  "tip": "Press it every Round for a free lucky spin. Expect it to break after several uses; it's cheap to buy again.",
+  "tip": "Press it every Round; it regains its charge each Round. Pressed before the last spin, the extra spin also gets Rotated Hamsa's Luck +7. Cheap to rebuy when it breaks.",
   "tier": "B",
   "ratings": {
    "power": 5,
@@ -1455,11 +1443,11 @@
    },
    {
     "id": "rotated_hamsa",
-    "why": "Used on the last spin, it gives Rotated Hamsa another Luck +7 last spin."
+    "why": "Pressed before the last spin, its extra spin becomes a new last spin and also gets Rotated Hamsa's Luck +7."
    },
    {
     "id": "super_capacitor",
-    "why": "Recharges its single charge mid-Round."
+    "why": "With another fully charged button charm equipped, it can refill this single charge between spins."
    },
    {
     "id": "potato_battery",
@@ -1473,7 +1461,8 @@
   "antiSynergies": [],
   "confidence": "medium",
   "assumptions": [
-   "Discard rule read as: once used 3 times, each activation has a 15% chance (at most once per Round) to discard it."
+   "Discard rule read as: once used 3 times, each activation has a 15% chance (at most once per Round) to discard it.",
+   "The engine gives the Luck +7 to the next spin rather than to the extra spin; total value is about the same."
   ]
  },
  {
@@ -1503,7 +1492,7 @@
   "synergies": [
    {
     "id": "toy_train",
-    "why": "Surgery: fuses with Cat Food into Cat Toy (DLC)."
+    "why": "Surgery (DLC): Cat Food + Toy Train fuse into Cat Toy (+2 spins with Luck +8 after 3 straight misses)."
    },
    {
     "id": "lucky_cat",
@@ -1572,8 +1561,8 @@
     "why": "More 2-miss streaks, so more recharges."
    },
    {
-    "id": "toy_train",
-    "why": "With pity Luck gone, Toy Train becomes your comeback spin and fires more often."
+    "id": "cat_toy",
+    "why": "Cat Toy (DLC) gives +2 spins with Luck +8 after 3 straight misses; without spontaneous Luck those streaks come more often."
    }
   ],
   "antiSynergies": [],
@@ -1589,7 +1578,7 @@
   "tip": "Softens dry streaks early. Avoid it with Steam or Diesel Locomotive: its Luck breaks their 3-miss streaks.",
   "tier": "C",
   "ratings": {
-   "power": 2,
+   "power": 4,
    "scaling": 0,
    "economy": 0,
    "utility": 2,
@@ -1621,11 +1610,7 @@
   "synergies": [
    {
     "id": "cat_food",
-    "why": "Surgery: fuses with Toy Train into Cat Toy (DLC)."
-   },
-   {
-    "id": "depression",
-    "why": "With pity Luck gone, Toy Train becomes your comeback spin and fires more often."
+    "why": "Surgery (DLC): Toy Train + Cat Food fuse into Cat Toy."
    }
   ],
   "antiSynergies": [
@@ -1661,8 +1646,7 @@
   ],
   "provides": [
    "symbolValue",
-   "allSymbols",
-   "noReward"
+   "allSymbols"
   ],
   "cares": [
    "noReward"
@@ -1722,8 +1706,7 @@
    "noReward"
   ],
   "provides": [
-   "patternValue",
-   "noReward"
+   "patternValue"
   ],
   "cares": [
    "noReward"

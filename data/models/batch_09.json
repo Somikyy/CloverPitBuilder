@@ -452,5 +452,573 @@
   "assumptions": [
    "Free Restocks can be stockpiled between Deadlines (wiki strategy note)."
   ]
+ },
+ {
+  "id": "fixation",
+  "kind": "memory",
+  "summary": "Run-long: 7 Rounds per Deadline but only 1 spin per Round; ending a Deadline early pays 2 tickets per skipped Round instead of 4.",
+  "tip": "Each spin is both first and last of its Round: Hamsa and Rotated Hamsa fire every spin and Red Button charms recharge 7 times a Deadline. Cat Food brings you back to 3 spins per Round.",
+  "tier": "C",
+  "ratings": {
+   "power": 2,
+   "scaling": 5,
+   "economy": 4,
+   "utility": 0,
+   "risk": 6
+  },
+  "archetypes": [
+   "redButton",
+   "retrigger",
+   "interest"
+  ],
+  "provides": [
+   "rounds"
+  ],
+  "cares": [
+   "spins",
+   "redButton",
+   "interest"
+  ],
+  "effects": [
+   {
+    "type": "rounds",
+    "set": 7
+   },
+   {
+    "type": "spins",
+    "set": 1
+   },
+   {
+    "type": "tickets",
+    "add": -2,
+    "when": {
+     "on": "roundSkipped"
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "cat_food",
+    "why": "+2 spins per Round gives 21 spins per Deadline again."
+   },
+   {
+    "id": "hamsa",
+    "why": "Every spin is a Round's first, so all Patterns trigger twice on every spin."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Every spin is a Round's last, so every spin gets Luck +7."
+   },
+   {
+    "id": "ring_bell",
+    "why": "Charges refill at every Round's end: 7 per Deadline instead of 3."
+   },
+   {
+    "id": "stonks",
+    "why": "Interest pays at every Round's end, 7 times per Deadline instead of 3."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "personal_trainer",
+    "why": "Loses 5% per Round, so it lasts only 5 spins."
+   },
+   {
+    "id": "fruit_basket",
+    "why": "Breaks after 10 Rounds, which is only 10 spins."
+   },
+   {
+    "id": "vines_soup",
+    "why": "Its doubling lasts until the Round ends, right after the spin that earned it."
+   },
+   {
+    "id": "stain",
+    "why": "Its Round-long Pattern bonus expires right after the spin that earned it."
+   },
+   {
+    "id": "ankh",
+    "why": "Its 2 extra Rounds are only 2 spins."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "The 2-instead-of-4 skip reward is encoded as -2 tickets per skipped Round versus normal.",
+   "Assumed first-spin and last-spin effects both apply to a Round's single spin."
+  ]
+ },
+ {
+  "id": "screen_addiction",
+  "kind": "memory",
+  "summary": "Run-long: each Deadline is one Round of up to 21 spins that pays extra tickets. The run starts with 27 coins and 5 tickets.",
+  "tip": "Round-long buffs now last the whole Deadline (Vine's Soup, Number 1, Midas Touch) and each extra Round is 21 spins. Interest and Red Button recharges come once a Deadline.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 4,
+   "economy": 3,
+   "utility": 1,
+   "risk": 4
+  },
+  "archetypes": [
+   "multiplier",
+   "retrigger"
+  ],
+  "provides": [
+   "spins",
+   "tickets",
+   "coins"
+  ],
+  "cares": [
+   "rounds",
+   "temporary"
+  ],
+  "effects": [
+   {
+    "type": "rounds",
+    "set": 1
+   },
+   {
+    "type": "spins",
+    "set": 21
+   },
+   {
+    "type": "coins",
+    "add": 27,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "tickets",
+    "add": 5,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "special",
+    "text": "The single Round pays more Clover Tickets than a normal Round (exact amount not stated)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "music_tape",
+    "why": "An extra Round is 21 more spins."
+   },
+   {
+    "id": "weird_clock",
+    "why": "Every extra Round it grants is a full 21-spin Round."
+   },
+   {
+    "id": "vines_soup",
+    "why": "A doubling lasts the rest of the 21-spin Deadline."
+   },
+   {
+    "id": "number_1",
+    "why": "One press retriggers yellow Patterns for the whole Deadline."
+   },
+   {
+    "id": "personal_trainer",
+    "why": "Fades 5% per Round, so its Repetition lasts 5 whole Deadlines."
+   },
+   {
+    "id": "fortune_teller",
+    "why": "Fades 5% per Round, so its Chain chance lasts 5 whole Deadlines."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "hamsa",
+    "why": "Fires on 1 spin per Deadline instead of 3."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Fires on 1 spin per Deadline instead of 3."
+   },
+   {
+    "id": "golden_pepper",
+    "why": "With 1 Round per Deadline there is nothing to skip."
+   },
+   {
+    "id": "calendar",
+    "why": "No Rounds to skip, so it gains only +1 per Deadline."
+   },
+   {
+    "id": "greedy_king",
+    "why": "No Rounds to skip, so its Golden chance never grows."
+   },
+   {
+    "id": "stonks",
+    "why": "Interest pays once per Deadline instead of 3 times."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "The extra tickets per Round are not stated; likely sized to make up for the 2 missing Rounds.",
+   "Assumed effects lasting 'until the end of the Round' now last the whole Deadline."
+  ]
+ },
+ {
+  "id": "cold_affection",
+  "kind": "memory",
+  "summary": "Start the run with 12 tickets, but Rounds pay 0 tickets for the rest of the run unless an effect changes it.",
+  "tip": "A fast start: buy 3-4 charms right away. After that, tickets must come from skipped Rounds, selling charms, Florid Traits or Ticket modifiers such as Raging Capitalist.",
+  "tier": "C",
+  "ratings": {
+   "power": 3,
+   "scaling": 1,
+   "economy": 2,
+   "utility": 1,
+   "risk": 5
+  },
+  "archetypes": [
+   "tickets"
+  ],
+  "provides": [
+   "tickets"
+  ],
+  "cares": [
+   "ticketMod",
+   "roundSkip"
+  ],
+  "effects": [
+   {
+    "type": "tickets",
+    "add": 12,
+    "per": "instant",
+    "when": {
+     "event": "instant"
+    }
+   },
+   {
+    "type": "ticketIncome",
+    "set": 0
+   }
+  ],
+  "synergies": [
+   {
+    "id": "raging_capitalist",
+    "why": "Ticket modifiers on every Symbol replace the lost Round income."
+   },
+   {
+    "id": "thimble",
+    "why": "A 2-ticket source of Ticket modifiers on Clovers."
+   },
+   {
+    "id": "cloverpot",
+    "why": "Turns the 12-ticket start into more tickets at each Deadline's end."
+   },
+   {
+    "id": "lost_briefcase",
+    "why": "30% of the debt at once helps you end Deadlines early for 4 tickets per skipped Round."
+   },
+   {
+    "id": "can_i_borrow_some_green",
+    "why": "+5 tickets per call."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "voicemail",
+    "why": "Its growth needs phone rerolls, which cost tickets you no longer earn each Round."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed Deadline-end rewards (skipped Rounds, Florid, CloverPot) still pay; only the per-Round payout drops to 0."
+  ]
+ },
+ {
+  "id": "old_wounds",
+  "kind": "memory",
+  "summary": "Run-long: every Deadline's debt is halved, but you start with only 15 coins, already deposited. Scores can't go to the Leaderboard.",
+  "tip": "The relaxed-run card: halved debts are worth about double income all run. Expect a slow first Deadline from the tiny start, then it carries you.",
+  "tier": "S",
+  "ratings": {
+   "power": 7,
+   "scaling": 6,
+   "economy": 0,
+   "utility": 6,
+   "risk": 2
+  },
+  "archetypes": [],
+  "provides": [
+   "debt"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "debt",
+    "mul": 0.5
+   },
+   {
+    "type": "special",
+    "text": "The run starts with only 15 coins, already deposited at the ATM. Runs with this card can't upload a score to the Leaderboard."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "calendar",
+    "why": "Halved debts are easier to pay early, so you skip more Rounds for its multiplier."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Halved debts make skipped Rounds common, and each one raises its Golden chance."
+   },
+   {
+    "id": "golden_pepper",
+    "why": "More skipped Rounds mean bigger Luck triggers next Deadline."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "'50% easier' read as every debt multiplied by 0.5 (the Hard Mode wiki page calls it a debt modifier).",
+   "Assumed the 15 deposited coins replace the usual starting coins."
+  ]
+ },
+ {
+  "id": "bullies_favorite",
+  "kind": "memory",
+  "summary": "When a Deadline ends with 6+ charms equipped, one of them is discarded at random, then you get 2 free Restocks.",
+  "tip": "A drawback card: any Deadline can cost you a key charm. Dung Beetle grows on each forced discard, Vorago can return the lost charm, and drawers let you drop to 5 charms first.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 3,
+   "utility": 0,
+   "risk": 7
+  },
+  "archetypes": [
+   "discard",
+   "restock"
+  ],
+  "provides": [
+   "discard",
+   "restock"
+  ],
+  "cares": [
+   "discard",
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "freeRestocks",
+    "add": 2,
+    "per": "deadline",
+    "when": {
+     "on": "deadlineEnd"
+    }
+   },
+   {
+    "type": "special",
+    "text": "When a Deadline ends with 6 or more charms equipped, one equipped charm is discarded at random (before the 2 free Restocks)."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "dung_beetle",
+    "why": "Each forced discard raises all Symbols by their base value."
+   },
+   {
+    "id": "vorago",
+    "why": "Holds the discarded charm so you can bring it back."
+   },
+   {
+    "id": "shopping_cart",
+    "why": "Bank the 2 free Restocks for +4 Symbols Multiplier."
+   },
+   {
+    "id": "gluttony",
+    "why": "Pays coins whenever an effect discards a charm."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "hourglass",
+    "why": "Its slow Deadline-by-Deadline growth is lost if it is the charm picked."
+   },
+   {
+    "id": "pentacle",
+    "why": "Its stacked Symbols Multiplier can be wiped by a random discard."
+   },
+   {
+    "id": "calendar",
+    "why": "Its banked Symbols Multiplier can be wiped by a random discard."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the 2 free Restocks come only when the discard happens (6+ charms equipped).",
+   "Assumed only charms on the table count, not those in drawers."
+  ]
+ },
+ {
+  "id": "delusions_of_grandeur",
+  "kind": "memory",
+  "summary": "Run-long: every Deadline's debt is doubled. Escaping through the door unlocks a cosmetic Golden Knob for the slot machine.",
+  "tip": "A pure challenge card: pick it only to chase the Golden Knob with a build you trust. Every target is twice as high, so permanent scaling matters even more.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 0,
+   "economy": 0,
+   "utility": 0,
+   "risk": 9
+  },
+  "archetypes": [],
+  "provides": [
+   "debt"
+  ],
+  "cares": [],
+  "effects": [
+   {
+    "type": "debt",
+    "mul": 2
+   },
+   {
+    "type": "special",
+    "text": "Opening the door (escaping) with this card unlocks the Golden Knob for the slot machine, if you don't have it yet."
+   }
+  ],
+  "synergies": [],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "The Golden Knob is assumed to be cosmetic (it is tied to the 'Omnipotent' achievement)."
+  ]
+ },
+ {
+  "id": "important_choice",
+  "kind": "memory",
+  "summary": "Run-long: choosing Most Spins doubles the 666 chance for that Round; choosing Fewer Spins halves it.",
+  "tip": "From Deadline 3, take Fewer Spins on Rounds you can't afford to lose. Devil builds (Baphomet, Gabihbb'h) and Sacred runs, where the odds cover 999s, can welcome Most Spins.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 2,
+   "risk": 5
+  },
+  "archetypes": [
+   "devil",
+   "sacred"
+  ],
+  "provides": [
+   "666"
+  ],
+  "cares": [
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "chance666",
+    "mul": 2
+   },
+   {
+    "type": "special",
+    "text": "The x2 applies to Rounds played with the Most Spins option; picking Fewer Spins halves the 666 chance for that Round instead."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "baphomet",
+    "why": "Doubled 666 odds double Above/Below more often."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "More 666s mean more Rounds with a doubled Symbols Multiplier."
+   },
+   {
+    "id": "crystal_skull",
+    "why": "More 666s mean more Rounds with tripled gem values."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Cancels a 666 while it still counts for 666 charms."
+   },
+   {
+    "id": "adams_ribcage",
+    "why": "In Sacred Mode, more 999s double your Patterns Multiplier more often."
+   },
+   {
+    "id": "ophanim_wheels",
+    "why": "In Sacred Mode, more 999s mean more forced Jackpots."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "The engine assumes Most Spins, so the 666 chance is encoded as doubled.",
+   "Assumed the same odds change applies to 999s in Sacred Mode."
+  ]
+ },
+ {
+  "id": "recovery_attempts",
+  "kind": "memory",
+  "summary": "Run-long: 666s are twice as likely, but hitting a Jackpot refunds all coins lost to 666s earlier in that same Round.",
+  "tip": "Only for Luck/Jackpot or devil builds: frequent Jackpots refund most losses, and 666 charms like Baphomet trigger twice as often. Holy Bible covers Rounds you can't lose.",
+  "tier": "C",
+  "ratings": {
+   "power": 1,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 6
+  },
+  "archetypes": [
+   "devil",
+   "jackpot"
+  ],
+  "provides": [
+   "666"
+  ],
+  "cares": [
+   "jackpot",
+   "luck",
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "chance666",
+    "mul": 2
+   },
+   {
+    "type": "special",
+    "text": "Whenever you hit a Jackpot, you get back all coins lost to 666s earlier in the same Round."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "baphomet",
+    "why": "Twice the 666s means twice the Above/Below doublings."
+   },
+   {
+    "id": "gabihbbh",
+    "why": "More 666s mean more Rounds with a doubled Symbols Multiplier."
+   },
+   {
+    "id": "one_trick_pony",
+    "why": "Its guaranteed Jackpot Round can refund a 666 hit earlier in that Round."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Luck +7 on the last spin raises the odds of a late, refunding Jackpot."
+   },
+   {
+    "id": "holy_bible",
+    "why": "Cancels a 666 outright, a safety net against the doubled odds."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the refund only covers 666 losses from before the Jackpot in the same Round.",
+   "Assumed 999 odds double in Sacred Mode as well."
+  ]
  }
 ]

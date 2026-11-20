@@ -1429,6 +1429,7 @@
   "assumptions": [
    "The effects are rolled per copy and cannot be simulated, so the ratings describe an average roll.",
    "Assumed every listed option is equally likely; the +2 symbol-chance upside comes in four versions.",
+   "provides lists what a roll can give, not what every copy has.",
    "Drawer storage and the Vorago re-roll come from the wiki's strategy notes."
   ]
  },
@@ -1856,7 +1857,7 @@
   "id": "sacred_heart",
   "kind": "charm",
   "summary": "Each Red Button press has a 50% chance to use no charges, so button charms fire about twice as often.",
-  "tip": "Roughly doubles uses of Midas Touch, Number 1/2, Ring Bell and the Pictures with no charm-space cost. Useless without button charms. Fuses with Horseshoe and Nuclear Button into Glorious Trumpet (DLC).",
+  "tip": "Roughly doubles uses of Midas Touch, Number 1/2, Ring Bell and the Pictures, without Nuclear Button's -1 slot. Useless without button charms. Fuses into Glorious Trumpet (DLC).",
   "tier": "B",
   "ratings": {
    "power": 0,
@@ -1919,11 +1920,11 @@
   "id": "halo",
   "kind": "charm",
   "summary": "When a spin has exactly one Pattern, every symbol touching it turns into that Pattern's symbol, usually forming much bigger Patterns.",
-  "tip": "Lone Patterns are common, and one in the middle row can spread over most of the grid. Big-Pattern payoffs (Stain, Abstract Painting, Ace of Diamonds) love it; small-Pattern makers hurt it.",
-  "tier": "A",
+  "tip": "Lone Patterns come up on about 3 spins in 10, and each spread builds big Patterns, often doubling or tripling your coins. Stain, Abstract Painting and Ace of Diamonds love it; Angel's Hand hurts it.",
+  "tier": "S",
   "ratings": {
-   "power": 7,
-   "scaling": 3,
+   "power": 9,
+   "scaling": 5,
    "economy": 0,
    "utility": 0,
    "risk": 0
@@ -1982,7 +1983,8 @@
   "confidence": "medium",
   "assumptions": [
    "Assumed 'adjacent' includes diagonal neighbours, as the simulator does; with side neighbours only, a middle-row Pattern still grows into an Eye.",
-   "Assumed the transformed grid scores in the same spin."
+   "Assumed the transformed grid scores in the same spin.",
+   "Tier S from simulation: in a plain build it multiplied coins about 2.4-3x with side-only adjacency and 3.5-4.6x with diagonals."
   ]
  },
  {
