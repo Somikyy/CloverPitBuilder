@@ -534,7 +534,7 @@
   "id": "gluttony",
   "kind": "charm",
   "summary": "Evil: whenever a charm is discarded by an effect (it breaks, decays or a rule removes it), you gain coins equal to everything 666 has taken from you this run.",
-  "tip": "Pays nothing until a 666 has cost you coins; after that every self-breaking charm is a full refund of your losses. Fraud in a drawer, Corpse pieces left in drawers, Peppers and Personal Trainer all count.",
+  "tip": "Pays nothing until a 666 has cost you coins; then every self-breaking charm refunds all of your losses. Fraud or Corpse pieces in drawers, Peppers and Personal Trainer all count.",
   "tier": "B",
   "ratings": {
    "power": 2,
@@ -1047,6 +1047,814 @@
   "assumptions": [
    "Per the wiki, Cadaver pieces sit on the slot machine and use no charm slot.",
    "Assumed the +5% Debt of several pieces stacks."
+  ]
+ },
+ {
+  "id": "corpse_right_arm",
+  "kind": "charm",
+  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Ankh into Resurrection before the Deadline ends.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 1,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "debt"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "debt",
+    "addPct": 5
+   },
+   {
+    "type": "special",
+    "text": "Goes on the slot machine (no charm slot) and can never be discarded once equipped. If it is still in a drawer when a Deadline ends it is discarded. Each equipped Corpse piece makes Skull spawn one free charm per Deadline."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "Equipped, it makes Skull spawn one free charm in a drawer every Deadline."
+   },
+   {
+    "id": "ankh",
+    "why": "Surgery: this Corpse piece + Ankh fuse into Resurrection (DLC)."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "If it is discarded from a drawer at the Deadline's end, the Beetle gains a stack."
+   },
+   {
+    "id": "gluttony",
+    "why": "Left in a drawer, its end-of-Deadline discard pays Gluttony."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Per the wiki, Cadaver pieces sit on the slot machine and use no charm slot.",
+   "Assumed the +5% Debt of several pieces stacks."
+  ]
+ },
+ {
+  "id": "corpse_left_leg",
+  "kind": "charm",
+  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Weird Clock into Eternal Rest before the Deadline ends.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 1,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "debt"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "debt",
+    "addPct": 5
+   },
+   {
+    "type": "special",
+    "text": "Goes on the slot machine (no charm slot) and can never be discarded once equipped. If it is still in a drawer when a Deadline ends it is discarded. Each equipped Corpse piece makes Skull spawn one free charm per Deadline."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "Equipped, it makes Skull spawn one free charm in a drawer every Deadline."
+   },
+   {
+    "id": "weird_clock",
+    "why": "Surgery: this Corpse piece + Weird Clock fuse into Eternal Rest (DLC)."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "If it is discarded from a drawer at the Deadline's end, the Beetle gains a stack."
+   },
+   {
+    "id": "gluttony",
+    "why": "Left in a drawer, its end-of-Deadline discard pays Gluttony."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Per the wiki, Cadaver pieces sit on the slot machine and use no charm slot.",
+   "Assumed the +5% Debt of several pieces stacks."
+  ]
+ },
+ {
+  "id": "corpse_right_leg",
+  "kind": "charm",
+  "summary": "Cadaver piece dropped by a 666: once equipped it sits on the slot machine for good and adds +5% Debt; left in a drawer, it is gone when the Deadline ends.",
+  "tip": "Equip it only with Skull (a free charm per piece every Deadline) or for the Skeleton Key ending. Otherwise keep it in a drawer and fuse it with Evil Deal into Sin before the Deadline ends.",
+  "tier": "D",
+  "ratings": {
+   "power": 0,
+   "scaling": 1,
+   "economy": 1,
+   "utility": 0,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil"
+  ],
+  "provides": [
+   "debt"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "debt",
+    "addPct": 5
+   },
+   {
+    "type": "special",
+    "text": "Goes on the slot machine (no charm slot) and can never be discarded once equipped. If it is still in a drawer when a Deadline ends it is discarded. Each equipped Corpse piece makes Skull spawn one free charm per Deadline."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "Equipped, it makes Skull spawn one free charm in a drawer every Deadline."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Surgery: this Corpse piece + Evil Deal fuse into Sin (DLC)."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "If it is discarded from a drawer at the Deadline's end, the Beetle gains a stack."
+   },
+   {
+    "id": "gluttony",
+    "why": "Left in a drawer, its end-of-Deadline discard pays Gluttony."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Per the wiki, Cadaver pieces sit on the slot machine and use no charm slot.",
+   "Assumed the +5% Debt of several pieces stacks."
+  ]
+ },
+ {
+  "id": "skull",
+  "kind": "charm",
+  "summary": "Cadaver piece (1 ticket): sits on the slot machine for good, +5% Debt, and each Deadline spawns a free charm in a drawer per Corpse piece you have equipped.",
+  "tip": "Worth a ticket once you have or expect Corpse pieces (a Round with a 666 drops one): four pieces mean four free charms every Deadline to sell, use, fuse or feed Dung Beetle.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 4,
+   "economy": 6,
+   "utility": 2,
+   "risk": 3
+  },
+  "archetypes": [
+   "devil",
+   "discard"
+  ],
+  "provides": [
+   "discard",
+   "resell",
+   "debt"
+  ],
+  "cares": [
+   "drawers",
+   "666"
+  ],
+  "effects": [
+   {
+    "type": "debt",
+    "addPct": 5
+   },
+   {
+    "type": "spawnCharm",
+    "pool": "random",
+    "where": "drawer",
+    "when": {
+     "on": "deadlineStart"
+    }
+   },
+   {
+    "type": "special",
+    "text": "Spawns one free random charm per equipped Corpse piece (0 to 4) at the start of every Deadline, only into empty drawers. Goes on the slot machine (no charm slot) and can never be discarded."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "corpse_left_arm",
+    "why": "Each equipped Corpse piece adds a free charm every Deadline."
+   },
+   {
+    "id": "corpse_right_arm",
+    "why": "Each equipped Corpse piece adds a free charm every Deadline."
+   },
+   {
+    "id": "corpse_left_leg",
+    "why": "Each equipped Corpse piece adds a free charm every Deadline."
+   },
+   {
+    "id": "corpse_right_leg",
+    "why": "Each equipped Corpse piece adds a free charm every Deadline."
+   },
+   {
+    "id": "dung_beetle",
+    "why": "Free charms every Deadline to discard for Beetle stacks."
+   },
+   {
+    "id": "dumpster",
+    "why": "Four free charms in your drawers are exactly one Dumpster recipe."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Per the wiki, Cadaver pieces use no charm slot.",
+   "Charms only spawn into empty drawers, so full drawers mean fewer free charms."
+  ]
+ },
+ {
+  "id": "garbage",
+  "kind": "charm",
+  "summary": "Surgery (any 2 charms), takes no slot: every Symbol permanently gains its base value once.",
+  "tip": "Turns two spare charms into a permanent boost that is biggest early, while values are low. Free charms from Skull or D20 make good fodder; each surgery raises the next one's coin cost.",
+  "tier": "C",
+  "ratings": {
+   "power": 4,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolValue",
+   "allSymbols",
+   "instant",
+   "surgery"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "symbolValue",
+    "symbols": "all",
+    "addBase": 1,
+    "when": {
+     "event": "instant"
+    },
+    "duration": "permanent"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "With Corpse pieces it drops free charms into your drawers every Deadline: ready-made fodder."
+   },
+   {
+    "id": "d20",
+    "why": "Refills your drawers with new random charms every Round, free fodder."
+   },
+   {
+    "id": "dangerous_experiments",
+    "why": "Every surgery refunds its coin cost, so repeat fusions are free."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discarding it returns the charms used in your last surgery, so you can fuse them again."
+   },
+   {
+    "id": "cigarettes",
+    "why": "The same +base value on every Symbol, so the two stack into fast base growth."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Wiki: ingredients must sit in your drawers and every surgery costs more coins than the last."
+  ]
+ },
+ {
+  "id": "trash_can",
+  "kind": "charm",
+  "summary": "Surgery (any 3 charms), takes no slot: Symbols Multiplier +1, permanently.",
+  "tip": "A clean permanent multiplier for three spare charms, strongest while your Symbols Multiplier is still small. Skull or D20 fodder and Dangerous Experiments make repeat fusions cheap.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "symbolsMult",
+   "instant",
+   "surgery"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "symbolsMult",
+    "add": 1,
+    "when": {
+     "event": "instant"
+    },
+    "duration": "permanent"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "With Corpse pieces it drops free charms into your drawers every Deadline: ready-made fodder."
+   },
+   {
+    "id": "d20",
+    "why": "Refills your drawers with new random charms every Round, free fodder."
+   },
+   {
+    "id": "dangerous_experiments",
+    "why": "Every surgery refunds its coin cost, so repeat fusions are free."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discarding it returns the charms used in your last surgery, so you can fuse them again."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Symbols Multiplier, including this +1."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Wiki: ingredients must sit in your drawers and every surgery costs more coins than the last."
+  ]
+ },
+ {
+  "id": "dumpster",
+  "kind": "charm",
+  "summary": "Surgery (any 4 charms), takes no slot: Patterns Multiplier +1, permanently.",
+  "tip": "Needs all four drawers of fodder but buys a permanent Patterns Multiplier, which few charms give. Repeat it with Skull or D20 fodder; Dangerous Experiments makes the surgeries free.",
+  "tier": "B",
+  "ratings": {
+   "power": 5,
+   "scaling": 3,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "multiplier"
+  ],
+  "provides": [
+   "patternsMult",
+   "instant",
+   "surgery"
+  ],
+  "cares": [
+   "drawers"
+  ],
+  "effects": [
+   {
+    "type": "patternsMult",
+    "add": 1,
+    "when": {
+     "event": "instant"
+    },
+    "duration": "permanent"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "skull",
+    "why": "With Corpse pieces it drops free charms into your drawers every Deadline: ready-made fodder."
+   },
+   {
+    "id": "d20",
+    "why": "Refills your drawers with new random charms every Round, free fodder."
+   },
+   {
+    "id": "dangerous_experiments",
+    "why": "Every surgery refunds its coin cost, so repeat fusions are free."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discarding it returns the charms used in your last surgery, so you can fuse them again."
+   },
+   {
+    "id": "adams_ribcage",
+    "why": "Every 999 doubles your Patterns Multiplier for the Round, including this +1."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "high",
+  "assumptions": [
+   "Wiki: ingredients must sit in your drawers and every surgery costs more coins than the last."
+  ]
+ },
+ {
+  "id": "platinum_record",
+  "kind": "charm",
+  "summary": "Surgery (Disc A + B + C): every 2nd spin fires one of Luck +7, forced ZIG and ZAG, or one extra trigger for every Pattern that spin.",
+  "tip": "All three Disc effects at a faster rate in one slot, freeing two slots. Gets better with large-Pattern value boosts and with charms that reward big spins.",
+  "tier": "A",
+  "ratings": {
+   "power": 6,
+   "scaling": 2,
+   "economy": 0,
+   "utility": 3,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot",
+   "retrigger"
+  ],
+  "provides": [
+   "luck",
+   "zigZag",
+   "largePatterns",
+   "retrigger",
+   "patternCount"
+  ],
+  "cares": [
+   "largePatterns",
+   "patternValue"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 7,
+    "when": {
+     "spin": "every",
+     "n": 6
+    },
+    "duration": "spin"
+   },
+   {
+    "type": "forcePattern",
+    "pattern": [
+     "ZIG",
+     "ZAG"
+    ],
+    "all": true,
+    "when": {
+     "spin": "every",
+     "n": 6
+    }
+   },
+   {
+    "type": "retrigger",
+    "add": 1,
+    "scope": "all",
+    "when": {
+     "spin": "every",
+     "n": 6
+    },
+    "duration": "spin"
+   }
+  ],
+  "synergies": [
+   {
+    "id": "i_found_a_winning_strategy",
+    "why": "Raises ZIG, ZAG and every other 4+ Pattern by its base value."
+   },
+   {
+    "id": "ill_take_back_control_of_my_life",
+    "why": "Doubles every 4+ Symbol Pattern, including the forced ZIG and ZAG."
+   },
+   {
+    "id": "stain",
+    "why": "The forced ZIG and ZAG are 5-symbol Patterns, a sure trigger for the Round."
+   },
+   {
+    "id": "abstract_painting",
+    "why": "The forced ZIG and ZAG are 5-symbol Patterns, doubling all Patterns for the Round."
+   },
+   {
+    "id": "pentacle",
+    "why": "Lucky and retriggered spins push more spins to 5+ Patterns."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed one of the three effects fires every 2nd spin, so each one averages 1 spin in 6; encoded that way, which makes the simulator fire all three on the same spin.",
+   "Assumed it counts spins across Rounds, like the Discs."
+  ]
+ },
+ {
+  "id": "amalgama",
+  "kind": "charm",
+  "summary": "Surgery: 30% of all Symbols carry Copy, which turns into the nearest other modifier on the grid. Drops 1% per Round and breaks at 0% (30 Rounds).",
+  "tip": "Only as good as your other modifier sources: with Golden, Chain, Repetition or Ticket charms it multiplies how many symbols carry them. Without them on the grid, Copy does nothing.",
+  "tier": "B",
+  "ratings": {
+   "power": 3,
+   "scaling": 6,
+   "economy": 2,
+   "utility": 0,
+   "risk": 2
+  },
+  "archetypes": [
+   "golden",
+   "chain"
+  ],
+  "provides": [
+   "copy",
+   "temporary"
+  ],
+  "cares": [
+   "golden",
+   "chain",
+   "repetition",
+   "ticketMod",
+   "token"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "copy",
+    "symbols": "all",
+    "add": 0.3,
+    "decay": {
+     "add": -0.01,
+     "per": "round"
+    },
+    "discardAfter": {
+     "count": 30,
+     "of": "rounds"
+    }
+   },
+   {
+    "type": "special",
+    "text": "Copy turns into the closest other modifier on the slot machine, so it multiplies whatever Golden, Chain, Repetition, Ticket, Token or Investor modifiers you already roll; with none on the grid it does nothing."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "the_body",
+    "why": "Copies spread its Golden, Ticket and Token modifiers."
+   },
+   {
+    "id": "the_blood",
+    "why": "Copies spread its Repetition, Battery and Chain modifiers."
+   },
+   {
+    "id": "mad_emperor",
+    "why": "Puts modifiers of every kind on the grid for Copy to become."
+   },
+   {
+    "id": "greedy_king",
+    "why": "Copies next to Golden symbols turn Golden too, growing values faster."
+   },
+   {
+    "id": "raging_capitalist",
+    "why": "Copies next to Ticket symbols pay tickets too."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed Copy needs another modified symbol on the grid to copy; the simulator gives Copy no value, so the text effect and ratings carry it.",
+   "Wiki: while it is equipped its ingredients (Personal Trainer, Electrician, Fortune Teller) are banned from the store."
+  ]
+ },
+ {
+  "id": "black_pepper",
+  "kind": "charm",
+  "summary": "Surgery (Red + Green Pepper), triggers randomly (7%): Luck +3 for the rest of the Round. Never breaks.",
+  "tip": "Weaker than either Pepper it is made from, but permanent and one slot instead of two. Horseshoe doubles its rate, and an early trigger helps more spins.",
+  "tier": "D",
+  "ratings": {
+   "power": 1,
+   "scaling": 1,
+   "economy": 0,
+   "utility": 1,
+   "risk": 0
+  },
+  "archetypes": [
+   "jackpot"
+  ],
+  "provides": [
+   "luck",
+   "triggersRandomly"
+  ],
+  "cares": [
+   "triggersRandomly"
+  ],
+  "effects": [
+   {
+    "type": "luck",
+    "add": 3,
+    "when": {
+     "chance": 0.07
+    },
+    "duration": "round"
+   },
+   {
+    "type": "special",
+    "text": "The Luck +3 lasts for every remaining spin of the Round and stacks if it triggers again."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "horseshoe",
+    "why": "Doubles its trigger rate to 14%."
+   },
+   {
+    "id": "golden_horseshoe",
+    "why": "Force a trigger on the first spin for Luck +3 on the whole Round."
+   },
+   {
+    "id": "rotated_hamsa",
+    "why": "Its Luck +7 on the last spin plus this +3 reaches Luck 10."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed repeated triggers in one Round stack (+3 each)."
+  ]
+ },
+ {
+  "id": "cosmic_cat",
+  "kind": "charm",
+  "summary": "Surgery (Lucky + Chonky + Swole Cat): 10% of Symbols carry Investor; each 3+ Pattern spin pays your current Interest and adds +5% Investor chance for the Round.",
+  "tip": "An Interest engine: Investor symbols push Interest up during each Round, so every later payout is bigger. Deposit early in each Deadline and add Stonks or Grandma's Purse.",
+  "tier": "A",
+  "ratings": {
+   "power": 4,
+   "scaling": 4,
+   "economy": 8,
+   "utility": 0,
+   "risk": 0
+  },
+  "archetypes": [
+   "interest"
+  ],
+  "provides": [
+   "investor",
+   "coins",
+   "interest"
+  ],
+  "cares": [
+   "patternCount",
+   "interest",
+   "retrigger"
+  ],
+  "effects": [
+   {
+    "type": "modifierChance",
+    "modifier": "investor",
+    "symbols": "all",
+    "add": 0.1
+   },
+   {
+    "type": "modifierChance",
+    "modifier": "investor",
+    "symbols": "all",
+    "add": 0.05,
+    "when": {
+     "patternsAtLeast": 3
+    },
+    "stack": true,
+    "reset": "round"
+   },
+   {
+    "type": "coins",
+    "interestMultiple": 1,
+    "when": {
+     "patternsAtLeast": 3
+    }
+   }
+  ],
+  "synergies": [
+   {
+    "id": "stonks",
+    "why": "+5% Interest raises every payout."
+   },
+   {
+    "id": "grandmas_purse",
+    "why": "+15% Interest for a few Rounds makes each payout much bigger."
+   },
+   {
+    "id": "avarice",
+    "why": "+20% Investor chance on every Symbol pushes Interest up faster."
+   },
+   {
+    "id": "evil_deal",
+    "why": "Doubles your Interest, so every payout doubles."
+   },
+   {
+    "id": "black_hole",
+    "why": "Discard it after the Cat surgery to get all three Cats back as well."
+   }
+  ],
+  "antiSynergies": [
+   {
+    "id": "living_on_the_edge",
+    "why": "You can only deposit after the last Round, so Interest stays tiny while it pays."
+   }
+  ],
+  "confidence": "medium",
+  "assumptions": [
+   "Read '+5% until the end of every Round' as +5% Investor chance per 3+ Pattern spin, stacking and resetting each Round."
+  ]
+ },
+ {
+  "id": "black_hole",
+  "kind": "charm",
+  "summary": "Surgery (Abyssu + Barathrum + Vorago): when you discard it, every charm used in your last surgery respawns in your drawers, if there is room.",
+  "tip": "Do your key surgery first, then discard Black Hole to get the ingredients back: keep Cosmic Cat and all three Cats, or re-fuse the fodder for another Dumpster.",
+  "tier": "C",
+  "ratings": {
+   "power": 0,
+   "scaling": 3,
+   "economy": 3,
+   "utility": 6,
+   "risk": 0
+  },
+  "archetypes": [
+   "discard"
+  ],
+  "provides": [
+   "discard",
+   "surgery"
+  ],
+  "cares": [
+   "drawers",
+   "surgery"
+  ],
+  "effects": [
+   {
+    "type": "special",
+    "text": "When discarded, every charm consumed by your most recent surgery respawns in free drawers, so you can keep a fusion and its ingredients, or fuse again."
+   }
+  ],
+  "synergies": [
+   {
+    "id": "abyssu",
+    "why": "Surgery: Abyssu + Barathrum + Vorago fuse into Black Hole (DLC)."
+   },
+   {
+    "id": "barathrum",
+    "why": "Surgery: Abyssu + Barathrum + Vorago fuse into Black Hole (DLC)."
+   },
+   {
+    "id": "vorago",
+    "why": "Surgery: Abyssu + Barathrum + Vorago fuse into Black Hole (DLC)."
+   },
+   {
+    "id": "cosmic_cat",
+    "why": "Get Lucky, Chonky and Swole Cat back after fusing them."
+   },
+   {
+    "id": "dumpster",
+    "why": "Get the four fodder charms back for a second Dumpster."
+   },
+   {
+    "id": "platinum_record",
+    "why": "Get the three Discs back after fusing them."
+   }
+  ],
+  "antiSynergies": [],
+  "confidence": "medium",
+  "assumptions": [
+   "Assumed the respawned charms are normal copies that can be equipped or fused again; only free drawers receive them.",
+   "Wiki: normally a surgery charm's ingredients are banned from the store while it is equipped; Black Hole brings them back anyway."
   ]
  }
 ]
