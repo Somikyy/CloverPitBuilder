@@ -35,27 +35,30 @@ async function init() {
   window.addEventListener('hashchange', () => { loadFromHash(false); });
   // The items page (or another helper tab) changed the build: pick it up, so editing here
   // can't write an older copy over it.
+  // It never writes the build back: if this tab's copy is a step behind, a write would undo the
+  // typing going on in the other tab.
   window.addEventListener('storage', (e) => {
     if (e.key === BUILD_KEY) {
       const next = loadLocal();
       if (JSON.stringify(next) === JSON.stringify(normalize(state))) return;
       state = next;
-      renderBuild(); run(true);
+      renderBuild(); run(false, { save: false });
     } else if (e.key === SAVED_KEY || e.key === null) renderSaved();
   });
 }
 
 // Loading a share link or a saved build replaces the current build. A build in progress that isn't
-// saved anywhere yet is kept under Saved builds first. Returns 'saved' (kept just now), 'already'
-// (an identical save exists) or '' (nothing entered, nothing to keep).
-function keepCurrentBuild(why) {
+// saved anywhere yet is kept under Saved builds first. Returns { kept, note }: kept is 'saved' (kept
+// just now), 'already' (an identical save exists) or '' (nothing entered); note tells about an old
+// save that made room (never `loading`, the save being opened).
+function keepCurrentBuild(why, loading = null) {
   const cur = normalize(state);
-  if (isEmptyBuild(cur)) return '';
+  if (isEmptyBuild(cur)) return { kept: '', note: '' };
   const same = JSON.stringify(cur);
-  if (listSaved().some((x) => JSON.stringify(normalize(x.state)) === same)) return 'already';
+  if (listSaved().some((x) => JSON.stringify(normalize(x.state)) === same)) return { kept: 'already', note: '' };
   const when = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-  saveBuild(uniqueName(`My build before ${why} (${when})`), cur);
-  return 'saved';
+  const { dropped } = saveBuild(uniqueName(`My build before ${why} (${when})`), cur, { keep: loading });
+  return { kept: 'saved', note: dropped ? ` The oldest save, “${dropped}”, was removed (30 at most).` : '' };
 }
 
 async function loadFromHash(first) {
@@ -66,10 +69,10 @@ async function loadFromHash(first) {
   if (!s) { toast('This share link is incomplete or broken, so nothing was loaded.'); return; }
   const cur = normalize(state);
   if (JSON.stringify(cur) === JSON.stringify(s)) { if (!first) toast('This build is already open'); return; }
-  const kept = keepCurrentBuild('a shared link');
+  const { kept, note } = keepCurrentBuild('a shared link');
   state = s;
   saveLocal(state);
-  toast(kept ? 'Loaded a shared build. Your own build is under Saved builds.' : 'Loaded a shared build');
+  toast(kept ? `Loaded a shared build. Your own build is under Saved builds.${note}` : 'Loaded a shared build');
   if (!first) { renderBuild(); renderSaved(); run(true); }
 }
 
@@ -82,8 +85,8 @@ function setupWorker() {
   } catch { worker = null; }
 }
 
-function run(now = false) {
-  saveLocal(state);
+function run(now = false, { save = true } = {}) {
+  if (save) saveLocal(state);
   clearTimeout(timer);
   const go = () => {
     const id = ++reqId;
@@ -520,10 +523,14 @@ function openCharmMenu(c) {
     document.body.append(menuDialog);
   }
   returnFocusOnClose(menuDialog, $('sockets'));
+  // act on the charm as it is in the build right now: another tab may have replaced the build
+  // while this menu was open
+  const cur = () => state.charms.find((x) => x.id === c.id);
+  const gone = () => { menuDialog.close(); toast(`${it.name} is no longer on your table`); renderSockets(); };
   const traitSel = h('select', { class: 'select', 'aria-label': 'Trait' },
     h('option', { value: '' }, 'No trait'),
     TRAITS.map((t) => h('option', { value: t.id, selected: c.trait === t.id }, `${t.name}: ${t.effect}`)));
-  traitSel.addEventListener('change', () => { c.trait = traitSel.value || null; renderSockets(); run(); });
+  traitSel.addEventListener('change', () => { const x = cur(); if (!x) return gone(); x.trait = traitSel.value || null; renderSockets(); run(); });
   menuDialog.replaceChildren(
     h('div', { class: 'sheet-head' }, h('h2', { id: 'menu-title' }, it.name), h('button', { class: 'close-btn', type: 'button', 'aria-label': 'Close', onclick: () => menuDialog.close() }, '×')),
     h('div', { class: 'sheet-body' },
@@ -532,9 +539,9 @@ function openCharmMenu(c) {
         h('div', {}, h('p', { style: { margin: '0 0 8px' } }, (it.model && it.model.summary) || ''), h('div', { class: 'row' }, itemChips(it)))),
       h('label', { class: 'field', style: { marginTop: '14px' } }, h('span', {}, 'Trait on this charm'), traitSel),
       h('div', { class: 'row', style: { marginTop: '14px' } },
-        h('button', { class: 'btn', type: 'button', onclick: () => { c.drawer = !c.drawer; sfx.click(); renderSockets(); run(); menuDialog.close(); } }, c.drawer ? 'Put back on the table' : 'Move to a drawer'),
+        h('button', { class: 'btn', type: 'button', onclick: () => { const x = cur(); if (!x) return gone(); x.drawer = !x.drawer; sfx.click(); renderSockets(); run(); menuDialog.close(); } }, c.drawer ? 'Put back on the table' : 'Move to a drawer'),
         h('button', { class: 'btn ghost', type: 'button', onclick: () => { menuDialog.close(); openItem(db, it.id, detailOpts(it)); } }, 'Details'),
-        h('button', { class: 'btn ghost', type: 'button', onclick: () => { state.charms = state.charms.filter((x) => x !== c); sfx.remove(); renderSockets(); run(); menuDialog.close(); toast(`Removed ${it.name}`); } }, 'Remove'))),
+        h('button', { class: 'btn ghost', type: 'button', onclick: () => { state.charms = state.charms.filter((x) => x.id !== c.id); sfx.remove(); renderSockets(); run(); menuDialog.close(); toast(`Removed ${it.name}`); } }, 'Remove'))),
   );
   menuDialog.showModal();
 }
@@ -587,6 +594,7 @@ function renderPick(r, i) {
   let done = false; // one take per rendered row, so a double click doesn't pay twice
   const take = () => { if (done) return; done = takeItem(r); };
   const offer = activeTab === 'offers' ? state.offers.find((o) => o.id === r.id) : null;
+  const curOffer = () => state.offers.find((o) => o.id === r.id); // the build may have been replaced since this row was drawn
   const chips = itemChips(it, { tickets: state.tickets, price: r.price });
   const details = () => openItem(db, r.id, { onAdd: take, addLabel: takeLabel, insight: r.reasons, forItem: detailOpts });
   return h('li', { class: 'pick' },
@@ -601,13 +609,13 @@ function renderPick(r, i) {
       offer && r.kind === 'charm' ? h('label', { class: 'small row', style: { marginTop: '6px', gap: '6px' } }, 'Price in store',
         h('input', {
           class: 'input num', style: { width: '72px', height: '28px', fontSize: '17px' }, type: 'number', min: '0', inputmode: 'numeric', value: offer.price ?? '', 'data-fkey': `offer:price:${r.id}`,
-          oninput: (e) => { const v = e.target.value; offer.price = v === '' || !Number.isFinite(+v) ? null : Math.max(0, Math.round(+v)); saveLocal(state); },
-          onchange: (e) => { e.target.value = offer.price ?? ''; run(); },
+          oninput: (e) => { const o = curOffer(); if (!o) return; const v = e.target.value; o.price = v === '' || !Number.isFinite(+v) ? null : Math.max(0, Math.round(+v)); saveLocal(state); },
+          onchange: (e) => { const o = curOffer(); e.target.value = o ? o.price ?? '' : ''; run(); },
         })) : null,
     ),
     h('div', { class: 'side' }, meter, h('span', { class: 'score' }, String(Math.round(r.score))),
       h('button', { class: 'btn small', type: 'button', 'data-fkey': `pick:take:${r.id}`, onclick: take }, takeLabel),
-      offer ? h('button', { class: 'link-btn', type: 'button', 'data-fkey': `offer:remove:${r.id}`, onclick: () => { state.offers = state.offers.filter((o) => o !== offer); run(); } }, 'Remove offer') : null),
+      offer ? h('button', { class: 'link-btn', type: 'button', 'data-fkey': `offer:remove:${r.id}`, onclick: () => { state.offers = state.offers.filter((o) => o.id !== r.id); run(); } }, 'Remove offer') : null),
   );
 }
 
@@ -777,8 +785,8 @@ function loadSaved(name) {
   if (!s) { renderSaved(); return; }
   const next = normalize(s.state);
   if (JSON.stringify(next) === JSON.stringify(normalize(state))) { toast(`“${s.name}” is already open`); return; }
-  const kept = keepCurrentBuild('loading a saved one');
+  const { kept, note } = keepCurrentBuild('loading a saved one', s.name);
   state = next;
   renderBuild(); renderSaved(); run(true);
-  toast(`Loaded “${s.name}”${kept === 'saved' ? '. Your own build is under Saved builds.' : ''}`);
+  toast(`Loaded “${s.name}”${kept === 'saved' ? `. Your own build is under Saved builds.${note}` : ''}`);
 }

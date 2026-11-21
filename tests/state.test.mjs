@@ -58,3 +58,13 @@ test('saving says what it replaced; suggested names stay unique', () => {
   for (let i = 0; i < 29; i++) saveBuild(`Build ${i}`, a);
   assert.deepEqual(saveBuild('One more', a), { replaced: false, dropped: 'Lemon build' }); // 30 at most: the oldest goes
 });
+
+test('making room in a full list never drops the save being loaded', () => {
+  globalThis.localStorage._d = {};
+  const a = normalize({ deadline: 2 });
+  for (let i = 0; i < 30; i++) saveBuild(`Save ${i}`, a); // "Save 0" is now the oldest
+  assert.deepEqual(saveBuild('Kept build', a, { keep: 'Save 0' }), { replaced: false, dropped: 'Save 1' });
+  const names = listSaved().map((x) => x.name);
+  assert.equal(names.length, 30);
+  assert.ok(names.includes('Save 0') && !names.includes('Save 1'));
+});

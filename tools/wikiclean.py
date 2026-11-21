@@ -5,7 +5,7 @@ _MECH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', '
 MOD_INFO = {m['id']: (m['name'], m['effect']) for m in json.load(open(_MECH, encoding='utf-8'))['modifiers']}
 def _mod_info(m):
     k = m.group(1).lower()
-    if k not in MOD_INFO: return ''
+    if k not in MOD_INFO: return '(see ' + m.group(1) + ' modifier)'  # a modifier mechanics.json doesn't know yet
     name, effect = MOD_INFO[k]
     return name + ' Modifier [' + name + ' modifier]: ' + effect
 SYM = {'SymbolLemon':'Lemon','SymbolCherry':'Cherry','SymbolClover':'Clover','SymbolBell':'Bell','SymbolDiamond':'Diamond','SymbolTreasureChest':'Treasure','SymbolSeven':'Seven'}

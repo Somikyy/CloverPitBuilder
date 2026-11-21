@@ -166,6 +166,8 @@ test('every pick explains its score, in plain words', () => {
         assert.ok(!/Cherrys/.test(y.text), y.text);
         if (/as it grows/.test(y.text)) assert.ok(y.text.startsWith('+'), `${x.id}: ${y.text}`); // a loss never "grows"
       }
+      const t = x.reasons.map((y) => y.text);
+      assert.ok(!(t.some((y) => /permanently/.test(y)) && t.some((y) => /^Temporary/.test(y))), `${x.id}: ${t.join(' | ')}`);
     }
   }
 });

@@ -299,6 +299,34 @@ const ok = (name, cond, extra = '') => { results.push(`${cond ? 'PASS' : 'FAIL'}
   ok('tiers: a build with only calls is not called empty', tierStatus.startsWith('Ranked for your build: 1 phone call, deadline 3'), tierStatus);
   ok('tiers: disabled Memory cards button looks disabled', await page.evaluate(() => { const b = document.querySelector('#kind-seg [data-kind="memory"]'); return b.disabled && parseFloat(getComputedStyle(b).opacity) < 1 && !!b.title; }));
 
+  // two tabs: the helper adopts a build changed elsewhere without writing it back, and an open charm
+  // menu still acts on the build as it is now
+  const ctx4 = await browser.newContext({ viewport: { width: 1300, height: 900 } });
+  await ctx4.addInitScript(() => localStorage.setItem('cp.sound', 'false'));
+  const h1 = await ctx4.newPage(), h2 = await ctx4.newPage();
+  h1.on('pageerror', (e) => errors.push('h1 ' + e.message));
+  await h1.goto(BASE + 'index.html', { waitUntil: 'networkidle' });
+  await h1.evaluate(() => localStorage.setItem('cp.build.v1', JSON.stringify({ v: 1, mode: { memory: 'erased_memory_card', hard: false, sacred: false, dlc: true }, deadline: 3, tickets: 5, coins: null, deposited: null, charms: [{ id: 'golden_lemon', trait: null, drawer: false }, { id: 'pentacle', trait: null, drawer: false }], phone: {}, stats: {}, offers: [], prefs: { horizon: 0.7 } })));
+  await h1.reload({ waitUntil: 'networkidle' });
+  await h1.waitForFunction(() => document.querySelector('#picks .pick') && !document.querySelector('#status-left .busy-dot'), null, { timeout: 30000 });
+  await h1.locator('#sockets .socket[aria-label^="Pentacle"]').click();
+  await h2.goto(BASE + 'items.html', { waitUntil: 'networkidle' });
+  await h2.evaluate(() => { const s = JSON.parse(localStorage.getItem('cp.build.v1')); s.phone.life_gave_me_lemons = 1; localStorage.setItem('cp.build.v1', JSON.stringify(s)); });
+  await h1.waitForTimeout(600);
+  await h1.locator('dialog[open] button', { hasText: 'Remove' }).click();
+  await h1.waitForTimeout(400);
+  const st4 = await h1.evaluate(() => JSON.parse(localStorage.getItem('cp.build.v1')));
+  ok('two tabs: menu acts on the current build', !st4.charms.some((c) => c.id === 'pentacle') && st4.phone.life_gave_me_lemons === 1, JSON.stringify({ charms: st4.charms.map((c) => c.id), phone: st4.phone }));
+  // quick edits in one tab are never undone by the other tab writing back an older copy
+  const echoes = [];
+  await h2.exposeFunction('noteEcho', (v) => echoes.push(v));
+  await h2.evaluate(() => window.addEventListener('storage', (e) => { if (e.key === 'cp.build.v1') window.noteEcho(JSON.parse(e.newValue).tickets); }));
+  for (const t of [7, 8, 9]) { await h2.evaluate((v) => { const s = JSON.parse(localStorage.getItem('cp.build.v1')); s.tickets = v; localStorage.setItem('cp.build.v1', JSON.stringify(s)); }, t); await h2.waitForTimeout(60); }
+  await h1.waitForTimeout(1500);
+  const final = await h2.evaluate(() => JSON.parse(localStorage.getItem('cp.build.v1')).tickets);
+  ok('two tabs: the helper never writes an older copy back', final === 9 && echoes.length === 0 && (await h1.inputValue('#tickets')) === '9', `stored ${final}, writes from the helper tab: ${JSON.stringify(echoes)}`);
+  await ctx4.close();
+
   // 404, also when served at a deep missing address (as GitHub Pages does)
   const errorsBefore404 = errors.length; // the 404 pages log their own (expected) 404 status
   const bad404 = [];

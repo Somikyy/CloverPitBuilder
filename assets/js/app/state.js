@@ -158,13 +158,20 @@ export function readHashCode() {
 export function listSaved() { const l = store.get(SAVED, []); return Array.isArray(l) ? l.filter((x) => x && typeof x.name === 'string') : []; }
 // Saves under `name`, replacing a save with the same name. Returns what happened, so the page can
 // say so: { replaced, dropped } (dropped = the oldest save's name when the list was already full).
-export function saveBuild(name, state) {
+// `keep` names a save that must not be the one dropped (the build being loaded right now).
+export function saveBuild(name, state, { keep = null } = {}) {
   const old = listSaved();
   const list = old.filter((x) => x.name !== name);
   const replaced = list.length !== old.length;
   list.unshift({ name, state: normalize(state), ts: Date.now() });
-  const dropped = list.length > MAX_SAVED ? list[list.length - 1].name : null;
-  store.set(SAVED, list.slice(0, MAX_SAVED));
+  let dropped = null;
+  while (list.length > MAX_SAVED) {
+    let i = list.length - 1;
+    if (list[i].name === keep) i--;
+    if (!dropped) dropped = list[i].name;
+    list.splice(i, 1);
+  }
+  store.set(SAVED, list);
   return { replaced, dropped };
 }
 // "Lemon build, deadline 3" -> "Lemon build, deadline 3 (2)" when that name is taken

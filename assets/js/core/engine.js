@@ -794,7 +794,8 @@ export function evaluateItem(it, ctx, extra = {}) {
   const dGrowth = (A - ctx.baseline.A) + (G - ctx.baseline.G);
   if (dGrowth > 0.006 && !(Number.isFinite(life) && life < ctx.H)) {
     const per = dGrowth;
-    reasons.push({ kind: 'good', text: `Scales: about ${fmtPct(per)} more coins every round, permanently` });
+    // a temporary charm only grows while it lasts ("permanently" would contradict its Temporary line)
+    reasons.push({ kind: 'good', text: `Scales: about ${fmtPct(per)} more coins every round${Number.isFinite(lifeShown) ? ' while it lasts' : ', permanently'}` });
   }
   topSymbolReason(it, model, ctx, reasons);
   for (const s of synReasons.slice(0, 3)) {
