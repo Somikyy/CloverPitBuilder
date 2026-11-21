@@ -3,7 +3,10 @@ import {
   loadDb, h, itemIcon, itemChips, initChrome, sfx, openItem, toast, TRAITS, reducedMotion, fmtNum, matches, relevance,
   keepFocus, returnFocusOnClose,
 } from './common.js';
-import { loadLocal, saveLocal, shareUrl, readHashCode, decodeShare, listSaved, saveBuild, deleteSaved, normalize } from './state.js';
+import {
+  loadLocal, saveLocal, shareUrl, readHashCode, decodeShare, listSaved, saveBuild, deleteSaved, normalize, isEmptyBuild, uniqueName,
+  BUILD_KEY, SAVED_KEY,
+} from './state.js';
 import { analyze, defaultState } from '../core/engine.js';
 import { SYMBOLS, SYMBOL_NAMES, PATTERNS, PATTERN_NAMES } from '../core/constants.js';
 
@@ -30,13 +33,31 @@ async function init() {
   renderSaved();
   run(true);
   window.addEventListener('hashchange', () => { loadFromHash(false); });
+  // The items page (or another helper tab) changed the build: pick it up, so editing here
+  // can't write an older copy over it.
+  window.addEventListener('storage', (e) => {
+    if (e.key === BUILD_KEY) {
+      const next = loadLocal();
+      if (JSON.stringify(next) === JSON.stringify(normalize(state))) return;
+      state = next;
+      renderBuild(); run(true);
+    } else if (e.key === SAVED_KEY || e.key === null) renderSaved();
+  });
 }
 
-function isEmptyBuild(s) {
-  return !s.charms.length && !Object.keys(s.phone).length && !Object.keys(s.stats).length && !s.offers.length && s.deadline === 1 && !s.tickets;
+// Loading a share link or a saved build replaces the current build. A build in progress that isn't
+// saved anywhere yet is kept under Saved builds first. Returns 'saved' (kept just now), 'already'
+// (an identical save exists) or '' (nothing entered, nothing to keep).
+function keepCurrentBuild(why) {
+  const cur = normalize(state);
+  if (isEmptyBuild(cur)) return '';
+  const same = JSON.stringify(cur);
+  if (listSaved().some((x) => JSON.stringify(normalize(x.state)) === same)) return 'already';
+  const when = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  saveBuild(uniqueName(`My build before ${why} (${when})`), cur);
+  return 'saved';
 }
 
-// A share link (#b=...) replaces the current build. A build in progress is kept in Saved builds first.
 async function loadFromHash(first) {
   const code = readHashCode();
   if (!code) return;
@@ -45,14 +66,10 @@ async function loadFromHash(first) {
   if (!s) { toast('This share link is incomplete or broken, so nothing was loaded.'); return; }
   const cur = normalize(state);
   if (JSON.stringify(cur) === JSON.stringify(s)) { if (!first) toast('This build is already open'); return; }
-  const keep = !isEmptyBuild(cur);
-  if (keep) {
-    const when = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-    saveBuild(`My build before a shared link (${when})`, cur);
-  }
+  const kept = keepCurrentBuild('a shared link');
   state = s;
   saveLocal(state);
-  toast(keep ? 'Loaded a shared build. Your own build is under Saved builds.' : 'Loaded a shared build');
+  toast(kept ? 'Loaded a shared build. Your own build is under Saved builds.' : 'Loaded a shared build');
   if (!first) { renderBuild(); renderSaved(); run(true); }
 }
 
@@ -87,8 +104,13 @@ function onResult(msg) {
   renderAtm();
   renderBoardsPlaceholders();
   renderCallsNote();
-  $('status-left').textContent = describeStatus();
-  $('status-right').textContent = result.ms ? `${result.ms} ms` : '';
+  showStatus();
+  $('status-right').textContent = result.ms ? `${result.ms}\u00a0ms` : '';
+}
+
+function showStatus() {
+  const s = describeStatus();
+  $('status-left').replaceChildren(...(Array.isArray(s) ? s : [s]));
 }
 
 function describeStatus() {
@@ -98,7 +120,8 @@ function describeStatus() {
     const best = result.recommendations.charms.find((x) => x.affordable);
     if (best && best !== top) return `Best you can afford with ${state.tickets} tickets: ${best.name}`;
   }
-  if (activeTab === 'phone') return "At the phone? Add its options under What's offered now to compare them.";
+  // the Offers tab is called "What's offered now" on wide screens and "Offers" on phones
+  if (activeTab === 'phone') return ['At the phone? Add its options under ', h('span', { class: 'tab-long' }, "What's offered now"), h('span', { class: 'tab-short' }, 'Offers'), ' to compare them.'];
   if (empty) return 'General picks for this deadline. Add your charms for personal advice.';
   const a = result.build.archetypes[0];
   return a ? `Reading your ${a.label} build` : 'Reading your build';
@@ -161,9 +184,13 @@ function bindStatic() {
     try { await navigator.clipboard.writeText(url); toast('Share link copied'); } catch { prompt('Copy this link:', url); }
   });
   $('save-build').addEventListener('click', () => {
-    const name = prompt('Name this build', suggestName());
+    const name = (prompt('Name this build', suggestName()) || '').trim().slice(0, 60);
     if (!name) return;
-    saveBuild(name.slice(0, 60), state); renderSaved(); toast(`Saved “${name.slice(0, 60)}”`);
+    const exists = listSaved().some((x) => x.name === name);
+    if (exists && !confirm(`A saved build called “${name}” already exists. Replace it?`)) return;
+    const { dropped } = saveBuild(name, state);
+    renderSaved();
+    toast(`${exists ? 'Replaced' : 'Saved'} “${name}”${dropped ? `. The oldest save, “${dropped}”, was removed (30 at most)` : ''}`);
   });
   $('new-run').addEventListener('click', () => {
     if (!confirm('Start a new run? Your current build will be cleared (saved builds stay).')) return;
@@ -175,7 +202,7 @@ function bindStatic() {
 
 function suggestName() {
   const a = result && result.build.archetypes[0];
-  return `${a ? a.label : 'My'} build, deadline ${state.deadline}`;
+  return uniqueName(`${a ? a.label : 'My'} build, deadline ${state.deadline}`);
 }
 
 function getStat(group, key) {
@@ -352,21 +379,34 @@ function takeItem(r) {
     if (state.charms.some((c) => c.id === r.id)) { toast(`${r.name} is already on your table`); return false; }
     const it = db.byId.get(r.id);
     const full = !(it && it.noSpace) && spaceUsed() >= charmSpace();
+    // the price box may have changed since the list was ranked (the re-rank waits until you leave the box)
+    const offer = state.offers.find((o) => o.id === r.id);
+    const price = offer ? (offer.price ?? (it ? it.cost : 0)) : r.price;
     state.charms.push({ id: r.id, trait: null, drawer: false });
-    state.tickets = Math.max(0, (state.tickets || 0) - (r.price || 0));
-    toast(full ? `Bought ${r.name}. Your table is over its space now: move a charm to a drawer.` : `Bought ${r.name}`);
+    state.tickets = Math.max(0, (state.tickets || 0) - (price || 0));
+    const paid = price ? ` for ${plural(price, 'ticket')}` : '';
+    toast(full ? `Bought ${r.name}${paid}. Your table is over its space now: move a charm to a drawer.` : `Bought ${r.name}${paid}`);
   } else {
     const adds = (result && result.build.callAddsPerTake) || 1;
     state.phone[r.id] = Math.min(99, (state.phone[r.id] || 0) + adds);
     toast(adds > 1 ? `Added call: ${r.name} (×${adds} with Megaphone)` : `Added call: ${r.name}`);
   }
-  if (activeTab === 'offers') state.offers = state.offers.filter((o) => o.id !== r.id);
+  state.offers = state.offers.filter((o) => o.id !== r.id); // a bought or taken offer is gone from the store/phone
   sfx.win(); renderBuild(); run();
   return true;
 }
 
+// "Without it your build would make 58% less over the next 9 rounds."
+function coinsLine(o) {
+  const over = `over the next ${result.build.horizonRounds === 1 ? 'round' : plural(result.build.horizonRounds, 'round')}`;
+  const less = Math.round((1 - 1 / Math.max(o.horizon, 0.01)) * 100);
+  if (less >= 1) return `Without it your build would make ${less}% less ${over}.`;
+  if (less <= -1) return `It costs you coins: without it your build would make ${-less}% more ${over}.`;
+  return `It doesn't change your coins ${over}.`;
+}
+
 function ownedInsight(o) {
-  return [{ kind: 'neutral', text: `Without it your build would make ${Math.round((1 - 1 / Math.max(o.horizon, 0.01)) * 100)}% less over the next ${plural(result.build.horizonRounds, 'round')}.` }, ...(o.reasons || [])];
+  return [{ kind: 'neutral', text: coinsLine(o) }, ...(o.reasons || [])];
 }
 
 // Options for the details dialog of any item (also for items opened from "Works well with" links):
@@ -407,7 +447,7 @@ function openPicker(mode) {
   // the store only sells store charms, so "Special" would always be empty there
   const groups = isPhone ? groupsPhone : mode === 'offer-charm' ? groupsCharm.filter(([g]) => g !== 'special') : groupsCharm;
   const grid = h('div', { class: 'item-grid' });
-  const search = h('input', { class: 'input', type: 'search', placeholder: isPhone ? 'Search calls: lemon, double, trait…' : 'Search charms: lemon, luck, 666, retrigger…', 'aria-label': 'Search' });
+  const search = h('input', { class: 'input', type: 'search', placeholder: isPhone ? 'Search calls: lemon, double…' : 'Search charms: lemon, luck…', 'aria-label': 'Search' });
   const seg = h('div', { class: 'seg', role: 'group', 'aria-label': 'Filter' });
   const badge = (it) => {
     if (it.kind === 'charm' && state.charms.some((c) => c.id === it.id)) return 'Owned';
@@ -454,6 +494,13 @@ function openPicker(mode) {
     seg.append(b);
   }
   search.addEventListener('input', () => { q = search.value.trim(); draw(); });
+  search.addEventListener('keydown', (e) => {
+    const first = grid.querySelector('button.tile');
+    if (!first) return;
+    // type a name, press Enter: the top match is added, and the text is selected so the next name replaces it
+    if (e.key === 'Enter' && q) { e.preventDefault(); first.click(); search.select(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); first.focus(); }
+  });
   pickerDialog.replaceChildren(
     h('div', { class: 'sheet-head' }, h('h2', { id: 'picker-title' }, title), h('button', { class: 'close-btn', type: 'button', 'aria-label': 'Close', onclick: () => pickerDialog.close() }, '×')),
     h('div', { class: 'sheet-body' }, h('div', { class: 'filters' }, search, seg), grid),
@@ -502,7 +549,7 @@ function selectTab(tab) {
   renderResults();
   lastTopKey = '';
   renderReels(true);
-  if (result) $('status-left').textContent = describeStatus();
+  if (result) showStatus();
 }
 
 function currentList() {
@@ -632,7 +679,7 @@ function renderAtm() {
   $('led-debt').textContent = fmtNum(c.debt);
   const exp = $('led-expected');
   exp.textContent = fmtNum(c.expectedPerDeadline);
-  exp.classList.toggle('green', c.expectedPerDeadline >= 0); // red when spins cost more than they win
+  exp.classList.toggle('green', c.expectedPerDeadline > -0.005); // red when spins cost more than they win (not for a rounded 0.00)
   $('led-ev').textContent = fmtNum(b.ev);
   const lamp = $('lamp');
   const emptyBuild = !state.charms.length && !Object.keys(state.phone).length && !Object.keys(state.stats).length;
@@ -642,7 +689,7 @@ function renderAtm() {
   const text = {
     safe: `On track: about ${times}× the debt. Good time to invest in scaling.`,
     ok: 'Should make it, but without much room to spare.',
-    tight: `Tight: you're expected to reach about ${pct}% of the debt. Favour picks that pay now.`,
+    tight: `Tight: you're expected to reach about ${pct}% of the debt. For picks that pay now, move the slider toward "Survive this deadline".`,
     danger: c.ratio <= 0
       ? 'At risk: right now your spins cost more coins than they win. Move the slider toward "Survive this deadline".'
       : `At risk: only about ${pct}% of the debt. Move the slider toward "Survive this deadline".`,
@@ -678,20 +725,25 @@ function renderAtm() {
   keepFocus(owned, () => {
     owned.replaceChildren();
     if (!result.owned.length) owned.append(h('li', { class: 'muted small', style: { display: 'block' } }, 'Add charms to see how much each one is worth.'));
+    // ordered by the coins each charm adds; charms worth something else (tickets...) say what
     for (const o of result.owned) {
       const it = db.byId.get(o.id);
       const p = Math.round((o.horizon - 1) * 100);
-      const pts = Math.round(o.score);
-      owned.append(h('li', { title: (o.reasons || []).map((r) => r.text).join('\n') },
+      const val = Math.abs(p) >= 1 ? `${p > 0 ? '+' : ''}${p}%` : o.tickets >= 0.5 ? `+${o.tickets.toFixed(1)} tickets` : o.other ? 'utility' : '0%';
+      owned.append(h('li', { title: [coinsLine(o), ...(o.reasons || []).map((r) => r.text)].join('\n') },
         itemIcon(it), h('button', { class: 'link-btn', type: 'button', 'data-fkey': `owned:${o.id}`, style: { color: 'var(--bone)', textDecoration: 'none', textAlign: 'left' }, onclick: () => openItem(db, o.id, { insight: ownedInsight(o), note: 'On your table', forItem: detailOpts }) }, o.name),
-        h('span', { class: `val${p < 0 ? ' neg' : ''}` }, Math.abs(p) >= 1 ? `${p > 0 ? '+' : ''}${p}%` : plural(pts, 'pt'))));
+        h('span', { class: `val${p < 0 ? ' neg' : ''}${Math.abs(p) < 1 ? ' dim' : ''}` }, val)));
     }
   });
   const weak = $('weakest');
   weak.replaceChildren();
-  if (result.weakest) {
-    const top = result.recommendations.charms[0];
-    weak.append(h('p', { class: 'warn' }, `Your table is full. The weakest charm is ${result.weakest.name}${top && top.score > result.weakest.score ? `; ${top.name} scores higher, so consider replacing it.` : '.'}`));
+  const w = result.weakest;
+  if (w) {
+    // a replacement must add more coins than the weakest charm does (or, for a charm that does
+    // nothing measurable, simply score higher)
+    const coinW = Math.abs(w.horizon - 1) >= 0.005;
+    const better = result.recommendations.charms.find((x) => (coinW ? x.value && x.value.horizon > w.horizon + 0.005 : x.score > w.score));
+    weak.append(h('p', { class: 'warn' }, `Your table is full. The weakest charm is ${w.name}${better ? `; ${better.name} would add more${coinW ? ' coins' : ''}, so consider replacing it.` : '.'}`));
   }
 }
 
@@ -719,9 +771,14 @@ function renderSaved() {
 }
 
 // Always read the saved copy from storage, so edits made after loading it never leak back in.
+// Like a share link, loading keeps a build in progress under Saved builds first.
 function loadSaved(name) {
   const s = listSaved().find((x) => x.name === name);
   if (!s) { renderSaved(); return; }
-  state = normalize(s.state);
-  renderBuild(); run(true); toast(`Loaded “${s.name}”`);
+  const next = normalize(s.state);
+  if (JSON.stringify(next) === JSON.stringify(normalize(state))) { toast(`“${s.name}” is already open`); return; }
+  const kept = keepCurrentBuild('loading a saved one');
+  state = next;
+  renderBuild(); renderSaved(); run(true);
+  toast(`Loaded “${s.name}”${kept === 'saved' ? '. Your own build is under Saved builds.' : ''}`);
 }

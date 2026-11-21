@@ -1,15 +1,15 @@
 // Tier list page: curated general tiers, or tiers recomputed for the saved build.
 import { loadDb, h, itemIcon, initChrome, openItem, sfx } from './common.js';
 import { ARCH_LABELS, analyze } from '../core/engine.js';
-import { loadLocal } from './state.js';
+import { loadLocal, isEmptyBuild, BUILD_KEY } from './state.js';
 
 const $ = (id) => document.getElementById(id);
 const TIERS = ['S', 'A', 'B', 'C', 'D'];
 const TIER_COLORS = { S: '#ff9f2a', A: '#e0c34f', B: '#73b86d', C: '#5c8fb3', D: '#6f6f6f' };
-let db, mode = 'base', kind = 'charm', arch = '', storeOnly = true, dlc = true, buildResult = null, busy = false, failed = false;
+let db, mode = 'base', kind = 'charm', arch = '', storeOnly = true, dlc = true, buildResult = null, busy = false, failed = false, gen = 0;
 const INTRO = {
   base: 'General strength in an average run. Switch to “For my build” to re-rank everything for the build you set up in the helper.',
-  build: 'Re-ranked by the helper’s simulator for the build you set up in the helper. Switch to “General” for the overall tiers.',
+  build: 'Re-ranked by the helper’s simulator for the build you set up in the helper. Switch to “General” for the overall tiers and for memory cards.',
 };
 
 init().catch((e) => { $('tier-status').textContent = 'Could not load: ' + e.message; });
@@ -26,6 +26,12 @@ async function init() {
   $('dlc').addEventListener('change', (e) => { dlc = e.target.checked; draw(); });
   $('mode-seg').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.mode; sfx.click(); draw(); }));
   $('kind-seg').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { kind = b.dataset.kind; sfx.click(); draw(); }));
+  // the build changed in the helper (another tab): rank it again
+  window.addEventListener('storage', (e) => {
+    if (e.key !== BUILD_KEY && e.key !== null) return;
+    gen++; buildResult = null; failed = false;
+    if (mode === 'build' && !busy) draw(); // a run still going is thrown away when it ends (see runBuild)
+  });
   draw();
 }
 
@@ -34,20 +40,28 @@ function runBuild() {
   busy = true;
   $('tier-status').innerHTML = '<span class="busy-dot"></span> Simulating your build…';
   const state = loadLocal();
+  const g = gen;
+  // a result for a build that has changed since (edited in another tab) is thrown away and redone
+  const done = (res, err) => {
+    busy = false;
+    if (g !== gen) { if (mode === 'build') draw(); return; }
+    if (err) { failed = true; $('tier-status').textContent = 'The simulator failed for this build. Check your build in the helper.'; return; }
+    buildResult = res;
+    if (mode === 'build') draw();
+  };
   try {
     const w = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
-    w.onmessage = (e) => { busy = false; w.terminate(); if (e.data.error) { failed = true; $('tier-status').textContent = 'The simulator failed for this build.'; return; } buildResult = e.data.res; draw(); };
-    w.onerror = () => { w.terminate(); fallback(state); };
+    w.onmessage = (e) => { w.terminate(); done(e.data.res, e.data.error); };
+    w.onerror = () => { w.terminate(); fallback(state, done); };
     w.postMessage({ id: 1, state, base: location.href });
-  } catch { fallback(state); }
+  } catch { fallback(state, done); }
 }
 
-function fallback(state) {
+function fallback(state, done) {
   setTimeout(() => {
-    try { buildResult = analyze(state, db); } catch { failed = true; }
-    busy = false;
-    if (failed) $('tier-status').textContent = 'The simulator failed for this build. Check your build in the helper.';
-    else draw();
+    let res = null, err = null;
+    try { res = analyze(state, db); } catch (e) { err = e; }
+    done(res, err);
   }, 20);
 }
 
@@ -55,15 +69,21 @@ function draw() {
   if (mode === 'build' && kind === 'memory') kind = 'charm';
   $('mode-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
   $('kind-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.kind === kind)));
-  $('kind-seg').querySelector('[data-kind="memory"]').disabled = mode === 'build';
+  const memBtn = $('kind-seg').querySelector('[data-kind="memory"]');
+  memBtn.disabled = mode === 'build';
+  memBtn.title = mode === 'build' ? 'Memory cards are not ranked for a build. Switch to General to see them.' : '';
   $('tier-intro').textContent = INTRO[mode];
   const all = kind === 'charm' ? db.charms : kind === 'phone' ? db.phone : db.memory;
-  const inView = (it) => !storeOnly || kind !== 'charm' || it.category === 'store';
+  // for a build only store charms are ranked (they're the ones you can buy)
+  const storeView = kind === 'charm' && (storeOnly || mode === 'build');
+  const inView = (it) => !storeView || it.category === 'store';
   // no store charm is DLC: then the DLC switch can't change anything
   const dlcMatters = all.some((it) => it.dlc && inView(it));
   $('dlc').disabled = !dlcMatters;
   $('dlc').closest('label').title = dlcMatters ? '' : 'No DLC items in this view';
-  $('store-only').disabled = kind !== 'charm';
+  $('store-only').disabled = kind !== 'charm' || mode === 'build';
+  $('store-only').checked = mode === 'build' ? true : storeOnly;
+  $('store-only').closest('label').title = mode === 'build' && kind === 'charm' ? 'For your build only store charms are ranked' : '';
   const p = new URLSearchParams();
   if (mode === 'build') p.set('mode', 'build');
   if (kind !== 'charm') p.set('kind', kind);
@@ -86,10 +106,16 @@ function draw() {
       const t = q < cut[0] ? 'S' : q < cut[1] ? 'A' : q < cut[2] ? 'B' : q < cut[3] ? 'C' : 'D';
       rows[t].push({ it: db.byId.get(r.id), score: r.score });
     });
+    // describe everything the ranking used, not just the charms (calls, deadline, memory card...)
     const owned = st.charms.length;
-    $('tier-status').textContent = owned
-      ? `Ranked for your build: ${owned} charm${owned === 1 ? '' : 's'}, deadline ${st.deadline}. Items you already own are left out.`
-      : 'Your build is empty, so this ranks picks for a fresh run. Set up your build in the helper for personal tiers.';
+    const calls = Object.values(st.phone).reduce((a, x) => a + x, 0);
+    const parts = [];
+    if (owned) parts.push(`${owned} charm${owned === 1 ? '' : 's'}`);
+    if (calls) parts.push(`${calls} phone call${calls === 1 ? '' : 's'}`);
+    parts.push(`deadline ${st.deadline}`);
+    $('tier-status').textContent = isEmptyBuild({ ...st, offers: [] })
+      ? 'Your build is empty, so this ranks picks for a fresh run. Set up your build in the helper for personal tiers.'
+      : `Ranked for your build: ${parts.join(', ')}.${owned && kind === 'charm' ? ' Charms you already have are left out.' : ''}`;
   }
   const box = $('rows');
   box.replaceChildren();

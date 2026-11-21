@@ -3,6 +3,7 @@
 
 export const SYMBOLS = ['lemon', 'cherry', 'clover', 'bell', 'diamond', 'treasure', 'seven'];
 export const SYMBOL_NAMES = ['Lemon', 'Cherry', 'Clover', 'Bell', 'Diamond', 'Treasure', 'Seven'];
+export const SYMBOL_PLURALS = ['Lemons', 'Cherries', 'Clovers', 'Bells', 'Diamonds', 'Treasures', 'Sevens'];
 export const SYM = Object.fromEntries(SYMBOLS.map((s, i) => [s, i]));
 export const BASE_VALUE = [2, 2, 3, 3, 5, 5, 7];
 export const BASE_WEIGHT = [1.3, 1.3, 1.0, 1.0, 0.8, 0.8, 0.5];

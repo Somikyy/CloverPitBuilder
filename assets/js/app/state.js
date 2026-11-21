@@ -4,6 +4,8 @@ import { store } from './common.js';
 
 const KEY = 'cp.build.v1';
 const SAVED = 'cp.saved.v1';
+export const BUILD_KEY = KEY, SAVED_KEY = SAVED;
+const MAX_SAVED = 30;
 
 // Cleans a build from storage or a share link: numbers become finite numbers in range, nested
 // objects are fresh copies (so editing the build never changes a saved copy), unknown junk is dropped.
@@ -55,6 +57,14 @@ export function normalize(s) {
       .map((o) => { const pr = finite(o.price); return { id: o.id, price: pr === null ? null : Math.max(0, Math.round(pr)) }; }),
     prefs: { horizon: horizon === null ? d.prefs.horizon : Math.max(0, Math.min(1, horizon)) },
   };
+}
+
+// Nothing entered yet: the build a new run starts with (the slider and the DLC switch are preferences).
+export function isEmptyBuild(s) {
+  const d = defaultState();
+  return !s.charms.length && !Object.keys(s.phone).length && !Object.keys(s.stats).length && !s.offers.length
+    && s.deadline === 1 && !s.tickets && s.coins == null && s.deposited == null
+    && (s.mode.memory || d.mode.memory) === d.mode.memory && !s.mode.hard && !s.mode.sacred;
 }
 
 export function loadLocal() { return normalize(store.get(KEY, null)); }
@@ -146,9 +156,22 @@ export function readHashCode() {
 
 // ---------- saved builds
 export function listSaved() { const l = store.get(SAVED, []); return Array.isArray(l) ? l.filter((x) => x && typeof x.name === 'string') : []; }
+// Saves under `name`, replacing a save with the same name. Returns what happened, so the page can
+// say so: { replaced, dropped } (dropped = the oldest save's name when the list was already full).
 export function saveBuild(name, state) {
-  const list = listSaved().filter((x) => x.name !== name);
+  const old = listSaved();
+  const list = old.filter((x) => x.name !== name);
+  const replaced = list.length !== old.length;
   list.unshift({ name, state: normalize(state), ts: Date.now() });
-  store.set(SAVED, list.slice(0, 30));
+  const dropped = list.length > MAX_SAVED ? list[list.length - 1].name : null;
+  store.set(SAVED, list.slice(0, MAX_SAVED));
+  return { replaced, dropped };
+}
+// "Lemon build, deadline 3" -> "Lemon build, deadline 3 (2)" when that name is taken
+export function uniqueName(base) {
+  const taken = new Set(listSaved().map((x) => x.name));
+  let n = base, i = 2;
+  while (taken.has(n)) n = `${base} (${i++})`;
+  return n;
 }
 export function deleteSaved(name) { store.set(SAVED, listSaved().filter((x) => x.name !== name)); }

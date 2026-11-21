@@ -17,7 +17,7 @@ import {
   newDerived, cloneDerived, applyModel, applyTrait, compileSim, totalSM, totalPM, chance666, postCond, protect666Of, symCtx,
 } from './effects.js';
 import {
-  SYMBOLS, SYMBOL_NAMES, PATTERNS, PATTERN_NAMES, BASE_VALUE, BASE_WEIGHT, PATTERN_BASE, PATTERN_SIZE,
+  SYMBOLS, SYMBOL_NAMES, SYMBOL_PLURALS, PATTERNS, PATTERN_NAMES, BASE_VALUE, BASE_WEIGHT, PATTERN_BASE, PATTERN_SIZE,
   MOD, RULES, SYM, PAT, deadlineInfo, maskToList,
 } from './constants.js';
 
@@ -496,23 +496,33 @@ function horizonValue(cand, base, H, life = Infinity, instant = 0) {
   return num / Math.max(den, 1e-9);
 }
 
+// How long a temporary charm lasts. `life` is what the valuation uses (a fading effect counts as about
+// half its full length at full strength); `shown` is the real length, for the text.
 function lifetimeRounds(model, item, stats) {
-  let life = Infinity;
+  let life = Infinity, shown = Infinity, fades = false;
   for (const e of (model && model.effects) || []) {
     // break counters on event triggers (dying, purchases...) don't wear out with ordinary spins
     if (e.when && e.when.on) continue;
     if (e.type === 'deathSave') continue;
     const da = e.discardAfter;
     if (da) {
-      if (da.of === 'rounds') life = Math.min(life, da.count);
+      let l = Infinity;
+      if (da.of === 'rounds') l = da.count;
       else if (da.of === 'activations' || da.of === 'uses') {
         const p = e.when && e.when.chance ? e.when.chance : 0.2;
-        life = Math.min(life, da.count / Math.max(0.05, p * stats.spinsPerRound));
+        l = da.count / Math.max(0.05, p * stats.spinsPerRound);
       }
+      life = Math.min(life, l);
+      shown = Math.min(shown, l);
     }
-    if (e.decay && e.decay.add < 0 && e.add) life = Math.min(life, Math.abs(e.add / e.decay.add) / (e.decay.per === 'round' ? 1 : 3) / 2 + 0.5);
+    if (e.decay && e.decay.add < 0 && e.add) {
+      const full = Math.abs(e.add / e.decay.add) / (e.decay.per === 'round' ? 1 : 3);
+      life = Math.min(life, full / 2 + 0.5);
+      if (full <= shown) fades = true;
+      shown = Math.min(shown, full);
+    }
   }
-  return life;
+  return { life, shown, fades };
 }
 
 // ------------------------------------------------------------------ build profile
@@ -683,7 +693,7 @@ export function evaluateItem(it, ctx, extra = {}) {
   const evRound0 = Math.max(ctx.cmp.evNet * ctx.cmp.spinsPerRound, 1e-9);
   const C1 = sideIncome(d2, ctx, S1, ecAll, mv) / evRound0 + ec.roundsPerDeadline / R;
   const dInterest = d2.interest - ctx.d.interest;
-  const life = lifetimeRounds(model, it, stats);
+  const { life, shown: lifeShown, fades } = lifetimeRounds(model, it, stats);
   const instant = ec.coinsInstant / evRound0 + ec.roundsInstant * m;
   // Phone multipliers (Megaphone, Dear Diary): one call per deadline; a doubled pick adds about
   // what a typical good pick is worth, once per deadline.
@@ -764,11 +774,20 @@ export function evaluateItem(it, ctx, extra = {}) {
     + 0.12 * (r.economy || 0) * 10 * (1 - quant) + 0.1 * (r.utility || 0) * 10 * (1 - quant) - costPenalty;
 
   // ---- reasons (most important first)
-  if (measured && Math.abs(V - 1) > 0.004) {
-    const now = Vnow - 1, avg = V - 1;
+  // A one-off gain or loss (coins now, an extra Round) is told apart from what changes every round,
+  // so a lump sum spread over the horizon never reads as "growth".
+  const newEcon = d2.econ.slice(ctx.d.econ.length);
+  const zeroesCoins = newEcon.some((e) => e.kind === 'coins' && e.set === 0 && e.per === 'instant');
+  if (zeroesCoins) reasons.push({ kind: 'bad', text: 'Sets the coins in your hand to 0, so deposit them first' });
+  else if (Math.abs(instant) >= 0.01) reasons.push(oneOffReason(instant));
+  const Vx = instant ? horizonValue(cand, ctx.baseline, ctx.H, life, 0) : V;
+  const Vnowx = instant ? horizonValue(cand, ctx.baseline, 1, life, 0) : Vnow;
+  if (measured && Math.abs(Vx - 1) > 0.004) {
+    const now = Vnowx - 1, avg = Vx - 1;
     if (Math.abs(now) >= 0.01) reasons.push({ kind: now > 0 ? 'good' : 'bad', text: `${fmtPct(now)} coins per round right away` });
-    if (Math.abs(V - Vnow) > 0.02 && ctx.H > 1) {
-      if (V > Vnow) reasons.push({ kind: 'good', text: `${fmtPct(avg)} on average over the next ${ctx.H} rounds as it grows` });
+    if (Math.abs(Vx - Vnowx) > 0.02 && ctx.H > 1) {
+      if (Vx > Vnowx && avg > 0) reasons.push({ kind: 'good', text: `${fmtPct(avg)} on average over the next ${ctx.H} rounds as it grows` });
+      else if (Vx > Vnowx) reasons.push({ kind: 'bad', text: `Grows, but still ${fmtPct(avg)} on average over the next ${ctx.H} rounds` });
       else reasons.push({ kind: avg >= 0 ? 'neutral' : 'bad', text: `Fades: ${fmtPct(avg)} on average over the next ${ctx.H} rounds` });
     }
   }
@@ -789,15 +808,25 @@ export function evaluateItem(it, ctx, extra = {}) {
   if (ec.tickets > 0.5) reasons.push({ kind: 'good', text: `About +${ec.tickets.toFixed(1)} tickets per deadline` });
   if (ec.tickets < -0.5) reasons.push({ kind: 'bad', text: `Costs about ${Math.abs(ec.tickets).toFixed(1)} tickets per deadline` });
   if (ec.restocks > 0.4) reasons.push({ kind: 'good', text: `About +${ec.restocks.toFixed(1)} free restocks per deadline` });
+  if (ec.discount > 0.5) reasons.push({ kind: 'good', text: 'Makes store charms cheaper' });
   if (dInterest) reasons.push({ kind: dInterest > 0 ? 'good' : 'bad', text: `Interest ${ctx.d.interest.toFixed(0)}% → ${d2.interest.toFixed(0)}%` });
   if (charmSpaceDelta) reasons.push({ kind: charmSpaceDelta > 0 ? 'good' : 'bad', text: `${charmSpaceDelta > 0 ? '+' : ''}${charmSpaceDelta} charm space` });
   const p1 = chance666(ctx.d, ctx.env.deadline), p2 = chance666(d2, ctx.env.deadline);
   if (p2 > p1 + 1e-6) reasons.push({ kind: devilBuild ? 'good' : 'bad', text: `666 chance ${(p1 * 100).toFixed(1)}% → ${(p2 * 100).toFixed(1)}%` });
   if (prot2 > prot1 + 1e-6) reasons.push({ kind: 'good', text: prot1 > 0 ? `666 blocked ${Math.round(prot1 * 100)}% → ${Math.round(prot2 * 100)}%` : 'Protects you from 666' });
   if (ec.deathSave && ctx.check && ctx.check.ratio < 1) reasons.push({ kind: 'good', text: "Saves the run if you can't pay this deadline" });
-  if (Number.isFinite(life) && life < ctx.H) reasons.push({ kind: 'neutral', text: `Temporary: lasts about ${Math.max(1, Math.round(life))} round${life >= 1.5 ? 's' : ''}` });
+  if (Number.isFinite(lifeShown)) {
+    const n = Math.max(1, Math.round(lifeShown));
+    reasons.push({ kind: 'neutral', text: `Temporary: lasts about ${n} round${n === 1 ? '' : 's'}${fades ? ', weaker each round' : ''}` });
+  }
   if (waitDeadlines >= 1.5) reasons.push({ kind: 'bad', text: `Costs ${price} tickets: about ${Math.round(waitDeadlines)} deadlines of saving` });
   if (quant < 0.5 && model && model.tip) reasons.push({ kind: 'neutral', text: model.tip });
+  // every pick explains its score, even when its effect on this build is tiny
+  if (!reasons.length) {
+    if (Math.abs(V - 1) > 0.004) reasons.push({ kind: V > 1 ? 'neutral' : 'bad', text: `Small effect in your build: ${fmtPct(V - 1)} coins over the next ${ctx.H === 1 ? 'round' : `${ctx.H} rounds`}` });
+    else reasons.push({ kind: 'neutral', text: 'No measurable change to your coins in this build' });
+    if (cares.length && careFactor < 0.45) reasons.push({ kind: 'bad', text: `Needs ${cares.map(tagLabel).slice(0, 2).join(' / ')} support you don't have yet` });
+  }
 
   const affordable = it.kind !== 'charm' || price == null || price <= ctx.tickets;
   return {
@@ -813,13 +842,36 @@ function dedupeReasons(rs) {
   return rs.filter((r) => { if (seen.has(r.text)) return false; seen.add(r.text); return true; });
 }
 
+// symbol groups some items work on (they mirror supportFor)
+const SYMBOL_GROUPS = { nonYellow: ['cherry', 'clover', 'diamond'], yellow: ['lemon', 'bell', 'treasure', 'seven'], fruit: ['lemon', 'cherry'] };
+const andList = (xs) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0] || '');
+
 function topSymbolReason(it, model, ctx, reasons) {
   if (!model) return;
   const syms = (model.provides || []).filter((t) => SYM[t] !== undefined);
-  if (!syms.length) return;
-  const best = syms.map((t) => [t, ctx.symShare[SYM[t]]]).sort((a, b) => b[1] - a[1])[0];
-  if (best[1] >= 0.25) reasons.push({ kind: 'good', text: `${SYMBOL_NAMES[SYM[best[0]]]}s make ${Math.round(best[1] * 100)}% of your coins` });
-  else if (best[1] < 0.1) reasons.push({ kind: 'bad', text: `${SYMBOL_NAMES[SYM[best[0]]]}s make only ${Math.round(best[1] * 100)}% of your coins` });
+  let label, share;
+  if (syms.length) {
+    const best = syms.map((t) => [t, ctx.symShare[SYM[t]]]).sort((a, b) => b[1] - a[1])[0];
+    label = SYMBOL_PLURALS[SYM[best[0]]]; share = best[1];
+  } else {
+    const g = (model.provides || []).map((t) => SYMBOL_GROUPS[t]).find(Boolean);
+    if (!g) return;
+    label = andList(g.map((s) => SYMBOL_PLURALS[SYM[s]])); share = g.reduce((a, s) => a + ctx.symShare[SYM[s]], 0);
+  }
+  if (share >= 0.25) reasons.push({ kind: 'good', text: `${label} make ${Math.round(share * 100)}% of your coins` });
+  else if (share < 0.1) reasons.push({ kind: 'bad', text: `${label} make only ${Math.round(share * 100)}% of your coins` });
+}
+
+// A lump sum, in rounds' worth of coins: "One-off: about 1.5 rounds' worth of coins".
+function oneOffReason(x) {
+  const a = Math.abs(x);
+  let amount;
+  if (a < 0.95) amount = `${Math.max(1, Math.round(a * 100))}% of a round's coins`;
+  else {
+    const n = a < 9.5 ? Math.round(a * 10) / 10 : Math.round(a);
+    amount = n === 1 ? "a round's worth of coins" : `${n} rounds' worth of coins`;
+  }
+  return x > 0 ? { kind: 'good', text: `One-off: about ${amount}` } : { kind: 'bad', text: `One-off: you lose about ${amount}` };
 }
 
 const TAG_LABELS = {
@@ -827,8 +879,15 @@ const TAG_LABELS = {
   redButton: 'Red Button charms', charges: 'charge sources', phone: 'phone calls', tickets: 'ticket stockpile', interest: 'Interest',
   '666': '666 hits', '999': '999 hits', traits: 'charm traits', restock: 'restocks', discard: 'discarding', retrigger: 'retriggers',
   luck: 'Luck', charmCount: 'many charms', jackpot: 'jackpots', eye: 'EYE patterns', aboveBelow: 'ABOVE/BELOW patterns',
+  nonYellow: 'Cherry/Clover/Diamond', yellow: 'Lemon/Bell/Treasure/Seven', fruit: 'Lemon/Cherry', drawers: 'drawers',
+  symbolChance: 'symbol chances', symbolValue: 'symbol values', patternValue: 'pattern values', largePatterns: 'big patterns',
+  smallPatterns: 'small patterns', spins: 'extra spins', rounds: 'extra Rounds', roundSkip: 'skipped Rounds', purchase: 'purchases',
+  resell: 'resell value', charmSpace: 'charm space', temporary: 'temporary charms', sacred: 'Sacred mode', discount: 'discounts',
+  phoneReroll: 'phone rerolls', instant: 'instant calls', revenge: 'Revenge', evil: 'Evil charms', surgery: 'surgery',
+  golden: 'Golden modifiers', chain: 'Chain modifiers', token: 'Token modifiers', ticketMod: 'Ticket modifiers',
+  repetition: 'Repetition modifiers', battery: 'Battery modifiers',
 };
-function tagLabel(t) { return TAG_LABELS[t] || (SYM[t] !== undefined ? SYMBOL_NAMES[SYM[t]] + 's' : t); }
+function tagLabel(t) { return TAG_LABELS[t] || (SYM[t] !== undefined ? SYMBOL_PLURALS[SYM[t]] : t); }
 
 function unitsOf(unit, ctx) {
   switch (unit.of) {
@@ -871,12 +930,25 @@ function ownedContributions(ctx) {
     const e = evaluateItem(it, ctx2, { trait: c.trait || null, price: 0 }); // already paid for
     out.push({
       id: c.id, name: it.name, trait: c.trait || null, score: e.score,
-      now: e.value.now, horizon: e.value.horizon, growth: e.value.growthPerRound,
+      now: e.value.now, horizon: e.value.horizon, growth: e.value.growthPerRound, tickets: e.value.ticketsPerDeadline,
+      // worth something besides coins (tickets, restocks, charm space, saving the run...)
+      other: (e.parts.econ || 0) >= 5 || (e.parts.utility || 0) >= 5,
       reasons: e.reasons.slice(0, 3),
     });
   }
-  out.sort((a, b) => b.score - a.score);
+  // The list shows the coins each charm adds (leave-one-out), so it is ordered by that same number.
+  out.sort((a, b) => (b.horizon - a.horizon) || (b.score - a.score));
   return out;
+}
+
+// The weakest charm on the table: the last in the list, skipping charms whose worth isn't in coins
+// (tickets, charm space...), which coins can't be weighed against.
+function weakestOwned(owned) {
+  for (let i = owned.length - 1; i >= 0; i--) {
+    const o = owned[i];
+    if (!(Math.abs(o.horizon - 1) < 0.005 && o.other)) return o;
+  }
+  return owned.length ? owned[owned.length - 1] : null;
 }
 
 // ------------------------------------------------------------------ deadline check
@@ -907,7 +979,7 @@ export function analyze(state, db, opt = {}) {
   // weakest owned charm (for "replace" suggestions when the table is full)
   const spaceUsed = (state.charms || []).filter((c) => !c.drawer && !(db.byId.get(c.id) || {}).noSpace).length;
   const full = spaceUsed >= ctx.d.charmSpace;
-  const weakest = owned.length ? owned[owned.length - 1] : null;
+  const weakest = weakestOwned(owned);
 
   const pool = opt.pool || candidatePool(ctx);
   const evals = [];

@@ -403,7 +403,8 @@ function applyEffect(d, e, c) {
       return true;
     }
     case 'tickets':
-      d.econ.push({ kind: 'tickets', amount: (e.add || 0) * n, mul: e.mul, set: e.set, per: e.per || (w ? 'event' : 'instant'), when: w, perUnit: e.perUnit, src });
+      // a doubling that triggers twice (First Love, Megaphone) quadruples
+      d.econ.push({ kind: 'tickets', amount: (e.add || 0) * n, mul: e.mul !== undefined ? Math.pow(e.mul, n) : undefined, set: e.set, per: e.per || (w ? 'event' : 'instant'), when: w, perUnit: e.perUnit, src });
       return true;
     case 'ticketIncome':
       d.econ.push({ kind: 'ticketIncome', mul: e.mul, set: e.set, src });
@@ -413,7 +414,7 @@ function applyEffect(d, e, c) {
         d.econ.push({ kind: 'coinsInterest', multiple: e.interestMultiple * n, when: w, src });
         return true;
       }
-      d.econ.push({ kind: 'coins', amount: (e.add || 0) * n, mul: e.mul, set: e.set, debtFraction: e.debtFraction, per: e.per || 'instant', when: w, src });
+      d.econ.push({ kind: 'coins', amount: (e.add || 0) * n, mul: e.mul !== undefined ? Math.pow(e.mul, n) : undefined, set: e.set, debtFraction: e.debtFraction, per: e.per || 'instant', when: w, src });
       return true;
     case 'freeRestocks':
       d.econ.push({ kind: 'restocks', amount: (e.add || 0) * n, per: e.per || (w && w.event === 'instant' ? 'instant' : w ? 'event' : 'deadline'), when: w, src });

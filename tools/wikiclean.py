@@ -1,4 +1,13 @@
-import re
+import json, os, re
+# {{CharmModifierInfo<Name>}} is the wiki's grey line explaining a modifier; the same explanations are in
+# data/mechanics.json, so the line is written out instead of a dead "(see ... modifier)" reference.
+_MECH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'mechanics.json')
+MOD_INFO = {m['id']: (m['name'], m['effect']) for m in json.load(open(_MECH, encoding='utf-8'))['modifiers']}
+def _mod_info(m):
+    k = m.group(1).lower()
+    if k not in MOD_INFO: return ''
+    name, effect = MOD_INFO[k]
+    return name + ' Modifier [' + name + ' modifier]: ' + effect
 SYM = {'SymbolLemon':'Lemon','SymbolCherry':'Cherry','SymbolClover':'Clover','SymbolBell':'Bell','SymbolDiamond':'Diamond','SymbolTreasureChest':'Treasure','SymbolSeven':'Seven'}
 def clean(s):
     if s is None: return ''
@@ -33,7 +42,7 @@ def clean(s):
         r'\{\{\s*cp\s*\}\}': 'CloverPit',
     }
     for k,v in reps.items(): s = re.sub(k, v, s, flags=re.I)
-    s = re.sub(r'\{\{\s*CharmModifierInfo(\w+)\s*\}\}', lambda m: '(see '+m.group(1)+' modifier)', s)
+    s = re.sub(r'\{\{\s*CharmModifierInfo(\w+)\s*\}\}', _mod_info, s)
     s = re.sub(r'\{\{\s*Currency\s*\|\s*amount=([^|}]*)\|\s*currency=(\w+)\s*\}\}', lambda m: m.group(1)+' '+m.group(2)+'s', s)
     s = re.sub(r'\{\{\s*(?:IconLink|lct|il)\s*\|([^}|]+)(?:\|[^}]*)?\}\}', r'\1', s)
     s = re.sub(r'\{\{\s*Trait\s*\|\s*s\s*\}\}', 'Traits', s, flags=re.I)

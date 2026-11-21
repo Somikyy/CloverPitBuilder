@@ -119,9 +119,12 @@ export const settings = {
 export function initChrome() {
   const sBtn = document.getElementById('toggle-sound');
   const fBtn = document.getElementById('toggle-fx');
+  // The name stays "Sound" / "CRT" and aria-pressed carries the state; the visible "on/off" is only
+  // a visual hint, so a screen reader hears "Sound, toggle button, pressed" instead of "Sound off, pressed".
+  const label = (btn, name, on) => btn.querySelector('span').replaceChildren(name, h('span', { 'aria-hidden': 'true' }, on ? ' on' : ' off'));
   const apply = () => {
-    if (sBtn) { sBtn.setAttribute('aria-pressed', String(settings.sound)); sBtn.querySelector('span').textContent = settings.sound ? 'Sound on' : 'Sound off'; }
-    if (fBtn) { fBtn.setAttribute('aria-pressed', String(settings.fx)); fBtn.querySelector('span').textContent = settings.fx ? 'CRT on' : 'CRT off'; }
+    if (sBtn) { sBtn.setAttribute('aria-pressed', String(settings.sound)); label(sBtn, 'Sound', settings.sound); }
+    if (fBtn) { fBtn.setAttribute('aria-pressed', String(settings.fx)); label(fBtn, 'CRT', settings.fx); }
     document.documentElement.classList.toggle('no-fx', !settings.fx);
     document.querySelectorAll('.screen').forEach((s) => s.classList.toggle('fx', settings.fx));
   };
@@ -321,5 +324,5 @@ export function fmtNum(x) {
   if (a >= 1e4) return (x / 1e3).toFixed(a >= 1e5 ? 0 : 1) + 'K';
   if (a >= 100 || (Number.isInteger(x) && a >= 1)) return Math.round(x).toLocaleString('en-US');
   if (a >= 10) return x.toFixed(1);
-  return x.toFixed(2);
+  return (a < 0.005 ? 0 : x).toFixed(2); // never "-0.00"
 }

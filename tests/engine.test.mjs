@@ -155,3 +155,50 @@ test('a luck item and the base build see the same grids (per-spin random streams
   assert.equal(a.spins, b.spins);
   assert.ok(b.ev > a.ev); // more luck never loses coins on the same grids
 });
+
+test('every pick explains its score, in plain words', () => {
+  const builds = [defaultState(), mk({ mode: { ...defaultState().mode, memory: 'first_love' }, deadline: 3, charms: [{ id: 'lucky_cat', trait: 'avid' }, { id: 'fruit_basket' }], phone: { i_need_supplements: 1 }, stats: { values: { lemon: 3 }, sm: 4 } })];
+  for (const st of builds) {
+    const r = analyze(st, db, { ...fast, skipOwned: true });
+    for (const x of r.recommendations.all) {
+      assert.ok(x.reasons.length > 0, `${x.id} has no reason`);
+      for (const y of x.reasons) {
+        assert.ok(!/Cherrys/.test(y.text), y.text);
+        if (/as it grows/.test(y.text)) assert.ok(y.text.startsWith('+'), `${x.id}: ${y.text}`); // a loss never "grows"
+      }
+    }
+  }
+});
+
+test('Number 2 says why it loses to Lemon Picture in a lemon build', () => {
+  const st = mk({ deadline: 3, tickets: 6, charms: [{ id: 'golden_lemon' }, { id: 'pentacle', trait: 'avid' }], phone: { life_gave_me_lemons: 2, i_need_supplements: 1 }, stats: { values: { lemon: 24 } }, offers: [{ id: 'lemon_picture', price: 2 }, { id: 'number_2', price: 3 }] });
+  const r = analyze(st, db, { ...fast, skipOwned: true });
+  assert.deepEqual(r.offers.map((o) => o.id), ['lemon_picture', 'number_2']);
+  const why = r.offers[1].reasons.map((x) => x.text);
+  assert.ok(why.some((t) => /^Cherries, Clovers and Diamonds make only \d+% of your coins$/.test(t)), why.join(' | '));
+});
+
+test('your charms are listed by the coins they add, and the weakest is the last', () => {
+  const ids = ['golden_lemon', 'lemon_picture', 'pentacle', 'clicker', 'fruit_basket', 'vines_soup', 'personal_trainer'];
+  const st = mk({ deadline: 4, tickets: 6, charms: ids.map((id) => ({ id, trait: id === 'pentacle' ? 'avid' : null, drawer: false })), phone: { life_gave_me_lemons: 2, i_need_supplements: 1 }, stats: { values: { lemon: 24 } } });
+  const r = analyze(st, db, fast);
+  const h = r.owned.map((o) => o.horizon);
+  assert.ok(h.every((v, i) => i === 0 || v <= h[i - 1]), r.owned.map((o) => `${o.id} ${o.horizon.toFixed(2)}`).join(', '));
+  assert.equal(r.weakest && r.weakest.id, r.owned[r.owned.length - 1].id);
+});
+
+test('First Love doubles a doubling call twice', () => {
+  const tickets = (memory) => analyze(mk({ mode: { ...defaultState().mode, memory }, deadline: 3, tickets: 5 }), db, { ...fast, skipOwned: true, pool: [db.byId.get('i_like_cryptic_values')] }).recommendations.all[0].value.ticketsPerDeadline;
+  const once = tickets('erased_memory_card'), twice = tickets('first_love');
+  assert.ok(once > 0 && Math.abs(twice / once - 3) < 1e-9, `${once} -> ${twice}`); // x2 adds the pile once, x4 adds it 3 times
+});
+
+test('temporary charms show their real length; emptying your hand is a one-off cost', () => {
+  const r = analyze(mk({ deadline: 3, tickets: 5 }), db, { ...fast, skipOwned: true, pool: ['fortune_teller', 'i_like_cryptic_values', 'alexithymia'].map((id) => db.byId.get(id)) });
+  const by = (id) => r.recommendations.all.find((x) => x.id === id).reasons.map((x) => x.text);
+  assert.ok(by('fortune_teller').includes('Temporary: lasts about 5 rounds, weaker each round'), by('fortune_teller').join(' | '));
+  for (const id of ['i_like_cryptic_values', 'alexithymia']) {
+    assert.equal(by(id)[0], 'Sets the coins in your hand to 0, so deposit them first');
+    assert.ok(!by(id).some((t) => /as it grows/.test(t)), by(id).join(' | '));
+  }
+});

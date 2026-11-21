@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 globalThis.localStorage = { _d: {}, getItem(k) { return this._d[k] ?? null; }, setItem(k, v) { this._d[k] = String(v); } };
-const { encodeShare, decodeShare, normalize } = await import('../assets/js/app/state.js');
+const { encodeShare, decodeShare, normalize, isEmptyBuild, saveBuild, listSaved, uniqueName } = await import('../assets/js/app/state.js');
 
 test('share links round-trip a build', async () => {
   const s = normalize({
@@ -39,4 +39,22 @@ test('normalize cleans junk and never shares nested objects', () => {
   const t = normalize(s);
   t.phone.c = 5; t.charms[0].trait = 'avid'; t.stats.values.lemon = 1;
   assert.equal(s.phone.c, 2); assert.equal(s.charms[0].trait, null); assert.equal(s.stats.values.lemon, 7);
+});
+
+test('a new run is empty; a memory card, calls or coins are not', () => {
+  assert.ok(isEmptyBuild(normalize({})));
+  assert.ok(isEmptyBuild(normalize({ prefs: { horizon: 0.2 }, mode: { dlc: false } }))); // preferences only
+  assert.ok(!isEmptyBuild(normalize({ mode: { memory: 'first_love' } })));
+  assert.ok(!isEmptyBuild(normalize({ phone: { life_gave_me_lemons: 1 } })));
+  assert.ok(!isEmptyBuild(normalize({ coins: 0 })));
+});
+
+test('saving says what it replaced; suggested names stay unique', () => {
+  const a = normalize({ deadline: 2 }), b = normalize({ deadline: 3 });
+  assert.deepEqual(saveBuild('Lemon build', a), { replaced: false, dropped: null });
+  assert.equal(uniqueName('Lemon build'), 'Lemon build (2)');
+  assert.deepEqual(saveBuild('Lemon build', b), { replaced: true, dropped: null });
+  assert.equal(listSaved().filter((x) => x.name === 'Lemon build').length, 1);
+  for (let i = 0; i < 29; i++) saveBuild(`Build ${i}`, a);
+  assert.deepEqual(saveBuild('One more', a), { replaced: false, dropped: 'Lemon build' }); // 30 at most: the oldest goes
 });
